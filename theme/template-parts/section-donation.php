@@ -89,6 +89,9 @@
 	    text-align: left;
         border-bottom: 1px solid #eee;
     	padding-bottom: 30px;
+<<<<<<< HEAD
+>>>>>>> Donation + global fixes
+=======
 >>>>>>> Donation + global fixes
     }
 
