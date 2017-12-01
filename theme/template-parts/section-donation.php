@@ -78,10 +78,18 @@
 <style type="text/css">
 
 	section.section_type-donation div.section-content {
+<<<<<<< HEAD
 		margin-top: -65px;
 	    background: #fb5507;
 	    color: #fff;
 	    padding: 20px;
+=======
+	    width: 810px;
+	    margin: auto;
+	    text-align: left;
+        border-bottom: 1px solid #eee;
+    	padding-bottom: 30px;
+>>>>>>> Donation + global fixes
     }
 
     #donate-btn {

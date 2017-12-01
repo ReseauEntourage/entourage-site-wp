@@ -19,7 +19,7 @@
 	$custom_fields = get_post_custom(get_the_ID());
 ?>
 
-<section <?php post_class() ?>>
+<section <?php post_class('bg-'.$custom_fields['couleur_fond'][0]) ?>>
 	<h3 class="section-title"><?php the_title(); ?></h3>
 	<ul class="section-carousel-list">
 		<?php

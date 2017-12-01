@@ -57,10 +57,6 @@
 		box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.21);
 	}
 
-	section.section.section_type-team li.list-item:nth-child(3n) {
-		margin-right: 0;
-	}
-
 	section.section.section_type-team li.list-item div.list-item-picture {
 		height: 210px;
 		background-size: cover;

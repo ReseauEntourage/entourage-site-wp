@@ -39,8 +39,8 @@ angular.module('entourageApp', [])
     map.currentAddress = null;
     map.hideAskLocation = !!navigator.geolocation;
     map.filters = {
-      status: null,
-      created_at: null
+      status: 'closed',
+      created_at: '3 month'
     };
 
     // size of marker icons
@@ -90,11 +90,6 @@ angular.module('entourageApp', [])
             // if (action.status != 'open')
             //  continue;
 
-            if (i%2)
-              action.status = 'open';
-            else
-              action.status = 'close';
-
             action.created_at = new Date(action.creation_date);
             action.description = replaceURLWithHTMLLinks(action.description)
 
@@ -123,6 +118,9 @@ angular.module('entourageApp', [])
             action.marker.addListener('click', map.showAction);
 
             map.actions.push(action);
+
+            // hide filtered actions
+            map.filterAction(i);
 
             // display action in url
             if (entourageId && (entourageId == action.uuid || entourageId == action.uuid_v1))
@@ -246,13 +244,17 @@ angular.module('entourageApp', [])
     }
 
     map.filterActions = function() {
-      for (action in map.actions) {
-        var visible = true;
-        if (map.filters.status) {
-          visible = action.status == map.filters.status;
-        }
-        action.marker.setVisible(visible);
+      for (id in map.actions) {
+        map.filterAction(id);
       }
+    }
+
+    map.filterAction = function(id) {
+      var visible = true;
+      if (map.filters.status != 'all') {
+        visible = map.actions[id].status == map.filters.status;
+      }
+      map.actions[id].marker.setVisible(visible);
     }
 
 
