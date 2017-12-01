@@ -1,0 +1,519 @@
+/* App */
+
+html,
+body,
+#page-content,
+#map,
+#map-container {
+	height: 100%;
+	overflow-x: hidden;
+}
+
+a,
+a:hover,
+a:focus,
+a:active {
+	color: #EF662F;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    letter-spacing: normal;
+    color: #333;
+}
+
+#app-filters {
+	position: relative;
+	display: inline-block;
+	margin-top: 14px;
+	margin-left: 61px;
+	font-size: 0;
+}
+
+#app-filters > li {
+	position: relative;
+	display: inline-block;
+	margin-right: 15px;
+	height: 33px;
+	font-size: 12px;
+	line-height: 33px;
+	border-radius: 3px;
+	vertical-align: top;
+	box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.2);
+	cursor: pointer;
+}
+
+#app-filters > li.active {
+	box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.2);
+}
+
+#app-filters .material-icons {
+	margin: 0 7px;
+	color: #b9b9b9;
+	font-size: 20px;
+}
+
+#app-search-input {
+	width: 220px;
+	height: 33px;
+	margin-left: -37px;
+    padding: 0 37px;
+    background: transparent;
+    line-height: 33px;
+    font-size: 14px;
+    color: #8c8c8c;
+}
+
+#app-search-address {
+    display: inline-block;
+    font-size: 14px;
+    color: #8c8c8c;
+    vertical-align: top;
+}
+
+#app-search-address i {
+    font-size: 15px;
+}
+
+#app-search-input:focus {
+	outline: none;
+}
+
+#app-search-input::-webkit-input-placeholder {
+	font-style: italic;
+  	color: #c5c5c5;
+}
+
+#app-search-input::-moz-input-placeholder {
+	font-style: italic;
+  	color: #c5c5c5;
+}
+
+#app-search-input:-ms-input-placeholder {
+	font-style: italic;
+  	color: #c5c5c5;
+}
+
+#app-filter-more.active .dropdown-menu {
+	display: block;
+}
+
+.dropdown-menu {
+	display: none;
+	position: absolute;
+    top: 34px;
+    left: 0;
+    width: 340px;
+    color: #8c8c8c;
+    font-size: 15px;
+	background: #f9f9f9;
+	border-radius: 0 5px 5px 5px;
+	border-top: 1px solid #f2f2f2;
+    box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.13);
+}
+
+.dropdown-menu li {
+	padding: 10px;
+	border-bottom: 1px solid #f2f2f2;
+    white-space: nowrap;
+}
+
+.dropdown-menu li label {
+	width: 160px;
+    display: inline-block;
+}
+
+.dropdown-menu li select {
+	background: #fff;
+	padding: 0 15px;
+    height: 33px;
+    font-size: 14px;
+    color: #8c8c8c;
+    box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    border: 0;
+}
+
+div.overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	padding-top: 60px;
+	background: rgba(255,255,255,0.9);
+	display: table;
+	text-align: center;
+	z-index: -1;
+	opacity: 0;
+}
+
+
+div.overlay.fade-in {
+	z-index: 19;
+	opacity: 1;
+	animation: fadeIn ease-in 0.6s;
+}
+
+div.overlay.fade-out {
+	z-index: -1;
+	opacity: 0;
+	animation: fadeOut ease-in 0.6s;
+}
+
+@keyframes fadeIn {
+    0% {
+    	opacity: 0;
+    }
+    100% {
+    	opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+    	opacity: 1;
+    }
+    100% {
+    	opacity: 0;
+    }
+}
+
+div.overlay > div {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+#page-title {
+	padding-top: 0;
+	background: #fff;
+}
+
+#page-title:not(.fade-out) {
+	opacity: 1;
+	z-index: 21;
+}
+
+#page-title > div {
+	animation: opacity ease-in 3s infinite;
+}
+
+@keyframes opacity {
+    0% {
+    	opacity: 1;
+    }
+    50% {
+    	opacity: 0.4;
+    }
+    100% {
+    	opacity: 1;
+    }
+}
+
+#page-title img {
+	margin-bottom: 10px;
+}
+
+#page-title a {
+	text-decoration: none;
+}
+
+#page-title h1 {
+	font-size: 16px;
+	font-weight: 300;
+    color: #797979;
+}
+
+#page-registration div.content {
+	position: relative;
+	display: inline-block;
+	width: 700px;
+	background: #333;
+	font-size: 0;
+	color: #fff;
+	border-radius: 5px;
+	box-shadow: -2px 2px 3px rgba(0,0,0,0.1);
+}
+
+#page-registration div.content a.page-close {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	color: #FFF;
+	font-size: 18px;
+	cursor: pointer;
+}
+
+#page-registration h1 {
+	margin: 40px 0;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 37px;
+}
+
+#page-registration img.app-screenshot {
+	display: inline-block;
+	width: 250px;
+	vertical-align: middle;
+}
+
+#page-registration div.registration-form {
+	display: inline-block;
+    width: 380px;
+    margin-left: 20px;
+    font-size: 17px;
+    vertical-align: middle;
+    line-height: 22px;
+}
+
+#page-registration div.input-parent {
+	display: inline-block;
+	font-size: 0;
+	margin-top: 20px;
+	border-radius: 6px;
+}
+
+#page-registration div.input-parent input {
+	width: 170px;
+	height: 45px;
+	padding: 0;
+	padding-left: 13px;
+	border: none;
+	background: #fff;
+	border-radius: 5px 0 0 5px;
+	line-height: 45px;
+	color: #333;
+	font-size: 15px;
+	vertical-align: top;
+	outline: 0;
+}
+
+#page-registration div.input-parent input::-webkit-input-placeholder {
+	font-style: italic;
+	font-weight: 300;
+  	color: #c5c5c5;
+}
+
+#page-registration div.input-parent input::-moz-input-placeholder {
+	font-style: italic;
+	font-weight: 300;
+  	color: #c5c5c5;
+}
+
+#page-registration div.input-parent input-ms-input-placeholder {
+	font-style: italic;
+	font-weight: 300;
+  	color: #c5c5c5;
+}
+
+
+#page-registration div.input-parent .btn {
+	height: 45px;
+	padding: 0 20px;
+    font-weight: 400;
+	background: #EF662F;
+	border-radius: 0 5px 5px 0;
+	line-height: 45px;
+	color: #fff;
+	font-size: 15px;
+}
+
+#page-registration .error {
+    margin-top: 7px;
+	font-size: 12px;
+	color: #EF662F;
+}
+
+#map {
+    position: relative;
+}
+
+#map-right-band {
+	position: absolute;
+    top: 70px;
+    right: -350px;
+    width: 300px;
+    border-radius: 3px;
+    background: #fff;
+    box-shadow: 0 0 9px rgba(0,0,0,0.3);
+    z-index: 3;
+	overflow: hidden;
+	text-align: center;
+}
+
+#map-right-band.open {
+	right: 10px;
+	transition: right 0.6s;
+}
+
+#map-right-band .action-title {
+	font-size: 17px;
+    font-weight: 400;
+    padding: 15px;
+    background: #333;
+    color: white;
+}
+
+#map-right-band .action-details {
+	position: relative;
+    font-size: 13px;
+    color: #6C6F73;
+    border-bottom: 1px solid#eee;
+    text-align: right;
+    line-height: 36px;
+    background: #f1f1f1;
+    padding-right: 10px;
+}
+
+.action-author:hover {
+	text-decoration: none;
+}
+
+.action-author-picture {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	border-radius: 20px;
+	background-color: #ddd;
+    margin: 0 3px;
+	vertical-align: middle;
+}
+
+#map-right-band .action-close {
+    position: absolute;
+    top: 0px;
+    left: 10px;
+    color: #333;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+#map-right-band .action-content .btn {
+	margin: 20px;
+}
+
+#map-right-band .action-description {
+	max-height: 190px;
+	overflow: auto;
+    margin: 20px;
+    margin-bottom: 0;
+    padding-right: 5px;
+    font-size: 15px;
+    line-height: 18px;
+    text-align: left;
+    word-wrap: break-word;
+}
+
+/* Custom Goggle Maps CSS */
+
+.gm-style > div > div .gmnoprint {
+    background: #ffa018;
+    opacity: 0.7 !important;
+    border-radius: 100%;
+    margin-top: -7px;
+    margin-left: -7px;
+    box-shadow: 0 0 6px 4px #ff8404;
+    animation: pulse 3s infinite; /*rotate 10s linear infinite*/
+}
+
+.gm-style > div > div .gmnoprint:nth-child(2n) {
+	animation-delay: 0.5s;
+}
+
+.gm-style > div > div .gmnoprint:nth-child(3n) {
+	animation-delay: 1s;
+}
+
+@keyframes pulse {
+    0% {
+    	opacity: 0.7 !important;
+    	box-shadow: 0 0 6px 4px #ff8404;
+    }
+    50% {
+    	opacity: 0.2 !important;
+    	box-shadow: 0 0 6px 7px #ff8404;
+    }
+    100% {
+    	opacity: 0.8 !important;
+    	box-shadow: 0 0 6px 4px #ff8404;
+    }
+}
+
+@keyframes rotate {
+    0% {
+    	transform: rotate(0deg);
+    }
+    100% {
+    	transform: rotate(360deg);
+    }
+}
+
+.gm-style > div > div .gmnoprint:hover {
+	opacity: 1 !important;
+    box-shadow: 0 0 6px 6px #ff6c04;
+}
+
+.gm-info-window {
+	cursor: pointer;
+}
+
+.gm-info-window b {
+	color: #333;
+}
+
+.gm-info-window span {
+	display: block;
+	font-size: 11px;
+	margin-top: 5px;
+}
+
+.gm-info-window a:hover {
+	text-decoration: none;
+}
+
+/*** MOBILE VIEW */
+
+@media (max-width: 768px) {
+
+	#main-header {
+		min-width: inherit;
+	}
+
+	#main-header h1 {
+		display: none;
+	}
+
+	#map-right-band.open {
+	    right: 50%;
+	    margin-right: -150px;
+	}
+
+	#map-right-band .action-title {
+	    padding: 15px 30px;	
+	}
+
+	#page-registration div.content {
+		width: 90%;
+	}
+
+	#page-registration h1 {
+	    margin: 30px 0;
+	    font-size: 16px;
+	    line-height: 21px;
+	}
+
+	#page-registration img.app-screenshot {
+	    width: 190px;
+	}
+
+	#page-registration div.registration-form {
+	    display: inline-block;
+	    width: 90%;
+	    margin: 20px 0;
+	    font-size: 14px;
+	    vertical-align: middle;
+	    line-height: 17px;
+	}
+}
