@@ -8,13 +8,14 @@
 
 	$custom_fields = get_post_custom($wp_query->post->ID);
 
-	$og_title = get_option('facebook_title');
-	$og_description = get_option('facebook_description');
-
-	if ( !is_front_page() )
+	if ( is_front_page() )
 	{
-		$og_title = $custom_fields['meta_titre'] ? $custom_fields['meta_titre'][0] : the_title();
-		$og_description = $custom_fields['meta_description'] ? $custom_fields['meta_description'][0] : get_option('description');
+		$og_title = get_option('facebook_title');
+		$og_description = get_option('facebook_description');
+	}
+	else {
+		$og_title = !empty($custom_fields['meta_titre']) ? $custom_fields['meta_titre'][0] : get_the_title($wp_query->post->ID);
+		$og_description = !empty($custom_fields['meta_description']) ? $custom_fields['meta_description'][0] : get_bloginfo('description');
 	}
 ?>
 
@@ -29,13 +30,13 @@
 		<?php
 			echo get_bloginfo('name');
 			echo ' | ';
-			if ( $custom_fields['meta_titre'] )
+			if ( !empty($custom_fields['meta_titre']) )
 				echo $custom_fields['meta_titre'][0];
 			else
 				the_title();
 		?>
 	</title>
-    <meta name="description" content="<?php echo ($custom_fields['meta_description'] ? $custom_fields['meta_description'][0] : get_bloginfo('description')); ?>">
+    <meta name="description" content="<?php echo (!empty($custom_fields['meta_description']) ? $custom_fields['meta_description'][0] : get_bloginfo('description')); ?>">
 
 	<meta property="og:title" content="<?php echo $og_title; ?>">
     <meta property="og:type" content="website">
@@ -62,14 +63,14 @@
 		<?php endif ?>
 	>
 		<div id="site-header-fixed">
-			<a id="site-header-fixed-logo" href="/">
+			<a id="site-header-logo" href="/">
 				<img src="<?php echo get_template_directory_uri(); ?>/img/logo-entourage-orange.png" alt="Logo de l'association Entourage" title="Association Entourage"/>
 			</a>
 			<div id="site-header-nav">
 				<a id="site-header-nav-mobile"><i class="material-icons">menu</i></a>
 				<?php echo get_post(178)->post_content; ?>
 			</div>
-			<div id="site-header-fixed-right">
+			<div id="site-header-right">
 				<?php if ( $custom_fields['bouton_2'] ): ?>
 					<a href="<?php echo $custom_fields['lien_2'][0] ?>"><?php echo $custom_fields['bouton_2'][0] ?></a>
 				<?php endif ?>
@@ -79,11 +80,13 @@
 					<a class="btn orange-btn" href="<?php echo $custom_fields['lien'][0]?: '#section-call-to-action' ?>"><?php echo $custom_fields['bouton_orange'][0] ?></a>
 				<?php endif ?>
 			</div>
+			<?php if ($wp_query->post->ID != 417): ?>
+				<a id="donate-btn" href="/don">
+					<i class="material-icons">favorite</i>
+					<span><?php echo get_option('donate_text'); ?></span>
+				</a>
+			<?php endif ?>
 		</div>
-
-		<a id="site-header-logo" href="/">
-			<img src="/wp-content/themes/entourage/img/logo-entourage.png" alt="Logo de l'association Entourage" title="Association Entourage"/>
-		</a>
 
 		<div id="site-header-title">
 			<h1><?php echo $custom_fields['titre'][0] ?></h1>
@@ -106,21 +109,8 @@
 			<?php endif ?>
 		</div>
 
-		
-		<div id="site-header-top-right">
-			<?php if ( $custom_fields['bouton_2'] ): ?>
-				<a href="<?php echo $custom_fields['lien_2'][0] ?>"><?php echo $custom_fields['bouton_2'][0] ?></a>
-			<?php endif ?>
-			<?php if ( $custom_fields['bouton'] ): ?>
-				<a class="btn" href="<?php echo $custom_fields['lien'][0]?: '#section-call-to-action' ?>"><?php echo $custom_fields['bouton'][0] ?></a>
-			<?php elseif ( $custom_fields['bouton_orange'] ): ?>
-				<a class="btn orange-btn" href="<?php echo $custom_fields['lien'][0]?: '#section-call-to-action' ?>"><?php echo $custom_fields['bouton_orange'][0] ?></a>
-			<?php endif ?>
-		</div>
-
 	</header>
 
 	<div id="entourage-window"></div>
 
 	<div id="site-content">
-		<a id="fixed-donate-btn" href="<?php echo get_option('donate_link'); ?>"><i class="material-icons">favorite</i><?php echo get_option('donate_text'); ?></a>

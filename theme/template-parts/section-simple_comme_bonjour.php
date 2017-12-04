@@ -100,7 +100,8 @@
 	
 	@media screen and (max-width: 900px) {
 		section.section.section_type-simple_comme_bonjour blockquote:before,
-		section.section.section_type-simple_comme_bonjour blockquote:after {
+		section.section.section_type-simple_comme_bonjour blockquote:after,
+		section.section.section_type-simple_comme_bonjour .section-character {
 			display: none;
 		}
 	}

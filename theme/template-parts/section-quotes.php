@@ -29,9 +29,9 @@
 					<b class="quote-author-name"><?php the_title(); ?></b>
 					<span class="quote-author-details"><?php echo $custom_fields['details'][0]; ?></span>
 				</div>
-				<?php if ( has_post_thumbnail() )
-					the_post_thumbnail('thumbnail', ['class' => 'quote-author-picture']);
-				?>
+				<?php if ( has_post_thumbnail() ): ?>
+					<img class="quote-author-picture" src="<?php echo the_post_thumbnail_url(); ?>"/>
+				<?php endif; ?>
 			</li>
 		<?php endwhile; ?>
 	</ul>
@@ -146,8 +146,8 @@
 		position: absolute;
 	    bottom: 0;
 	    left: 0;
-	    max-width: 80px;
-	    max-height: 80px;
+	    max-width: 75px;
+	    max-height: 75px;
 	}
 
 	section.section.section_type-quotes li.section-quote:last-child img.quote-author-picture {

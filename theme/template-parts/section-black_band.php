@@ -25,6 +25,7 @@
 	}
 
 	section.section_type-black_band a {
+		display: block;
 		font-weight: 400;
 		text-decoration: underline;
 	}
@@ -39,6 +40,7 @@
 
 	@media screen and (max-width: 900px) {
 		section.section_type-black_band i.material-icons {
+			display: block;
 			margin-right: 0px;
 			text-align: center;
 		}
@@ -48,7 +50,7 @@
 			padding-bottom: 30px;
 		}
 
-		section.section_type-black_band strong {
+		section.section_type-black_band a {
 			display: block;
 		}
 	}

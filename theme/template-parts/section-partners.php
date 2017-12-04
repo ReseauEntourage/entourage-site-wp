@@ -47,10 +47,6 @@
 	section.section.section_type-partners {
 	}
 
-	section.section.section_type-partners ul.section-list {
-	    margin-top: 45px;
-	}
-
 	section.section.section_type-partners li.list-item {
 		display: inline-block;
 		width: 210px;
@@ -59,6 +55,10 @@
 		vertical-align: top;
 	    background: #fff;
 		box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.21);
+	}
+
+	section.section.section_type-partners li.list-item:last-child {
+		margin-right: 0;
 	}
 
 	section.section.section_type-partners li.list-item a.list-item-picture {
@@ -77,11 +77,6 @@
 		section.section.section_type-partners li.list-item {
 			display: block;
 			margin: 0 auto 20px;
-		}
-
-		section.section.section_type-partners li.list-item:last-child {
-			margin-bottom: 0;
-			margin-right: auto;
 		}
 	}
 

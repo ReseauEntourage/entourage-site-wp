@@ -50,10 +50,6 @@
     	left: 70px;
 	}
 
-	section.section.section_type-how_it_works ol li:before {
-		top: 16px;
-	}
-
 	section.section.section_type-how_it_works a.btn {
 		position: absolute;
 		top: 340px;
@@ -80,10 +76,6 @@
 		    top: inherit;
 	    	left: inherit;
 	    	right: inherit;
-		}
-
-		section.section.section_type-how_it_works ol li:before {
-			top: 9px;
 		}
 
 		section.section.section_type-how_it_works a.btn {
