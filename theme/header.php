@@ -40,7 +40,7 @@
 
 	<meta property="og:title" content="<?php echo $og_title; ?>">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="<?php echo get_bloginfo('url'); ?>">
+    <meta property="og:url" content="<?php echo wp_get_canonical_url(); ?>">
     <meta property="og:image" content="<?php echo get_template_directory_uri(); ?>/img/share-fb.png">
     <meta property="og:description" content="<?php echo $og_description; ?>">
     <meta name="apple-mobile-web-app-capable" content="yes">
