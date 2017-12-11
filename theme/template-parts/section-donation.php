@@ -5,11 +5,6 @@
  */
 
   $presets = [
-    'default' => [
-      'once'      => [10, 25, 50, 80],
-      'regular'   => [ 5, 10, 15, 25],
-      'selected'  =>  25,
-    ],
     'S1' => [
       'once'      => [10, 15, 25, 35],
       'regular'   => [ 2,  5,  8, 15],
@@ -34,17 +29,19 @@
 
   if (preg_match('/.+-(S[1-4])$/', $_GET['utm_source'], $match)) {
     $preset = $presets[$match[1]];
-  } else {
-    $preset = $presets['default'];
   }
 
   function to_cents($amount) { return $amount * 100; }
 
-  $url_parameters = [
-    'once_grid'    => array_map(to_cents, $preset['once']),
-    'regular_grid' => array_map(to_cents, $preset['regular']),
-    'amount'       => to_cents($preset['selected'])
-  ];
+  if ($preset) {
+    $url_parameters = [
+      'once_grid'    => array_map(to_cents, $preset['once']),
+      'regular_grid' => array_map(to_cents, $preset['regular']),
+      'amount'       => to_cents($preset['selected'])
+    ];
+  } else {
+    $url_parameters = [];
+  }
 
   $url_parameters = array_merge($_GET, $url_parameters);
   $url_parameters = http_build_query($url_parameters);
