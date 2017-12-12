@@ -1,0 +1,15 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "RT7X9LLTN6.social.entourage.entourageios",
+        "paths": [ "/entourages/*"]
+      },
+      {
+        "appID": "RT7X9LLTN6.social.entourage.entourageios.beta",
+        "paths": [ "/entourages/*"]
+      }
+    ]
+  }
+}
