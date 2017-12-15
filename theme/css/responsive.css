@@ -84,13 +84,18 @@
 	    border: 0;
 	}
 
-	#site-header-fixed-right {
-		display: none;
+	#site-header-right a:not(.btn),
+	#site-header-right a.btn {
+	    display: none;
 	}
 
-	#donate-btn {
-	    top: 14px;
-    }
+	#site-header-right #header-download-btn {
+		display: inline-block;
+	    font-size: 12px;
+	    padding: 0 10px;
+	    line-height: 30px;
+	    height: inherit;
+	}
 
 	#site-header-fixed-logo {
 	    left: 50%;
@@ -116,10 +121,6 @@
 	#site-header div.orange-band {
 	    font-size: 15px;
         padding: 11px;
-	}
-
-	#site-header-right {
-		display: none;
 	}
 
 	#site-header-search {
@@ -159,7 +160,7 @@
 
 	section.section h3.section-title {
 		font-size: 28px;
-		padding: 40px 10px 20px 10px;
+		padding: 40px 10px 30px 10px;
 	}
 
 	section.section h3.section-title br {

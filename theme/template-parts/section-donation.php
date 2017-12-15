@@ -4,6 +4,7 @@
  *
  */
 
+
   $presets = [
     'S1' => [
       'once'      => [10, 15, 25, 35],
@@ -45,6 +46,7 @@
 
   $url_parameters = array_merge($_GET, $url_parameters);
   $url_parameters = http_build_query($url_parameters);
+
 ?>
 
 <section <?php post_class(); ?>>
@@ -78,10 +80,27 @@
 <style type="text/css">
 
 	section.section_type-donation div.section-content {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Donation final
 		margin-top: -65px;
 	    background: #fb5507;
 	    color: #fff;
 	    padding: 20px;
+<<<<<<< HEAD
+=======
+	    width: 810px;
+	    margin: auto;
+	    text-align: left;
+        border-bottom: 1px solid #eee;
+    	padding-bottom: 30px;
+<<<<<<< HEAD
+>>>>>>> Donation + global fixes
+=======
+>>>>>>> Donation + global fixes
+=======
+>>>>>>> Donation final
     }
 
     #donate-btn {

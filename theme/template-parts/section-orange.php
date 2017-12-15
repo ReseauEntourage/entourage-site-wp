@@ -77,8 +77,9 @@
 	    box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.21);
 	}
 
-	section.section.section_type-orange p + a.btn {
-		margin-top: 30px;
+	section.section.section_type-orange p + a.btn,
+	section.section.section_type-orange p a.btn {
+		margin-top: 20px;
 	}
 
 	section.section.section_type-orange a.btn:last-child {

@@ -30,20 +30,11 @@
 		text-decoration: underline;
 	}
 
-	section.section_type-black_band p {
-		display: inline-block;
-	}
-
 	section.section_type-black_band i.material-icons {
-		margin-right: 10px;
+		margin-bottom: 10px;
 	}
 
 	@media screen and (max-width: 900px) {
-		section.section_type-black_band i.material-icons {
-			display: block;
-			margin-right: 0px;
-			text-align: center;
-		}
 
 		section.section_type-black_band {
 			padding: 15px;

@@ -459,6 +459,10 @@ strong {
 	border: 1px solid #fff;
 }
 
+#header-download-btn {
+	display: none;
+}
+
 #site-header-title {
 	position: relative;
 	display: table-cell;
