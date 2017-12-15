@@ -10,8 +10,8 @@
 
 	if ( is_front_page() )
 	{
-		$og_title = get_option('facebook_title');
-		$og_description = get_option('facebook_description');
+		$og_title = !empty(get_option('facebook_title')) ? get_option('facebook_title') : $custom_fields['meta_titre'][0];
+		$og_description = !empty(get_option('facebook_description')) ? get_option('facebook_description') : $custom_fields['meta_description'][0];
 	}
 	else {
 		$og_title = !empty($custom_fields['meta_titre']) ? $custom_fields['meta_titre'][0] : get_the_title($wp_query->post->ID);
@@ -48,6 +48,7 @@
     <meta property="og:image" content="<?php echo get_template_directory_uri(); ?>/img/share-fb.png">
     <meta property="og:description" content="<?php echo $og_description; ?>">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="google-site-verification" content="bTnS-WgN8k5eTpzBbN6ATibb2BdN1g8qZ-DEOVtYB5s" />
 
 	<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/style.css">
 	<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/responsive.css">
