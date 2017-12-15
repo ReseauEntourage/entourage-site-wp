@@ -19,6 +19,7 @@ class ActionPreviewRouter {
     $current_url = $this->get_current_url();
 
     if (preg_match('/^\/entourages\/([a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}|e[a-zA-Z0-9_-]{11})$/', $current_url)) {
+
        $this->$is_action_preview = true;
        $wp->query_vars = [];
        return false;

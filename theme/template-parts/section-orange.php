@@ -13,7 +13,7 @@
 ?>
 
 <section <?php post_class(); ?> id="section-call-to-action">
-	<h3 class="section-title"><?php the_title(); ?></h3>
+	<h3 class="section-title"><?php the_custom_html_title(); ?></h3>
 	<div class="section-content">
 		<?php the_content(); ?>
 		<?php if ($custom_fields['bouton']): ?>
@@ -68,15 +68,25 @@
 	}
 
 	section.section.section_type-orange a.btn {
-		margin: 30px 0;
 		padding: 0 30px;
+		margin-right: 10px;
 	    height: 43px;
     	line-height: 43px;
 	 	font-weight: 600;
     	font-size: 16px;
+	    box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.21);
 	}
 
-	section.section.section_type-orange p + div.section-contact {
+	section.section.section_type-orange p + a.btn {
+		margin-top: 30px;
+	}
+
+	section.section.section_type-orange a.btn:last-child {
+		margin-right: 0;
+	}
+
+	section.section.section_type-orange p + div.section-contact,
+	section.section.section_type-orange .btn + div.section-contact {
 		margin-top: 30px;
 	}
 

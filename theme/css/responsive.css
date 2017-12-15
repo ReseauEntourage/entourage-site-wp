@@ -20,6 +20,10 @@
 	    line-height: 56px;
 	}
 
+	#site-header-nav-mobile i {
+		line-height: 56px;
+	}
+
 	#site-header-nav > ul {
 		display: none;
 	}
@@ -84,6 +88,10 @@
 		display: none;
 	}
 
+	#donate-btn {
+	    top: 14px;
+    }
+
 	#site-header-fixed-logo {
 	    left: 50%;
     	margin-left: -12px;
@@ -110,7 +118,7 @@
         padding: 11px;
 	}
 
-	#site-header-top-right {
+	#site-header-right {
 		display: none;
 	}
 
@@ -166,7 +174,7 @@
 
 	section.section.section_type-text ol li:before,
 	section.section.section_type-how_it_works ol li:before {
-	    top: 0px;	
+	    margin-top: -18px;	
 	    left: 14px;
 	    font-size: 30px;
 	}

@@ -301,11 +301,12 @@ strong {
  	background-size: cover;
  	background-image: url(../img/homepage.jpg);
  	color: rgb(255, 255, 255);
+ 	margin-top: 60px;
 }
 
 #site-header-fixed {
 	position: fixed;
-	top: -100px;
+	top: 0;
 	left: 0;
 	right: 0;
 	height: 60px;
@@ -315,18 +316,16 @@ strong {
 	transition: top 0.5s ease;
 }
 
-#site-header-fixed.show {
-	top: 0px;
-}
-
-#site-header-fixed-logo {
+#site-header-logo {
 	position: absolute;
 	top: 13px;
 	left: 18px;
+	width: 24px;
+    z-index: 1;
 }
 
-#site-header-fixed-logo img {
-	width: 24px;
+#site-header-logo img {
+	width: 100%;
 }
 
 #site-header-nav {
@@ -442,18 +441,22 @@ strong {
     color: #fff;
 }
 
-#site-header-fixed-right {
+#site-header-right {
 	float: right;
 	margin-top: 13px;
 	margin-right: 13px;
 }
 
-#site-header-fixed-right a:not(.btn){
+#site-header-right a:not(.btn){
     display: inline-block;
     margin-right: 20px;
     color: #333;
     font-size: 14px;
     line-height: 33px;
+}
+
+#site-header-right a.btn:not(.orange-btn) {
+	border: 1px solid #fff;
 }
 
 #site-header-title {
@@ -493,37 +496,6 @@ strong {
 	max-width: 540px;
 }
 
-#site-header-logo {
-	position: absolute;
-	top: 7px;
-	left: 30px;
-	width: 46px;
-	height: 54px;
-    z-index: 1;
-}
-
-#site-header-logo img {
-	width: 100%;
-}
-
-#site-header-top-right {
-	position: absolute;
-	top: 14px;
-	right: 30px;
-}
-
-#site-header-top-right a:not(.btn) {
-	display: inline-block;
-	margin-right: 20px;
-	color: #fff;
-	font-size: 14px;
-	line-height: 33px;
-}
-
-#site-header-top-right a.btn:not(.orange-btn) {
-	border: 1px solid #fff;
-}
-
 #site-header-search {
 	position: relative;
 	display: inline-block;
@@ -561,25 +533,49 @@ strong {
     text-decoration: none;
 }
 
-#fixed-donate-btn {
-	display: block;
+#donate-btn {
 	position: fixed;
-	right: 0px;
-	bottom: 10px;
-	background: #1ac811;
-	color: #fff;
-	font-size: 14px;
-	font-weight: bold;
-    line-height: 38px;
-    border-radius: 38px 0 0 38px;
-    padding: 0 16px;
+	right: -300px;
+    top: 66px;
+    background: #f11616;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 31px;
+    border-radius: 16px  0 0px 16px ;
+    padding: 0 14px;
     cursor: pointer;
     z-index: 999;
+    animation: donate 1s forwards;
+    animation-delay: 5s;
 }
 
-#fixed-donate-btn i {
+#donate-btn i {
     margin-right: 10px;
+    font-size: 18px;	
     animation: heart 3s infinite;
+}
+
+#donate-btn span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 90px;
+    white-space: nowrap;
+    display: inline-block;
+    vertical-align: top;
+}
+
+#donate-btn:hover span {
+    text-decoration: underline;
+}
+
+@keyframes donate {
+	0% {
+		right: -300px;
+	}
+	100%   {
+		right: 0px;
+	}
 }
 
 
@@ -664,13 +660,22 @@ section.section.section_type-how_it_works ol li {
 section.section.section_type-text ol li:before,
 section.section.section_type-how_it_works ol li:before {
 	position: absolute;
-	top: 6px;
-	left: 25px;
+    top: 50%;
+    margin-top: -24px;
+    left: 25px;
 	content: counter(list-counter) '.';
 	counter-increment: list-counter;
 	color: #ff5100;
 	font-size: 40px;
 	font-weight: 600;
+}
+
+section.section.section_type-text ol li[data-icon]:before {
+	content: attr(data-icon);
+	font-family: Material Icons;
+    font-size: 34px;
+    font-weight: 100;
+    margin-top: -17px;
 }
 
 section.section.section_type-text ol li .btn {

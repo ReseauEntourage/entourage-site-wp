@@ -3,18 +3,59 @@
  * The template part for displaying section with "text" type
  *
  */
+
+  $presets = [
+    'S1' => [
+      'once'      => [10, 15, 25, 35],
+      'regular'   => [ 2,  5,  8, 15],
+      'selected'  =>  15,
+    ],
+    'S2' => [
+      'once'      => [15, 35, 50, 80],
+      'regular'   => [ 5, 10, 15, 25],
+      'selected'  =>  35,
+    ],
+    'S3' => [
+      'once'      => [ 5, 15, 25, 35, 50],
+      'regular'   => [ 2,  5,  8, 15],
+      'selected'  =>  15,
+    ],
+    'S4' => [
+      'once'      => [10, 25, 50, 80, 150],
+      'regular'   => [10, 15, 25, 30],
+      'selected'  =>  50,
+    ],
+  ];
+
+  if (preg_match('/.+-(S[1-4])$/', $_GET['utm_source'], $match)) {
+    $preset = $presets[$match[1]];
+  }
+
+  function to_cents($amount) { return $amount * 100; }
+
+  if ($preset) {
+    $url_parameters = [
+      'once_grid'    => array_map(to_cents, $preset['once']),
+      'regular_grid' => array_map(to_cents, $preset['regular']),
+      'amount'       => to_cents($preset['selected'])
+    ];
+  } else {
+    $url_parameters = [];
+  }
+
+  $url_parameters = array_merge($_GET, $url_parameters);
+  $url_parameters = http_build_query($url_parameters);
 ?>
 
 <section <?php post_class(); ?>>
-	<h3 class="section-title"><?php the_title(); ?></h3>
 	<div class="section-content">
 		<?php the_content(); ?>
-		<iframe
-			id="donation-form"
-			border="0"
-			src="<?php echo link_with_url_parameters(get_option('donate_link'), $_SERVER['QUERY_STRING']); ?>"
-			></iframe>
 	</div>
+	<iframe
+		id="donation-form"
+		border="0"
+		src="<?php echo link_with_url_parameters(get_option('donate_link'), $url_parameters); ?>"
+		></iframe>
 </section>
 
 <script type="text/javascript">
@@ -37,39 +78,24 @@
 <style type="text/css">
 
 	section.section_type-donation div.section-content {
-	    width: 810px;
-	    margin: auto;
-	    text-align: left;
+		margin-top: -65px;
+	    background: #fb5507;
+	    color: #fff;
+	    padding: 20px;
     }
 
-    section.section_type-donation div.section-content iframe {
-	    width: 100%;
+    #donate-btn {
+    	display: none;
+    }
+
+    #donation-form {
+    	width: 100%;
 	    min-height: 658px;
         margin-top: 20px;
     }
 
-    #fixed-donate-btn {
-    	display: none;
-    }
+    @media screen and (max-width: 1000px) {
 
-    @media screen and (max-width: 900px) {
-    	section.section_type-adherer form fieldset {
-    		margin-bottom: 0;
-    	}
-    	section.section_type-adherer form fieldset .parent-input {
-    		display: block;
-    		margin-bottom: 20px;
-    	}
-
-	    section.section_type-adherer input[type=text] {
-	    	width: 100%;
-	    	margin-right: 0;
-	    }
-
-	    section.section_type-adherer label {
-	    	margin: 0;
-	    	width: 100%;
-	    }
     }
 
 </style>
