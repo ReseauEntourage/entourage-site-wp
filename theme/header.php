@@ -17,6 +17,10 @@
 		$og_title = !empty($custom_fields['meta_titre']) ? $custom_fields['meta_titre'][0] : get_the_title($wp_query->post->ID);
 		$og_description = !empty($custom_fields['meta_description']) ? $custom_fields['meta_description'][0] : get_bloginfo('description');
 	}
+
+	$custom_fields_home = get_post_custom('2');
+	$download_btn_link = $custom_fields_home['lien'][0];
+	$download_btn_text = $custom_fields_home['bouton_orange'][0];
 ?>
 
 
@@ -79,6 +83,7 @@
 				<?php elseif ( $custom_fields['bouton_orange'] ): ?>
 					<a class="btn orange-btn" href="<?php echo $custom_fields['lien'][0]?: '#section-call-to-action' ?>"><?php echo $custom_fields['bouton_orange'][0] ?></a>
 				<?php endif ?>
+				<a id="header-download-btn" class="btn orange-btn" href="<?php echo $download_btn_link ?>"><?php echo $download_btn_text ?></a>
 			</div>
 			<?php if ($wp_query->post->ID != 417): ?>
 				<a id="donate-btn" href="/don">

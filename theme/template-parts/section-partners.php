@@ -39,45 +39,54 @@
 		<a href="<?php echo get_page_link(115); ?>" class="link"><?php echo $custom_fields['bouton'][0]; ?></a>
 	<?php endif; ?>
 
-</section>
 
-<style type="text/css">
+	<style type="text/css">
 
-	
-	section.section.section_type-partners {
-	}
-
-	section.section.section_type-partners li.list-item {
-		display: inline-block;
-		width: 210px;
-		margin-right: 30px;
-		margin-bottom: 30px;
-		vertical-align: top;
-	    background: #fff;
-		box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.21);
-	}
-
-	section.section.section_type-partners li.list-item:last-child {
-		margin-right: 0;
-	}
-
-	section.section.section_type-partners li.list-item a.list-item-picture {
-		display: block;
-		height: 210px;
-		background-size: 90%;
-	    background-repeat: no-repeat;
-	    background-position: center;
-	}
-
-	@media screen and (max-width: 900px) {
-		section.section.section_type-partners ul.section-list {
-			text-align: center;
+		
+		section.section.section_type-partners {
+			width: 960px;
+			<?php if (!is_front_page()): ?>
+				padding-bottom: 0;
+			<?php endif; ?>
 		}
+
+		<?php if (!is_front_page()): ?>
+			section.section.section_type-partners ul.section-list {
+			    margin-top: 45px;
+			}
+		<?php endif; ?>
 
 		section.section.section_type-partners li.list-item {
-			display: block;
-			margin: 0 auto 20px;
+			display: inline-block;
+			width: 210px;
+			margin-right: 30px;
+			margin-bottom: 30px;
+			vertical-align: top;
+		    background: #fff;
+			box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.21);
 		}
-	}
 
-</style>
+		section.section.section_type-partners li.list-item:last-child {
+			margin-right: 0;
+		}
+
+		section.section.section_type-partners li.list-item a.list-item-picture {
+			display: block;
+			height: 210px;
+			background-size: 90%;
+		    background-repeat: no-repeat;
+		    background-position: center;
+		}
+
+		@media screen and (max-width: 900px) {
+			section.section.section_type-partners ul.section-list {
+				text-align: center;
+			}
+
+			section.section.section_type-partners li.list-item {
+				margin-right: 0;
+			}
+		}
+
+	</style>
+</section>
