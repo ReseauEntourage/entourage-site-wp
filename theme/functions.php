@@ -204,6 +204,10 @@
 		return $link.'?'.$params; 
 	}
 
+
+	/*** EMAIL ***/
+
+
 	function send_email_to_admin() {
 	    if (empty($_POST['name']))
 	        $return = "Merci d'indiquer votre nom.";
@@ -219,17 +223,21 @@
 	    if (!isset($return))
 	    {
 	        $headers  = 'MIME-Version: 1.0' . "\r\n";
-	        $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-	        $headers .= 'From: '.$_POST['name'].' <'.$_POST['email'].'>' . "\r\n";
+	        $headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
+	        $headers .= 'From: entourage.social <'.get_option('admin_email').'>' . "\r\n";
 	        $headers .= 'Reply-To: '.$_POST['email']. "\r\n";
 
-	        wp_mail(get_option('admin_email'), 'ENTOURAGE.SOCIAL - '.$_POST['subject'], $_POST['message'], $headers);
+	        $message = 'Message de : <b>'.$_POST['name'].'</b> '.$_POST['email'].'';
+	        $message .= '<br><br>'.nl2br($_POST['message']);
+
+	        wp_mail('duvalaugustin@gmail.com', 'CONTACT - '.$_POST['subject'], $message, $headers);
 	        $return = 'success';
 	    }
 	    echo $return;
 	}
 	add_action( 'admin_post_nopriv_contact_form', 'send_email_to_admin' );
 	add_action( 'admin_post_contact_form', 'send_email_to_admin' );
+
 
 	/*** ADMIN OPTIONS ***/
 
