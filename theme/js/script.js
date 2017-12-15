@@ -121,6 +121,16 @@ jQuery(document).ready(function($) {
 
 	// EVENTS TRACKING //
 
+	$('#header-download-btn').on('click', function(){
+		ga('send', {
+			hitType: 'event',
+			eventCategory: 'Engagement',
+			eventAction: 'AppDownload',
+			eventLabel: 'TopButton'
+		});
+		fbq('track', 'Lead', {'content_name': 'TopButton'});
+	});
+
 	$('.iphone-btn').on('click', function(){
 		ga('send', {
 			hitType: 'event',
@@ -141,7 +151,7 @@ jQuery(document).ready(function($) {
 		fbq('track', 'Lead', {'content_name': 'Android'});
 	});
 
-	$('.fixed-donate-btn').on('click', function(){
+	$('#donate-btn').on('click', function(){
 		ga('send', {
 			hitType: 'event',
 			eventCategory: 'Donate',
@@ -151,7 +161,7 @@ jQuery(document).ready(function($) {
 		fbq('track', 'Purchase', {'content_name': 'FixedButton'});
 	});
 
-	$('.footer-links-lists .donate-btn').on('click', function(){
+	$('#site-header .donate-btn').on('click', function(){
 		ga('send', {
 			hitType: 'event',
 			eventCategory: 'Donate',
@@ -159,6 +169,16 @@ jQuery(document).ready(function($) {
 			eventLabel: 'MenuButton'
 		});
 		fbq('track', 'Purchase', {'content_name': 'MenuButton'});
+	});
+
+	$('.site-footer .donate-btn').on('click', function(){
+		ga('send', {
+			hitType: 'event',
+			eventCategory: 'Donate',
+			eventAction: 'ClickDonate',
+			eventLabel: 'FooterButton'
+		});
+		fbq('track', 'Purchase', {'content_name': 'FooterButton'});
 	});
 
 
