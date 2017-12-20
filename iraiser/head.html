@@ -1,0 +1,442 @@
+<!-- CUSTOM ENTOURAGE CODE -->
+<script>
+    (function(){
+        var html = document.getElementsByTagName('html')[0],
+            className = null;
+
+        if (window !== window.top) {
+            className = 'in-iframe';
+            window['_fs_is_outer_script'] = true;
+        } else {
+            className = 'out-iframe';
+        }
+
+        if (html.classList) {
+            html.classList.add(className);
+        } else {
+            html.className += ' ' + className;
+        }
+    })();
+    var EntourageCookies = {
+        getItem: function (sKey) {
+            if (!sKey) { return null; }
+            return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
+        },
+        setItem: function (sKey, sValue, vEnd, sPath, sDomain, bSecure) {
+            if (!sKey || /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)) { return false; }
+            var sExpires = "";
+            if (vEnd) {
+                switch (vEnd.constructor) {
+                    case Number:
+                    sExpires = vEnd === Infinity ? "; expires=Fri, 31 Dec 9999 23:59:59 GMT" : "; max-age=" + vEnd;
+                    break;
+                    case String:
+                    sExpires = "; expires=" + vEnd;
+                    break;
+                    case Date:
+                    sExpires = "; expires=" + vEnd.toUTCString();
+                    break;
+                }
+            }
+            document.cookie = encodeURIComponent(sKey) + "=" + encodeURIComponent(sValue) + sExpires + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "") + (bSecure ? "; secure" : "");
+            return true;
+        },
+        removeItem: function (sKey, sPath, sDomain) {
+            if (!this.hasItem(sKey)) { return false; }
+            document.cookie = encodeURIComponent(sKey) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "");
+            return true;
+        },
+        hasItem: function (sKey) {
+            if (!sKey || /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)) { return false; }
+            return (new RegExp("(?:^|;\\s*)" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=")).test(document.cookie);
+        },
+        keys: function () {
+            var aKeys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, "").split(/\s*(?:\=[^;]*)?;\s*/);
+            for (var nLen = aKeys.length, nIdx = 0; nIdx < nLen; nIdx++) { aKeys[nIdx] = decodeURIComponent(aKeys[nIdx]); }
+                return aKeys;
+        }
+    };
+</script>
+<script type="text/javascript" src="https://rawgit.com/davidjbradshaw/iframe-resizer/master/js/iframeResizer.contentWindow.min.js"></script>
+
+<!-- END CUSTOM ENTOURAGE CODE -->
+
+<link rel='shortcut icon' type='image/x-icon' href='https://cdn.iraiser.eu/sEeiMUvWhUGrV4Q/KBK57Q==/default/origin/EntourageFavicon.ico' />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-68872992-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-68872992-2');
+</script>
+
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300italic,300,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,100italic,300italic,400italic,500,500italic,700,700italic,900italic,900' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://libs.iraiser.eu/libs/fonts/font-awesome-4.3.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+
+<script src="/libs.iraiser.eu/libs/forms/apivalidation.js"></script>
+
+<script>
+ $(document).ready(function(){
+    ApiValidation.init({
+        keyapivalidation : 'AIzaSyArfhHszA3vZaZJTMonh5Xo-8XMchzNGek',
+        addedFieldAddressForNL : false
+    });
+
+    $('#card_submit').add('#check_submit').on('click', function(e){
+        if ('parentIFrame' in window) {
+            window.parentIFrame.sendMessage('resize');
+        }
+    });
+    $('#paypal_submit').on('click', function(e){
+        if ('parentIFrame' in window) {
+            window.parentIFrame.sendMessage('paypal');
+        }
+    });
+});
+</script>
+
+<link rel="stylesheet" href="/libs.iraiser.eu/users/iraiser/themes/basic/generique.css" />
+<link rel="stylesheet" href="/libs.iraiser.eu/users/iraiser/themes/basic/custom_select.css" />
+<link rel="stylesheet" href="/libs.iraiser.eu/users/iraiser/themes/basic/carte_credits.css" />
+<link rel="stylesheet" href="/libs.iraiser.eu/users/iraiser/themes/basic/montants.css" />
+
+<script src="https://libs.iraiser.eu/libs/dom/classie.js"></script>
+<script src="https://libs.iraiser.eu/libs/forms/select/selectFx.js"></script>
+
+<script>
+$(document).ready(function() {
+
+    // liste montants
+    $('#once .amount [type=radio]:checked').siblings('span').addClass('active');
+    $('#regular .amount [type=radio]:checked').siblings('span').addClass('active');
+
+    $('.amount ul li label span').click(function() {
+        var $this = $(this);
+        $('.amount ul li label span.active').removeClass('active');
+        $this.addClass('active');
+    });
+
+    $('.free-amount input').blur(function() {
+        var value = $(this).val().replace(',', '.');
+        if (value != '' && !isNaN(value)) {
+            $('.amount ul li label span.active').removeClass('active');
+        }
+    });
+
+    //custom select && card type
+    if (typeof Step3 != 'undefined') {
+        Step3.select('#card, #card-expiry select, #card-number select').addClass('cs-select cs-skin-border');
+        $('#cb-payment #card, #card-expiry select, #card-number select').addClass('cs-select cs-skin-border');
+        $('#step-2 select').addClass('cs-select cs-skin-border');
+        (function() {
+            [].slice.call( $('#step-2 select.cs-select')).forEach( function(el) { new SelectFx(el); } );
+            [].slice.call( $(Step3.select('select.cs-select'))).forEach( function(el) { new SelectFx(el); });
+            [].slice.call( $('#cb-payment .cs-select')).forEach( function(el) { new SelectFx(el); });
+        })();
+
+        //add trigger on card change
+        if (typeof Step3 != 'undefined') {
+            Step3.select('#card-type li').click(function(){
+                $('[name=cardtype]').trigger('change');
+            });
+        }
+
+        //preselection
+        $('#step-1 .amount input[type=radio]:checked').siblings('span').addClass('active');
+    }
+});
+</script>
+
+<!-- Entourage -->
+<script>
+(function(){
+  var success = false,
+      fb_data = {};
+
+  [if][donation_status][in]validated,waiting,active[then]
+    success = true;
+    fb_data = {
+      em: "[donator_email]",
+      fn: "[donator_firstname]",
+      ln: "[donator_lastname]",
+      ge: "[donator_sex]".toLowerCase(),
+      ct: "[donator_city]",
+      zp: "[donator_postcode]",
+    };
+  [/if]
+
+  // Facebook Pixel Code
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1994203164153325', fb_data);
+  fbq('track', 'PageView');
+
+  if (success) {
+    var amount = parseInt('[donation_amount|div:100|sprintf:%d]') || 0,
+        multiplier = '[donation_frequency]' === 'regular' ? 3 : 1;
+
+    fbq('track', 'Purchase', {
+      value: (amount * multiplier),
+      currency: '[donation_currency]',
+    });
+  }
+
+})();
+</script>
+<noscript>
+  <img height="1" width="1" style="display:none"
+       src="https://www.facebook.com/tr?id=1994203164153325&ev=PageView&noscript=1"/>
+</noscript>
+<!-- End Facebook Pixel Code -->
+<!-- /Entourage -->
+
+
+<style>
+    body {
+        font-family: 'Roboto';
+        font-weight: 300;
+        color: #000;
+        background-color: #bfbfbf;
+    }
+
+    a {
+        color: #f03e1b;
+    }
+
+    a:hover {
+        color: #f03e1b;
+    }
+
+    #logo {
+        width: 185px;
+        margin: auto;
+        float: none;
+    }
+
+    #form-info {
+        color: #fff;
+        background-color: transparent;
+        border-color: transparent;
+        margin-bottom: 30px;
+    }
+
+    label {
+        font-weight: 300;
+        font-size: 14px;
+    }
+
+    input[type=text], textarea {
+        display: inline-block;
+        font-size: 15px;
+        font-weight: 300;
+        border-radius: 3px;
+        padding: 0 20px;
+        background: #fff;
+        border: none;
+        font-family: "Roboto";
+    }
+
+    input[type=text] {
+        height: 41px;
+        line-height: 41px;
+    }
+
+    #form-steps {
+        background: #fff;
+        padding: 20px;
+    }
+
+    #form-error {
+        color: #e90038;
+        background-color: #fff;
+        border: 0;
+        font-size: 14px;
+    }
+
+    #form-error h3 {
+        font-size: 20px;
+    }
+
+    .step-content {
+        background: #eee;
+    }
+
+    #once,
+    #regular {
+        background: #eee;
+    }
+
+    .amount ul li label span {
+        color: #333;
+        border: 0;
+        box-shadow: 0 1px 1px 0 rgba(255, 255, 255, 0.4) inset, 0 1px 1px 1px #706f6f;
+    }
+
+    .amount ul li label span.active {
+        background: #F26521;
+        color: #fff;
+    }
+
+    .tax-info {
+        background: #333;
+        color: #fff;
+    }
+
+    .tax-info:before,
+    .tax-info:after {
+        border-color: transparent transparent #333;
+    }
+
+    .price {
+        color: #F26521;
+        font-weight: bold;
+    }
+
+    .free-amount {
+        padding-bottom: 0px;
+    }
+
+    div.cs-skin-border {
+        border-radius: 3px;
+        border: 0;
+    }
+
+    .cs-skin-border>span {
+        padding-left: 20px;
+        border-radius: 3px;
+    }
+
+    #or p {
+        color: #333;
+    }
+
+    .step-title h2 {
+        text-shadow: none;
+    }
+
+    #security-info p {
+        text-transform: uppercase;
+        font-weight: bold;
+        color: #1ac811;
+    }
+
+    #cb-bloc h4,
+    #type-a #other-payment-bloc h4,
+    .payment h4 {
+        text-shadow: none;
+        font-size: 17px;
+        background: #ddd;
+    }
+
+    #cb-bloc h4:after,
+    #type-a #other-payment-bloc h4:after,
+    .payment h4:after {
+        border-color: #ddd transparent transparent;
+    }
+
+    #card-type>p {
+        background: #fff;
+    }
+
+    #card-expiry > span {
+        font-weight: 300;
+        font-size: 14px;
+    }
+
+    @media only screen and (max-width: 767px) {
+        .payment-submit input[type=image] {
+            max-width: 100%;
+        }
+    }
+
+    /* Iframe */
+
+    html:not(.out-iframe) body {
+        background: #fff;
+    }
+
+    html:not(.out-iframe) #header,
+    html:not(.out-iframe) #footer,
+    html:not(.out-iframe) #form-info {
+        display: none;
+    }
+
+    /* End Iframe */
+
+
+    /* Remerciements */
+
+    #greetings {
+        text-align: center;
+    }
+
+    #greetings-text {
+        background: #eee;
+        padding: 20px;
+        margin-bottom: 40px;
+    }
+
+    #greetings-comp h2 {
+        font-size: 20px;
+    }
+
+    #greetings .last-unit {
+        display: inline-block;
+    }
+
+    #greetings-comp h2,
+    #share-title h2 {
+        text-shadow: none;
+    }
+
+    #greetings.bloc {
+        background-color:#fff;
+    }
+
+    #greetings-text h2,
+    #postmail-content h3 {
+        color: #000000;
+    }
+
+    #greetings-comp {
+        background: #171f36;
+        border-color: #171f36;
+        color: #FFF;
+        text-shadow: 0 -1px 0 rgba(0, 0, 0, .1);
+    }
+
+    /* End Remerciements */
+
+
+    /* Footer */
+
+    #footer a,
+    #footer a.current,
+    #footer a:hover {
+        color: #FFF;
+    }
+
+    /* End Footer */
+
+
+    /*** a ajouter a libs ***/
+    #r #qualif_birthday,
+    #affectation #qualif_birthmonth,
+    #affectation #qualif_birthyear {
+        width:30%;
+        float:left;
+        margin-right:2%;
+    }
+
+</style>
