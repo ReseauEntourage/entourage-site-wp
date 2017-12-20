@@ -5,10 +5,6 @@
       {
         "appID": "RT7X9LLTN6.social.entourage.entourageios",
         "paths": [ "/entourages/*", "/deeplink/*" ]
-      },
-      {
-        "appID": "RT7X9LLTN6.social.entourage.entourageios.beta",
-        "paths": [ "/entourages/*", "/deeplink/*" ]
       }
     ]
   }
