@@ -230,7 +230,7 @@
 	        $message = 'Message de : <b>'.$_POST['name'].'</b> '.$_POST['email'].'';
 	        $message .= '<br><br>'.nl2br($_POST['message']);
 
-	        wp_mail('duvalaugustin@gmail.com', 'CONTACT - '.$_POST['subject'], $message, $headers);
+	        wp_mail(get_option('admin_email'), 'CONTACT - '.$_POST['subject'], $message, $headers);
 	        $return = 'success';
 	    }
 	    echo $return;
