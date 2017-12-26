@@ -51,22 +51,22 @@ class ActionPreviewRouter {
 class DonationRouter {
   private $presets = [
     'S1' => [
-      'once'      => [10, 15, 25, 35],
+      'once'      => [15, 35, 50, 100],
       'regular'   => [ 2,  5,  8, 15],
       'selected'  =>  15,
     ],
     'S2' => [
-      'once'      => [15, 35, 50, 80],
+      'once'      => [25, 35, 50, 150],
       'regular'   => [ 5, 10, 15, 25],
       'selected'  =>  35,
     ],
     'S3' => [
-      'once'      => [ 5, 15, 25, 35, 50],
+      'once'      => [15, 25, 35, 50],
       'regular'   => [ 2,  5,  8, 15],
       'selected'  =>  15,
     ],
     'S4' => [
-      'once'      => [10, 25, 50, 80, 150],
+      'once'      => [10, 25, 50, 100, 150],
       'regular'   => [10, 15, 25, 30],
       'selected'  =>  50,
     ],
