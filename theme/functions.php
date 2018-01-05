@@ -204,6 +204,10 @@
 		return $link.'?'.$params; 
 	}
 
+  function asset_url($path) {
+    $version = filemtime(path_join(get_stylesheet_directory(), $path));
+    echo esc_url(path_join(get_template_directory_uri(), $path).'?'.$version);
+  }
 
 	/*** EMAIL ***/
 

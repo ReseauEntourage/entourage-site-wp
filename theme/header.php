@@ -29,7 +29,7 @@
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width">
-	<link rel="icon" type="image/png" href="<?php echo get_template_directory_uri(); ?>/img/fav.png" />
+	<link rel="icon" type="image/png" href="<?php asset_url('img/fav.png'); ?>" />
 	<title>
 		<?php
 			echo get_bloginfo('name');
@@ -45,20 +45,20 @@
 	<meta property="og:title" content="<?php echo $og_title; ?>">
     <meta property="og:type" content="website">
     <meta property="og:url" content="<?php echo wp_get_canonical_url(); ?>">
-    <meta property="og:image" content="<?php echo get_template_directory_uri(); ?>/img/share-fb.png">
+    <meta property="og:image" content="<?php asset_url('img/share-fb.png'); ?>">
     <meta property="og:description" content="<?php echo $og_description; ?>">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="google-site-verification" content="6EHu9r95V7L27wF49pEYrAovlGC0JPlECZ93h90Z0l0" />
 
-	<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/style.css">
-	<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/responsive.css">
+	<link rel="stylesheet" href="<?php asset_url('css/style.css'); ?>">
+	<link rel="stylesheet" href="<?php asset_url('css/responsive.css'); ?>">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link href='https://fonts.googleapis.com/css?family=Roboto:300,500,100,300italic' rel='stylesheet' type='text/css'>
 	<!--[if lt IE 9]>
-	<script src="<?php echo esc_url( get_template_directory_uri() ); ?>/js/html5.js"></script>
+	<script src="<?php asset_url('js/html5.js'); ?>"></script>
 	<![endif]-->
-	<script src="<?php echo get_template_directory_uri(); ?>/js/jquery.js" type="text/javascript"></script>
-	
+	<script src="<?php asset_url('js/jquery.js'); ?>" type="text/javascript"></script>
+
 	<!-- Analytics Code -->
 	<script>
 		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -81,7 +81,7 @@
 	>
 		<div id="site-header-fixed">
 			<a id="site-header-logo" href="/">
-				<img src="<?php echo get_template_directory_uri(); ?>/img/logo-entourage-orange.png" alt="Logo de l'association Entourage" title="Association Entourage"/>
+				<img src="<?php asset_url('img/logo-entourage-orange.png'); ?>" alt="Logo de l'association Entourage" title="Association Entourage"/>
 			</a>
 			<div id="site-header-nav">
 				<a id="site-header-nav-mobile"><i class="material-icons">menu</i></a>
