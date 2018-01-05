@@ -227,7 +227,7 @@ jQuery(document).ready(function($) {
 	// ENTOURAGE SHARING WINDOW 
 
 	var apiUrl = 'https://api.entourage.social/api/v1/public';
-	var searchToken = /entourage\=([a-z0-9]{8}(-[a-z0-9]{4}){3}-[a-z0-9]{12}|e[a-zA-Z0-9_-]{11})/.exec(window.location.search);
+	var searchToken = /^\/entourages\/([a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}|e[a-zA-Z0-9_-]{11})$/.exec(window.location.pathname);
 	
 	if (searchToken) {
 		$band = $('#entourage-window');
