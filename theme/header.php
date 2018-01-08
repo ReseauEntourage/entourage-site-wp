@@ -70,6 +70,37 @@
 		ga('send', 'pageview');
 	</script>
 
+  <script>
+    $(document).on('click', 'a[href^="/don"]', function(e) {
+      var event, url;
+
+      // ensure exact match because we only did a prefix match
+      if (this.pathname !== '/don') {
+        return
+      }
+
+      event = {
+        hitType: 'event',
+        eventCategory: 'engagement',
+        eventAction: 'don'
+      }
+
+      if  (this.target === '_blank' || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) {
+        // page will not open in this tab, no callback required
+      }
+      else {
+        // cancel new page load and resume after event sent
+        e.preventDefault()
+        url = this.href
+        event.hitCallback = function() {
+          window.location = url
+        }
+      }
+
+      ga('send', event);
+    })
+</script>
+
 </head>
 
 <body <?php body_class(); ?>>
@@ -99,7 +130,7 @@
 				<a id="header-download-btn" class="btn orange-btn" href="<?php echo $download_btn_link ?>"><?php echo $download_btn_text ?></a>
 			</div>
 			<?php if ($wp_query->post->ID != 417): ?>
-				<a id="donate-btn" href="/don">
+				<a id="donate-btn" href="/don" target="_blank">
 					<i class="material-icons">favorite</i>
 					<span><?php echo get_option('donate_text'); ?></span>
 				</a>
