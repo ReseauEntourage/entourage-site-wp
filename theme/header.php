@@ -81,7 +81,7 @@
 
       event = {
         hitType: 'event',
-        eventCategory: 'engagement',
+        eventCategory: 'Engagement',
         eventAction: 'don'
       }
 

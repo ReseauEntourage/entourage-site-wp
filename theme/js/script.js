@@ -151,6 +151,8 @@ jQuery(document).ready(function($) {
 		fbq('track', 'Lead', {'content_name': 'Android'});
 	});
 
+  /*
+  Deprecated in favor of the Engagement/don event
 	$('#donate-btn').on('click', function(){
 		ga('send', {
 			hitType: 'event',
@@ -180,7 +182,7 @@ jQuery(document).ready(function($) {
 		});
 		fbq('track', 'Purchase', {'content_name': 'FooterButton'});
 	});
-
+  */
 
 	// MOBILE NAV //
 
