@@ -145,10 +145,10 @@
 			<?php endif ?>
 
 			<?php if ( is_front_page() ): ?>
-				<!--div id="site-header-search">
+				<div id="site-header-search">
 					<input id="site-header-input" type="text" placeholder="<?php echo $custom_fields['recherche'][0] ?>"/>
-					<a id="ask-location" class="material-icons">my_location</a>
-				</div-->
+					<a id="ask-location" class="material-icons" title="Partager automatiquement ma position">my_location</a>
+				</div>
 			<?php endif ?>
 
 			<?php if ( $custom_fields['sous_sous_titre'] ): ?>

@@ -5,6 +5,7 @@ body,
 #page-content,
 #map,
 #map-container {
+    position: relative;
 	height: 100%;
 	overflow-x: hidden;
 }
@@ -17,11 +18,12 @@ a:active {
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 300;
-    font-size: 16px;
-    letter-spacing: normal;
+    font-size: 0;
     color: #333;
+}
+
+#site-header-fixed:not(.show) {
+	top: -100px;
 }
 
 #app-filters {
@@ -40,7 +42,6 @@ body {
 	font-size: 12px;
 	line-height: 33px;
 	border-radius: 3px;
-	vertical-align: top;
 	box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.2);
 	cursor: pointer;
 }
@@ -100,6 +101,10 @@ body {
 	display: block;
 }
 
+#app-filter-more:not(.active).enabled > .material-icons {
+    color: #ff5100;
+}
+
 .dropdown-menu {
 	display: none;
 	position: absolute;
@@ -137,30 +142,38 @@ body {
 }
 
 div.overlay {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	padding-top: 60px;
-	background: rgba(255,255,255,0.9);
-	display: table;
-	text-align: center;
-	z-index: -1;
-	opacity: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255,255,255,0.9);
+    z-index: 1000;
+    overflow-x: hidden;
+    opacity: 0;
 }
 
+div.overlay > div {
+    margin-top: 60px;
+    display: flex;
+    justify-content: center;
+}
+
+div.overlay .content {
+    position: relative;
+    border-radius: 5px;
+    font-size: 18px;
+}
 
 div.overlay.fade-in {
-	z-index: 19;
 	opacity: 1;
-	animation: fadeIn ease-in 0.6s;
+	animation: fadeIn ease-in 0.3s;
 }
 
 div.overlay.fade-out {
-	z-index: -1;
 	opacity: 0;
-	animation: fadeOut ease-in 0.6s;
+	z-index: -1;
+	animation: fadeOut ease-in 1s;
 }
 
 @keyframes fadeIn {
@@ -175,28 +188,31 @@ div.overlay.fade-out {
 @keyframes fadeOut {
     0% {
     	opacity: 1;
+    	z-index: 1000;
     }
     100% {
     	opacity: 0;
+    	z-index: -1;
     }
-}
-
-div.overlay > div {
-	display: table-cell;
-	vertical-align: middle;
 }
 
 #page-title {
 	padding-top: 0;
 	background: #fff;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
 }
 
 #page-title:not(.fade-out) {
 	opacity: 1;
-	z-index: 21;
+	z-index: 1001;
 }
 
 #page-title > div {
+    height: 100%;
+    margin: 0;
+	flex-direction: column;
 	animation: opacity ease-in 3s infinite;
 }
 
@@ -227,14 +243,38 @@ div.overlay > div {
 }
 
 #page-registration div.content {
-	position: relative;
-	display: inline-block;
-	width: 700px;
-	background: #333;
-	font-size: 0;
-	color: #fff;
-	border-radius: 5px;
-	box-shadow: -2px 2px 3px rgba(0,0,0,0.1);
+	display: flex;
+    flex-wrap: nowrap;
+    background: url(../img/bg-simple-comme-bonjour.jpg);
+    background-size: cover;
+    background-color: #ff5100;
+    color: #FFF;
+}
+
+#page-registration div.illu {
+    display: inline-block;
+    width: 190px;
+    margin-left: 30px;
+    background: url(../img/app-screenshot.png) no-repeat;
+    background-position: bottom left;
+    background-size: 100%;
+    flex-shrink: 0;
+}
+
+#page-registration div.content.valid div.illu {
+	background-image: url(../img/character-1.png);
+}
+
+#page-registration div.text {
+    margin: 50px;
+    text-align: center;
+}
+
+#page-registration div.text h3 {
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
 }
 
 #page-registration div.content a.page-close {
@@ -246,43 +286,67 @@ div.overlay > div {
 	cursor: pointer;
 }
 
-#page-registration h1 {
-	margin: 40px 0;
-    font-weight: 400;
-    font-size: 28px;
-    line-height: 37px;
-}
-
-#page-registration img.app-screenshot {
-	display: inline-block;
-	width: 250px;
-	vertical-align: middle;
-}
-
 #page-registration div.registration-form {
 	display: inline-block;
     width: 380px;
-    margin-left: 20px;
     font-size: 17px;
     vertical-align: middle;
     line-height: 22px;
 }
 
+#page-registration div.registration-form a:not(.btn) {
+	color: #fff;
+	text-decoration: underline;
+}
+
+#page-registration div.registration-form p {
+    margin-bottom: 4px;
+}
+
 #page-registration div.input-parent {
-	display: inline-block;
-	font-size: 0;
+	display: flex;
 	margin-top: 20px;
 	border-radius: 6px;
 }
 
-#page-registration div.input-parent input {
-	width: 170px;
+div.input-parent .country-selection {
+	position: relative;
 	height: 45px;
-	padding: 0;
-	padding-left: 13px;
+    display: flex;
+    background: #eee;
+    color: #333;
+    padding: 0 13px;
+    align-items: center;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px 0 0 5px;
+    cursor: pointer;
+}
+
+div.input-parent .country-selection .iti-flag {
+}
+
+div.input-parent .country-selection #country-list {
+	top: 45px;
+	left: 0;
+    text-align: left;
+    display: block;
+}
+
+div.input-parent .country-selection #country-list li {
+    text-overflow: ellipsis;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+#page-registration div.input-parent input {
+    width: 220px;
+    height: 45px;
+    padding: 0;
+    padding-left: 10px;
 	border: none;
 	background: #fff;
-	border-radius: 5px 0 0 5px;
+    border-radius: 0;
 	line-height: 45px;
 	color: #333;
 	font-size: 15px;
@@ -313,7 +377,7 @@ div.overlay > div {
 	height: 45px;
 	padding: 0 20px;
     font-weight: 400;
-	background: #EF662F;
+	background: #000;
 	border-radius: 0 5px 5px 0;
 	line-height: 45px;
 	color: #fff;
@@ -322,8 +386,8 @@ div.overlay > div {
 
 #page-registration .error {
     margin-top: 7px;
-	font-size: 12px;
-	color: #EF662F;
+	font-size: 15px;
+    font-weight: bold;
 }
 
 #map {
@@ -332,28 +396,43 @@ div.overlay > div {
 
 #map-right-band {
 	position: absolute;
-    top: 70px;
+	top: 70px;
+    bottom: 10px;
     right: -350px;
     width: 300px;
-    border-radius: 3px;
-    background: #fff;
-    box-shadow: 0 0 9px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     z-index: 3;
 	overflow: hidden;
 	text-align: center;
+	transition: right 0.3s;
+}
+
+#map-right-band > div {
+	display: flex;
+    flex-direction: column;
+	border-radius: 5px;
+    background: #fff;
+    box-shadow: 0 0 9px rgba(0,0,0,0.3);
 }
 
 #map-right-band.open {
-	right: 10px;
-	transition: right 0.6s;
+	right: 30px;
 }
 
 #map-right-band .action-title {
-	font-size: 17px;
-    font-weight: 400;
+	font-size: 16px;
+    font-weight: 600;
     padding: 15px;
     background: #333;
     color: white;
+    border-radius: 5px 5px 0 0;
+}
+
+#map-right-band .action-content {
+	padding: 20px;
+	overflow: auto;
 }
 
 #map-right-band .action-details {
@@ -365,6 +444,7 @@ div.overlay > div {
     line-height: 36px;
     background: #f1f1f1;
     padding-right: 10px;
+    border-radius: 0 0 5px 5px;
 }
 
 .action-author:hover {
@@ -388,17 +468,33 @@ div.overlay > div {
     color: #333;
     font-weight: bold;
     text-decoration: underline;
+    cursor: pointer;
 }
 
-#map-right-band .action-content .btn {
-	margin: 20px;
+#map-right-band .action-buttons {
+	margin-top: 20px;
+}
+
+#map-right-band .action-buttons .btn:not(:last-child) {
+	margin-bottom: 10px;
+}
+
+#map-right-band #share-fb {
+    background-color: #365899;
+    color: #fff;
+}
+
+#map-right-band #closed {
+	font-size: 13px;
+    display: block;
+    background: #eee;
+    color: #333;
+    font-weight: bold;
+    line-height: 25px;
+    border-radius: 3px;
 }
 
 #map-right-band .action-description {
-	max-height: 190px;
-	overflow: auto;
-    margin: 20px;
-    margin-bottom: 0;
     padding-right: 5px;
     font-size: 15px;
     line-height: 18px;
@@ -410,12 +506,9 @@ div.overlay > div {
 
 .gm-style > div > div .gmnoprint {
     background: #ffa018;
-    opacity: 0.7 !important;
     border-radius: 100%;
     margin-top: -7px;
     margin-left: -7px;
-    box-shadow: 0 0 6px 4px #ff8404;
-    animation: pulse 3s infinite; /*rotate 10s linear infinite*/
 }
 
 .gm-style > div > div .gmnoprint:nth-child(2n) {
@@ -424,6 +517,18 @@ div.overlay > div {
 
 .gm-style > div > div .gmnoprint:nth-child(3n) {
 	animation-delay: 1s;
+}
+
+.gm-style > div > div .gmnoprint[title*=cours] {
+    opacity: 1 !important;
+    animation: pulse 3s infinite; /*rotate 10s linear infinite*/
+}
+
+.gm-style > div > div .gmnoprint[title*=Terminée] {
+    animation: none;
+    opacity: 0.7 !important;
+    box-shadow: 0 0 2px 2px #ff8404;
+    transform: scale(0.7);
 }
 
 @keyframes pulse {
@@ -450,9 +555,18 @@ div.overlay > div {
     }
 }
 
+.gm-style > div > div .gmnoprint:hover,
+.gm-style > div > div .gmnoprint[title*=ouverte] {
+    box-shadow: 0 0 6px 6px #fff;
+    background: #ff3c00;
+    transform: scale(1.2);
+    opacity: 1 !important;
+	z-index: 9998 !important;
+	animation: none;
+}
+
 .gm-style > div > div .gmnoprint:hover {
-	opacity: 1 !important;
-    box-shadow: 0 0 6px 6px #ff6c04;
+	z-index: 9999 !important;
 }
 
 .gm-info-window {
@@ -475,14 +589,27 @@ div.overlay > div {
 
 /*** MOBILE VIEW */
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
 
-	#main-header {
-		min-width: inherit;
+	#site-header-logo {
+	    left: 18px;
+	    margin-left: 0;
 	}
 
-	#main-header h1 {
-		display: none;
+	#page-title h1 {
+		margin: 0 50px;
+	}
+
+	#app-search-input {
+	    width: 182px;
+	}
+
+	#app-filter-more.active .dropdown-menu {
+	    left: inherit;
+	    right: -21px;
+    	top: 46px;
+    	width: inherit;
+    	border-radius: 0 0 5px 0;
 	}
 
 	#map-right-band.open {
@@ -494,26 +621,57 @@ div.overlay > div {
 	    padding: 15px 30px;	
 	}
 
+	div.overlay > div {
+		margin: 10px;
+	}
+
 	#page-registration div.content {
-		width: 90%;
+        width: 100%;
+	    flex-wrap: nowrap;
+	    flex-direction: column-reverse;
 	}
 
-	#page-registration h1 {
-	    margin: 30px 0;
-	    font-size: 16px;
-	    line-height: 21px;
+	#page-registration div.illu {
+	    height: 210px;
+        margin: 10px auto 0;
 	}
 
-	#page-registration img.app-screenshot {
-	    width: 190px;
+	#page-registration div.text {
+	    margin: 40px 10px 0;
+	}
+
+	#page-registration div.text h3 {
 	}
 
 	#page-registration div.registration-form {
-	    display: inline-block;
-	    width: 90%;
+	    width: inherit;
 	    margin: 20px 0;
-	    font-size: 14px;
+	    font-size: 15px;
 	    vertical-align: middle;
 	    line-height: 17px;
+	}
+
+    #page-registration div.input-parent {
+        flex-wrap: wrap;
+        justify-content: center;    
+    }
+
+	#page-registration div.input-parent input {
+        border-radius: 0 5px 5px 0;
+        padding: 0 13px;
+        width: 160px;
+        font-weight: bold;
+        font-size: 20px;
+	}
+
+	#page-registration div.input-parent .btn {
+		border-radius: 5px;
+		margin-top: 10px;
+        text-decoration: none;
+	}
+
+	#page-registration .error {
+        background: red;
+        padding: 10px;
 	}
 }
