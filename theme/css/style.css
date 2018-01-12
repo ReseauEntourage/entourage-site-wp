@@ -112,7 +112,7 @@ a img {
 }
 
 body {
-	font-family: "Roboto";
+	font-family: "Roboto", sans-serif;
 	font-size: 18px;
 	font-weight: 300;
 	color: #000;
@@ -501,7 +501,7 @@ strong {
 
 #site-header-search {
 	position: relative;
-	display: none;
+	display: inline-block;
 	margin-top: 20px;
 	font-size: 0;
 }

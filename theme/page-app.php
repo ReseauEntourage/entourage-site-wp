@@ -16,10 +16,12 @@
     $custom_fields = get_post_custom($wp_query->post->ID);
 
     if (!empty($entourage)) {
+        $og_url = get_bloginfo('url') . "/app?token=" . $_GET['token'];
         $og_title = $entourage->title;
-        $og_description = "Vous pouvez aider " . ucfirst($entourage->author->display_name) . " ? Rejoignez-la sur le réseau solidaire Entourage et passez vous aussi concrètement à l\'action pour les personnes sans-abri";
+        $og_description = "Vous pouvez aider ? Rejoignez " . ucfirst($entourage->author->display_name) . " et les milliers de membres du réseau solidaire Entourage et passez vous aussi concrètement à l\'action pour les personnes sans-abri";
     }
     else {
+        $og_url = get_bloginfo('url') . "/app";
         $og_title = !empty($custom_fields['meta_titre']) ? $custom_fields['meta_titre'][0] : get_the_title($wp_query->post->ID);
         $og_description = !empty($custom_fields['meta_description']) ? $custom_fields['meta_description'][0] : get_bloginfo('description');
     }
@@ -41,9 +43,10 @@
     <meta name="description" content="<?php echo (!empty($custom_fields['meta_description']) ? $custom_fields['meta_description'][0] : get_bloginfo('description')); ?>">
     <meta property="og:title" content="<?php echo $og_title; ?>">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="<?php echo get_bloginfo('url'); ?>">
+    <meta property="og:url" content="<?php echo $og_url; ?>">
     <meta property="og:image" content="<?php echo get_template_directory_uri(); ?>/img/share-fb.png">
     <meta property="og:description" content="<?php echo $og_description; ?>">
+    <meta property="fb:app_id" content="280727035774134">
     <meta name="apple-mobile-web-app-capable" content="yes">
 
     <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/countries.css">
@@ -205,7 +208,7 @@
                                         </ul>
                                     </div>
                                     <input type="text" ng-model="map.phone" placeholder="Numéro de téléphone" ng-keypress="map.isKeyEnter($event) && map.register()"/>
-                                    <a class="btn" ng-click="map.register()">Télécharger</a>
+                                    <a class="btn" ng-click="map.register()">Envoyer</a>
                                 </div>
                                 <div class="error" ng-if="map.registrationError" ng-bind="map.registrationError"></div>
                             </div>

@@ -47,6 +47,7 @@
     <meta property="og:url" content="<?php echo wp_get_canonical_url(); ?>">
     <meta property="og:image" content="<?php asset_url('img/share-fb.png'); ?>">
     <meta property="og:description" content="<?php echo $og_description; ?>">
+    <meta property="fb:app_id" content="280727035774134">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="google-site-verification" content="6EHu9r95V7L27wF49pEYrAovlGC0JPlECZ93h90Z0l0" />
 
@@ -145,10 +146,10 @@
 			<?php endif ?>
 
 			<?php if ( is_front_page() ): ?>
-				<div id="site-header-search">
+				<!--div id="site-header-search">
 					<input id="site-header-input" type="text" placeholder="<?php echo $custom_fields['recherche'][0] ?>"/>
 					<a id="ask-location" class="material-icons" title="Partager automatiquement ma position">my_location</a>
-				</div>
+				</div-->
 			<?php endif ?>
 
 			<?php if ( $custom_fields['sous_sous_titre'] ): ?>
