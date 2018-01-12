@@ -25,13 +25,16 @@
 	}
 
 	section.section_type-black_band a {
-		display: block;
 		font-weight: 400;
 		text-decoration: underline;
 	}
 
+	section.section_type-black_band p {
+		display: inline-block;
+	}
+
 	section.section_type-black_band i.material-icons {
-		margin-bottom: 10px;
+		margin-right: 10px;
 	}
 
 	@media screen and (max-width: 900px) {
@@ -39,6 +42,12 @@
 		section.section_type-black_band {
 			padding: 15px;
 			padding-bottom: 30px;
+		}
+
+		section.section_type-black_band i.material-icons {
+			display: block;
+			margin-right: 0px;
+			text-align: center;
 		}
 
 		section.section_type-black_band a {
