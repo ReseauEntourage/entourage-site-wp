@@ -18,7 +18,7 @@
     if (!empty($entourage)) {
         $og_url = get_bloginfo('url') . "/app?token=" . $_GET['token'];
         $og_title = $entourage->title;
-        $og_description = "Vous pouvez aider ? Rejoignez " . ucfirst($entourage->author->display_name) . " et les milliers de membres du réseau solidaire Entourage et passez vous aussi concrètement à l\'action pour les personnes sans-abri";
+        $og_description = "Vous voulez aider ? Rejoignez " . ucfirst($entourage->author->display_name) . " et les milliers de membres du réseau solidaire Entourage et passez vous aussi concrètement à l'action pour les personnes sans-abri près de chez vous";
     }
     else {
         $og_url = get_bloginfo('url') . "/app";
@@ -33,19 +33,17 @@
     <meta charset="<?php bloginfo( 'charset' ); ?>">
     <meta name="viewport" content="width=device-width">
     <link rel="icon" type="image/png" href="<?php echo get_template_directory_uri(); ?>/img/fav.png" />
-    <title>
-        <?php
+    <title><?php
             echo get_bloginfo('name');
             if ( !empty($custom_fields['meta_titre']) )
                 echo ' | '.$custom_fields['meta_titre'][0];
-        ?>
-    </title>
+        ?></title>
     <meta name="description" content="<?php echo (!empty($custom_fields['meta_description']) ? $custom_fields['meta_description'][0] : get_bloginfo('description')); ?>">
-    <meta property="og:title" content="<?php echo $og_title; ?>">
+    <meta property="og:title" content="<?php echo htmlentities($og_title); ?>">
     <meta property="og:type" content="website">
     <meta property="og:url" content="<?php echo $og_url; ?>">
     <meta property="og:image" content="<?php echo get_template_directory_uri(); ?>/img/share-fb.png">
-    <meta property="og:description" content="<?php echo $og_description; ?>">
+    <meta property="og:description" content="<?php echo htmlentities($og_description); ?>">
     <meta property="fb:app_id" content="280727035774134">
     <meta name="apple-mobile-web-app-capable" content="yes">
 
