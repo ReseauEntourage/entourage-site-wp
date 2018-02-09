@@ -93,16 +93,18 @@
         <ul id="app-filters">
             <li
                 id="app-search"
-                ng-class="{'active': searchFocus}"
+                ng-class="{'active': searchFocus, 'enabled': map.currentAddress}"
                 >
                 <i class="material-icons">room</i>
                 <div
                     id="app-search-address"
                     ng-show="map.currentAddress"
-                    ng-click="map.clearAddress()"
                     >
                     <span ng-bind="map.currentAddress"></span>
-                    <i class="material-icons">
+                    <i
+                        class="material-icons erase"
+                        ng-click="map.clearAddress()"
+                        >
                         close 
                     </i>
                         
@@ -126,11 +128,20 @@
                 id="app-filter-more"
                 ng-class="{'active': showFilters, 'enabled': map.filters.period || map.filters.status}"
                 >
+                <i class="material-icons">filter_list</i>
+                <span ng-hide="map.filters.period || map.filters.status">
+                    Filtrez les actions
+                </span>
+                <span ng-show="map.filters.period || map.filters.status">
+                    <span ng-show="map.filters.period && map.filters.status">Filtres actifs</span>
+                    <span ng-hide="map.filters.period && map.filters.status">Filtre actif</span>
+                </span>
                 <i
-                    class="material-icons"
-                    ng-click="showFilters = !showFilters"
-                    ng-bind="showFilters ? 'close' : 'filter_list'"
+                    ng-show="map.filters.period || map.filters.status"
+                    class="material-icons erase"
+                    ng-click="map.clearFilters()"
                     >
+                    close 
                 </i>
                 <ul class="dropdown-menu">
                     <li>
@@ -186,7 +197,7 @@
                     <div class="text">
                         <h3 ng-hide="map.invitationSent">
                             Envie de passer à l'action&nbsp;? Super&nbsp;!<br>
-                            Rejoignez-nous <a class="action-author" ng-bind="map.currentAction.first_name"></a> sur l'application Entourage.
+                            Rejoignez-nous <span class="action-author" ng-bind="map.currentAction.first_name"></span> sur l'application Entourage.
                         </h3>
                         <h3 ng-show="map.invitationSent">
                             C'est envoyé ! Regardez vite vos SMS !
@@ -219,7 +230,9 @@
                                 <br><p>A tout de suite sur <a href="<?php echo get_bloginfo('url'); ?>">Entourage</a> !</p>
                             </div>
                         </div>
-                        <a class="page-close" ng-click="map.registrationToggle = false">X</a>
+                        <a class="page-close" ng-click="map.registrationToggle = false">
+                            <i class="material-icons">close</i>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -228,21 +241,25 @@
         <div id="map">
             <div id="map-right-band" ng-class="{open: map.currentAction}">
                 <div>
+                    <a class="action-close">
+                        <i class="material-icons" ng-click="map.hideAction()">close</i>
+                    </a>
                     <h3 class="action-title" ng-bind="map.currentAction.title"></h3>
                     <div class="action-content">
+                        <div class="action-details">
+                            <div class="action-author-picture" ng-style="{'background-image': 'url(' + map.currentAction.author_avatar_url + ')'}"></div><span class="action-author" ng-bind="map.currentAction.author_name"></span>, le
+                            <span class="action-date" ng-bind="map.currentAction.created_at|date:'dd/MM/yy'"></span>
+                        </div>
                         <p class="action-description" ng-if="map.currentAction.description" ng-bind-html="map.currentAction.description|trusted"></p>
-                        <div class="action-buttons" ng-if="map.currentAction.status == 'open'">
-                            <a id="join-btn" class="btn orange-btn" ng-click="map.showRegistration(map.currentAction.uuid)">Rejoignez cette action !</a>
-                            <a id="share-fb" class="btn" ng-click="map.shareFacebook(map.currentAction)">Partagez sur Facebook</a>
-                        </div>
-                        <div class="action-buttons" ng-if="map.currentAction.status == 'closed'">
-                            <div id="closed">Cette action est terminée !</div>
-                        </div>
                     </div>
-                    <div class="action-details">
-                        <a class="action-close" ng-click="map.hideAction()">Fermer</a>
-                        Par <div class="action-author-picture" ng-style="{'background-image': 'url(' + map.currentAction.author_avatar_url + ')'}"></div><a class="action-author" ng-bind="map.currentAction.author_name"></a>, le
-                        <span class="action-date" ng-bind="map.currentAction.created_at|date:'dd/MM/yy'"></span>
+                    <div class="action-buttons" ng-if="map.currentAction.status == 'open'">
+                        <a id="join-btn" class="btn orange-btn" ng-click="map.showRegistration(map.currentAction.uuid)">Rejoignez <span ng-bind="map.currentAction.author_name"></span> !</a>
+                        <a id="share-fb" class="btn" ng-click="map.shareFacebook(map.currentAction)">
+                            <i class="material-icons">exit_to_app</i> Partagez sur Facebook
+                        </a>
+                    </div>
+                    <div class="action-buttons" ng-if="map.currentAction.status == 'closed'">
+                        <div id="closed">Cette action est terminée !</div>
                     </div>
                 </div>
             </div>
