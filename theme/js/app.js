@@ -258,7 +258,7 @@ angular.module('entourageApp', [])
         map.registrationError = "Votre numéro n'est pas valide, merci de réessayer";
       }
       else {
-        phone = libphonenumber.format(phone.phone, countryCode, 'International_plaintext');
+        phone = libphonenumber.format(phone.phone, countryCode, 'International');
 
         if (!libphonenumber.isValidNumber(phone, countryCode)) {
           map.registrationError = "Votre numéro n'est pas valide, merci de réessayer";
