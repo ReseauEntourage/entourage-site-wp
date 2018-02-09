@@ -58,7 +58,7 @@ body {
     box-shadow: none;
 }
 
-#app-filters > li.enabled > .material-icons {
+#app-filters > li.enabled .filter-icon {
     color: #fff;
 }
 
@@ -93,12 +93,21 @@ body {
     vertical-align: top;
 }
 
-#app-filters > li.enabled #app-search-address {
-    color: #fff;
+#app-search-address > span {
+    max-width: 200px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 #app-search-address i {
     font-size: 15px;
+}
+
+#app-filters > li.enabled #app-search-address {
+    color: #fff;
 }
 
 #app-search-input:focus {
@@ -120,8 +129,12 @@ body {
   	color: #c5c5c5;
 }
 
-#app-filter-more:hover .dropdown-menu {
+#app-filter-more.active .dropdown-menu {
 	display: block;
+}
+
+#app-filter-more > div {
+    display: inline-block;
 }
 
 .dropdown-menu {
@@ -129,11 +142,11 @@ body {
 	position: absolute;
     top: 34px;
     left: 0;
-    width: 340px;
     color: #8c8c8c;
+    width: 340px;
     font-size: 15px;
 	background: #f9f9f9;
-	border-radius: 0 5px 5px 5px;
+    border-radius: 0 5px 5px 5px;
 	border-top: 1px solid #f2f2f2;
     box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.13);
 }
@@ -449,15 +462,15 @@ div.input-parent .country-selection #country-list li {
 
 #map-right-band .action-close i {
     font-size: 15px;
-    color: #fff;
+    color: #333;
 }
 
 #map-right-band .action-title {
 	font-size: 15px;
     font-weight: 600;
     padding: 20px 25px;
-    background: #333;
-    color: white;
+    background: #f9f9f9;
+    border-bottom: 1px solid #eee;
     border-radius: 5px 5px 0 0;
 }
 
@@ -495,8 +508,13 @@ div.input-parent .country-selection #country-list li {
 
 #map-right-band .action-buttons {
 	padding: 10px;
-    background: #f1f1f1;
+    background: #f9f9f9;
+    border-top: 1px solid #eee;
     border-radius: 0 0 5px 5px;
+}
+
+#map-right-band .action-buttons .btn span {
+    text-transform: capitalize;
 }
 
 #map-right-band #share-fb {
@@ -630,6 +648,10 @@ div.input-parent .country-selection #country-list li {
 		margin: 0 50px;
 	}
 
+    #app-search-address > span {
+        max-width: 110px;
+    }
+
 	#app-search-input {
 	    width: 182px;
 	}
@@ -639,7 +661,7 @@ div.input-parent .country-selection #country-list li {
         padding-right: 0;
     }
 
-    #app-filters #app-filter-more > span {
+    #app-filters #app-filter-more > div > span {
         display: none;
     }
 

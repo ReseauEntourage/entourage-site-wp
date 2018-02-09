@@ -95,7 +95,7 @@
                 id="app-search"
                 ng-class="{'active': searchFocus, 'enabled': map.currentAddress}"
                 >
-                <i class="material-icons">room</i>
+                <i class="filter-icon material-icons">room</i>
                 <div
                     id="app-search-address"
                     ng-show="map.currentAddress"
@@ -128,21 +128,18 @@
                 id="app-filter-more"
                 ng-class="{'active': showFilters, 'enabled': map.filters.period || map.filters.status}"
                 >
-                <i class="material-icons">filter_list</i>
-                <span ng-hide="map.filters.period || map.filters.status">
-                    Filtrez les actions
-                </span>
-                <span ng-show="map.filters.period || map.filters.status">
-                    <span ng-show="map.filters.period && map.filters.status">Filtres actifs</span>
-                    <span ng-hide="map.filters.period && map.filters.status">Filtre actif</span>
-                </span>
-                <i
-                    ng-show="map.filters.period || map.filters.status"
-                    class="material-icons erase"
-                    ng-click="map.clearFilters()"
-                    >
-                    close 
-                </i>
+                <div ng-click="showFilters = !showFilters">
+                    <i
+                        class="filter-icon material-icons"
+                        ng-bind="showFilters ? 'close' : 'filter_list'"></i>
+                    <span ng-hide="map.filters.period || map.filters.status">
+                        Filtrez les actions
+                    </span>
+                    <span ng-show="map.filters.period || map.filters.status">
+                        <span ng-show="map.filters.period && map.filters.status">Filtres actifs</span>
+                        <span ng-hide="map.filters.period && map.filters.status">Filtre actif</span>
+                    </span>
+                </div>
                 <ul class="dropdown-menu">
                     <li>
                         <label>
@@ -153,9 +150,9 @@
                             ng-model="map.filters.period"
                             >
                             <option value="">Peu importe</option>
-                            <option value="7">< 1 semaine</option>
-                            <option value="30">< 1 mois</option>
-                            <option value="90">< 3 mois</option>
+                            <option value="7">Cette semaine</option>
+                            <option value="30">Ce mois-ci</option>
+                            <option value="90">Ce trimestre</option>
                         </select>
                     </li>
                     <li>

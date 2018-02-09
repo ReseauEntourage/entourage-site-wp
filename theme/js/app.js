@@ -173,9 +173,7 @@ angular.module('entourageApp', [])
       Autocomplete.addListener('place_changed', function() {
         var place = Autocomplete.getPlace();
 
-        if (!place.geometry)
-          return;
-        else {
+        if (place.geometry) {
           map.currentAddress = place.formatted_address;
           map.mapObject.setZoom(13);
           map.mapObject.setCenter(place.geometry.location);
@@ -285,8 +283,8 @@ angular.module('entourageApp', [])
               $scope.$apply();
             },
             error: function(data) {
-              if (data.responseJSON && data.responseJSON.error && data.responseJSON.error.code)
-                map.registrationError = data.responseJSON.error.message
+              if (data.responseJSON && data.responseJSON.error && data.responseJSON.error.message)
+                map.registrationError = "Erreur : " + data.responseJSON.error.message[0]
               else
                 map.registrationError = "Il y a eu une erreur, merci de réessayer ou de nous contacter";
               $scope.$apply();
@@ -344,7 +342,7 @@ angular.module('entourageApp', [])
 
     // initialize the map when GoogleMaps script is loaded
     googleMapsInitializer.mapsInitialized.then(function() {
-      if (getQueryParams('ville')) {
+      if (getQueryParams('ville') && getQueryParams('ville') != 'undefined') {
         var geocoder = new google.maps.Geocoder;
         geocoder.geocode({'address': getQueryParams('ville')}, function(results, status) {
           if (status === 'OK' && results[0]) {

@@ -277,7 +277,9 @@ function googleMapsInitialized() {
 
 	Autocomplete.addListener('place_changed', function() {
 		var place = Autocomplete.getPlace();
-		window.location = '/app?ville=' + place.formatted_address;
+
+		if (place.geometry)
+			window.location = '/app?ville=' + place.formatted_address;
 	});
 }
 

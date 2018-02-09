@@ -773,6 +773,11 @@ body.home section.section.section_type-download {
 	color: #fff;
 }
 
+.pac-item-selected .pac-matched,
+.pac-item-selected .pac-item-query {
+	color: #fff;
+}
+
 .pac-item:first-child {
 	border: none;
 }
