@@ -79,7 +79,7 @@ angular.module('entourageApp', [])
       // get the list of actions
       $.ajax({
         type: "GET",
-        url: "https://entourage-csv.s3-eu-west-1.amazonaws.com/development/entourages.csv",
+        url: "https://entourage-csv.s3-eu-west-1.amazonaws.com/production/entourages.csv",
         dataType: "text",
         success: function(data) {
           actions = $.csv.toObjects(data);
@@ -203,7 +203,7 @@ angular.module('entourageApp', [])
 
       map.infoWindow = new google.maps.InfoWindow({
         pixelOffset: new google.maps.Size(0, map.actionIcon.pixels / -2),
-        content: '<div class="gm-info-window" data-id="' + this.id + '"><b>' + map.actions[this.id].title + '</b><span>Par <div class="action-author-picture" style="background-image: url(' + map.actions[this.id].author_avatar_url + ')"></div><a>' + map.actions[this.id].author_name + '</a>, le ' + $filter('date')(map.actions[this.id].created_at, 'dd/MM/yy') + '</span></div>'
+        content: '<div class="gm-info-window" data-id="' + this.id + '"><b>' + map.actions[this.id].title + '</b><div><div class="action-author-picture" style="background-image: url(' + map.actions[this.id].author_avatar_url + ')"></div><span class="action-author">' + map.actions[this.id].author_name + '</span>, le ' + $filter('date')(map.actions[this.id].created_at, 'dd/MM/yy') + '</div></div>'
       });
       map.infoWindow.open(map.mapObject, this);
     }
@@ -266,10 +266,9 @@ angular.module('entourageApp', [])
         else {
           
           // https://entourage-back-preprod.herokuapp.com/api/v1/users
-          // https://api.entourage.social/api/v1/users
           $.ajax({
             type: 'POST',
-            url: 'https://entourage-back-preprod.herokuapp.com/api/v1/users',
+            url: 'https://api.entourage.social/api/v1/users',
             data: {
               user: {
                 phone: phone
@@ -304,6 +303,14 @@ angular.module('entourageApp', [])
     map.clearAddress = function() {
       map.currentAddress = null;
       $('#app-search-input').val('').focus();
+    }
+
+    map.clearFilters  = function() {
+      map.filters = {
+        status: '',
+        period: ''
+      };
+      map.filterActions();
     }
 
     map.filterActions = function() {
