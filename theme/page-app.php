@@ -90,29 +90,27 @@
                     alt="Logo de l'association Entourage"
                 />
         </a>
-        <ul id="app-filters">
-            <li
+        <div id="site-header-left">
+            <div
                 id="app-search"
                 ng-class="{'active': searchFocus, 'enabled': map.currentAddress}"
+                ng-click="map.currentAddress && map.clearAddress()"
                 >
-                <i class="filter-icon material-icons">room</i>
-                <div
+                <i class="icon material-icons">room</i>
+                <span
                     id="app-search-address"
-                    ng-show="map.currentAddress"
+                    ng-bind="map.currentAddress"
+                    ></span>
+                <i
+                    ng-if="map.currentAddress"
+                    class="material-icons erase"
                     >
-                    <span ng-bind="map.currentAddress"></span>
-                    <i
-                        class="material-icons erase"
-                        ng-click="map.clearAddress()"
-                        >
-                        close 
-                    </i>
-                        
-                </div>
+                    close 
+                </i>
                 <input
                     id="app-search-input"
                     type="text"
-                    placeholder="Cherchez un lieu..."
+                    placeholder="Cherchez une ville..."
                     ng-hide="map.currentAddress"
                     ng-focus="searchFocus = true"
                     ng-blur="searchFocus = false"
@@ -123,56 +121,105 @@
                     class="material-icons"
                     ng-click="map.askLocation()"
                     >my_location</i>
-            </li>
-            <li
-                id="app-filter-more"
-                ng-class="{'active': showFilters, 'enabled': map.filters.period || map.filters.status}"
+            </div>
+            <div
+                id="app-filters"
+                class="parent-dropdown"
+                ng-class="{'open': showFilters, 'enabled': map.filters.period || map.filters.status}"
                 >
-                <div ng-click="showFilters = !showFilters">
-                    <i
-                        class="filter-icon material-icons"
-                        ng-bind="showFilters ? 'close' : 'filter_list'"></i>
-                    <span ng-hide="map.filters.period || map.filters.status">
-                        Filtrez les actions
-                    </span>
-                    <span ng-show="map.filters.period || map.filters.status">
-                        <span ng-show="map.filters.period && map.filters.status">Filtres actifs</span>
-                        <span ng-hide="map.filters.period && map.filters.status">Filtre actif</span>
-                    </span>
+                <div class="dropdown">
+                    <a class="btn dropdown-toggle icon-filter">
+                        <i class="material-icons">filter_list</i>
+                        <div
+                            class="badge"
+                            ng-if="map.activatedFilters()"
+                            ng-bind="map.activatedFilters()"
+                            ></div>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-toggle">
+                                Date de création
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a
+                                        ng-click="map.filterActions('period', '')"
+                                        ng-class="{selected: !map.filters.period}"
+                                        >
+                                        Peu importe
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        ng-click="map.filterActions('period', '7')"
+                                        ng-class="{selected: map.filters.period == '7'}"
+                                        >
+                                        7 derniers jours
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        ng-click="map.filterActions('period', '30')"
+                                        ng-class="{selected: map.filters.period == '30'}"
+                                        >
+                                        30 derniers jours
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        ng-click="map.filterActions('period', '90')"
+                                        ng-class="{selected: map.filters.period == '90'}"
+                                        >
+                                        90 derniers jours
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown-toggle">
+                                Statut
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a
+                                        ng-click="map.filterActions('status', '')"
+                                        ng-class="{selected: !map.filters.status}"
+                                        >
+                                        Peu importe
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        ng-click="map.filterActions('status', 'open')"
+                                        ng-class="{selected: map.filters.status == 'open'}"
+                                        >
+                                        En cours
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        ng-click="map.filterActions('status', 'closed')"
+                                        ng-class="{selected: map.filters.status == 'closed'}"
+                                        >
+                                        Terminé
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
-                <ul class="dropdown-menu">
-                    <li>
-                        <label>
-                            <i class="material-icons">history</i> Date de l'action
-                        </label>
-                        <select
-                            ng-change="map.filterActions()"
-                            ng-model="map.filters.period"
-                            >
-                            <option value="">Peu importe</option>
-                            <option value="7">Cette semaine</option>
-                            <option value="30">Ce mois-ci</option>
-                            <option value="90">Ce trimestre</option>
-                        </select>
-                    </li>
-                    <li>
-                        <label> 
-                            <i class="material-icons">done</i> Statut
-                        </label>
-                        <select
-                            ng-change="map.filterActions()"
-                            ng-model="map.filters.status"
-                            >
-                            <option value="">Peu importe</option>
-                            <option value="open">En cours</option>
-                            <option value="closed">Terminée</option>
-                        </select>
-                    </li>
-                </ul>
-            </li>
-        </ul>
+            </div>
+        </div>
         <div id="site-header-right">
-            <a href="<?php echo get_bloginfo('url'); ?>"><?php echo $custom_fields['bouton_2'][0] ?></a>
+            <a
+                class="btn"
+                href="https://www.entourage.social"
+                target="_blank"
+                title="Visiter le site de l'association Entourage"
+                >
+                <i class="material-icons">help</i>Entourage, c'est quoi ?
+            </a>
             <a
                 class="btn orange-btn"
                 ng-click="map.showRegistration()"
@@ -236,7 +283,16 @@
         </div>
 
         <div id="map">
-            <div id="map-right-band" ng-class="{open: map.currentAction}">
+            <div
+                id="map-bottom-band"
+                ng-class="{open: map.noAction}"
+                >
+                <i class="material-icons">error</i> Il y a peu d'action par ici... Et si vous y ajoutiez un peu de chaleur humaine en <a ng-click="map.showRegistration()">rejoignant la communauté Entourage</a> ?!
+            </div>
+            <div
+                id="map-right-band"
+                ng-class="{open: map.currentAction}"
+                >
                 <div>
                     <a class="action-close">
                         <i class="material-icons" ng-click="map.hideAction()">close</i>
