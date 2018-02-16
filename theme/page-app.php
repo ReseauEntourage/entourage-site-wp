@@ -32,7 +32,7 @@
 <head>
     <meta charset="<?php bloginfo( 'charset' ); ?>">
     <meta name="viewport" content="width=device-width">
-    <link rel="icon" type="image/png" href="<?php echo get_template_directory_uri(); ?>/img/fav.png" />
+    <link rel="icon" type="image/png" href="<?php asset_url('img/fav.png'); ?>" />
     <title><?php
             echo get_bloginfo('name');
             if ( !empty($custom_fields['meta_titre']) )
@@ -42,15 +42,15 @@
     <meta property="og:title" content="<?php echo htmlentities($og_title); ?>">
     <meta property="og:type" content="website">
     <meta property="og:url" content="<?php echo $og_url; ?>">
-    <meta property="og:image" content="<?php echo get_template_directory_uri(); ?>/img/share-fb.png">
+    <meta property="og:image" content="<?php asset_url('img/share-fb.png'); ?>">
     <meta property="og:description" content="<?php echo htmlentities($og_description); ?>">
     <meta property="fb:app_id" content="280727035774134">
     <meta name="apple-mobile-web-app-capable" content="yes">
 
-    <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/countries.css">
-    <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/style.css">
-    <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/responsive.css">
-    <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/app.css">
+    <link rel="stylesheet" href="<?php asset_url('css/countries.css'); ?>">
+    <link rel="stylesheet" href="<?php asset_url('css/style.css'); ?>">
+    <link rel="stylesheet" href="<?php asset_url('css/responsive.css'); ?>">
+    <link rel="stylesheet" href="<?php asset_url('css/app.css'); ?>">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Roboto:300,500,100,300italic' rel='stylesheet' type='text/css'>
 
@@ -320,11 +320,11 @@
         </div>
     </div>
   <!-- Scripts -->
-  <script src="<?php echo get_template_directory_uri(); ?>/js/jquery.js" type="text/javascript"></script>
-  <script src="<?php echo get_template_directory_uri(); ?>/js/angular.min.js" type="text/javascript"></script>
-  <script src="<?php echo get_template_directory_uri(); ?>/js/jquery.csv.min.js" type="text/javascript"></script>
+  <script src="<?php asset_url('js/jquery.js'); ?>" type="text/javascript"></script>
+  <script src="<?php asset_url('js/angular.min.js'); ?>" type="text/javascript"></script>
+  <script src="<?php asset_url('js/jquery.csv.min.js'); ?>" type="text/javascript"></script>
   <script src="https://catamphetamine.github.io/libphonenumber-js/libphonenumber-js.min.js" type="text/javascript"></script>
-  <script src="<?php echo get_template_directory_uri(); ?>/js/app.js" type="text/javascript"></script>
+  <script src="<?php asset_url('js/app.js'); ?>" type="text/javascript"></script>
 
   <!-- Analytics Code -->
     <script>

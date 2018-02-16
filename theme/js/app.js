@@ -192,7 +192,6 @@ angular.module('entourageApp', [])
         }
       }
       map.noAction = count < 5;
-      console.info("checkArea", count);
       $scope.$apply();
     }
 
