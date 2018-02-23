@@ -156,7 +156,7 @@
 						<a href="/app/?ville=Paris,%20France">Paris</a>,
 						<a href="/app/?ville=Lyon,%20France">Lyon</a>,
 						<a href="/app/?ville=Lille,%20France">Lille</a>,
-						<a href="/app/?ville=Lille,%20France">Grenoble</a>
+						<a href="/app/?ville=Grenoble,%20France">Grenoble</a>
 					</div>
 				</div>
 			<?php endif ?>
