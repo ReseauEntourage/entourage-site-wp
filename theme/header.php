@@ -148,7 +148,16 @@
 			<?php if ( is_front_page() ): ?>
 				<div id="site-header-search">
 					<input id="site-header-input" type="text" placeholder="<?php echo $custom_fields['recherche'][0] ?>"/>
-					<a id="ask-location" class="material-icons" title="Partager automatiquement ma position">my_location</a>
+					<a id="ask-location" class="btn orange-btn">
+						<i class="material-icons">search</i>
+					</a>
+					<div id="cities-example">
+						Ex :
+						<a href="/app/?ville=Paris,%20France">Paris</a>,
+						<a href="/app/?ville=Lyon,%20France">Lyon</a>,
+						<a href="/app/?ville=Lille,%20France">Lille</a>,
+						<a href="/app/?ville=Lille,%20France">Grenoble</a>
+					</div>
 				</div>
 			<?php endif ?>
 

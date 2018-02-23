@@ -132,6 +132,10 @@
 	    font-size: 13px;
 	}
 
+	#site-header-search #cities-example {
+	    display: inline-block;
+	}
+
 	#site-header div.orange-band {
 	    padding: 7px;
 	    font-size: 13px;

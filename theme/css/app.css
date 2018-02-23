@@ -628,6 +628,7 @@ div.input-parent .country-selection #country-list li {
 
 #map {
     position: relative;
+    overflow: hidden;
 }
 
 #map-bottom-band {
@@ -961,7 +962,7 @@ div.input-parent .country-selection #country-list li {
 	#page-registration div.input-parent input {
         border-radius: 0 5px 5px 0;
         padding: 0 13px;
-        width: 160px;
+        width: 70%;
         font-weight: bold;
 	}
 

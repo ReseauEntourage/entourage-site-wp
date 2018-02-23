@@ -246,9 +246,9 @@ angular.module('entourageApp', [])
       map.registrationToggle = true;
 
       if (token)
-        ga('send', 'event', 'Entourage', 'join', 'Join Entourage', token);
+        ga('send', 'event', 'Click', 'Join', token);
       else
-        ga('send', 'event', 'Header', 'join');
+        ga('send', 'event', 'Click', 'Join', 'Header');
     }
 
     map.selectCountry = function(country) {
@@ -286,7 +286,7 @@ angular.module('entourageApp', [])
               if (data.user)
               {
                 map.invitationSent = true;
-                ga('send', 'event', 'Register');
+                ga('send', 'event', 'Engagement', 'AppDownload', 'WebApp');
               }
               else
                 map.registrationError = "Il y a eu une erreur, merci de réessayer ou de nous contacter";
