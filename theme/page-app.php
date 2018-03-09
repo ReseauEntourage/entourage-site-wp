@@ -320,10 +320,10 @@
         </div>
     </div>
   <!-- Scripts -->
-  <script src="<?php asset_url('js/jquery.js'); ?>" type="text/javascript"></script>
-  <script src="<?php asset_url('js/angular.min.js'); ?>" type="text/javascript"></script>
-  <script src="<?php asset_url('js/jquery.csv.min.js'); ?>" type="text/javascript"></script>
-  <script src="https://catamphetamine.github.io/libphonenumber-js/libphonenumber-js.min.js" type="text/javascript"></script>
+  <script src="<?php asset_url('js/lib/jquery.js'); ?>" type="text/javascript"></script>
+  <script src="<?php asset_url('js/lib/angular.min.js'); ?>" type="text/javascript"></script>
+  <script src="<?php asset_url('js/lib/jquery.csv.min.js'); ?>" type="text/javascript"></script>
+  <script src="<?php asset_url('js/lib/phonenumber-js.min.js'); ?>" type="text/javascript"></script>
   <script src="<?php asset_url('js/app.js'); ?>" type="text/javascript"></script>
 
   <!-- Analytics Code -->
