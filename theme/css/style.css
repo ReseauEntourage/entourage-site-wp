@@ -160,6 +160,11 @@ a:hover {
 	color: #fff;
 }
 
+.btn.dark-btn {
+	background: #333;
+	color: #fff;
+}
+
 .btn i {
 	vertical-align: middle;
 	margin-top: -2px;
@@ -275,6 +280,9 @@ div.parent-input.with-icon.image-icon:before {
 	content: "image";
 }
 
+div.parent-input.with-icon.security-icon:before {
+	content: "security";
+}
 
 div.parent-input.with-icon input {
 	padding-left: 40px;
@@ -301,6 +309,69 @@ strong {
  	background-image: url(../img/homepage.jpg);
  	color: rgb(255, 255, 255);
  	margin-top: 60px;
+ 	transition: margin-top 0.5s ease;
+}
+
+#banner-app-download {
+	position: fixed;
+	top: -100px;
+	left: 0;
+	right: 0;
+	height: 90px;
+	background-color: #f0f0f0;
+	color: #333;
+	z-index: 999;
+    box-shadow: inset 0px -5px 12px -6px rgba(0, 0, 0, 0.13);
+	transition: top 0.5s ease;
+	display: flex;
+	align-items: center;
+	overflow: hidden;
+	font-family: -apple-system,system-ui,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Fira Sans,Ubuntu,Oxygen,Oxygen Sans,Cantarell,Droid Sans,Lucida Grande,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Emoji,Segoe UI Symbol,Hiragino Kaku Gothic Pro,Meiryo,Hiragino Sans GB W3,Noto Naskh Arabic,Droid Arabic Naskh,Geeza Pro,Simplified Arabic,Noto Sans Thai,Thonburi,Dokchampa,Droid Sans Thai,Droid Sans Fallback,'.SFNSDisplay-Regular',Heiti SC,Microsoft Yahei;
+}
+
+#banner-app-download .close {
+	font-size: 18px;
+    margin: 0 10px;
+}
+
+#banner-app-download .app-picture {
+	margin-right: 15px;
+	width: 75px;
+    height: 75px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#banner-app-download .app-picture img {
+	width: 100%;
+}
+
+#banner-app-download .app-details {
+	width: 130px;
+	font-size: 0;
+}
+
+#banner-app-download .app-name {
+	display: block;
+    margin-top: 4px;	
+    font-size: 15px;
+}
+
+#banner-app-download .app-rating {
+    width: 70px;	
+}
+
+#banner-app-download .app-downloads {
+	font-size: 11px;
+    display: block;
+}
+
+#banner-app-download .app-download-btn {
+	margin-left: auto;
+    margin-right: 15px;
+    text-transform: uppercase;
+    color: #333;
+    font-size: 15px;
 }
 
 #site-header-fixed {
@@ -446,7 +517,7 @@ strong {
 	margin-right: 13px;
 }
 
-#site-header-right a:not(.btn){
+#site-header-right a:not(.btn) {
     display: inline-block;
     margin-right: 20px;
     color: #333;
@@ -454,7 +525,7 @@ strong {
     line-height: 33px;
 }
 
-#site-header-right a.btn:not(.orange-btn) {
+#site-header-right a.btn:not(.orange-btn):not(.dark-btn) {
 	border: 1px solid #fff;
 }
 

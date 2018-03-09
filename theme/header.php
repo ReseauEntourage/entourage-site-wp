@@ -21,6 +21,7 @@
 	$custom_fields_home = get_post_custom('2');
 	$download_btn_link = $custom_fields_home['lien'][0];
 	$download_btn_text = $custom_fields_home['bouton_orange'][0];
+	$custom_fields_downloads = get_post_custom('20');
 ?>
 
 
@@ -55,10 +56,7 @@
 	<link rel="stylesheet" href="<?php asset_url('css/responsive.css'); ?>">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link href='https://fonts.googleapis.com/css?family=Roboto:300,500,100,300italic' rel='stylesheet' type='text/css'>
-	<!--[if lt IE 9]>
-	<script src="<?php asset_url('js/html5.js'); ?>"></script>
-	<![endif]-->
-	<script src="<?php asset_url('js/jquery.js'); ?>" type="text/javascript"></script>
+	<script src="<?php asset_url('js/lib/jquery.js'); ?>" type="text/javascript"></script>
 
 	<!-- Analytics Code -->
 	<script>
@@ -111,6 +109,22 @@
 			style="background-image: url(<?php echo the_post_thumbnail_url(); ?>);background-position: <?php echo $custom_fields['alignement_photo'][0]; ?>"
 		<?php endif ?>
 	>
+		<div id="banner-app-download">
+			<i class="close material-icons">close</i>
+			<div class="app-picture">
+				<img src="<?php asset_url('img/logo-entourage-app.jpg'); ?>" alt="Logo de l'application Entourage" title="Téléchargez l'application Entourage, réseau solidaire">
+			</div>
+			<div class="app-details">
+				<strong class="app-name">Entourage</strong>
+				<img class="app-rating" src="<?php asset_url('img/rating-stars.png'); ?>">
+				<span class="app-downloads">Plus de 50.000 téléchargements</span>
+			</div>
+			<?php
+				echo sprintf( '<a class="app-download-btn iphone-btn" href="%s">Télécharger</a>', link_with_url_parameters($custom_fields_downloads['lien_ios'][0], $_SERVER['QUERY_STRING']));
+				echo sprintf( '<a class="app-download-btn android-btn" href="%s">Télécharger</a>', link_with_url_parameters($custom_fields_downloads['lien_android'][0], $_SERVER['QUERY_STRING']));
+			?>
+		</div>
+
 		<div id="site-header-fixed">
 			<a id="site-header-logo" href="/">
 				<img src="<?php asset_url('img/logo-entourage-orange.png'); ?>" alt="Logo de l'association Entourage" title="Association Entourage"/>

@@ -201,8 +201,20 @@ jQuery(document).ready(function($) {
 	    $('.iphone-btn').hide();
 
 
+	// APP DOWNLOAD BANNER //
+
+	if (!localStorage.getItem('no-app-download-banner'))
+		$('body').addClass('show-banner');
+
+	$('#banner-app-download').find('.close').on('click', function(){
+		$('body').removeClass('show-banner');
+		localStorage.setItem('no-app-download-banner', 1);
+	});
+
+
+	// ADDRESS SEARCH BAR //
+
 	if ($('#ask-location').length) {
-		// ADDRESS SEARCH BAR //
 
 		// Google's url for async maps initialization accepting callback function
 	    var asyncUrl = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyATSImG1p5k6KydsN7sESLVM2nREnU7hZk&libraries=places&callback=';

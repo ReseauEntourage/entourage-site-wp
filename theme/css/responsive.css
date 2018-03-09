@@ -239,6 +239,24 @@
 	}
 }
 
+@media screen and (max-width: 900px) {
+	body.show-banner #site-header {
+		margin-top: 150px;
+	}
+
+	body.show-banner #banner-app-download {
+		top: 0;
+	}
+
+	body.show-banner #site-header-fixed {
+		top: 90px;
+	}
+
+	body.show-banner #donate-btn {
+		top: 156px;
+	}
+}
+
 @media
 only screen and (-webkit-min-device-pixel-ratio: 2),
 only screen and (   min--moz-device-pixel-ratio: 2)),
