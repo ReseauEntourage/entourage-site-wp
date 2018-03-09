@@ -124,11 +124,19 @@ jQuery(document).ready(function($) {
 	$('#header-download-btn').on('click', function(){
 		ga('send', {
 			hitType: 'event',
+			eventCategory: 'Click',
+			eventAction: 'TopButton'
+		});
+	});
+
+	$('.desktop-btn').on('click', function(){
+		ga('send', {
+			hitType: 'event',
 			eventCategory: 'Engagement',
 			eventAction: 'AppDownload',
-			eventLabel: 'TopButton'
+			eventLabel: 'Desktop'
 		});
-		fbq('track', 'Lead', {'content_name': 'TopButton'});
+		fbq('track', 'Lead', {'content_name': 'Desktop'});
 	});
 
 	$('.iphone-btn').on('click', function(){
@@ -196,9 +204,9 @@ jQuery(document).ready(function($) {
 	var mobileOS = getMobileOperatingSystem();
 
 	if (mobileOS == 'iOS')
-    	$('.android-btn').hide();
+    	$('.iphone-btn').css('display', 'inline-block');
   	else if (mobileOS == 'Android')
-	    $('.iphone-btn').hide();
+	    $('.android-btn').css('display', 'inline-block');
 
 
 	// APP DOWNLOAD BANNER //

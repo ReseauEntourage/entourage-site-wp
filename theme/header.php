@@ -19,8 +19,8 @@
 	}
 
 	$custom_fields_home = get_post_custom('2');
-	$download_btn_link = $custom_fields_home['lien'][0];
 	$download_btn_text = $custom_fields_home['bouton_orange'][0];
+	$download_btn_link = $custom_fields_home['lien'][0];
 	$custom_fields_downloads = get_post_custom('20');
 ?>
 
@@ -137,12 +137,15 @@
 				<?php if ( $custom_fields['bouton_2'] ): ?>
 					<a href="<?php echo $custom_fields['lien_2'][0] ?>"><?php echo $custom_fields['bouton_2'][0] ?></a>
 				<?php endif ?>
-				<?php if ( $custom_fields['bouton'] ): ?>
+				<?php if ( is_front_page() ): ?>
+					<a id="header-download-btn" class="btn orange-btn iphone-btn" href="<?php echo link_with_url_parameters($custom_fields_downloads['lien_ios'][0], $_SERVER['QUERY_STRING']) ?>"><?php echo $download_btn_text ?></a>
+					<a id="header-download-btn" class="btn orange-btn android-btn" href="<?php echo link_with_url_parameters($custom_fields_downloads['lien_android'][0], $_SERVER['QUERY_STRING']) ?>"><?php echo $download_btn_text ?></a>
+					<a id="header-download-btn" class="btn orange-btn desktop-btn" href="<?php echo link_with_url_parameters($download_btn_link, $_SERVER['QUERY_STRING']) ?>"><?php echo $download_btn_text ?></a>
+				<?php elseif ( $custom_fields['bouton'] ): ?>
 					<a class="btn" href="<?php echo $custom_fields['lien'][0]?: '#section-call-to-action' ?>"><?php echo $custom_fields['bouton'][0] ?></a>
 				<?php elseif ( $custom_fields['bouton_orange'] ): ?>
 					<a class="btn orange-btn" href="<?php echo $custom_fields['lien'][0]?: '#section-call-to-action' ?>"><?php echo $custom_fields['bouton_orange'][0] ?></a>
 				<?php endif ?>
-				<a id="header-download-btn" class="btn orange-btn" href="<?php echo $download_btn_link ?>"><?php echo $download_btn_text ?></a>
 			</div>
 			<?php if ($wp_query->post->ID != 417): ?>
 				<a id="donate-btn" href="/don" target="_blank">

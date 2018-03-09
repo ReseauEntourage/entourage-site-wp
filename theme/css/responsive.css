@@ -1,7 +1,18 @@
+@media screen and (min-width: 901px) {
+	#site-header-right #header-download-btn:not(.desktop-btn) {
+		display: none;
+	}
+}
+
 @media screen and (max-width: 900px) {
 
 	body.home #site-header {
 	    height: 280px;
+	}
+
+	.iphone-btn,
+	.android-btn {
+		display: none;
 	}
 
 	#site-header {
@@ -89,8 +100,7 @@
 	    display: none;
 	}
 
-	#site-header-right #header-download-btn {
-		display: inline-block;
+	#site-header-right #header-download-btn:not(.desktop-btn) {
 	    font-size: 12px;
 	    padding: 0 10px;
 	    line-height: 30px;
@@ -109,6 +119,7 @@
 
 	#site-header h1 {
 	    font-size: 28px;
+	    line-height: 28px;
         padding: 0 20px;
 	}
 

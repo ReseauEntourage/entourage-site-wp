@@ -336,14 +336,13 @@ strong {
 
 #banner-app-download .app-picture {
 	margin-right: 15px;
-	width: 75px;
     height: 75px;
     border-radius: 10px;
     overflow: hidden;
 }
 
 #banner-app-download .app-picture img {
-	width: 100%;
+	height: 100%;
 }
 
 #banner-app-download .app-details {
@@ -527,10 +526,6 @@ strong {
 
 #site-header-right a.btn:not(.orange-btn):not(.dark-btn) {
 	border: 1px solid #fff;
-}
-
-#header-download-btn {
-	display: none;
 }
 
 #site-header-title {
