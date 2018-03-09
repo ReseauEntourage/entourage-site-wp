@@ -211,6 +211,14 @@ jQuery(document).ready(function($) {
 		localStorage.setItem('no-app-download-banner', 1);
 	});
 
+	$('#banner-app-download').find('.app-download-btn').on('click', function(){
+		ga('send', {
+			hitType: 'event',
+			eventCategory: 'Click',
+			eventAction: 'DownloadBanner'
+		});
+	});
+
 
 	// ADDRESS SEARCH BAR //
 
