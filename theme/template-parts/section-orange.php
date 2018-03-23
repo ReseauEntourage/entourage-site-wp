@@ -16,9 +16,16 @@
 	<h3 class="section-title"><?php the_custom_html_title(); ?></h3>
 	<div class="section-content">
 		<?php the_content(); ?>
+
 		<?php if ($custom_fields['bouton']): ?>
-			<a href="<?php echo $custom_fields['lien'][0]; ?>" class="btn white-btn"><?php echo $custom_fields['bouton'][0]; ?></a>
+			<div class="section-buttons">
+				<a href="<?php echo $custom_fields['lien'][0]; ?>" class="btn white-btn"><?php echo $custom_fields['bouton'][0]; ?></a>
+				<?php if ($custom_fields['bouton_2']): ?>
+					<a href="<?php echo $custom_fields['lien_2'][0]; ?>" class="btn btn"><?php echo $custom_fields['bouton_2'][0]; ?></a>
+				<?php endif; ?>
+			</div>
 		<?php endif; ?>
+
 		<?php
 		while ( $query->have_posts() ) : $query->the_post();
 			$custom_fields = get_post_custom(get_the_ID());
@@ -26,7 +33,9 @@
 			<div class="section-contact">
 				<p>Pour tout renseignement, <?php the_title(); ?> se tient à disposition :</p>
 				<div class="section-contact-details">
-					<div class="section-contact-picture" style="background-image: url(<?php echo the_post_thumbnail_url(); ?>);"></div>
+					<?php if (get_the_post_thumbnail_url()): ?>
+						<div class="section-contact-picture" style="background-image: url(<?php echo the_post_thumbnail_url(); ?>);"></div>
+					<?php endif; ?>
 					<ul>
 						<?php if ($custom_fields['email']): ?>
 							<li>
@@ -77,7 +86,10 @@
 	    box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.21);
 	}
 
-	section.section.section_type-orange p + a.btn,
+	section.section.section_type-orange p + .section-buttons {
+		margin-top: 20px;
+	}
+
 	section.section.section_type-orange p a.btn {
 		margin-top: 20px;
 	}
@@ -87,12 +99,14 @@
 	}
 
 	section.section.section_type-orange p + div.section-contact,
-	section.section.section_type-orange .btn + div.section-contact {
+	section.section.section_type-orange .section-buttons + div.section-contact {
 		margin-top: 30px;
 	}
 
 	section.section.section_type-orange div.section-contact-details {
-		display: inline-block;
+		display: inline-flex;
+    	align-items: center;
+    	margin: auto;
     	margin-top: 20px;
     	padding: 15px;
     	font-size: 0;
@@ -139,6 +153,11 @@
 
 		section.section.section_type-orange div.section-contact-details {
 		    padding: 10px;
+		}
+
+		section.section.section_type-orange .section-buttons .btn {
+			margin-right: 0px;
+			margin-bottom: 10px;
 		}
 	}
 
