@@ -204,10 +204,10 @@
 		return $link.'?'.$params; 
 	}
 
-  function asset_url($path) {
-    $version = filemtime(path_join(get_stylesheet_directory(), $path));
-    echo esc_url(path_join(get_template_directory_uri(), $path).'?'.$version);
-  }
+	function asset_url($path) {
+		$version = filemtime(path_join(get_stylesheet_directory(), $path));
+		echo esc_url(path_join(get_template_directory_uri(), $path).'?'.$version);
+	}
 
 	/*** EMAIL ***/
 
@@ -218,11 +218,33 @@
 	    else if (empty($_POST['email']))
 	        $return = "Merci d'indiquer votre email.";
 	    else if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
-	        $return = "Merci d'entrer une adresse mail valide..";
+	        $return = "Merci d'entrer une adresse mail valide.";
 	    else if (empty($_POST['subject']))
 	        $return = "Merci d'indiquer un sujet à votre message.";
 	    else if (empty($_POST['message']))
 	        $return = "Sans message il sera difficile de vous répondre !";
+	    else if (empty($_POST['g-recaptcha-response']))
+	    	$return = "Veuillez cocher la case 'Je ne suis pas un robot'";
+	    else {
+		    $url = 'https://www.google.com/recaptcha/api/siteverify';
+			$data = [
+				'secret' => '6Lct6k8UAAAAAPLiJ06OYiZkfCTzCuiQqSwekmXg',
+				'response' => $_POST['g-recaptcha-response']
+			];
+
+			$options = [
+			    'http' => [
+			        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+			        'method'  => 'POST',
+			        'content' => http_build_query($data)
+			    ]
+			];
+			$context  = stream_context_create($options);
+			$result = json_decode(file_get_contents($url, false, $context), true);
+
+			if (!$result['success'])
+				$return = "Vous êtes un robot d'après Google Re-catcha !";
+		}
 
 	    if (!isset($return))
 	    {

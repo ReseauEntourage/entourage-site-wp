@@ -69,37 +69,38 @@
 		ga('send', 'pageview');
 	</script>
 
-  <script>
-    $(document).on('click', 'a[href^="/don"]', function(e) {
-      var event, url;
+	<script>
+	    $(document).on('click', 'a[href^="/don"]', function(e) {
+	      var event, url;
 
-      // ensure exact match because we only did a prefix match
-      if (this.pathname !== '/don') {
-        return
-      }
+	      // ensure exact match because we only did a prefix match
+	      if (this.pathname !== '/don') {
+	        return
+	      }
 
-      event = {
-        hitType: 'event',
-        eventCategory: 'Engagement',
-        eventAction: 'don'
-      }
+	      event = {
+	        hitType: 'event',
+	        eventCategory: 'Engagement',
+	        eventAction: 'don'
+	      }
 
-      if  (this.target === '_blank' || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) {
-        // page will not open in this tab, no callback required
-      }
-      else {
-        // cancel new page load and resume after event sent
-        e.preventDefault()
-        url = this.href
-        event.hitCallback = function() {
-          window.location = url
-        }
-      }
+	      if  (this.target === '_blank' || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) {
+	        // page will not open in this tab, no callback required
+	      }
+	      else {
+	        // cancel new page load and resume after event sent
+	        e.preventDefault()
+	        url = this.href
+	        event.hitCallback = function() {
+	          window.location = url
+	        }
+	      }
 
-      ga('send', event);
-    })
-</script>
+	      ga('send', event);
+	    })
+	</script>
 
+	<script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 
 <body <?php body_class(); ?>>

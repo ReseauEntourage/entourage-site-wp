@@ -23,6 +23,7 @@
 			<div>
 				<textarea name="message" placeholder="Votre message" required></textarea>
 			</div>
+			<div class="g-recaptcha" data-sitekey="6Lct6k8UAAAAAJLtjH9Uthp-2zPTXCMtvfd6imSY"></div>
 			<input type="submit" class="btn orange-btn" value="Envoyer !">
 			<input type="hidden" name="action" value="contact_form">
 		</form>
