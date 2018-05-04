@@ -1,0 +1,80 @@
+<div class="action-info">
+    <h2>
+        <div
+            ng-if="ctrl.action.display_category"
+            class="action-icon"
+            ng-class="ctrl.action.entourage_type + ' ' + ctrl.action.display_category"
+            ></div>
+        <div
+            ng-if="ctrl.action.icon_url"
+            class="action-icon"
+            ng-style="{'background-image': 'url(' + ctrl.action.icon_url + ')'}"
+            ></div>
+        <span ng-bind="ctrl.action.title"></span>
+    </h2>
+    <div
+        ng-if="ctrl.action.type != 'Announcement'"
+        class="action-status"
+        ng-switch on="ctrl.action.join_status"
+        >
+        <div
+            ng-switch-when="pending"
+            class="action-status-pending"
+            >
+            <i class="material-icons">access_time</i> Votre demande est en attente
+        </div>
+        <div
+            ng-switch-when="accepted"
+            class="action-status-joined"
+            >
+            <div
+                ng-if="ctrl.action.status == 'closed'"
+                class="action-status-closed"
+                >
+                <span ng-if="ctrl.user.id != ctrl.action.author.id">
+                    <i class="material-icons">done</i> Merci d'avoir participé à cette action !
+                </span>
+                <span ng-if="ctrl.user.id == ctrl.action.author.id">
+                    <i class="material-icons">done</i> Votre action est terminée !
+                </span>
+            </div>
+            <div ng-if="ctrl.action.status != 'closed'">
+                <span ng-if="ctrl.user.id != ctrl.action.author.id">Vous participez à cette action !</span>
+                <span ng-if="ctrl.user.id == ctrl.action.author.id">Vous avez créé cette action !</span>
+            </div>
+        </div>
+        <div ng-switch-default>
+            <div
+                ng-if="ctrl.action.status == 'closed'"
+                class="action-status-closed"
+                >
+                <i class="material-icons">done</i> Cette action est terminée, merci à tous !
+            </div>
+            <div
+                ng-if="ctrl.action.status != 'closed'"
+                class="action-date"
+                >
+                Créé <span ng-bind="ctrl.action.created_at|timeAgo"></span> par
+                <user-name
+                    user="ctrl.user"
+                    profile="ctrl.action.author"
+                    ></user-name>
+            </div>
+        </div>
+    </div>
+    <div
+        ng-if="ctrl.action.type == 'Announcement'"
+        class="action-announcement-content"
+        >
+        <p ng-bind="ctrl.action.body"></p>
+        <a
+            ng-if="ctrl.action.url"
+            class="btn white-btn"
+            ng-bind="ctrl.action.action"
+            ></a>
+    </div>
+</div>
+<action-participants-picture
+    class="action-participants-picture-container"
+    action="ctrl.action"
+></action-participants-picture>

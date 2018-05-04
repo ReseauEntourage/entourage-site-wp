@@ -1,0 +1,20 @@
+<div
+    class="action-participants-picture"
+    ng-click="ctrl.clickable && ctrl.showParticipants()"
+    >
+    <div
+        class="action-author-profile"
+        ng-class="{'no-picture': !ctrl.action.author.avatar_url}"
+        ng-style="{'background-image': 'url(' + ctrl.action.author.avatar_url + ')'}"
+        ></div>
+    <div
+        ng-if="ctrl.action.number_of_people"
+        class="action-participants"
+        ng-bind="ctrl.action.number_of_people > 99 ? '99+' : ('+' + ctrl.action.number_of_people)"
+        ></div>
+</div>
+<div
+	ng-if="ctrl.action.author.partner"
+	class="action-author-badge"
+	ng-style="{'background-image': 'url(' + ctrl.action.author.partner.small_logo_url + ')'}"
+	></div>

@@ -136,7 +136,7 @@
 			</div>
 			<div id="site-header-right">
 				<?php if ( $custom_fields['bouton_2'] ): ?>
-					<a href="<?php echo $custom_fields['lien_2'][0] ?>"><?php echo $custom_fields['bouton_2'][0] ?></a>
+					<a class="link" href="<?php echo $custom_fields['lien_2'][0] ?>"><?php echo $custom_fields['bouton_2'][0] ?></a>
 				<?php endif ?>
 				<?php if ( is_front_page() ): ?>
 					<a id="header-download-btn" class="btn orange-btn iphone-btn" href="<?php echo link_with_url_parameters($custom_fields_downloads['lien_ios'][0], $_SERVER['QUERY_STRING']) ?>"><?php echo $download_btn_text ?></a>

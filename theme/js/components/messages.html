@@ -1,0 +1,45 @@
+<div
+    id="messages-content"
+    ng-class="{loading: ctrl.loading}"
+    >
+    <ul ng-if="ctrl.actions.length">
+        <li
+            ng-repeat="(k, action) in ctrl.actions"
+            class="action-item"
+            ng-class="{unread: action.pendingUsers.length || action.number_of_unread_messages}"
+            ng-click="ctrl.show(action)"
+            >
+            <action-participants-picture
+                class="action-participants-picture-container"
+                action="action"
+            ></action-participants-picture>
+            <div class="action-info">
+                <h2
+                    class="ellipsis"
+                    ng-bind="action.title"
+                    ></span>
+                </h2>
+                <p
+                    ng-if="!action.pendingUsers.length && action.lastMessage"
+                    class="ellipsis"
+                    >
+                    <span ng-bind="action.lastMessage.user.display_name + ' : ' + action.lastMessage.content"></span>
+                </p>
+                <p
+                    ng-if="action.pendingUsers.length"
+                    class="ellipsis"
+                    >
+                    <span ng-bind="(action.pendingUsers.length > 1) ? (action.pendingUsers.length + ' personnes') : action.pendingUsers[0].display_name"></span>
+                    <span ng-bind="(action.pendingUsers.length > 1) ? 'souhaitent' : 'souhaite'"></span>
+                    rejoindre votre action
+                </p>
+            </div>
+        </li>
+    </ul>
+    <div
+        ng-if="!ctrl.loading && !ctrl.actions.length"
+        class="no-content"
+        >
+        Vous n'avez pas encore de messages. Rejoignez une action !
+    </div>
+</div>  

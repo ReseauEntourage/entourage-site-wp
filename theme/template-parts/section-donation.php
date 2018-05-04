@@ -80,27 +80,15 @@
 <style type="text/css">
 
 	section.section_type-donation div.section-content {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> Donation final
-		margin-top: -65px;
-	    background: #fb5507;
-	    color: #fff;
-	    padding: 20px;
-<<<<<<< HEAD
-=======
-	    width: 810px;
-	    margin: auto;
-	    text-align: left;
-        border-bottom: 1px solid #eee;
-    	padding-bottom: 30px;
-<<<<<<< HEAD
->>>>>>> Donation + global fixes
-=======
->>>>>>> Donation + global fixes
-=======
->>>>>>> Donation final
+      margin-top: -65px;
+      background: #fb5507;
+      color: #fff;
+      padding: 20px;
+      width: 810px;
+      margin: auto;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 30px;
     }
 
     #donate-btn {
@@ -110,7 +98,7 @@
     #donation-form {
     	width: 100%;
 	    min-height: 658px;
-        margin-top: 20px;
+      margin-top: 20px;
     }
 
     @media screen and (max-width: 1000px) {

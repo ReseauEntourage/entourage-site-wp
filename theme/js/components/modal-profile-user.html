@@ -1,0 +1,69 @@
+<div
+    id="modal-profile-user"
+    class="modal-body"
+    ng-class="{loading: ctrl.loading}"
+    >
+    <div class="action-participants-picture-container">
+        <div class="action-participants-picture">
+            <div
+                class="action-author-profile"
+                ng-class="{'no-picture': !ctrl.profile.avatar_url}"
+                ng-style="{'background-image': 'url(' + ctrl.profile.avatar_url + ')'}"
+                ></div>
+        </div>
+    </div>
+    <h2
+        class="modal-profile-user-name"
+        ng-bind="ctrl.profile.display_name"
+        ></h2>
+    <div
+        ng-if="ctrl.profile.about"
+        class="modal-profile-user-description"
+        >
+        "<span ng-bind="ctrl.profile.about|linkify"
+        ></span>"
+    </div>
+    <div
+        ng-if="ctrl.profile.stats.entourage_count || ctrl.profile.organization || ctrl.profile.partner"
+        class="modal-profile-user-info"
+        >
+        <ul ng-if="ctrl.profile.stats.entourage_count">
+            <li>Actions</li>
+            <li>
+                <i class="material-icons">create</i>
+                <b ng-bind="ctrl.profile.stats.entourage_count"></b>
+                <span ng-if="ctrl.profile.stats.entourage_count > 1">actions créées</span>
+                <span ng-if="ctrl.profile.stats.entourage_count == 1">action créée</span>
+            </li>
+        </ul>
+        <ul ng-if="ctrl.profile.organization || ctrl.profile.partner">
+            <li>Associations</li>
+            <li ng-if="ctrl.profile.partner">
+                <i class="material-icons">favorite</i> Sympathisant de <a ng-href="ctrl.profile.partner.website_url" target="_blank" ng-bind="ctrl.profile.partner.name"></a>
+            </li>
+            <li ng-if="ctrl.profile.organization">
+                <i class="material-icons">directions_walk</i> Maraudeur avec <b ng-bind="ctrl.profile.organization.name"></b>
+            </li>
+        </ul>
+    </div>
+    <a
+        class="modal-close"
+        ng-click="ctrl.close()"
+        >
+        <i class="material-icons">close</i>
+    </a>
+</div>
+<div class="modal-footer">
+    <a
+        ng-click="ctrl.report()"
+        class="btn dark-btn"
+        >
+        <i class="material-icons">error</i>
+        Signaler cet utilisateur
+    </a>
+</div>
+<modal-new-message
+    ng-if="ctrl.currentMessage"
+    user="ctrl.user"
+    message="ctrl.currentMessage"
+    ></modal-new-message>

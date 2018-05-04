@@ -49,12 +49,38 @@
 
     <link rel="stylesheet" href="<?php asset_url('css/countries.css'); ?>">
     <link rel="stylesheet" href="<?php asset_url('css/style.css'); ?>">
-    <link rel="stylesheet" href="<?php asset_url('css/responsive.css'); ?>">
     <link rel="stylesheet" href="<?php asset_url('css/app.css'); ?>">
+    <link rel="stylesheet" href="<?php asset_url('css/app-responsive.css'); ?>">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Roboto:300,500,100,300italic' rel='stylesheet' type='text/css'>
 
     <style id="inline-style" type="text/css"></style>
+
+    <!-- Scripts -->
+    <script src="<?php asset_url('js/lib/jquery.js'); ?>" type="text/javascript"></script>
+    <script src="<?php asset_url('js/lib/angular.min.js'); ?>" type="text/javascript"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-animate.min.js" type="text/javascript"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.js" type="text/javascript"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js" type="text/javascript"></script>
+    <script src="<?php asset_url('js/lib/jquery.csv.min.js'); ?>" type="text/javascript"></script>
+    <script src="<?php asset_url('js/lib/phonenumber-js.min.js'); ?>" type="text/javascript"></script>
+    
+    <script src="<?php asset_url('js/functions.js'); ?>" type="text/javascript"></script>
+    <script src="<?php asset_url('js/map.js'); ?>" type="text/javascript"></script>
+    <script src="<?php asset_url('js/filters.js'); ?>" type="text/javascript"></script>
+    <script src="<?php asset_url('js/components/feed.js'); ?>" type="text/javascript"></script>
+    <script src="<?php asset_url('js/components/action.js'); ?>" type="text/javascript"></script>
+    <script src="<?php asset_url('js/components/action-participants-picture.js'); ?>" type="text/javascript"></script>
+    <script src="<?php asset_url('js/components/user-name.js'); ?>" type="text/javascript"></script>
+    <script src="<?php asset_url('js/components/login.js'); ?>" type="text/javascript"></script>
+    <script src="<?php asset_url('js/components/messages.js'); ?>" type="text/javascript"></script>
+    <script src="<?php asset_url('js/components/register.js'); ?>" type="text/javascript"></script>
+    <script src="<?php asset_url('js/components/current-action.js'); ?>" type="text/javascript"></script>
+    <script src="<?php asset_url('js/components/new-action.js'); ?>" type="text/javascript"></script>
+    <script src="<?php asset_url('js/components/modal-profile-required.js'); ?>" type="text/javascript"></script>
+    <script src="<?php asset_url('js/components/modal-profile-edit.js'); ?>" type="text/javascript"></script>
+    <script src="<?php asset_url('js/components/modal-profile-user.js'); ?>" type="text/javascript"></script>
+    <script src="<?php asset_url('js/components/modal-new-message.js'); ?>" type="text/javascript"></script>
 </head>
 
 <body
@@ -70,7 +96,7 @@
         >
         <div>
             <div>
-                <img class="app-screenshot" title="Découvrez l'application Entourage" src="<?php echo get_template_directory_uri(); ?>/img/logo-entourage-orange.png"/>
+                <img class="app-screenshot" title="Découvrez la carte des actions de la communauté d'Entourage" src="<?php echo get_template_directory_uri(); ?>/img/logo-entourage-orange.png"/>
             </div>
             <h1><a href="http://www.entourage.social/" target="_blank">Entourage</a>, <?php echo $custom_fields['titre'][0] ?>...</h1>
         </div>
@@ -114,6 +140,7 @@
                     ng-hide="map.currentAddress"
                     ng-focus="searchFocus = true"
                     ng-blur="searchFocus = false"
+                    autocomplete="nope"
                     >
                 <i
                     id="ask-location"
@@ -125,10 +152,10 @@
             <div
                 id="app-filters"
                 class="parent-dropdown"
-                ng-class="{'open': showFilters, 'enabled': map.filters.period || map.filters.status}"
+                ng-class="{'open': showFilters, 'enabled': map.activatedFilters()}"
                 >
                 <div class="dropdown">
-                    <a class="btn dropdown-toggle icon-filter">
+                    <a class="btn dropdown-toggle btn-icon">
                         <i class="material-icons">filter_list</i>
                         <div
                             class="badge"
@@ -176,7 +203,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li>
+                        <li ng-if="map.public">
                             <a class="dropdown-toggle">
                                 Statut
                             </a>
@@ -211,8 +238,106 @@
                 </div>
             </div>
         </div>
-        <div id="site-header-right">
+        <div
+            id="site-header-right"
+            ng-if="!map.public"
+            >
             <a
+                class="btn orange-btn no-mobile"
+                ng-click="map.toggleNewAction()"
+                >
+                <i class="material-icons">add</i> Créer une action
+            </a>
+            <new-action
+                ng-if="map.showNewAction"
+                user="map.loggedUser"
+                hide="map.toggleNewAction()"
+                ></new-action>
+            <div
+                id="user-messages"
+                class="parent-dropdown"
+                >
+                <div class="dropdown">
+                    <a class="btn btn-icon dropdown-toggle">
+                        <i class="material-icons">mail</i>
+                        <div
+                            class="badge"
+                            ng-if="map.loggedUser.unreadMessages"
+                            ng-bind="map.loggedUser.unreadMessages"
+                            ></div>
+                    </a>
+                    <div class="dropdown-menu">
+                        <messages
+                            user="map.loggedUser"
+                            on-show-action="map.showAction(action)"
+                        />
+                    </div>
+                </div>
+            </div>
+            <div
+                id="user-menu"
+                class="parent-dropdown"
+                >
+                <div class="dropdown">
+                    <a class="dropdown-toggle">
+                        <div class="action-participants-picture-container no-mobile">
+                            <div class="action-participants-picture">
+                                <div
+                                    class="action-author-profile"
+                                    ng-class="{'no-picture': !map.loggedUser.avatar_url}"
+                                    ng-style="{'background-image': 'url(' + map.loggedUser.avatar_url + ')'}"
+                                    ></div>
+                            </div>
+                            <div
+                                ng-if="map.loggedUser.partner"
+                                class="action-author-badge"
+                                ng-style="{'background-image': 'url(' + map.loggedUser.partner.small_logo_url + ')'}"
+                                ></div>
+                        </div>
+                    </a>
+                    <div class="dropdown-menu">
+                        <ul>
+                            <li>
+                                <a ng-click="map.toggleProfileEdit()">
+                                    <i class="material-icons">person_pin</i> Modifier mon profil
+                                </a>
+                                <a ng-click="map.logout()">
+                                    <i class="material-icons">power_settings_new</i> Me déconnecter
+                                </a>
+                            </li>
+                            <li>
+                                <a href="http://www.simplecommebonjour.org/" target="_blank">
+                                    <i class="material-icons">question_answer</i> Conseils pour oser la rencontre
+                                </a>
+                                <a href="https://blog.entourage.social/2017/04/28/quelles-actions-faire-avec-entourage/" target="_blank">
+                                    <i class="material-icons">lightbulb_outline</i> Idées d'action
+                                </a>
+                                <a href="https://blog.entourage.social/2017/04/28/comment-utiliser-l-application-entourage/" target="_blank">
+                                    <i class="material-icons">help</i> Questions fréquentes
+                                </a>
+                                <!--a href="" target="_blank">
+                                    <i class="material-icons">map</i> Carte des structures solidaires
+                                </a-->
+                            </li>
+                            <li>
+                                <a href="https://blog.entourage.social/charte-ethique-grand-public/" target="_blank">
+                                    <i class="material-icons">school</i> Charte éthique
+                                </a>
+                                <a class="orange" href="https://www.entourage.social/don" target="_blank">
+                                    <i class="material-icons">favorite</i> Faire un don
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div
+            id="site-header-right"
+            ng-if="map.public"
+            >
+            <a
+                id="site-header-info"
                 class="btn"
                 href="https://www.entourage.social"
                 target="_blank"
@@ -220,6 +345,25 @@
                 >
                 <i class="material-icons">help</i>Entourage, c'est quoi ?
             </a>
+            <div
+                id="site-header-login"
+                class="parent-dropdown click-only"
+                >
+                <div
+                    class="dropdown"
+                    ng-class="{open: toggleLogin}"
+                    >
+                    <a
+                        class="dropdown-toggle link"
+                        ng-click="toggleLogin = !toggleLogin"
+                        >
+                        Connectez-vous
+                    </a>
+                    <div class="dropdown-menu">
+                        <login></login>
+                    </div>
+                </div>
+            </div>
             <a
                 class="btn orange-btn"
                 ng-click="map.showRegistration()"
@@ -229,104 +373,75 @@
         </div>
     </header>
 
+    <modal-profile-required
+        ng-if="!map.public && !map.loggedUser.display_name"
+        user="map.loggedUser"
+        ></modal-profile-required>
+
+    <modal-profile-edit
+        ng-if="map.showProfileEdit"
+        user="map.loggedUser"
+        hide="map.toggleProfileEdit()"
+        ></modal-profile-edit>
+
     <div id="page-content">
         <div
-            id="page-registration"
+            ng-if="map.registrationToggle"
             class="overlay fade-in"
-            ng-show="map.registrationToggle"
             >
             <div>
-                <div class="content" ng-class="{'valid': map.invitationSent}">
-                    <div class="illu"></div>
-                    <div class="text">
-                        <h3 ng-hide="map.invitationSent">
-                            Envie de passer à l'action&nbsp;? Super&nbsp;!<br>
-                            Rejoignez-nous <span class="action-author" ng-bind="map.currentAction.first_name"></span> sur l'application Entourage.
-                        </h3>
-                        <h3 ng-show="map.invitationSent">
-                            C'est envoyé ! Regardez vite vos SMS !
-                        </h3>
-                        <div class="registration-form">
-                            <div ng-hide="map.invitationSent">
-                                <p>Entrez votre numéro de téléphone pour vous inscrire et recevoir votre mot de passe par SMS&nbsp;:</p>
-                                <div class="input-parent">
-                                    <div class="country-selection" ng-click="map.countriesToggle = !map.countriesToggle">
-                                        <i class="iti-flag" ng-class="map.country[1]"></i>
-                                        <div ng-bind="'+' + map.country[2]"></div>
-                                        <ul id="country-list" class="dropdown-menu" ng-if="map.countriesToggle">
-                                            <li ng-repeat="country in map.countries" ng-click="map.selectCountry(country)">
-                                                <i class="iti-flag" ng-class="country[1]"></i>
-                                                <span ng-bind="country[0]"></span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <input type="text" ng-model="map.phone" placeholder="Numéro de téléphone" ng-keypress="map.isKeyEnter($event) && map.register()"/>
-                                    <a class="btn" ng-click="map.register()">Envoyer</a>
-                                </div>
-                                <div class="error" ng-if="map.registrationError" ng-bind="map.registrationError"></div>
-                            </div>
-                            <div ng-show="map.invitationSent">
-                                <p>Le SMS que vous allez recevoir contient toutes les informations dont vous avez besoin :</p>
-                                <ul>
-                                    <li>- <b><a href="https://api.entourage.social/store_redirection" target="_blank">le lien de téléchargement</a></b> de l'application</li>
-                                    <li>- <b>votre code de connexion</b> pour vous identifier</li>
-                                </ul>
-                                <br><p>A tout de suite sur <a href="<?php echo get_bloginfo('url'); ?>">Entourage</a> !</p>
-                            </div>
-                        </div>
-                        <a class="page-close" ng-click="map.registrationToggle = false">
-                            <i class="material-icons">close</i>
-                        </a>
-                    </div>
-                </div>
+                <register
+                    id="page-registration"
+                    user="map.loggedUser"
+                    toggle="map.hideRegistration()"
+                    />
             </div>
         </div>
 
-        <div id="map">
+        <div
+            id="map"
+            ng-class="{'loading': map.refreshing}"
+            >
+            <feed
+                ng-if="!map.public && map.actions.length"
+                user="map.loggedUser"
+                actions="map.actions"
+                on-show-action="map.showAction(action)"
+                on-open-profile="map.toggleProfileEdit()"
+                on-open-create-action="map.toggleNewAction()"
+                ></feed>
             <div
                 id="map-bottom-band"
-                ng-class="{open: map.noAction}"
+                ng-class="{open: map.emptyArea || (!map.refreshing && !map.actions.length)}"
                 >
-                <i class="material-icons">error</i> Il y a peu d'action par ici... Et si vous y ajoutiez un peu de chaleur humaine en <a ng-click="map.showRegistration()">rejoignant la communauté Entourage</a> ?!
+                <i class="material-icons">error</i> Il y a peu d'action par ici... Et si vous y ajoutiez un peu de chaleur humaine en
+                <a
+                    ng-if="map.public"
+                    ng-click="map.showRegistration()"
+                    >
+                    rejoignant la communauté Entourage
+                </a>
+                <a
+                    ng-if="!map.public"
+                    ng-click="map.showNewAction()"
+                    >
+                    créant une action solidaire
+                </a> ?!
             </div>
-            <div
-                id="map-right-band"
-                ng-class="{open: map.currentAction}"
-                >
-                <div>
-                    <a class="action-close">
-                        <i class="material-icons" ng-click="map.hideAction()">close</i>
-                    </a>
-                    <h3 class="action-title" ng-bind="map.currentAction.title"></h3>
-                    <div class="action-content">
-                        <div class="action-details">
-                            <div class="action-author-picture" ng-style="{'background-image': 'url(' + map.currentAction.author_avatar_url + ')'}"></div><span class="action-author" ng-bind="map.currentAction.author_name"></span>, le
-                            <span class="action-date" ng-bind="map.currentAction.created_at|date:'dd/MM/yy'"></span>
-                        </div>
-                        <p class="action-description" ng-if="map.currentAction.description" ng-bind-html="map.currentAction.description|trusted"></p>
-                    </div>
-                    <div class="action-buttons" ng-if="map.currentAction.status == 'open'">
-                        <a id="join-btn" class="btn orange-btn" ng-click="map.showRegistration(map.currentAction.uuid)">Rejoignez <span ng-bind="map.currentAction.author_name"></span> !</a>
-                        <a id="share-fb" class="btn" ng-click="map.shareFacebook(map.currentAction)">
-                            <i class="material-icons">exit_to_app</i> Partagez sur Facebook
-                        </a>
-                    </div>
-                    <div class="action-buttons" ng-if="map.currentAction.status == 'closed'">
-                        <div id="closed">Cette action est terminée !</div>
-                    </div>
-                </div>
-            </div>
+            <current-action
+                ng-if="map.currentAction"
+                map="map.mapObject"
+                action="map.currentAction"
+                public="map.public"
+                show-registration="map.showRegistration(token)"
+                user="map.loggedUser"
+                ></current-action>
             <div id="map-container"></div>
         </div>
     </div>
-  <!-- Scripts -->
-  <script src="<?php asset_url('js/lib/jquery.js'); ?>" type="text/javascript"></script>
-  <script src="<?php asset_url('js/lib/angular.min.js'); ?>" type="text/javascript"></script>
-  <script src="<?php asset_url('js/lib/jquery.csv.min.js'); ?>" type="text/javascript"></script>
-  <script src="<?php asset_url('js/lib/phonenumber-js.min.js'); ?>" type="text/javascript"></script>
-  <script src="<?php asset_url('js/app.js'); ?>" type="text/javascript"></script>
 
-  <!-- Analytics Code -->
+
+    <!-- Analytics Code -->
     <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -352,9 +467,7 @@
         fbq('track', 'PageView');
     </script>
     <noscript>
-        <img height="1" width="1" 
-    src="https://www.facebook.com/tr?id=1977352069219759&ev=PageView
-    &noscript=1"/>
+        <img height="1" width="1" src="https://www.facebook.com/tr?id=1977352069219759&ev=PageView&noscript=1"/>
     </noscript>
 
     <!-- Facebook JS SDK -->

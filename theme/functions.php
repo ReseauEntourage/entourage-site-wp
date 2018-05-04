@@ -264,6 +264,20 @@
 	add_action( 'admin_post_nopriv_contact_form', 'send_email_to_admin' );
 	add_action( 'admin_post_contact_form', 'send_email_to_admin' );
 
+	function direct_email() {
+        $headers  = 'MIME-Version: 1.0' . "\r\n";
+        $headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
+        $headers .= 'From: entourage.social <'.get_option('admin_email').'>' . "\r\n";
+        $headers .= 'Reply-To: '.$_POST['email']. "\r\n";
+
+        $message .= nl2br($_POST['message']);
+
+        wp_mail(get_option('admin_email'), $_POST['title'], $message, $headers);
+	    echo 'success';
+	}
+	add_action( 'admin_post_nopriv_direct_email', 'direct_email' );
+	add_action( 'admin_post_direct_email', 'direct_email' );
+
 
 	/*** ADMIN OPTIONS ***/
 

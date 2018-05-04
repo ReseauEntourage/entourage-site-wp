@@ -131,6 +131,12 @@ a:hover {
 	text-decoration: underline;
 }
 
+.ellipsis {
+	text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
 .container {
 	width: 1280px;
 	padding: 0 60px;
@@ -144,7 +150,7 @@ a:hover {
 	font-size: 14px;
 	font-weight: 500;
 	color: inherit;
-	border-radius: 3px;
+    border-radius: 20px;
 	padding: 0 20px;
 	cursor: pointer;
 	vertical-align: top;
@@ -170,6 +176,45 @@ a:hover {
 	margin-top: -2px;
 }
 
+.parent-select .btn {
+	display: inline-flex;
+    color: #424242;
+	padding: 0px;
+	padding-right: 40px;
+	align-items: center;
+    font-weight: normal;
+}
+
+.parent-select .btn.empty span {
+	color: #cdcdcd;
+	font-style: italic;
+}
+
+.parent-select .btn span {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.parent-select .btn i.material-icons {
+    width: 41px;
+    text-align: center;
+    line-height: 41px;
+    margin-right: 0px;
+    color: #b9b9b9;
+    flex-shrink: 0;
+}
+
+.parent-select .btn:after {
+	content: "keyboard_arrow_down";
+	position: absolute;
+	top: 0;
+	right: 10px;
+	font-size: 20px;
+	color: #b9b9b9;
+	font-family: 'Material Icons';
+}
+
 a.link {
 	display: inline-block;
 	font-weight: 400;
@@ -193,11 +238,12 @@ a.link:hover {
 }
 
 input[type=text],
+input[type=password],
 textarea {
 	display: inline-block;
 	font-size: 15px;
 	font-weight: 300;
-	border-radius: 3px;
+	border-radius: 20px;
 	padding: 0 20px;
 	background: #fff;
 	border: none;
@@ -222,9 +268,17 @@ textarea:-ms-input-placeholder {
 input:-moz-placeholder,
 textarea:-moz-placeholder {
   color: #8c8c8c;
+  
 }
 
-input[type=text] {
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+}
+
+input[type=text],
+input[type=password] {
 	display: inline-block;
 	height: 41px;
 	line-height: 41px;
@@ -233,12 +287,13 @@ input[type=text] {
 
 div.parent-input {
 	position: relative;
+	border-radius: 20px;
 }
 
 div.parent-input.with-icon:before {
 	position: absolute;
 	top: 11px;
-	left: 10px;
+	left: 13px;
 	color: #b9b9b9;
 	font-size: 20px;
 	font-family: 'Material Icons';
@@ -284,8 +339,17 @@ div.parent-input.with-icon.security-icon:before {
 	content: "security";
 }
 
-div.parent-input.with-icon input {
-	padding-left: 40px;
+div.parent-input.with-icon.tag-icon:before {
+	content: "loyalty";
+}
+
+div.parent-input.with-icon.message-icon:before {
+	content: "chat";
+}
+
+div.parent-input.with-icon input,
+div.parent-input.with-icon textarea {
+	padding-left: 43px;
 }
 
 strong {
@@ -516,12 +580,22 @@ strong {
 	margin-right: 13px;
 }
 
-#site-header-right a:not(.btn) {
+#site-header-right a.link {
     display: inline-block;
     margin-right: 20px;
     color: #333;
     font-size: 14px;
     line-height: 33px;
+    text-decoration: none;
+    font-weight: 300;	
+}
+
+#site-header-right a.link:hover {
+	text-decoration: underline;
+}
+
+#site-header-right a.link:after {
+	display: none;
 }
 
 #site-header-right a.btn:not(.orange-btn):not(.dark-btn) {
@@ -578,7 +652,7 @@ strong {
 	height: 45px;
 	font-size: 14px;
 	line-height: 45px;
-	border-radius: 3px 0 0 3px;
+	border-radius: 23px 0 0 23px;
 	vertical-align: top;
 	box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.35);
 }
@@ -592,7 +666,7 @@ strong {
 	height: 45px;
     padding: 0 13px;	
     line-height: 45px;
-    border-radius: 0 3px 3px 0;
+    border-radius: 0 23px 23px 0;
 }
 
 #site-header-search #cities-example {
@@ -827,6 +901,7 @@ body.home section.section.section_type-download {
 	border-radius: 0 0 5px 5px;
     border-top: 1px solid #d9d9d9;
     box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.13);
+    z-index: 1050;
 }
 
 .pac-item {
@@ -926,7 +1001,7 @@ section.section-newsletter div.parent-input #newsletter-email {
 	display: inline-block;
 	width: 300px;
 	height: 41px;
-	border-radius: 3px 0 0 3px;
+	border-radius: 20px 0 0 20px;
 }
 
 section.section-newsletter div.parent-input a.btn {
@@ -934,7 +1009,7 @@ section.section-newsletter div.parent-input a.btn {
 	height: 41px;
     padding: 0 15px;
     line-height: 41px;
-    border-radius: 0 3px 3px 0;
+    border-radius: 0 20px 20px 0;
     font-weight: 500;
 	font-size: 13px;
 }

@@ -1,0 +1,22 @@
+<a
+    class="action-author-link"
+    ng-click="ctrl.openProfile = true;$event.stopPropagation()"
+    >
+    <div
+        ng-if="ctrl.withPicture"
+        class="action-author-picture"
+        ng-class="{'no-picture': !ctrl.profile.avatar_url}"
+        ng-style="{'background-image': 'url(' + ctrl.profile.avatar_url + ')'}"
+    ></div>
+    <b
+        class="action-author-name"
+        ng-bind="ctrl.profile.display_name"
+        ></b>
+</a>
+
+<modal-profile-user
+    ng-if="ctrl.openProfile"
+    user="ctrl.user"
+    profile-id="ctrl.profile.id"
+    open="ctrl.openProfile"
+    ></modal-profile-user>
