@@ -1,0 +1,51 @@
+<div class="modal-header">
+    <a
+        class="modal-close mobile-only"
+        ng-click="ctrl.close()"
+        >
+        <i class="material-icons">arrow_back</i>
+    </a>
+    <span
+        ng-if="ctrl.action.users.length == 1"
+        ng-bind="ctrl.action.users.length + ' participant'"
+        ></span>
+    <span
+        ng-if="ctrl.action.users.length > 1"
+        ng-bind="ctrl.action.users.length + ' participants'"
+        ></span>
+</div>
+<div
+    id="modal-action-participants"
+    class="modal-body"
+    ng-class="{loading: ctrl.loading}"
+    >
+    <div
+    class="action-participant"
+        ng-repeat="participant in ctrl.action.users"
+        ng-click="participant.openProfile = true"
+        >
+        <div class="action-participants-picture-container">
+            <div class="action-participants-picture">
+                <div
+                    class="action-author-profile"
+                    ng-class="{'no-picture': !participant.avatar_url}"
+                    ng-style="{'background-image': 'url(' + participant.avatar_url + ')'}"
+                    ></div>
+            </div>
+            
+            <modal-profile-user
+                ng-if="participant.openProfile"
+                user="ctrl.user"
+                profile-id="participant.id"
+                open="participant.openProfile"
+                ></modal-profile-user>
+        </div>
+        <h3 ng-bind="participant.display_name"></h3>
+    </div>  
+    <a
+        class="modal-close no-mobile"
+        ng-click="ctrl.close()"
+        >
+        <i class="material-icons">close</i>
+    </a>
+</div>

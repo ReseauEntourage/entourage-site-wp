@@ -1,0 +1,142 @@
+<div class="modal-header">
+    <a
+        class="modal-close mobile-only"
+        ng-click="ctrl.close()"
+        >
+        <i class="material-icons">arrow_back</i>
+    </a>
+    <span ng-show="!ctrl.termsAccepted">Je respecte la <a href="https://blog.entourage.social/charte-ethique-grand-public/" target="_blank">charte d'Entourage</a>&nbsp;:</span>
+    <span ng-show="ctrl.termsAccepted">Vous souhaitez créer une action solidaire&nbsp;? C'est parti&nbsp;!</span>
+</div>
+<div
+    id="modal-new-action"
+    class="modal-body"
+    ng-class="{loading: ctrl.loading}"
+    >
+    <ul
+        id="terms-list"
+        ng-show="!ctrl.termsAccepted"
+        >
+        <li>
+            <div class="material-icons">record_voice_over</div>
+            <div class="text">
+                <strong>Recueillir l'accord</strong>
+                Je dois recueillir le consentement des personnes concernées avant de créer un entourage
+            </div>
+        </li>
+        <li>
+            <div class="material-icons">lock</div>
+            <div class="text">
+                <strong>Sécurité</strong>
+                Je n'inclus aucune donnée permettant d'identifier ou de localiser les personnes concernées
+            </div>
+        </li>
+        <li>
+            <div class="material-icons">place</div>
+            <div class="text">
+                <strong>Géolocalisation ?</strong>
+                La position précise des actions ne sera pas diffusée : elle est remplacée par les zones orange sur la carte
+            </div>
+        </li>
+    </ul>
+    <div
+        ng-show="ctrl.termsAccepted"
+        class="form"
+        >
+        <fieldset>
+            <label>1. Choisissez sa catégorie et précisez son emplacement :</label>
+            <div class="input-line">
+                <div class="parent-dropdown">
+                    <div class="dropdown parent-select">
+                        <a
+                            class="dropdown-toggle btn white-btn"
+                            ng-class="{empty: !ctrl.display_category}">
+                            <i class="material-icons">toc</i>
+                            <span ng-bind="ctrl.display_category ? ctrl.display_category[ctrl.entourage_type.id] : 'Catégorie'"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li ng-repeat="type in ctrl.types">
+                                <a
+                                    class="dropdown-toggle"
+                                    ng-bind="type.name"
+                                    ></a>
+                                <ul class="dropdown-menu">
+                                    <li ng-repeat="category in ctrl.categories">
+                                        <a
+                                            ng-click="ctrl.display_category = category;ctrl.entourage_type = type"
+                                            ng-class="{selected: (ctrl.display_category.id == category.id) && (ctrl.entourage_type.id == type.id)}"
+                                            >
+                                            <div
+                                                class="action-icon"
+                                                ng-class="type.id + ' ' + category.id"
+                                                ></div>
+                                            <span ng-bind="category[type.id]"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="parent-input with-icon address-icon">
+                    <input
+                        ng-init="ctrl.initSearchBox()"
+                        id="new-action-search-input"
+                        type="text"
+                        placeholder="Position (à peu près)"
+                        />
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <label>2. Donnez un titre clair à votre initiative :</label>
+            <div class="parent-input with-icon tag-icon">
+                <input
+                    type="text"
+                    ng-model="ctrl.title"
+                    maxlength="100"
+                    placeholder="Je suis disponible pour..."
+                    />
+            </div>
+        </fieldset>
+        <fieldset>
+            <label>3. Racontez simplement votre histoire. Les actions avec une description claire attirent plus de membres et ont plus de chances d'aboutir :</label>
+            <div class="parent-input with-icon message-icon">
+                <textarea
+                    type="text"
+                    ng-model="ctrl.description"
+                    placeholder="Je crée cette action parce que..."
+                ></textarea>
+            </div>
+        </fieldset>
+        <div
+            class="error"
+            ng-repeat="error in ctrl.errors"
+            ng-bind="error"
+            ></div>
+    </div>
+    <a
+        class="modal-close no-mobile"
+        ng-click="ctrl.close()"
+        >
+        <i class="material-icons">close</i>
+    </a>
+</div>
+<div class="modal-footer">
+    <a
+        ng-show="!ctrl.termsAccepted"
+        ng-click="ctrl.termsAccepted = true"
+        class="btn orange-btn"
+        >
+        <i class="material-icons">done</i>
+        J'ai lu et j'accepte
+    </a>
+    <a
+        ng-show="ctrl.termsAccepted"
+        ng-click="ctrl.submit()"
+        class="btn orange-btn"
+        >
+        <i class="material-icons">add</i>
+        Créer mon action !
+    </a>
+</div>

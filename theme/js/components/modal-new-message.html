@@ -1,0 +1,97 @@
+<div
+    class="modal-header"
+    ng-switch="ctrl.type"
+    >
+    <a
+        class="modal-close mobile-only"
+        ng-click="ctrl.close()"
+        >
+        <i class="material-icons">arrow_back</i>
+    </a>
+    <span ng-switch-when="report_action">Signaler une action</span>
+    <span ng-switch-when="report_user">Signaler un utilisateur</span>
+    <span ng-switch-when="action_feedback">Clôturer votre action</span>
+    <span ng-switch-default>Nouveau message</span>
+</div>
+<div
+    id="modal-new-action"
+    class="modal-body"
+    ng-class="{loading: ctrl.loading}"
+    >
+    <div
+        class="form"
+        ng-switch="ctrl.type"
+        >
+        <fieldset ng-switch-when="report_action">
+            <label>Pourquoi signalez-vous cette action ?</label>
+            <div class="parent-input with-icon message-icon">
+                <textarea
+                    type="text"
+                    ng-model="ctrl.message"
+                    placeholder="Ecrivez quelque chose..."
+                ></textarea>
+            </div>
+        </fieldset>
+        <fieldset ng-switch-when="report_user">
+            <label>Pourquoi signalez-vous cette personne ?</label>
+            <div class="parent-input with-icon message-icon">
+                <textarea
+                    type="text"
+                    ng-model="ctrl.message"
+                    placeholder="Ecrivez quelque chose..."
+                ></textarea>
+            </div>
+        </fieldset>
+        <div ng-switch-when="action_feedback">
+            <fieldset>
+                <label>Votre action s'est-elle bien déroulée ?</label>
+                <div class="btn-group">
+                    <a
+                        class="btn"
+                        ng-class="{'white-btn': ctrl.actionFeedback == 'success', 'dark-btn': ctrl.actionFeedback != 'success'}"
+                        ng-click="ctrl.actionFeedback = 'success'"
+                        >
+                        Oui, c'est un succès !
+                    </a>
+                    <a
+                        class="btn dark-btn"
+                        ng-class="{'white-btn': ctrl.actionFeedback == 'fail', 'dark-btn': ctrl.actionFeedback != 'fail'}"
+                        ng-click="ctrl.actionFeedback = 'fail'"
+                        >
+                        Pas vraiment...
+                    </a>
+                </div>
+            </fieldset>
+            <fieldset ng-if="ctrl.actionFeedback">
+                <label>Dites-nous en plus :</label>
+                <div class="parent-input with-icon message-icon">
+                    <textarea
+                        type="text"
+                        ng-model="ctrl.message"
+                        placeholder="Ecrivez quelque chose..."
+                    ></textarea>
+                </div>
+            </fieldset>
+        </div>
+        <div
+            class="error"
+            ng-repeat="error in ctrl.errors"
+            ng-bind="error"
+            ></div>
+    </div>
+    <a
+        class="modal-close no-mobile"
+        ng-click="ctrl.close()"
+        >
+        <i class="material-icons">close</i>
+    </a>
+</div>
+<div class="modal-footer">
+    <a
+        ng-click="ctrl.send()"
+        class="btn orange-btn"
+        >
+        <i class="material-icons">send</i>
+        Envoyer
+    </a>
+</div>

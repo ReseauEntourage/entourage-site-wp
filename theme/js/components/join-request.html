@@ -1,0 +1,46 @@
+<div class="modal-header">
+    <a
+        class="modal-close mobile-only"
+        ng-click="ctrl.close()"
+        >
+        <i class="material-icons">arrow_back</i>
+    </a>
+    Votre demande a été transmise !
+</div>
+<div
+    class="modal-body"
+    ng-class="{loading: ctrl.loading}"
+    >
+    <div class="form">
+        <fieldset>
+            <label>Pourquoi rejoignez-vous cette action ? Ajoutez un petit mot !</label>
+            <div class="parent-input with-icon message-icon">
+                <textarea
+                    type="text"
+                    ng-model="ctrl.message"
+                    placeholder="Votre message"
+                ></textarea>
+            </div>
+        </fieldset>
+        <div
+            ng-if="ctrl.error"
+            class="error"
+            ng-bind="ctrl.error"
+            ></div>
+    </div>
+    <a
+        class="modal-close no-mobile"
+        ng-click="ctrl.close()"
+        >
+        <i class="material-icons">close</i>
+    </a>
+</div>
+<div class="modal-footer">
+    <a
+        ng-click="ctrl.submit()"
+        class="btn orange-btn"
+        >
+        <i class="material-icons">send</i>
+        Envoyer
+    </a>
+</div>

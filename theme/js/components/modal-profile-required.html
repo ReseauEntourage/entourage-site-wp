@@ -1,0 +1,69 @@
+<div class="modal-header">
+    Bienvenue sur Entourage ! Présentons-nous...
+</div>
+<div
+    class="modal-body"
+    ng-class="{loading: ctrl.loading}"
+    >
+    <div class="form">
+        <fieldset>
+            <label>1. Pour commencer, et si vous nous disiez qui vous êtes ? C'est obligatoire, mais pas d'inquiétude, votre nom sera masqué :</label>
+            <div class="input-line">
+                <input
+                    type="text"
+                    ng-model="ctrl.first_name"
+                    placeholder="Votre prénom"
+                />
+                <input
+                    type="text"
+                    ng-model="ctrl.last_name"
+                    placeholder="Votre nom (ne sera pas affiché)"
+                />
+            </div>
+        </fieldset>
+        <fieldset>
+            <label>2. Présentez-vous en quelques mots à la communauté :</label>
+            <div class="parent-input with-icon message-icon">
+                <textarea
+                    ng-model="ctrl.about"
+                    placeholder="Pourquoi avez-vous rejoint Entourage ?"
+                ></textarea>
+            </div>
+        </fieldset>
+        <fieldset>
+            <label>3. Quel est votre email ? Il est nécessaire pour nous afin de pouvoir vous renvoyer votre mot de passe si vous perdez votre téléphone</label>
+            <div class="parent-input with-icon email-icon">
+                <input
+                    type="text"
+                    ng-model="ctrl.email"
+                    placeholder="Votre email"
+                />
+            </div>
+        </fieldset>
+        <fieldset>
+            <label>4. Pour finir, téléchargez une photo de vous afin de mettre un visage sur votre profil !</label>
+            <label for="file-upload" class="btn dark-btn upload-btn">
+                <i class="material-icons">file_upload</i> Télécharger
+            </label>
+            <input
+                id="file-upload"
+                type="file"
+                fileread="ctrl.avatar_key"
+            />
+        </fieldset>
+        <div
+            class="error"
+            ng-repeat="error in ctrl.errors"
+            ng-bind="error"
+            ></div>
+    </div>
+</div>
+<div class="modal-footer">
+    <a
+        ng-click="ctrl.submit()"
+        class="btn orange-btn"
+        >
+        <i class="material-icons">send</i>
+        Enregistrer !
+    </a>
+</div>

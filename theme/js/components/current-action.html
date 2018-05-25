@@ -1,0 +1,246 @@
+<div
+    id="current-action"
+    ng-class="{open: ctrl.open}"
+    >
+    <div>
+        <div class="action-actions">
+            <div class="action-left-actions">
+                <a ng-click="ctrl.shareFacebook()">
+                    <i class="material-icons">share</i> Partager sur Facebook
+                </a>
+            </div>
+            <div class="action-right-actions">
+                <a
+                    ng-if="!ctrl.public && !ctrl.is_admin"
+                    class="action-report"
+                    tooltip-placement="top"
+                    uib-tooltip="Signaler cette action à l'équipe d'Entourage"
+                    tooltip-append-to-body="true"
+                    >
+                    <i
+                        class="material-icons"
+                        ng-click="ctrl.report()"
+                        >
+                        report
+                    </i>
+                </a>
+                <a
+                    ng-if="!ctrl.public && (ctrl.action.join_status == 'accepted' || ctrl.action.join_status == 'pending') && !ctrl.is_admin"
+                    tooltip-placement="top"
+                    uib-tooltip="Quitter cette action"
+                    tooltip-append-to-body="true"
+                    >
+                    <i
+                        class="material-icons"
+                        ng-click="ctrl.leave()"
+                        >
+                        exit_to_app
+                    </i>
+                </a>
+                <a
+                    ng-if="!ctrl.public && ctrl.action.status != 'closed' && ctrl.is_admin"
+                    tooltip-placement="top"
+                    uib-tooltip="Clôturer votre action"
+                    tooltip-append-to-body="true"
+                    >
+                    <i
+                        class="material-icons"
+                        ng-click="ctrl.finishAction()"
+                        >
+                        check_circle
+                    </i>
+                </a>
+                <a
+                    class="action-close"
+                    tooltip-placement="top"
+                    uib-tooltip="Fermer"
+                    tooltip-append-to-body="true"
+                    >
+                    <i
+                        class="material-icons no-mobile"
+                        ng-click="ctrl.hide()"
+                        >
+                        close
+                    </i>
+                    <i
+                        class="material-icons mobile-only"
+                        ng-click="ctrl.hide()"
+                        >
+                        arrow_back
+                    </i>
+                </a>
+            </div>
+        </div>
+        <div
+            class="action-content"
+            ng-class="{loading: ctrl.loading}"
+            >
+            <div class="action-title">
+                <action-participants-picture
+                    class="action-participants-picture-container"
+                    user="ctrl.user"
+                    action="ctrl.action"
+                    clickable="true"
+                ></action-participants-picture> 
+                <span ng-bind="ctrl.action.title"></span>
+            </div>
+            <div class="action-chat">
+                <div ng-if="ctrl.action.status == 'closed' || ctrl.action.join_status != 'accepted'">
+                    <div class="action-details">
+                        <user-name
+                            user="ctrl.user"
+                            profile="ctrl.action.author"
+                            ></user-name>
+                        , le
+                        <span
+                            class="action-date"
+                            ng-bind="ctrl.action.created_at|date:'dd/MM/yy'"
+                            ></span>
+                    </div>
+                    <p
+                        ng-if="ctrl.action.description"
+                        class="action-description"
+                        >
+                        <span ng-bind-html="ctrl.action.description|linkify|trusted"></span>
+                    </p>
+                </div>
+                <div ng-if="ctrl.action.status != 'closed' && ctrl.action.join_status == 'accepted'">
+                    <div
+                        class="action-chat-date"
+                        ng-bind="ctrl.action.created_at|date:'d MMMM, H:mm'"
+                        ></div>
+                    <div ng-class="{'own-message': ctrl.action.author.id == ctrl.user.id}">
+                        <div class="action-chat-author">
+                            <user-name
+                                user="ctrl.user"
+                                profile="ctrl.action.author"
+                                with-picture="true"
+                                ></user-name>
+                            &nbsp;a créé l'action
+                        </div>
+                        <div
+                            ng-if="ctrl.action.description"
+                            class="action-chat-message"
+                            ng-bind-html="ctrl.action.description|linkify|trusted"
+                            ></div>
+                    </div>
+                    <div
+                        ng-repeat="event in ctrl.timeline"
+                        ng-class="{'own-message': event.type == 'message' && event.user.id == ctrl.user.id}"
+                        >
+                        <div
+                            ng-if="event.formatDate"
+                            class="action-chat-date"
+                            ng-bind="event.created_at|date:event.formatDate"
+                            ></div>
+                        <div class="action-chat-author">
+                            <user-name
+                                user="ctrl.user"
+                                profile="event.user"
+                                with-picture="true"
+                                ></user-name>
+                            <span ng-if="event.type == 'user' && event.user.status == 'accepted'">&nbsp;a rejoint l'action</span>
+                        </div>
+                        <div
+                            ng-if="event.message"
+                            class="action-chat-message"
+                            ng-bind-html="event.message|linkify|trusted"
+                            ></div>
+                    </div>
+                    <div
+                        ng-if="ctrl.is_admin && (ctrl.action.users|filter:{status: 'pending'}).length"
+                        class="action-chat-requests"
+                        ng-repeat="user in ctrl.action.users|filter:{status: 'pending'}"
+                        >
+                        <div class="action-chat-author">
+                            <user-name
+                                user="ctrl.user"
+                                profile="user"
+                                with-picture="true"
+                                ></user-name>
+                            &nbsp;souhaite rejoindre votre action
+                        </div>
+                        <div
+                            ng-if="user.message"
+                            class="action-chat-message"
+                            ng-bind-html="user.message|linkify|trusted"
+                            ></div>
+                        <a
+                            class="btn orange-btn"
+                            ng-click="ctrl.changeUserStatus(user.id, 'accepted')"
+                            >
+                            <i class="material-icons">group_add</i>Accepter
+                        </a>
+                        <a
+                            class="reject"
+                            ng-click="ctrl.changeUserStatus(user.id, 'rejected')"
+                            >
+                            Refuser
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="action-buttons"
+                ng-if="ctrl.action.status == 'open'"
+                ng-switch on="ctrl.action.join_status"
+                >
+                <a
+                    ng-switch-default
+                    class="btn orange-btn"
+                    ng-click="ctrl.askJoin()"
+                    >
+                    <i class="material-icons">group_add</i>
+                    Rejoignez <span ng-bind="ctrl.action.author.display_name"></span> !
+                </a>
+                <a
+                    ng-switch-when="pending"
+                    class="btn"
+                    >
+                    <i class="material-icons">access_time</i>
+                    Votre demande est en attente
+                </a>
+                <a
+                    ng-switch-when="rejected"
+                    class="btn"
+                    >
+                    <i class="material-icons">access_time</i>
+                    Votre demande n'a pas été acceptée
+                </a>
+                <div
+                    ng-switch-when="accepted"
+                    class="action-new-message"
+                    >
+                    <input
+                        type="text"
+                        ng-model="ctrl.newMessage"
+                        ng-enter="ctrl.sendNewMessage()"
+                        placeholder="Ecrivez un message..."
+                        >
+                    <a
+                        class="btn orange-btn btn-icon"
+                        ng-click="ctrl.sendNewMessage()"
+                        title="Envoyer"
+                        >
+                        <i class="material-icons">send</i>        
+                    </a>
+                </div>
+            </div>
+            <div
+                class="action-buttons"
+                ng-if="ctrl.action.status == 'closed'"
+                >
+                <a class="btn">
+                    <i class="material-icons">done</i>
+                    <span ng-if="ctrl.is_admin">Votre action est terminée !</span>
+                    <span ng-if="!ctrl.is_admin">Cette action est terminée !</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <modal-new-message
+        ng-if="ctrl.currentMessage"
+        user="ctrl.user"
+        message="ctrl.currentMessage"
+        ></modal-new-message>
+</div>

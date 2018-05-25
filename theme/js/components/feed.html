@@ -1,0 +1,32 @@
+<div
+    id="user-feed"
+    ng-class="{bottom: ctrl.hiddenFeed}"
+    >
+    <a
+        id="user-feed-toggle"
+        class="btn dark-btn mobile-only"
+        ng-click="ctrl.toggleFeed()"
+        >
+            <div ng-if="ctrl.hiddenFeed">
+                <i class="material-icons">arrow_upward</i>
+                Afficher la liste
+            </div>
+            <div ng-if="!ctrl.hiddenFeed">
+                <i class="material-icons">arrow_downward</i>
+                Masquer la liste
+            </div>
+    </a>
+    <ul id="user-feed-list">
+        <li
+            ng-repeat="(k, action) in ctrl.actions"
+            class="action-item"
+            ng-class="{announcement: action.type == 'Announcement', closed: action.status == 'closed'}"
+            ng-click="ctrl.click(action)"
+            >
+            <action
+            	user="ctrl.user"
+            	action="action"
+            	></action>
+        </li>
+    </ul>
+</div>

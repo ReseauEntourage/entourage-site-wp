@@ -1,0 +1,101 @@
+<div
+    class="content"
+    ng-class="{loading: loading}"
+    >
+    <div class="illu"></div>
+    <div
+        class="text"
+        ng-switch on="registrationStep"
+        >
+        <div ng-switch-default>
+            <h3>
+                Envie de passer à l'action&nbsp;? Super&nbsp;!<br>
+                Rejoignez la communauté Entourage&nbsp;!
+            </h3>
+            <div class="registration-form form">
+                <label>Entrez votre numéro de téléphone pour vous inscrire et recevoir votre code d'activation par SMS&nbsp;:</label>
+                <div class="input-parent input-phone">
+                    <div class="parent-dropdown">
+                        <div class="country-selection dropdown">
+                            <i
+                                class="iti-flag"
+                                ng-class="country[1]"
+                                ></i>
+                            <div ng-bind="'+' + country[2]"></div>
+                            <ul
+                                id="country-list"
+                                class="dropdown-menu"
+                                >
+                                <li ng-repeat="c in countries">
+                                    <a ng-click="selectCountry(c)">
+                                        <i
+                                            class="iti-flag"
+                                            ng-class="c[1]"
+                                            ></i>
+                                        <span ng-bind="c[0]"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <input
+                        type="text"
+                        ng-model="user.phone"
+                        placeholder="Numéro de téléphone"
+                        ng-enter="register()"
+                        />
+                    <a
+                        class="btn"
+                        ng-click="register()"
+                        >
+                        Envoyer
+                    </a>
+                </div>
+                <div
+                    class="error"
+                    ng-if="registrationError"
+                    ng-bind="registrationError"
+                    ></div>
+            </div>
+            <a
+                class="page-close"
+                ng-click="hide()"
+                >
+                <i class="material-icons">close</i>
+            </a>
+        </div>
+        <div ng-switch-when="2">
+            <h3>
+                Regardez vite vos SMS !
+            </h3>
+            <div class="registration-form connection-form form">
+                <div>
+                    <label>1. Entrez le code d'activation reçu&nbsp;:</label>
+                    <input
+                        type="text"
+                        ng-model="user.sms_code"
+                        placeholder="123456"
+                        />
+                    <label>2. Choisissez votre mot de passe (au moins 8 caractères)&nbsp;:</label>
+                    <input
+                        type="text"
+                        ng-model="$parent.password"
+                        placeholder="Mot de passe"
+                        ng-keypress="isKeyEnter($event) && login()"
+                        />
+                </div>
+                <a
+                    class="btn"
+                    ng-click="login()"
+                    >
+                    Connexion
+                </a>
+                <div
+                    class="error"
+                    ng-if="registrationError"
+                    ng-bind="registrationError"
+                    ></div>
+            </div>
+        </div>
+    </div>
+</div>

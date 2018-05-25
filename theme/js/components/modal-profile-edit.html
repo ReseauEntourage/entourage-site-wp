@@ -1,0 +1,169 @@
+<div
+    ng-if="!ctrl.success"
+    class="modal-header"
+    >
+    <a
+        class="modal-close mobile-only"
+        ng-click="ctrl.close()"
+        >
+        <i class="material-icons">arrow_back</i>
+    </a>
+    Editez votre profil
+</div>
+<div
+    class="modal-body"
+    ng-class="{loading: ctrl.loading}"
+    >
+    <div ng-if="!ctrl.success">
+        <div
+            id="profile-edition-form"
+            class="form two-parts"
+            >
+            <div class="two-parts">
+                <div>
+                    <h3>Vos informations publiques</h3>
+                    <fieldset>
+                        <label>Votre photo de profil</label>
+                        <div class="form-picture">
+                            <div class="action-participants-picture-container">
+                                <div class="action-participants-picture">
+                                    <div
+                                        class="action-author-profile"
+                                        ng-class="{'no-picture': !ctrl.user.avatar_url}"
+                                        ng-style="{'background-image': 'url(' + (ctrl.avatar_key || ctrl.user.avatar_url) + ')'}"
+                                        ></div>
+                                </div>
+                            </div>
+                            <label for="file-upload" class="btn dark-btn upload-btn">
+                                <i class="material-icons">file_upload</i> Télécharger
+                            </label>
+                            <input
+                                id="file-upload"
+                                type="file"
+                                fileread="ctrl.avatar_key"
+                            />
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <label>Votre prénom</label>
+                        <div class="parent-input with-icon person-icon">
+                            <input
+                                type="text"
+                                ng-model="ctrl.first_name"
+                                placeholder="Votre prénom"
+                            />
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <label>Votre présentation</label>
+                        <div class="parent-input with-icon message-icon">
+                            <textarea
+                                ng-model="ctrl.about"
+                                placeholder="Pourquoi avez-vous rejoint Entourage ?"
+                            ></textarea>
+                        </div>
+                    </fieldset>
+                </div>
+                <div>
+                    <h3>Vos informations privées</h3>
+                    <fieldset>
+                        <label>Votre nom</label>
+                        <div class="parent-input with-icon person-icon">
+                            <input
+                                type="text"
+                                ng-model="ctrl.last_name"
+                                placeholder="Votre nom (ne sera pas affiché)"
+                            />
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <label>Votre email</label>
+                        <div class="parent-input with-icon email-icon">
+                            <input
+                                type="text"
+                                ng-model="ctrl.email"
+                                placeholder="Votre email"
+                            />
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <label>Votre numéro de téléphone</label>
+                        <div class="parent-input with-icon phone-icon">
+                            <input
+                                type="text"
+                                ng-model="ctrl.user.phone"
+                                disabled
+                            />
+                        </div>
+                    </fieldset>
+                    <fieldset ng-if="!ctrl.togglePassword">
+                        <label>Votre mot de passe</label>
+                        <a
+                            class="btn dark-btn" 
+                            ng-click="ctrl.togglePassword = true"
+                            >
+                            Changer
+                        </a>
+                    </fieldset>
+                    <fieldset ng-if="ctrl.togglePassword">
+                        <label>Changer votre mot de passe</label>
+                        <fieldset>
+                            <input
+                                type="text"
+                                ng-model="ctrl.current_password"
+                                placeholder="Votre mot de passe actuel"
+                            />
+                        </fieldset>
+                        <fieldset>
+                            <input
+                                type="text"
+                                ng-model="ctrl.new_password"
+                                placeholder="Votre nouveau mot de passe"
+                            />
+                        </fieldset>
+                        <a
+                            class="btn dark-btn"
+                            ng-click="ctrl.changePassword()"
+                            >Changer</a>
+                    </fieldset>
+                </div>
+            </div>
+            <!--a
+                class="btn btn-delete"
+                ng-click="ctrl.removeUser()"
+                >
+                <i class="material-icons">delete_forever</i> Supprimer mon compte définitivement (irréversible !)
+            </a-->
+            <div
+                class="error"
+                ng-repeat="error in ctrl.errors"
+                ng-bind="error"
+                ></div>
+        </div>
+        <a
+            class="modal-close no-mobile"
+            ng-click="ctrl.close()"
+            >
+            <i class="material-icons">close</i>
+        </a>
+    </div>
+    <h3 ng-if="ctrl.success">Votre profil a bien été mis à jour !</h3>
+</div>
+<div class="modal-footer">
+    <a
+        ng-if="!ctrl.success"
+        ng-click="ctrl.submit()"
+        class="btn orange-btn"
+        >
+        <i class="material-icons">send</i>
+        Enregistrer !
+    </a>
+    <a
+        ng-if="ctrl.success"
+        ng-click="ctrl.close()"
+        class="btn orange-btn"
+        >
+        <i class="material-icons">close</i>
+        Fermer
+    </a>
+</div>

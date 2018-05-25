@@ -1,0 +1,49 @@
+<div
+    class="login-content"
+    ng-class="{loading: ctrl.loading}"
+    >
+
+    <div class="parent-input with-icon phone-icon">
+        <input
+            id="login-username"
+            type="text"
+            ng-model="ctrl.phone"
+            placeholder="Votre téléphone"
+            ng-enter="ctrl.login()"
+            autocomplete="tel"
+            />
+    </div>
+    <div class="parent-input with-icon security-icon">
+        <input
+            type="password"
+            ng-model="ctrl.password"
+            placeholder="Votre mot de passe"
+            ng-enter="ctrl.login()"
+            autocomplete="password"
+            />
+    </div>
+    <label>
+        <input
+            type="checkbox"
+            ng-model="ctrl.keepLogged"
+            />
+        <span>Rester connecté sur cet appareil</span>
+    </label>
+    <a
+        class="btn dark-btn"
+        ng-click="ctrl.login()"
+        >
+        Connexion
+    </a>
+    <div
+        class="error"
+        ng-if="ctrl.error"
+        ng-bind="ctrl.error"
+        ></div>
+    <div
+        class="forgot-code"
+        ng-click="ctrl.openNewPasswordModal()"
+        >
+        Mot de passe oublié ?
+    </div>
+</div>

@@ -1,5 +1,6 @@
 @media screen and (min-width: 901px) {
-	#site-header-right #header-download-btn:not(.desktop-btn) {
+	#site-header-right #header-download-btn:not(.desktop-btn),
+	.mobile-only {
 		display: none;
 	}
 }
