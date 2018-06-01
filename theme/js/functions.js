@@ -23,7 +23,7 @@ function isMobile() {
 }
 
 function getApiUrl() {
-  if (window.location.hostname != 'localhost')
+  if (window.location.hostname == 'localhost')
     return 'https://entourage-back-preprod.herokuapp.com/api/v1';
   else
     return 'https://api.entourage.social/api/v1';
