@@ -1,56 +1,93 @@
 <div class="modal-header">
-    Bienvenue sur Entourage ! Présentons-nous...
+    <span ng-if="ctrl.has_password">Bienvenue sur Entourage ! Présentons-nous...</span>
+     <span ng-if="!ctrl.has_password">Bienvenue sur le site d'Entourage !</span>
 </div>
 <div
     class="modal-body"
     ng-class="{loading: ctrl.loading}"
     >
     <div class="form">
-        <fieldset>
-            <label>1. Pour commencer, et si vous nous disiez qui vous êtes ? C'est obligatoire, mais pas d'inquiétude, votre nom sera masqué :</label>
-            <div class="input-line">
+        <div ng-if="ctrl.has_password">
+            <fieldset>
+                <label>1. Pour commencer, et si vous nous disiez qui vous êtes ? C'est obligatoire, mais pas d'inquiétude, votre nom sera masqué :</label>
+                <div class="input-line">
+                    <input
+                        type="text"
+                        ng-model="ctrl.first_name"
+                        placeholder="Votre prénom"
+                    />
+                    <input
+                        type="text"
+                        ng-model="ctrl.last_name"
+                        placeholder="Votre nom (ne sera pas affiché)"
+                    />
+                </div>
+            </fieldset>
+            <fieldset>
+                <label>2. Présentez-vous en quelques mots à la communauté :</label>
+                <div class="parent-input with-icon message-icon">
+                    <textarea
+                        ng-model="ctrl.about"
+                        placeholder="Pourquoi avez-vous rejoint Entourage ?"
+                    ></textarea>
+                </div>
+            </fieldset>
+            <fieldset>
+                <label>3. Quel est votre email ? Il est nécessaire pour nous afin de pouvoir vous renvoyer votre mot de passe si vous perdez votre téléphone</label>
+                <div class="parent-input with-icon email-icon">
+                    <input
+                        type="text"
+                        ng-model="ctrl.email"
+                        placeholder="Votre email"
+                    />
+                </div>
+            </fieldset>
+            <fieldset>
+                <label>4. Pour finir, téléchargez une photo de vous afin de mettre un visage sur votre profil !</label>
+                <label for="file-upload" class="btn dark-btn upload-btn">
+                    <i class="material-icons">file_upload</i> Télécharger
+                </label>
                 <input
-                    type="text"
-                    ng-model="ctrl.first_name"
-                    placeholder="Votre prénom"
+                    id="file-upload"
+                    type="file"
+                    fileread="ctrl.avatar_key"
                 />
-                <input
-                    type="text"
-                    ng-model="ctrl.last_name"
-                    placeholder="Votre nom (ne sera pas affiché)"
-                />
-            </div>
-        </fieldset>
-        <fieldset>
-            <label>2. Présentez-vous en quelques mots à la communauté :</label>
-            <div class="parent-input with-icon message-icon">
-                <textarea
-                    ng-model="ctrl.about"
-                    placeholder="Pourquoi avez-vous rejoint Entourage ?"
-                ></textarea>
-            </div>
-        </fieldset>
-        <fieldset>
-            <label>3. Quel est votre email ? Il est nécessaire pour nous afin de pouvoir vous renvoyer votre mot de passe si vous perdez votre téléphone</label>
-            <div class="parent-input with-icon email-icon">
-                <input
-                    type="text"
-                    ng-model="ctrl.email"
-                    placeholder="Votre email"
-                />
-            </div>
-        </fieldset>
-        <fieldset>
-            <label>4. Pour finir, téléchargez une photo de vous afin de mettre un visage sur votre profil !</label>
-            <label for="file-upload" class="btn dark-btn upload-btn">
-                <i class="material-icons">file_upload</i> Télécharger
-            </label>
-            <input
-                id="file-upload"
-                type="file"
-                fileread="ctrl.avatar_key"
-            />
-        </fieldset>
+            </fieldset>
+        </div>
+        <div ng-if="!ctrl.has_password">
+            <fieldset>
+                <label>1. Veuillez définir un mot de passe (au moins 8 caractères)&nbsp;: </label>
+                <div class="parent-input with-icon security-icon">
+                    <input
+                        type="text"
+                        ng-model="ctrl.password"
+                        placeholder="Votre nouveau mot de passe"
+                    />
+                </div>
+            </fieldset>
+            <fieldset>
+                <label>2. Veuillez écrire à nouveau ce mot de passe&nbsp;:</label>
+                <div class="parent-input with-icon security-icon">
+                    <input
+                        type="text"
+                        ng-model="ctrl.password_confirm"
+                        ng-enter="ctrl.submit()"
+                        placeholder="Votre nouveau mot de passe"
+                    />
+                </div>
+            </fieldset>
+            <fieldset ng-if="!ctrl.currentUser.email">
+                <label>3. Quel est votre email ? Il est nécessaire pour nous afin de pouvoir vous renvoyer votre mot de passe si vous perdez votre téléphone</label>
+                <div class="parent-input with-icon email-icon">
+                    <input
+                        type="text"
+                        ng-model="ctrl.email"
+                        ng-enter="ctrl.submit()"
+                        placeholder="Votre email"
+                    />
+                </div>
+            </fieldset>
+        </div>
         <div
             class="error"
             ng-repeat="error in ctrl.errors"

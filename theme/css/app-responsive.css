@@ -213,20 +213,24 @@
         margin-top: 14px;
     }
 
+    #user-messages:hover {
+        right: 0;
+        background: #fff;
+        z-index: 1;
+    }
+
     #user-messages:hover .dropdown-menu,
     #user-menu:hover .dropdown-menu {
         top: 50px;
         right: 0;
         left: 0;
         background-color: #f9f9f9;
-        border-top: 1px solid #eee;
         border-radius: 0;
+        padding-top: 0;
     }
 
     #user-messages #messages-content,
     #user-menu .dropdown-menu > ul {
-        margin: 0 10px;
-        border-radius: 6px;
     }
 
     #site-header-right .dropdown-menu li > a {
@@ -272,6 +276,14 @@
 
 
     /** MAP **/
+
+    #map {
+        padding-left: 0px;
+    }
+
+    #map-bottom-band {
+        padding-right: 80px;
+    }
 
     .gm-style > div > div .gmnoprint {
         animation: none !important;
@@ -319,7 +331,7 @@
     #current-action .action-actions .action-close {
         position: absolute;
         top: 13px;
-        left: 10px;
+        left: 0px;
     }
 
     #current-action .action-actions a {
@@ -341,6 +353,10 @@
 
     #current-action .action-title {
         padding: 15px 30px; 
+    }
+
+    #current-action .action-chat {
+        padding: 0 20px;
     }
 
     #current-action .action-buttons {

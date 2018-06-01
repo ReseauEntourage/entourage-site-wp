@@ -17,14 +17,11 @@ angular.module('entourageApp')
 
         delete ctrl.error;
 
-        // 0755881784
-        // 755982 
-
         if (!ctrl.phone) {
           ctrl.error = "Entrez votre téléphone !";
         }
-        else if (!ctrl.password || !ctrl.password.match(/[0-9]{6}/)) {
-          ctrl.error = "Votre mot de passe est composé de 6 chiffres";
+        else if (!ctrl.password) {
+          ctrl.error = "Entrez votre mot de passe !";
         }
         else {
           ctrl.loading = true;

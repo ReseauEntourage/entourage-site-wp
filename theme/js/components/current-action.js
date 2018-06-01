@@ -27,7 +27,7 @@ angular.module('entourageApp')
           console.info('newAction', newValue);
 
           if (oldValue && oldValue.marker)
-            oldValue.marker.setTitle(translateTitle(oldValue.status));
+            oldValue.marker.setTitle(getMarkerTitle(oldValue.status));
 
           ctrl.openAction();
         }
@@ -35,8 +35,8 @@ angular.module('entourageApp')
 
       ctrl.openAction = function () {
         if (ctrl.action.marker) {
-          ctrl.action.marker.setTitle(translateTitle(ctrl.action.status, true));
-          ctrl.map.setCenter(ctrl.action.marker.getPosition());
+          ctrl.action.marker.setTitle(getMarkerTitle(ctrl.action.status, true));
+          // ctrl.map.setCenter(ctrl.action.marker.getPosition());
 
           if (ctrl.public)
             ctrl.map.setZoom(13);
@@ -48,7 +48,7 @@ angular.module('entourageApp')
           if (ctrl.action.join_status == 'accepted') {
 
             ctrl.getTimeline();
-            ctrl.checkingInfoInterval = setInterval(ctrl.getTimeline, 300000);
+            ctrl.checkingInfoInterval = setInterval(ctrl.getTimeline, 30000);
 
             // mark as read
             $.ajax({
@@ -156,6 +156,7 @@ angular.module('entourageApp')
       }
 
       ctrl.getTimeline = function(forced) {
+        console.info('getTimeline', ctrl.action);
         if (ctrl.loading && !forced)
           return;
 
@@ -186,7 +187,6 @@ angular.module('entourageApp')
               });
             }
             ctrl.getMessages();
-            $scope.$apply();
           },
           error: function(data) {
             ctrl.loading = false;
@@ -220,6 +220,11 @@ angular.module('entourageApp')
               }));
 
               ctrl.sortTimeline();
+            }
+            else
+            {
+              ctrl.loading = false;
+              $scope.$apply();
             }
           },
           error: function(data) {
@@ -310,7 +315,7 @@ angular.module('entourageApp')
             }
           },
           success: function(data) {
-            ctrl.getTimeline();
+            ctrl.getTimeline(true);
           },
           error: function(data) {
             alert("Erreur : le statut de l'utilisateur n'a pu être changé, réessayez ou contactez l'équipe d'Entourage");
@@ -322,7 +327,7 @@ angular.module('entourageApp')
 
       ctrl.hide = function() {
         if (ctrl.action.marker)
-          ctrl.action.marker.setTitle(translateTitle(ctrl.action.status));
+          ctrl.action.marker.setTitle(getMarkerTitle(ctrl.action.status));
         ctrl.open = false;
 
         window.history.pushState('page3', ctrl.action.title, '/app');
@@ -393,7 +398,7 @@ angular.module('entourageApp')
             $scope.$apply();
           },
           error: function(data) {
-            alert("Erreur : nous n'avons pas pu clôre cette action, réessayez ou contactez l'équipe d'Entourage");
+            alert("Erreur : nous n'avons pas pu clôturer cette action, réessayez ou contactez l'équipe d'Entourage");
             ctrl.loading = false;
             $scope.$apply();
           }

@@ -96,9 +96,20 @@
         >
         <div>
             <div>
-                <img class="app-screenshot" title="Découvrez la carte des actions de la communauté d'Entourage" src="<?php echo get_template_directory_uri(); ?>/img/logo-entourage-orange.png"/>
+                <img
+                    class="app-screenshot"
+                    title="Découvrez la carte des actions de la communauté d'Entourage"
+                    src="<?php echo get_template_directory_uri(); ?>/img/logo-entourage-orange.png"
+                    />
             </div>
-            <h1><a href="http://www.entourage.social/" target="_blank">Entourage</a>, <?php echo $custom_fields['titre'][0] ?>...</h1>
+            <h1>
+                <a
+                        href="http://www.entourage.social/"
+                        target="_blank"
+                        >
+                    Entourage
+                </a>, <?php echo $custom_fields['titre'][0] ?>...
+            </h1>
         </div>
     </div>
 
@@ -106,15 +117,11 @@
         id="site-header-fixed"
         ng-class="{'show': map.loaded, 'public': map.public}"
         >
-            <a
-                id="site-header-logo"
-                href="/"
-                title="Visiter le site d'Entourage"
-                >
-                <img
-                    src="<?php echo get_template_directory_uri(); ?>/img/logo-entourage-orange.png"
-                    alt="Logo de l'association Entourage"
-                />
+        <a id="site-header-logo">
+            <img
+                src="<?php echo get_template_directory_uri(); ?>/img/logo-entourage-orange.png"
+                alt="Logo de l'association Entourage"
+            />
         </a>
         <div id="site-header-left">
             <div
@@ -324,6 +331,9 @@
                                 <a href="https://blog.entourage.social/charte-ethique-grand-public/" target="_blank">
                                     <i class="material-icons">school</i> Charte éthique
                                 </a>
+                                <a href="http://www.entourage.social/" target="_blank">
+                                    <i class="material-icons">question_answer</i> Voir le site d'Entourage
+                                </a>
                                 <a class="orange" href="https://www.entourage.social/don" target="_blank">
                                     <i class="material-icons">favorite</i> Faire un don
                                 </a>
@@ -359,7 +369,7 @@
                         class="dropdown-toggle link"
                         ng-click="toggleLogin = !toggleLogin"
                         >
-                        <span class="no-mobile">Connectez-nous</span>
+                        <span class="no-mobile">Connectez-vous</span>
                         <span class="mobile-only">Connexion</span>
                     </a>
                     <div
@@ -382,7 +392,7 @@
     </header>
 
     <modal-profile-required
-        ng-if="!map.public && !map.loggedUser.display_name"
+        ng-if="!map.public && (!map.loggedUser.display_name || !map.loggedUser.has_password)"
         id="modal-profile-required"
         user="map.loggedUser"
         ></modal-profile-required>
@@ -409,7 +419,7 @@
 
         <div
             id="map"
-            ng-class="{'loading': map.refreshing}"
+            ng-class="{'loading': map.refreshing, 'full-width': map.public || (map.emptyArea && !map.refreshing)}"
             >
             <feed
                 ng-if="!map.public && !map.emptyArea"

@@ -12,6 +12,7 @@ body,
 
 body {
     font-size: 0;
+    font-weight: 400;
     color: #454545;
 }
 
@@ -568,7 +569,7 @@ div.overlay.fade-out {
 #site-header-right {
     float: none;
     margin-top: 0;
-    margin-right: 15px;
+    margin-right: 18px;
 }
 
 #site-header-right a.btn:not(.orange-btn):not(.dark-btn) {
@@ -589,7 +590,7 @@ div.overlay.fade-out {
 
 #app-search {
     position: relative;
-    margin-right: 15px;
+    margin-right: 18px;
     display: flex;
     padding: 0 10px;
     height: 33px;
@@ -664,11 +665,11 @@ div.overlay.fade-out {
 /** MESSAGES **/
 
 #user-messages {
-    margin: 0 15px;
+    margin: 0 18px;
 }
 
 #user-messages .dropdown-menu {
-    right: 67px;
+    right: 0;
     background: transparent;
     box-shadow: none;
 }
@@ -677,6 +678,8 @@ div.overlay.fade-out {
     position: fixed;
     top: 47px;
     bottom: 0;
+    padding-top: 13px;
+    padding-bottom: 0;
     min-width: inherit;
 }
 
@@ -684,8 +687,9 @@ div.overlay.fade-out {
     max-height: 100%;
     overflow: auto;
     background: #fff;
-    box-shadow: 0px 0px 3px 2px rgba(60, 72, 103, 0.1);
-    border-radius: 3px;
+    border-top: 1px solid #eee;
+    box-shadow: -2px 2px 5px 0px rgba(60, 72, 103, 0.1);
+    border-radius: 0 0 0 3px;
 }
 
 #user-messages .no-content {
@@ -705,16 +709,15 @@ div.overlay.fade-out {
     margin-left: 10px;
     margin-right: 0;
     max-width: 250px;
+    font-size: 13px;
 }
 
 #user-messages .action-info h2 {
-    font-size: 12px;
     line-height: 12px;
 }
 
 #user-messages .action-info p {
     margin-top: 2px;
-    font-size: 12px;
     color: #8c8c8c;
 }
 
@@ -745,6 +748,8 @@ div.overlay.fade-out {
     position: fixed;
     top: 47px;
     bottom: 0;
+    padding-top: 13px;
+    padding-bottom: 0;
     min-width: inherit;
 }
 
@@ -752,8 +757,9 @@ div.overlay.fade-out {
     max-height: 100%;
     overflow: auto;
     background: #fff;
-    box-shadow: 0px 0px 3px 2px rgba(60, 72, 103, 0.1);
-    border-radius: 3px;
+    border-top: 1px solid #eee;
+    box-shadow: -2px 2px 5px 0px rgba(60, 72, 103, 0.1);
+    border-radius: 0 0 0 3px;
     font-size: 15px;
 }
 
@@ -860,6 +866,9 @@ div.overlay.fade-out {
     text-align: right;
     margin-top: 4px;
     cursor: pointer;
+}
+
+#site-header-login .login-content .forgot-code a {
     text-decoration: underline;
 }
 
@@ -1149,7 +1158,7 @@ div.overlay.fade-out {
 .action-item .action-status {
     margin-top: 6px;
     color: #858484;
-    font-size: 12px;
+    font-size: 13px;
 }
 
 .action-item .action-status i {
@@ -1440,8 +1449,14 @@ div.overlay.fade-out {
 
 #map {
     position: relative;
+    padding-top: 60px;
+    padding-left: 340px;
     overflow: hidden;
     transition: opacity 0.3s;
+}
+
+#map.full-width {
+    padding-left: 0px;
 }
 
 #map.loading {
@@ -1499,8 +1514,8 @@ div.overlay.fade-out {
 
 #current-action .action-actions {
     margin-bottom: 3px;
-    height: 24px;
-    line-height: 24px;
+    height: 28px;
+    line-height: 28px;
     color: #fff;
     display: flex;
     align-items: center;
@@ -1513,7 +1528,7 @@ div.overlay.fade-out {
     display: inline-block;
     cursor: pointer;
     font-weight: 400;
-    border-radius: 12px;
+    border-radius: 30px;
     vertical-align: top;
 }
 
@@ -1522,7 +1537,7 @@ div.overlay.fade-out {
 }
 
 #current-action .action-actions a i {
-    font-size: 15px;
+    font-size: 16px;
     color: #fff;
 }
 
@@ -1534,11 +1549,11 @@ div.overlay.fade-out {
 
 #current-action .action-left-actions a i {
     margin-right: 4px;
-    font-size: 13px;    
+    height: 20px;    
 }
 
 #current-action .action-right-actions a {
-    width: 24px;
+    width: 28px;
     background-color: #626262;
 }
 
@@ -1579,13 +1594,16 @@ div.overlay.fade-out {
 
 #current-action .action-details {
     position: relative;
-    font-size: 11px;
+    font-size: 12px;
     color: #6C6F73;
     text-align: left;
     line-height: 26px;
-    border-bottom: 1px solid #f1f1f1;
     padding-right: 10px;
-    margin-bottom: 6px;
+}
+
+#current-action .action-details + .action-description {
+    padding-top: 6px;
+    border-top: 1px solid #f1f1f1;
 }
 
 #current-action .action-description {
@@ -1633,6 +1651,7 @@ div.overlay.fade-out {
 #current-action .own-message .action-chat-message {
     background: #ff5100;
     color: #fff;
+    text-align: left;
 }
 
 #current-action .action-chat .centered {
@@ -1686,9 +1705,9 @@ div.overlay.fade-out {
 }
 
 #current-action .action-new-message input {
-    padding-left: 13px; 
     height: 37px;
     font-size: 14px;
+    font-weight: 400;
     line-height: 37px;
     width: 100%;
     box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.2);
@@ -1715,6 +1734,7 @@ div.overlay.fade-out {
     border-radius: 100%;
     margin-top: -7px;
     margin-left: -7px;
+    transition: background 0.3s;
 }
 
 .gm-style > div > div .gmnoprint:nth-child(2n) {
@@ -1733,42 +1753,30 @@ div.overlay.fade-out {
 .gm-style > div > div .gmnoprint[title*=Terminée] {
     animation: none;
     opacity: 0.7 !important;
-    box-shadow: 0 0 2px 2px #ff8404;
+    box-shadow: 0 0 2px 2px #505050;
     transform: scale(0.7);
+    background: #505050;
+    z-index: -99 !important;
 }
 
-@keyframes pulse {
-    0% {
-    	opacity: 0.7 !important;
-    	box-shadow: 0 0 6px 4px #ff8404;
-    }
-    50% {
-    	opacity: 0.2 !important;
-    	box-shadow: 0 0 6px 7px #ff8404;
-    }
-    100% {
-    	opacity: 0.8 !important;
-    	box-shadow: 0 0 6px 4px #ff8404;
-    }
+.gm-style > div > div .gmnoprint[title*=ouverte]:before {
+    content: "";
+    background: #ff7331;
+    width: 30px;
+    height: 30px;
+    display: block;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
 }
 
-@keyframes rotate {
-    0% {
-    	transform: rotate(0deg);
-    }
-    100% {
-    	transform: rotate(360deg);
-    }
-}
-
-.gm-style > div > div .gmnoprint:hover,
+.gm-style > div > div .gmnoprint[title*=cours]:hover,
 .gm-style > div > div .gmnoprint[title*=ouverte] {
-    box-shadow: 0 0 6px 6px #fff;
-    background: #ff3c00;
-    transform: scale(1.2);
-    opacity: 1 !important;
+    background: #ff5100;
 	z-index: 9998 !important;
-	animation: none;
+    animation: pulseActive 3s infinite;
 }
 
 .gm-style > div > div .gmnoprint:hover {
@@ -1790,6 +1798,39 @@ div.overlay.fade-out {
     border-top: 1px solid #eee;
     padding-top: 5px;
     color: #6C6F73;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 6px 4px #ff8404;
+    }
+    50% {
+        box-shadow: 0 0 6px 7px #ff8404;
+    }
+    100% {
+        box-shadow: 0 0 6px 4px #ff8404;
+    }
+}
+
+@keyframes pulseActive {
+    0% {
+        box-shadow: 0 0 6px 4px #e04e0a;
+    }
+    50% {
+        box-shadow: 0 0 6px 7px #e04e0a;
+    }
+    100% {
+        box-shadow: 0 0 6px 4px #e04e0a;
+    }
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 

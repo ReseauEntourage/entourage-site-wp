@@ -5,7 +5,7 @@ angular.module('entourageApp', ['ui.bootstrap'])
     var mapsDefer = $q.defer();
 
     // Google's url for async maps initialization accepting callback function
-    var asyncUrl = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyATSImG1p5k6KydsN7sESLVM2nREnU7hZk&libraries=places&callback=';
+    var asyncUrl = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyATSImG1p5k6KydsN7sESLVM2nREnU7hZk&libraries=places,geometry&callback=';
 
     // async loader
     var asyncLoad = function(asyncUrl, callbackName) {
@@ -47,7 +47,6 @@ angular.module('entourageApp', ['ui.bootstrap'])
       }
     });
 
-    // 
     if (getQueryParams('preprod')) {
       map.showOnlyInPreprod = true;
     }
@@ -58,42 +57,22 @@ angular.module('entourageApp', ['ui.bootstrap'])
       map.public = false;
     }
 
-    // set default filters
-    if (map.public && map.mobileView) {
-      map.filters = {
-        status: 'open',
-        period: '7'
-      };
-    }
-    else {
-      map.filters = {
-        status: localStorage.getItem('filter_status') ? localStorage.getItem('filter_status') : '',
-        period: localStorage.getItem('filter_period') ? localStorage.getItem('filter_period') : '90'
-      };
-    }
-
     initMap = function(position) {
 
       map.actions = [];
 
-      // size of marker icons
-      map.actionIcon = {
-        meters: 250,
-        pixels: null
-      };
-
-      // default parameters of our map (centered on France)
+      // default parameters of our map (centered on Paris)
       map.mapObjectParams = {
         maxZoom: 15,
         minZoom: 3,
         zoom: 6,
         center: {
-          lat: 48.8588376,
-          lng: 2.2773456
+          lat: 48.85453279673971,
+          lng: 2.3678111456542865
         }
       };
 
-      // center the map on the user position (if given)
+      // center the map on a custom position (if given)
       if (position && position.coords) {
         map.mapObjectParams.zoom = 13;
         map.mapObjectParams.center.lat = position.coords.latitude;
@@ -102,96 +81,54 @@ angular.module('entourageApp', ['ui.bootstrap'])
 
       if (!map.public) {
         map.mapObjectParams.zoom = 14;
-        map.mapObjectParams.minZoom = 14;
+        map.mapObjectParams.minZoom = 12;
         map.mapObjectParams.maxZoom = 14;
-        map.mapObjectParams.disableDefaultUI = true; 
       }
 
       map.mapObject = new google.maps.Map(document.getElementById('map-container'), map.mapObjectParams);
 
-      // get actions
-      if (map.public) {
-        getAllActions();
-      }
-      else {
+      setMarkersCustomStyle();
 
-        // if shared action, center map on it before loading feed
-        if (getQueryParams('token')) {
-          $.ajax({
-            type: 'GET',
-            url: getApiUrl() + '/entourages/' + getQueryParams('token'),
-            data: {
-              token: map.loggedUser.token
-            },
-            success: function(data) {
-              if (data.entourage) {
-                map.mapObject.setCenter(new google.maps.LatLng(data.entourage.location.latitude, data.entourage.location.longitude));
-              }
-              getFeed();
-            },
-            error: function() {
-              getFeed();
-            }
-          });
-        }
-        else {
-          getFeed();
-        }
-      }
-    }
+      // when the user zooms the map
+      google.maps.event.addListener(map.mapObject, 'zoom_changed', function() {
+        setMarkersCustomStyle();
 
-    getFeed = function(refreshing) {
-      if (refreshing) {
-        clearMarkers();
-        map.actions = [];
-        map.refreshing = true;
-      }
-
-      data = {
-        token: map.loggedUser.token,
-        latitude: map.mapObject.getCenter().lat(),
-        longitude: map.mapObject.getCenter().lng(),
-        announcements: "v1"
-      };
-
-      if (map.filters.period != '') {
-        data.time_range = map.filters.period * 24
-      }
-
-      $.ajax({
-        type: 'GET',
-        url: getApiUrl() + '/feeds',
-        data: data,
-        success: function(data) {
-          if (data.feeds)
-          {
-            data.feeds.map(function(action){
-              action.data.type = action.type;
-              action = transformAction(action.data);
-              if (action.type != 'Announcement') {
-                action = createMarker(action);
-              }
-              map.actions.push(action);
-              return action;
-            });
-
-            isMapEmpty();
-
-            if (refreshing) {
-              map.refreshing = false;
-              $scope.$apply();
-            }      
-            else
-              endInitMap();
-          }
-          else
-            alert("Il y a eu une erreur, merci de réessayer ou de nous contacter");
-          $scope.$apply();
+        if (!map.public) {
+          getPrivateFeed(true);
         }
       });
+
+      // when the user drags the map
+      google.maps.event.addListener(map.mapObject, 'dragend', function(){
+        if (map.public) {
+          isMapEmpty();
+        }
+        else {
+          getPrivateFeed(true);
+        }
+      });
+
+      getActions();
     }
 
-    getAllActions = function() {
+
+    // ** ACTIONS **/
+
+    getActions = function() {
+      if (map.public) {
+        getPublicActions();
+      }
+      else {
+        google.maps.event.addListener(map.mapObject, 'bounds_changed', function() {
+          if (!map.isMapReady) {
+            map.isMapReady = true;
+            initFeed();
+          }
+        });
+      }
+    }
+
+    getPublicActions = function() {
       $.ajax({
         type: "GET",
         url: "https://entourage-csv.s3-eu-west-1.amazonaws.com/production/entourages.csv",
@@ -216,115 +153,119 @@ angular.module('entourageApp', ['ui.bootstrap'])
             // hide if filters
             map.filterAction(i);
           }
-          endInitMap();
-        }
-      });
-    }
 
-    endInitMap = function() {
-      console.info("actions", map.actions);
+          // display action if token in url
+          if (getQueryParams('token')) {
+            map.showAction({uuid: getQueryParams('token')});
+          } 
 
-      // display action if token in url
-      if (getQueryParams('token')) {
-        map.showAction({uuid: getQueryParams('token')});
-      } 
-
-      // redraw all icons when zoom changes
-      markersCustomCSS();
-      google.maps.event.addListener(map.mapObject, 'zoom_changed', markersCustomCSS);
-
-      google.maps.event.addListener(map.mapObject, 'dragend', function(){
-        if (map.public) {
           isMapEmpty();
-        }
-        else {
-          getFeed(true);
+          
+          map.loaded = true;
+          $scope.$apply();
         }
       });
-
-      isMapEmpty();
-      
-      initSearchbox();
-
-      // remove loader
-      map.loaded = true;
-
-      $scope.$apply();
     }
 
-    createMarker = function(action) {
-      action.latLng = new google.maps.LatLng(action.location.latitude, action.location.longitude);
-
-      // create marker
-      action.marker = new google.maps.Marker({
-        id: map.actions.length,
-        position: action.latLng,
-        map: map.mapObject,
-        title: translateTitle(action.status),
-        icon: {
-          path: google.maps.SymbolPath.CIRCLE,
-          fillOpacity: 0,
-          strokeWeight: 0
-        },
-        animation: google.maps.Animation.DROP
-      });
-
-      // display action title when marker hovered
-      action.marker.addListener('mouseover', showTitle);
-      action.marker.addListener('mouseout', hideTitle);
-      
-      // show detailed action window when marker clicked
-      action.marker.addListener('click', function(){
-        map.showAction(null, this.id, true);
-      });
-
-      return action;
-    }
-
-    clearMarkers = function() {
-      for (var i = 0; i < map.actions.length; i++) {
-        if (map.actions[i].marker)
-          map.actions[i].marker.setMap(null);
+    initFeed = function() {
+      // if shared action, center map on it before loading feed
+      if (getQueryParams('token')) {
+        $.ajax({
+          type: 'GET',
+          url: getApiUrl() + '/entourages/' + getQueryParams('token'),
+          data: {
+            token: map.loggedUser.token
+          },
+          success: function(data) {
+            if (data.entourage) {
+              map.mapObject.setCenter(new google.maps.LatLng(data.entourage.location.latitude, data.entourage.location.longitude));
+            }
+            getPrivateFeed();
+          },
+          error: function() {
+            getPrivateFeed();
+          }
+        });
+      }
+      else {
+        getPrivateFeed();
       }
     }
 
-    translateTitle = function(status, active) {
-      switch (status) {
-        case 'open':
-          title = 'En cours';
-          break;
-        case 'closed':
-          title = 'Terminée';
-          break;
-        default:
-          title = '';
+    getPrivateFeed = function(refreshing) {
+      if (refreshing) {
+        clearMarkers();
+        map.actions = [];
+        map.refreshing = true;
       }
-      if (active)
-        title += ' (ouverte)';
-      return title;
-    }
 
-    initSearchbox = function() {
-      var Autocomplete = new google.maps.places.Autocomplete(document.getElementById('app-search-input'), {
-        types: ['(cities)'] 
-      });
+      map.boundsSize = getBoundsSize(map.mapObject.getBounds());
 
-      Autocomplete.addListener('place_changed', function() {
-        var place = Autocomplete.getPlace();
+      data = {
+        token: map.loggedUser.token,
+        latitude: map.mapObject.getCenter().lat(),
+        longitude: map.mapObject.getCenter().lng(),
+        distance: Math.ceil(Math.max(map.boundsSize.x, map.boundsSize.y) / 2 / 1000),
+        announcements: "v1"
+      };
 
-        if (place.geometry) {
-          map.currentAddress = place.formatted_address;
-          localStorage.setItem('city', map.currentAddress);
-          map.mapObject.setCenter(place.geometry.location);
+      if (map.filters.period != '') {
+        data.time_range = map.filters.period * 24
+      }
 
-          if (map.public) {
-            map.mapObject.setZoom(13);
-            isMapEmpty();
+      $.ajax({
+        type: 'GET',
+        url: getApiUrl() + '/feeds',
+        data: data,
+        success: function(data) {
+          if (data.feeds)
+          {
+            var visibleActionsCount = 0;
+            var mapPoly = new google.maps.Polygon({
+              paths: [
+                {
+                  lat: map.mapObject.getBounds().getNorthEast().lat(),
+                  lng: map.mapObject.getBounds().getNorthEast().lng()
+                },
+                {
+                  lat: map.mapObject.getBounds().getNorthEast().lat(),
+                  lng: map.mapObject.getBounds().getSouthWest().lng()
+                },
+                {
+                  lat: map.mapObject.getBounds().getSouthWest().lat(),
+                  lng: map.mapObject.getBounds().getSouthWest().lng()
+                },
+                {
+                  lat: map.mapObject.getBounds().getSouthWest().lat(),
+                  lng: map.mapObject.getBounds().getNorthEast().lng()
+                },
+              ]});
+
+            for (id in data.feeds) {
+              var action = data.feeds[id];
+              action.data.type = action.type;
+              action = transformAction(action.data);
+              if (action.type != 'Announcement') {
+                var visible = google.maps.geometry.poly.containsLocation(new google.maps.LatLng(action.location.latitude, action.location.longitude), mapPoly);
+                if (visible) {
+                  visibleActionsCount += 1;
+                  action = createMarker(action);
+                  map.actions.push(action);
+                }
+              }
+              else {
+                map.actions.push(action);
+              }
+            }
+
+            map.emptyArea = !visibleActionsCount;
+
+            console.info('actions', map.actions);
+
+            map.refreshing = false;
+            map.loaded = true;
+            $scope.$apply();   
           }
-          else {
-            getFeed(true);
-          }
-          $scope.$apply(); 
         }
       });
     }
@@ -350,39 +291,37 @@ angular.module('entourageApp', ['ui.bootstrap'])
         }
       }
       map.emptyArea = count < value;
-      if (!map.public && !map.actions.filter(function(e){return e.type != 'Announcement'}).length)
-        map.emptyArea = true;
       $scope.$apply();
     }
 
-    markersCustomCSS = function() {
-      map.actionIcon.pixels = metersToPixels(map.actionIcon.meters, map.mapObject.getCenter().lat());
-      $('#inline-style').text('.gm-style > div > div .gmnoprint {width: ' + map.actionIcon.pixels + 'px !important;height: ' + map.actionIcon.pixels + 'px !important;margin: -' + (map.actionIcon.pixels/2) + 'px !important; transform-origin: ' + (map.actionIcon.pixels/3) + 'px ' + (map.actionIcon.pixels/3) + 'px;}');
+    getBoundsSize = function(bounds) {
+      var NE = bounds.getNorthEast();
+      var SW = bounds.getSouthWest();
+      var NW = new google.maps.LatLng(NE.lat(), SW.lng());
+
+      return {
+        x: google.maps.geometry.spherical.computeDistanceBetween(NW, NE),
+        y: google.maps.geometry.spherical.computeDistanceBetween(NW, SW)
+      };
     }
 
-    metersToPixels = function(meters, lat) {
-      return meters / (156543.03392 * Math.cos(lat * Math.PI / 180) / Math.pow(2, map.mapObject.getZoom()));
-    }
+    placeChanged = function(city, location) {
+      map.currentAddress = city;
+      localStorage.setItem('city', map.currentAddress);
+      map.mapObject.setCenter(location);
 
-    showTitle = function() {
-      map.infoWindow = new google.maps.InfoWindow({
-        pixelOffset: new google.maps.Size(0, map.actionIcon.pixels / -2),
-        content: '<div class="gm-info-window" data-id="' + this.id + '"><b>' + map.actions[this.id].title + '</b><div><div class="action-author-picture" style="background-image: url(' + map.actions[this.id].author.avatar_url + ')"></div><b>' + map.actions[this.id].author.display_name + '</b>, le ' + $filter('date')(map.actions[this.id].created_at, 'dd/MM/yy') + '</div></div>'
-      });
-      map.infoWindow.open(map.mapObject, this);
+      if (map.public) {
+        map.mapObject.setZoom(13);
+        isMapEmpty();
+      }
+      else {
+        getPrivateFeed(true);
+      }
+      $scope.$apply(); 
     }
-
-    hideTitle = function() {
-      if (map.infoWindow)
-        map.infoWindow.close();
-    }
-
-    $(document).on('click', '.gm-info-window', function(e){
-      map.showAction(null, $(this).attr('data-id'));
-    });
 
     map.showAction = function(action, index, apply) {
-      hideTitle();
+      hideMarkerTitle();
 
       if (index == undefined && action.uuid) {
         for (var i = 0; i < map.actions.length; i++) {
@@ -426,12 +365,101 @@ angular.module('entourageApp', ['ui.bootstrap'])
       }
     }
 
+
+    // ** MARKERS **/
+
+    createMarker = function(action) {
+      action.latLng = new google.maps.LatLng(action.location.latitude, action.location.longitude);
+
+      // create marker
+      action.marker = new google.maps.Marker({
+        id: map.actions.length,
+        position: action.latLng,
+        map: map.mapObject,
+        title: getMarkerTitle(action.status),
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          fillOpacity: 0,
+          strokeWeight: 0
+        },
+        animation: google.maps.Animation.DROP
+      });
+
+      // display action title when marker hovered
+      action.marker.addListener('mouseover', showMarkerTitle);
+      action.marker.addListener('mouseout', hideMarkerTitle);
+      
+      // show detailed action window when marker clicked
+      action.marker.addListener('click', function(){
+        map.showAction(null, this.id, true);
+      });
+
+      return action;
+    }
+
+    showMarkerTitle = function() {
+      map.infoWindow = new google.maps.InfoWindow({
+        pixelOffset: new google.maps.Size(0, map.actionIcon.pixels / -2),
+        content: '<div class="gm-info-window" data-id="' + this.id + '"><b>' + map.actions[this.id].title + '</b><div><div class="action-author-picture" style="background-image: url(' + map.actions[this.id].author.avatar_url + ')"></div><b>' + map.actions[this.id].author.display_name + '</b>, le ' + $filter('date')(map.actions[this.id].created_at, 'dd/MM/yy') + '</div></div>'
+      });
+      map.infoWindow.open(map.mapObject, this);
+    }
+
+    hideMarkerTitle = function() {
+      if (map.infoWindow)
+        map.infoWindow.close();
+    }
+
+    getMarkerTitle = function(status, active) {
+      switch (status) {
+        case 'open':
+          title = 'En cours';
+          break;
+        case 'closed':
+          title = 'Terminée';
+          break;
+        default:
+          title = '';
+      }
+      if (active)
+        title += ' (ouverte)';
+      return title;
+    }
+
+    clearMarkers = function() {
+      for (var i = 0; i < map.actions.length; i++) {
+        if (map.actions[i].marker)
+          map.actions[i].marker.setMap(null);
+      }
+    }
+
+    // size of marker icons
+    map.actionIcon = {
+      meters: 250,
+      pixels: null
+    };
+
+    setMarkersCustomStyle = function() {
+      map.actionIcon.pixels = metersToPixels(map.actionIcon.meters, map.mapObject.getCenter().lat());
+      $('#inline-style').text('.gm-style > div > div .gmnoprint {width: ' + map.actionIcon.pixels + 'px !important;height: ' + map.actionIcon.pixels + 'px !important;margin: -' + (map.actionIcon.pixels/2) + 'px !important; transform-origin: ' + (map.actionIcon.pixels/3) + 'px ' + (map.actionIcon.pixels/3) + 'px;}');
+    }
+
+    metersToPixels = function(meters, lat) {
+      return meters / (156543.03392 * Math.cos(lat * Math.PI / 180) / Math.pow(2, map.mapObject.getZoom()));
+    }
+
+    // click event on marker
+    $(document).on('click', '.gm-info-window', function(e){
+      map.showAction(null, $(this).attr('data-id'));
+    });
+
     map.logout = function() {
       localStorage.removeItem('user');
       localStorage.removeItem('keep-user');
       sessionStorage.removeItem('logged');
       window.location.reload();
     }
+
 
     // MODALS //
 
@@ -442,11 +470,10 @@ angular.module('entourageApp', ['ui.bootstrap'])
     map.showRegistration = function(token) {
       map.registrationToggle = true;
 
-      // TODO: uncomment
-      // if (token)
-      //   ga('send', 'event', 'Click', 'Join', token);
-      // else
-      //   ga('send', 'event', 'Click', 'Join', 'Header');
+      if (token)
+        ga('send', 'event', 'Click', 'Join', token);
+      else
+        ga('send', 'event', 'Click', 'Join', 'Header');
     }
 
     map.toggleNewAction = function() {
@@ -471,17 +498,77 @@ angular.module('entourageApp', ['ui.bootstrap'])
       }
     }
 
-    map.askLocation = function() {
-      navigator.geolocation.getCurrentPosition(initMap, initMap);
-    }
 
-    // SEARCH + FILTERS //
+    // ** SEARCH ** //
+
+    initSearchbox = function() {
+      var input = document.getElementById('app-search-input');
+      var _addEventListener = (input.addEventListener) ? input.addEventListener : input.attachEvent;
+
+      function addEventListenerWrapper(type, listener) {
+          // Simulate a 'down arrow' keypress on hitting 'return' when no pac suggestion is selected,
+          // and then trigger the original listener.
+          if (type == "keydown") {
+              var orig_listener = listener;
+              listener = function(event) {
+                  var suggestion_selected = $('.pac-item-selected').length > 0;
+                  if (event.which == 13 && !suggestion_selected) {
+                      var simulated_downarrow = $.Event('keydown', {
+                          keyCode: 40,
+                          which: 40
+                      });
+                      orig_listener.apply(input, [simulated_downarrow]);
+                  }
+
+                  orig_listener.apply(input, [event]);
+              };
+          }
+
+          _addEventListener.apply(input, [type, listener]);
+      }
+
+      input.addEventListener = addEventListenerWrapper;
+      input.attachEvent = addEventListenerWrapper;
+
+      var Autocomplete = new google.maps.places.Autocomplete(input, {
+        types: ['(cities)'] 
+      });
+
+      Autocomplete.addListener('place_changed', function() {
+        var place = Autocomplete.getPlace();
+
+        if (place.geometry) {
+          placeChanged(place.formatted_address, place.geometry.location);
+        }
+      });
+    }
 
     map.clearAddress = function() {
       map.currentAddress = null;
       $('#app-search-input').val('').focus();
       localStorage.removeItem('address');
       localStorage.removeItem('city');
+    }
+
+    map.askLocation = function() {
+      navigator.geolocation.getCurrentPosition(initMap, initMap);
+    }
+
+
+    // ** FILTERS ** //
+
+    // set defaults
+    if (map.public && map.mobileView) {
+      map.filters = {
+        status: 'open',
+        period: '7'
+      };
+    }
+    else {
+      map.filters = {
+        status: localStorage.getItem('filter_status') ? localStorage.getItem('filter_status') : '',
+        period: localStorage.getItem('filter_period') ? localStorage.getItem('filter_period') : '90'
+      };
     }
 
     map.filterActions = function(type, value) {
@@ -496,7 +583,7 @@ angular.module('entourageApp', ['ui.bootstrap'])
         isMapEmpty();
       }
       else {
-        getFeed(true);
+        getPrivateFeed(true);
       }
     }
 
@@ -523,7 +610,9 @@ angular.module('entourageApp', ['ui.bootstrap'])
       return value;
     }
 
-    // initialize the map when GoogleMaps script is loaded
+
+    // ** INIT ** //
+
     googleMapsInitializer.mapsInitialized.then(function() {
       if (getQueryParams('ville') && getQueryParams('ville') != 'undefined') {
         var city = getQueryParams('ville');
@@ -557,6 +646,8 @@ angular.module('entourageApp', ['ui.bootstrap'])
       else {
         initMap();
       }
+
+      initSearchbox();
     });
 
   }])
