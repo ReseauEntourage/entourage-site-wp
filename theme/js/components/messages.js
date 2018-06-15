@@ -26,21 +26,23 @@ angular.module('entourageApp')
 
         $.ajax({
           type: 'GET',
-          url: getApiUrl() + '/feeds',
+          url: getApiUrl() + '/myfeeds',
           data: {
             token: ctrl.user.token,
-            show_my_entourages_only: true
+            status: "all"
           },
           success: function(data) {
             if (data.feeds) {
               data.feeds.map(function(action){
                 action = transformAction(action.data);
 
-                ctrl.getLastMessage(action);
+                if (action.join_status == 'accepted') {
+                  ctrl.getLastMessage(action);
 
-                ctrl.is_admin = (action.author.id == ctrl.user.id);
-                if (ctrl.is_admin) {
-                  ctrl.getPendingUsers(action);
+                  ctrl.is_admin = (action.author.id == ctrl.user.id);
+                  if (ctrl.is_admin) {
+                    ctrl.getPendingUsers(action);
+                  }
                 }
 
                 ctrl.actions.push(action);
@@ -102,8 +104,21 @@ angular.module('entourageApp')
         });
       }
 
-      ctrl.show = function(action) {
+      ctrl.showAction = function(action) {
+        if (action.number_of_unread_messages) {
+          ctrl.user.unreadMessages -= 1;
+          action.number_of_unread_messages = 0;
+        }
+        simulateMouseOut();
         ctrl.onShowAction({action: action});
+      }
+
+      simulateMouseOut = function() {
+        ctrl.hide = true;
+        $scope.$apply();
+        setTimeout(function(){
+          delete ctrl.hide;
+        }, 100);
       }
     }
   })

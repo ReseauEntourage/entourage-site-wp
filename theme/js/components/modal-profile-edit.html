@@ -34,14 +34,12 @@
                                         ></div>
                                 </div>
                             </div>
-                            <label for="file-upload" class="btn dark-btn upload-btn">
-                                <i class="material-icons">file_upload</i> Télécharger
-                            </label>
-                            <input
-                                id="file-upload"
-                                type="file"
-                                fileread="ctrl.avatar_key"
-                            />
+                            <a
+                                class="btn dark-btn"
+                                ng-click="ctrl.showPicture = true"
+                                >
+                                Changer
+                            </a>
                         </div>
                     </fieldset>
                     <fieldset>
@@ -167,3 +165,8 @@
         Fermer
     </a>
 </div>
+<modal-new-picture
+    ng-if="ctrl.showPicture"
+    show="ctrl.showPicture"
+    user="ctrl.user"
+    ></modal-new-picture>

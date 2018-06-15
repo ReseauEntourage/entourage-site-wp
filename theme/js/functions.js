@@ -66,6 +66,9 @@ function transformAction(action) {
       action.uuid = action.share_url.match(/entourages\/(.*)/)[1];
     else if (action.share_url.match(/token=(.*)/))
       action.uuid = action.share_url.match(/token=(.*)/)[1];
+    if (action.status == 'closed') {
+      action.title = 'TERMINÉ - ' + action.title;
+    }
   }
   return action;
 }

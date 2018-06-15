@@ -1,0 +1,65 @@
+<div class="modal-header">
+    <a
+        class="modal-close mobile-only"
+        ng-click="ctrl.close()"
+        >
+        <i class="material-icons">arrow_back</i>
+    </a>
+    Nouvelle photo de profil
+</div>
+<div
+	id="modal-new-picture"
+    class="modal-body"
+    ng-class="{loading: ctrl.loading}"
+    >
+    <section class="step-download">
+        <label
+        	for="file-upload"
+        	class="btn white-btn upload-btn"
+        	>
+            <i class="material-icons">file_upload</i> Télécharger une image
+        </label>
+        <input
+        	id="file-upload"
+        	type="file"
+        	class="image-crop-filepicker"
+        	fileread="ctrl.imageSrc"
+        	>
+	</section>
+	<image-crop
+		ng-if="ctrl.imageSrc"
+		data-crop="ctrl.crop"
+		data-width="300"
+		data-height="300"
+		data-shape="circle"
+		data-src="ctrl.imageSrc"
+		data-result-blob="ctrl.imageCropResultBlob"
+		data-result="ctrl.imageCropResult"
+		data-step="ctrl.imageCropStep"
+		data-padding="50"
+		data-max-size="500"
+	></image-crop>
+	<div class="form">
+		<div
+	        class="error"
+	        ng-repeat="error in ctrl.errors"
+	        ng-bind="error"
+	        ></div>
+    </div>
+	<a
+		class="modal-close no-mobile"
+		ng-click="ctrl.close()"
+		>
+        <i class="material-icons">close</i>
+    </a>
+</div>
+<div class="modal-footer">
+    <a
+    	ng-if="ctrl.imageCropStep == 2"
+        ng-click="ctrl.save()"
+        class="btn orange-btn"
+        >
+        <i class="material-icons">send</i>
+        Enregistrer
+    </a>
+</div>

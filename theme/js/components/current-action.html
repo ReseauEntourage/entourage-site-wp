@@ -121,7 +121,7 @@
                         <div
                             ng-if="ctrl.action.description"
                             class="action-chat-message"
-                            ng-bind-html="ctrl.action.description|linkify|trusted"
+                            ng-bind-html="ctrl.action.description|linkify|showbr|trusted"
                             ></div>
                     </div>
                     <div
@@ -144,7 +144,7 @@
                         <div
                             ng-if="event.message"
                             class="action-chat-message"
-                            ng-bind-html="event.message|linkify|trusted"
+                            ng-bind-html="event.message|linkify|showbr|trusted"
                             ></div>
                     </div>
                     <div
@@ -163,7 +163,7 @@
                         <div
                             ng-if="user.message"
                             class="action-chat-message"
-                            ng-bind-html="user.message|linkify|trusted"
+                            ng-bind-html="user.message|linkify|showbr|trusted"
                             ></div>
                         <a
                             class="btn orange-btn"
@@ -211,12 +211,19 @@
                     ng-switch-when="accepted"
                     class="action-new-message"
                     >
-                    <input
-                        type="text"
-                        ng-model="ctrl.newMessage"
-                        ng-enter="ctrl.sendNewMessage()"
-                        placeholder="Ecrivez un message..."
-                        >
+                    <div class="textarea">
+                        <div
+                            class="content"
+                            contenteditable
+                            ng-model="ctrl.newMessage"
+                            />
+                        <input
+                            ng-if="!ctrl.newMessage.length"
+                            class="fake-placeholder"
+                            type="text"
+                            placeholder="Ecrivez un message..."
+                            />
+                    </div>
                     <a
                         class="btn orange-btn btn-icon"
                         ng-click="ctrl.sendNewMessage()"

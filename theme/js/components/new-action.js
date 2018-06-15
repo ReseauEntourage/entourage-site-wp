@@ -63,7 +63,7 @@ angular.module('entourageApp')
 
             ctrl.initSearchBox = function() {
               var a = new google.maps.places.Autocomplete(document.getElementById('new-action-search-input'), {
-                types: ['address'] 
+                types: ['address']
               });
 
               a.addListener('place_changed', function() {

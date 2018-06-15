@@ -47,7 +47,7 @@ angular.module('entourageApp')
 
           if (ctrl.action.join_status == 'accepted') {
 
-            ctrl.getTimeline();
+            ctrl.getTimeline(true);
             ctrl.checkingInfoInterval = setInterval(ctrl.getTimeline, 30000);
 
             // mark as read
@@ -155,12 +155,10 @@ angular.module('entourageApp')
         });
       }
 
-      ctrl.getTimeline = function(forced) {
-        console.info('getTimeline', ctrl.action);
-        if (ctrl.loading && !forced)
-          return;
-
-        ctrl.loading = true;
+      ctrl.getTimeline = function(showLoader) {
+        if (showLoader) {
+          ctrl.loading = true;
+        }
 
         $.ajax({
           type: 'GET',

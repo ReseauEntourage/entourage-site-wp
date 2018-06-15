@@ -326,7 +326,7 @@ function googleMapsInitialized() {
 	input.attachEvent = addEventListenerWrapper;
 
   	var Autocomplete = new google.maps.places.Autocomplete(input, {
-	    types: ['(cities)'] 
+	    types: ['(regions)'] 
   	});
 
 	Autocomplete.addListener('place_changed', function() {

@@ -171,10 +171,10 @@
 					</a>
 					<div id="cities-example">
 						Ex :
-						<a href="/app/?ville=Paris,%20France">Paris</a>,
-						<a href="/app/?ville=Lyon,%20France">Lyon</a>,
-						<a href="/app/?ville=Lille,%20France">Lille</a>,
-						<a href="/app/?ville=Grenoble,%20France">Grenoble</a>
+						<a href="/app/?ville=Paris,%20France" target="_blank">Paris</a>,
+						<a href="/app/?ville=Lyon,%20France" target="_blank">Lyon</a>,
+						<a href="/app/?ville=Lille,%20France" target="_blank">Lille</a>,
+						<a href="/app/?ville=Grenoble,%20France" target="_blank">Grenoble</a>
 					</div>
 				</div>
 			<?php endif ?>

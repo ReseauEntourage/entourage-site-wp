@@ -62,6 +62,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-animate.min.js" type="text/javascript"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.js" type="text/javascript"></script>
     <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js" type="text/javascript"></script>
+    <script src="<?php asset_url('js/lib/image-crop.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/lib/jquery.csv.min.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/lib/phonenumber-js.min.js'); ?>" type="text/javascript"></script>
     
@@ -81,6 +82,7 @@
     <script src="<?php asset_url('js/components/modal-profile-edit.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/components/modal-profile-user.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/components/modal-new-message.js'); ?>" type="text/javascript"></script>
+    <script src="<?php asset_url('js/components/modal-new-picture.js'); ?>" type="text/javascript"></script>
 </head>
 
 <body
@@ -163,7 +165,7 @@
                 >
                 <div class="dropdown">
                     <a class="btn dropdown-toggle btn-icon">
-                        <i class="material-icons">filter_list</i>
+                        <i class="material-icons">tune</i>
                         <div
                             class="badge"
                             ng-if="map.activatedFilters()"
@@ -176,14 +178,15 @@
                                 Date de création
                             </a>
                             <ul class="dropdown-menu">
-                                <li>
+                                <!--li>
                                     <a
+                                        ng-if="map.public"
                                         ng-click="map.filterActions('period', '')"
                                         ng-class="{selected: !map.filters.period}"
                                         >
                                         Peu importe
                                     </a>
-                                </li>
+                                </li-->
                                 <li>
                                     <a
                                         ng-click="map.filterActions('period', '7')"
