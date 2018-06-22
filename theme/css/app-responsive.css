@@ -28,7 +28,7 @@
         display: none;
     }
 
-    .dropdown-menu .dropdown-menu {
+    .dropdown-menu > li > .dropdown-menu {
         position: relative;
         height: auto;
         max-width: initial;
@@ -150,6 +150,7 @@
         height: auto;
         padding: 0 12px;
         line-height: 31px;
+        margin-right: 10px;
     }
 
     #site-header-right #btn-new-action {

@@ -280,7 +280,7 @@
                     <div class="dropdown-menu">
                         <messages
                             user="map.loggedUser"
-                            on-show-action="map.showAction(action)"
+                            on-show-action="map.showAction(uuid)"
                         />
                     </div>
                 </div>
@@ -428,7 +428,7 @@
                 ng-if="!map.public && !map.emptyArea"
                 user="map.loggedUser"
                 actions="map.actions"
-                on-show-action="map.showAction(action)"
+                on-show-action="map.showAction(uuid)"
                 on-open-profile="map.toggleProfileEdit()"
                 on-open-create-action="map.toggleNewAction()"
                 ></feed>

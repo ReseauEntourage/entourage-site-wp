@@ -160,37 +160,44 @@ angular.module('entourageApp')
           ctrl.loading = true;
         }
 
-        $.ajax({
-          type: 'GET',
-          url: getApiUrl() + '/entourages/' + ctrl.action.uuid + '/users',
-          data: {
-            token: ctrl.user.token,
-            entourage_id: ctrl.action.uuid
-          },
-          success: function(data) {
-            if (data.users)
-            {
-              ctrl.action.users = data.users;
+        console.info('getTimeline', ctrl.action);
 
-              ctrl.timeline = ctrl.action.users.filter(function(user){
-                return ((user.id != ctrl.action.author.id) && (user.status == 'accepted'));
-              }).map(function(user) {
-                var data = {
-                  user: user,
-                  created_at: user.requested_at,
-                  message: user.message,
-                  type: 'user'
-                }
-                return data; 
-              });
+        if (ctrl.action.group_type == "conversation") {
+          ctrl.getMessages();
+        }
+        else {
+          $.ajax({
+            type: 'GET',
+            url: getApiUrl() + '/entourages/' + ctrl.action.uuid + '/users',
+            data: {
+              token: ctrl.user.token,
+              entourage_id: ctrl.action.uuid
+            },
+            success: function(data) {
+              if (data.users)
+              {
+                ctrl.action.users = data.users;
+
+                ctrl.timeline = ctrl.action.users.filter(function(user){
+                  return ((user.id != ctrl.action.author.id) && (user.status == 'accepted'));
+                }).map(function(user) {
+                  var data = {
+                    user: user,
+                    created_at: user.requested_at,
+                    message: user.message,
+                    type: 'user'
+                  }
+                  return data; 
+                });
+              }
+              ctrl.getMessages();
+            },
+            error: function(data) {
+              ctrl.loading = false;
+              $scope.$apply();
             }
-            ctrl.getMessages();
-          },
-          error: function(data) {
-            ctrl.loading = false;
-            $scope.$apply();
-          }
-        });
+          });
+        }
       }
 
       ctrl.getMessages = function() {

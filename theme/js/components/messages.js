@@ -110,15 +110,14 @@ angular.module('entourageApp')
           action.number_of_unread_messages = 0;
         }
         simulateMouseOut();
-        ctrl.onShowAction({action: action});
+        ctrl.onShowAction({uuid: action.uuid});
       }
 
       simulateMouseOut = function() {
         ctrl.hide = true;
-        $scope.$apply();
         setTimeout(function(){
           delete ctrl.hide;
-        }, 100);
+        }, 1000);
       }
     }
   })

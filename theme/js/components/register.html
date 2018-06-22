@@ -32,7 +32,10 @@
                                             class="iti-flag"
                                             ng-class="c[1]"
                                             ></i>
-                                        <span ng-bind="c[0]"></span>
+                                        <span
+                                            class="ellipsis"
+                                            ng-bind="c[0]"
+                                            ></span>
                                     </a>
                                 </li>
                             </ul>
@@ -43,6 +46,7 @@
                         ng-model="user.phone"
                         placeholder="Numéro de téléphone"
                         ng-enter="register()"
+                        autocomplete="tel"
                         />
                     <a
                         class="btn"

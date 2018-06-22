@@ -32,7 +32,7 @@ angular.module('entourageApp')
           }
         }
         else {
-          ctrl.onShowAction({action: action});
+          ctrl.onShowAction({uuid: action.uuid});
         }
       }
 

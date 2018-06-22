@@ -338,17 +338,32 @@ a[href]:hover {
 }
 
 .form div.input-parent .country-selection .dropdown-menu li a {
+    display: flex;
+    align-items: center;
     color: #333;
     text-decoration: none;
 }
 
+.form div.input-parent .country-selection .dropdown-menu li a i {
+    flex-shrink: 0;
+}
+
+.form div.input-parent .parent-dropdown:hover .dropdown-menu {
+    max-width: 300px;
+    max-height: 300px;
+    overflow: auto;
+}
+
 .form .error {
+    display: flex;
+    margin-top: 10px;
+    padding: 7px 13px;
+    align-items: center;
     background-color: #333;
     color: #fff;
-    border-radius: 5px;
-    padding: 7px 13px;
+    border-radius: 25px;
     font-size: 14px;
-    margin-top: 10px;
+    line-height: 16px;
 }
 
 .form .error:before {
@@ -366,6 +381,7 @@ textarea::-webkit-input-placeholder {
     font-style: italic;
     font-weight: 300;
     color: #c5c5c5;
+    font-size: 15px;
 }
 
 input::-moz-input-placeholder,
@@ -804,7 +820,7 @@ div.overlay.fade-out {
     line-height: 40px;
 }
 
-#site-header-login .dropdown .dropdown-toggle {
+#site-header-login > .dropdown > .dropdown-toggle {
     padding-left: 10px;
     line-height: 23px;
     cursor: pointer;
@@ -812,7 +828,7 @@ div.overlay.fade-out {
     border-left: 1px solid #ccc;
 }
 
-#site-header-login .dropdown-menu {
+#site-header-login #login-window {
     padding: 0px;
     background-color: #F9F9F9;
     left: 50px;
@@ -820,7 +836,7 @@ div.overlay.fade-out {
     line-height: 20px;
 }
 
-#site-header-login .dropdown-menu:before {
+#site-header-login #login-window:before {
     position: absolute;
     top: -8px;
     left: 50%;
@@ -831,44 +847,37 @@ div.overlay.fade-out {
 }
 
 #site-header-login .login-content {
-    width: 250px;
+    width: 300px;
     margin: 20px;
     white-space: normal;
 }
 
-#site-header-login .login-content .parent-input {
-    margin-bottom: 10px;
-}
-
 #site-header-login .login-content input:not([type=checkbox]) {
+    width: 100%;
     box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.2);
 }
 
-#site-header-login .login-content .parent-input input:not([type=checkbox]),
-#site-header-login .login-content label,
-#site-header-login .login-content .btn {
-    width: 100%;   
+#site-header-login .login-content .label-checkbox {
+    margin-top: 10px;
+    margin-bottom: -10px;
 }
 
-#site-header-login .login-content label {
-    display: block;
-    margin-bottom: 10px;
-    font-size: 12px;
-}
-
-#site-header-login .login-content input[type=checkbox] {
-    margin: 0;
+#site-header-login .login-content .label-checkbox input[type=checkbox] {
     vertical-align: middle;
 }
 
 #site-header-login .login-content .btn {
+    width: 100%;
     text-align: center;
 }
 
+#site-header-login .login-content .btn i {
+    margin-left: 5px;
+    margin-right: 0;
+}
+
 #site-header-login .error {
-    margin-top: 10px;
-    color: red;
-    font-weight: bold;
+    background: red;
 }
 
 #site-header-login .login-content .forgot-code {
@@ -952,12 +961,6 @@ div.overlay.fade-out {
 	display: flex;
 	margin-top: 20px;
 	border-radius: 6px;
-}
-
-#page-registration .error {
-    margin-top: 7px;
-	font-size: 15px;
-    font-weight: bold;
 }
 
 #page-registration .connection-form {
@@ -1721,6 +1724,7 @@ div.overlay.fade-out {
     word-break: break-word;
 }
 
+#current-action .action-description a,
 #current-action .action-chat-message a {
     color: #ff5100;
     text-decoration: underline;
@@ -1791,6 +1795,7 @@ div.overlay.fade-out {
     align-items: center;
 }
 
+#current-action .action-new-message textarea,
 #current-action .action-new-message .textarea {
     position: relative;
     width: 100%;
@@ -1802,6 +1807,15 @@ div.overlay.fade-out {
     border-radius: 27px;
     background: #fff;
     box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.2);
+}
+
+#current-action .action-new-message textarea {
+    height: 37px;
+    min-height: 37px;
+    max-height: 68px;
+    overflow: hidden;
+    padding: 10px 20px;
+    resize: none;
 }
 
 #current-action .action-new-message .textarea .content {
@@ -1826,6 +1840,8 @@ div.overlay.fade-out {
     background: none;
 }
 
+#current-action .action-new-message textarea:hover,
+#current-action .action-new-message textarea:focus,
 #current-action .action-new-message .textarea:hover,
 #current-action .action-new-message .textarea:focus {
     box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.2);

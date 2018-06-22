@@ -164,7 +164,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
 
           // display action if token in url
           if (getQueryParams('token')) {
-            map.showAction({uuid: getQueryParams('token')});
+            map.showAction(getQueryParams('token'));
           } 
 
           isMapEmpty();
@@ -185,7 +185,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
             token: map.loggedUser.token
           },
           success: function(data) {
-            if (data.entourage) {
+            if (data.entourage && data.entourage.group_type != "conversation") {
               map.mapObject.setCenter(new google.maps.LatLng(data.entourage.location.latitude, data.entourage.location.longitude));
             }
             getPrivateFeed();
@@ -284,7 +284,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
 
             if (!refresh && getQueryParams('token')) {
               // display action if token in url
-              map.showAction({uuid: getQueryParams('token')});
+              map.showAction(getQueryParams('token'));
             } 
 
             console.info('actions', map.actions);
@@ -347,45 +347,37 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
       $scope.$apply(); 
     }
 
-    map.showAction = function(action, index, apply) {
+    map.showAction = function(uuid, apply) {
       hideMarkerTitle();
 
-      if (index == undefined && action.uuid) {
-        for (var i = 0; i < map.actions.length; i++) {
-          var a = map.actions[i];
+      searchAction = map.actions.filter(function(a){
+        return (uuid == a.id || uuid == a.uuid || uuid == a.uuid_v1);
+      });
 
-          if (action.uuid == a.id || action.uuid == a.uuid || action.uuid == a.uuid_v1)
-            index = i;
-        }
-        if (index == undefined) {
-          if (map.public)
-            return;
-          
-          $.ajax({
-            type: 'GET',
-            url: getApiUrl() + '/entourages/' + action.uuid,
-            data: {
-              token: map.loggedUser.token
-            },
-            success: function(data) {
-              if (data.entourage) {
-                var action = transformAction(data.entourage)
-                action = createMarker(action);
-                map.currentAction = action;
-                $scope.$apply();
-              }
-            }
-          });
+      if (!searchAction.length) {
+        if (map.public)
           return;
-        }
+        
+        $.ajax({
+          type: 'GET',
+          url: getApiUrl() + '/entourages/' + uuid,
+          data: {
+            token: map.loggedUser.token
+          },
+          success: function(data) {
+            if (data.entourage) {
+              var action = transformAction(data.entourage);
+              if (action.type == 'Entourage') {
+                action = createMarker(action);
+              }
+              map.currentAction = action;
+              $scope.$apply();
+            }
+          }
+        });
       }
-
-      if (index != undefined) {
-        action = map.actions[index];
-      }
-
-      if (action) {
-        map.currentAction = action;
+      else {
+        map.currentAction = searchAction[0];
 
         if (apply)
           $scope.$apply();
@@ -400,7 +392,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
 
       // create marker
       action.marker = new google.maps.Marker({
-        id: map.actions.length,
+        id: action.uuid,
         position: action.latLng,
         map: map.mapObject,
         title: getMarkerTitle(action.status),
@@ -413,23 +405,25 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
       });
 
       // display action title when marker hovered
-      action.marker.addListener('mouseover', showMarkerTitle);
+      action.marker.addListener('mouseover', function() {
+        showMarkerTitle(action, this);
+      });
       action.marker.addListener('mouseout', hideMarkerTitle);
       
       // show detailed action window when marker clicked
       action.marker.addListener('click', function(){
-        map.showAction(null, this.id, true);
+        map.showAction(action.uuid, true);
       });
 
       return action;
     }
 
-    showMarkerTitle = function() {
+    showMarkerTitle = function(action, context) {
       map.infoWindow = new google.maps.InfoWindow({
         pixelOffset: new google.maps.Size(0, map.actionIcon.pixels / -2),
-        content: '<div class="gm-info-window" data-id="' + this.id + '"><b>' + map.actions[this.id].title + '</b><div><div class="action-author-picture" style="background-image: url(' + map.actions[this.id].author.avatar_url + ')"></div><b>' + map.actions[this.id].author.display_name + '</b>, le ' + $filter('date')(map.actions[this.id].created_at, 'dd/MM/yy') + '</div></div>'
+        content: '<div class="gm-info-window" data-id="' + action.uuid + '"><b>' + action.title + '</b><div><div class="action-author-picture" style="background-image: url(' + action.author.avatar_url + ')"></div><b>' + action.author.display_name + '</b>, le ' + $filter('date')(action.created_at, 'dd/MM/yy') + '</div></div>'
       });
-      map.infoWindow.open(map.mapObject, this);
+      map.infoWindow.open(map.mapObject, context);
     }
 
     hideMarkerTitle = function() {
@@ -477,7 +471,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
 
     // click event on marker
     $(document).on('click', '.gm-info-window', function(e){
-      map.showAction(null, $(this).attr('data-id'));
+      map.showAction($(this).attr('data-id'));
     });
 
     map.logout = function() {
