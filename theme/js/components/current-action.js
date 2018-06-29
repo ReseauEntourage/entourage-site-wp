@@ -5,9 +5,8 @@ angular.module('entourageApp')
       map: '=',
       action: '=',
       public: '=',
-      showRegistration: '&',
+      showRegister: '&',
       user: '=',
-      showOnlyInPreprod: '='
     },
     controllerAs: 'ctrl',
     controller: function($scope, $element, $attrs, $uibModal) {
@@ -68,10 +67,7 @@ angular.module('entourageApp')
 
       ctrl.askJoin = function() {
         if (ctrl.public) {
-          if (ctrl.showOnlyInPreprod)
-            ctrl.showRegistration({token: ctrl.action.uuid});
-          else
-            window.location = "https://s3-eu-west-1.amazonaws.com/entourage-ressources/store_redirection.html";
+          ctrl.showRegistration({token: ctrl.action.uuid});
         }
         else {
           ctrl.join();

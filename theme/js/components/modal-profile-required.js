@@ -1,6 +1,7 @@
 angular.module('entourageApp')
   .component('modalProfileRequired', {
     bindings: {
+      reloadFeed: '&',
       user: '='
     },
     controller: function($scope, $element, $attrs, $uibModal) {
@@ -24,7 +25,7 @@ angular.module('entourageApp')
 
               ctrl.errors = [];
 
-              if (ctrlParent.user.has_password) {
+              if (ctrl.currentUser.has_password) {
                 if (!ctrl.first_name)
                   ctrl.errors.push("Erreur : veuillez entrer votre prénom");
                 if (!ctrl.last_name)
@@ -37,13 +38,13 @@ angular.module('entourageApp')
                   ctrl.errors.push("Erreur : vous avez écrit deux mots de passe différents");
               }
 
-              if (!ctrlParent.user.email && (!ctrl.email || !ctrl.email.match(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)))
+              if (!ctrl.currentUser.email && (!ctrl.email || !ctrl.email.match(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)))
                 ctrl.errors.push("Erreur : veuillez entrer un email valide");
 
               if (ctrl.errors.length)
                 return;
 
-              if (ctrlParent.user.has_password) {
+              if (ctrl.currentUser.has_password) {
                 var data = {
                   first_name: ctrl.first_name,
                   last_name: ctrl.last_name,
@@ -57,7 +58,7 @@ angular.module('entourageApp')
                 };
               }
 
-              if (ctrl.email)
+              if (!ctrl.currentUser.email)
                 data.email = ctrl.email;
 
               ctrl.updateUser(data);
@@ -70,14 +71,17 @@ angular.module('entourageApp')
                 type: 'PATCH',
                 url: getApiUrl() + '/users/me',
                 data: {
-                  token: ctrlParent.user.token,
+                  token: ctrl.currentUser.token,
                   user: data
                 },
                 success: function(data) {
                   if (data.user) {
                     localStorage.setItem('user', JSON.stringify(data.user));
-                    ctrlParent.user = data.user;
-                    ctrl.close();
+                    ctrl.currentUser = data.user;
+                    ctrlParent.user = ctrl.currentUser;
+                    if (ctrl.currentUser.display_name) {
+                      ctrl.close();
+                    }
                   }
                   else
                     ctrl.errors.push("Il y a eu une erreur, merci de réessayer ou de nous contacter");
@@ -97,6 +101,7 @@ angular.module('entourageApp')
 
             ctrl.close = function() {
               $uibModalInstance.close();
+              ctrlParent.reloadFeed();
             }
           }
         });

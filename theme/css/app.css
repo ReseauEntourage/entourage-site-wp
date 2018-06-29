@@ -257,6 +257,11 @@ a[href]:hover {
     font-size: 14px;
 }
 
+.form label i {
+    margin-left: 3px;
+    font-size: 16px;
+}
+
 .form .btn {
     box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.2);
 }
@@ -264,6 +269,15 @@ a[href]:hover {
 .form .input-line {
     display: flex;
     justify-content: space-between;
+}
+
+.form .input-line-centered {
+    display: flex;
+    align-items: center;
+}
+
+.form .input-line-centered .btn {
+    margin-left: 10px;
 }
 
 .form .input-line > * {
@@ -728,6 +742,7 @@ div.overlay.fade-out {
     margin-left: 10px;
     margin-right: 0;
     max-width: 250px;
+    min-width: 200px;
     font-size: 13px;
 }
 
@@ -892,106 +907,82 @@ div.overlay.fade-out {
 }
 
 
-/** REGISTRATION **/
+/** REGISTER **/
 
-#page-registration div.content {
+#modal-register {
 	display: flex;
+    padding: 0 30px;
     flex-wrap: nowrap;
     background: url(../img/bg-simple-comme-bonjour.jpg);
     background-size: cover;
-    background-color: #ff5100;
-    color: #FFF;
 }
 
-#page-registration div.illu {
-    display: inline-block;
+#modal-register div.illu {
     width: 200px;
-    margin-left: 30px;
     background: url(../img/character-1.png) no-repeat;
     background-position: bottom left;
     flex-shrink: 0;
 }
 
-#page-registration div.text {
-    margin: 50px;
+#modal-register div.form {
+    margin: 50px 40px;
+    width: 430px;
     text-align: center;
 }
 
-#page-registration div.text h3 {
+#modal-register h3 {
     text-transform: uppercase;
     font-size: 20px;
     font-weight: 600;
     margin-bottom: 10px;
 }
 
-#page-registration div.content a.page-close {
-	position: absolute;
-	top: 10px;
-	right: 10px;
-	color: #FFF;
-	font-size: 18px;
-	cursor: pointer;
+#modal-register div.input-parent {
+	margin-top: 20px;
+	justify-content: center;
 }
 
-#page-registration .btn {
+#modal-register .btn {
     height: 45px;
-    padding: 0 20px;
     margin-left: 10px;
-    font-weight: 400;
     background: #000;
     border-radius: 22px;
     line-height: 45px;
-    color: #fff;
     font-size: 15px;
 }
 
-#page-registration div.registration-form {
-	display: inline-block;
-    width: 380px;
-    font-size: 17px;
-    vertical-align: middle;
-    line-height: 22px;
-}
-
-#page-registration div.registration-form p {
-    margin-bottom: 4px;
-}
-
-#page-registration div.input-parent {
-	display: flex;
-	margin-top: 20px;
-	border-radius: 6px;
-}
-
-#page-registration .connection-form {
+#modal-register .connection-form {
     padding-top: 20px;  
     text-align: left;
 }
 
-#page-registration .connection-form .btn {
+#modal-register .connection-form .btn {
     margin-top: 10px;
+    margin-left: 0;
 }
 
-#page-registration .connection-form input {
+#modal-register .connection-form input {
     margin-bottom: 10px;
     width: 220px;
     font-weight: bold;  
 }
 
 
-/** PROFILE EDIT **/
+/** PROFILE REQUIRED **/
 
-.modal-profile-edit .modal-dialog  {
-    max-width: inherit;
+#modal-profile-required .action-participants-picture-container {
+    width: 60px;
+    height: 60px;
 }
 
-#profile-edition-form .form-picture {
-    display: flex;
-    align-items: center;
+
+/** PROFILE EDIT **/
+
+#modal-profile-edit {
+
 }
 
 #profile-edition-form .action-participants-picture-container {
-    margin-right: 10px;
     width: 60px;
     height: 60px;
 }
@@ -1026,7 +1017,7 @@ div.overlay.fade-out {
 }
 
 .step-download {
-    margin-bottom: 20px;
+    margin: 20px;
     text-align: center;
 }
 
@@ -1622,7 +1613,6 @@ div.overlay.fade-out {
 
 #current-action .action-actions a i {
     font-size: 16px;
-    color: #fff;
 }
 
 #current-action .action-left-actions a {
@@ -1633,12 +1623,27 @@ div.overlay.fade-out {
 
 #current-action .action-left-actions a i {
     margin-right: 4px;
-    height: 20px;    
+    height: 20px;
+    color: #fff;    
 }
 
 #current-action .action-right-actions a {
     width: 28px;
+    background: #f9f9f9;
+    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.4);
+}
+
+#current-action .action-right-actions a i {
+    color: #626262;
+}
+
+#current-action .action-right-actions a.action-close {
     background-color: #626262;
+    box-shadow: none;
+}
+
+#current-action .action-right-actions a.action-close i {
+    color: #fff;
 }
 
 #current-action .action-content {
@@ -2041,6 +2046,10 @@ div.overlay.fade-out {
     display: inline-block;
     margin: 10px;
     max-width: 600px;
+}
+
+.modal-no-width .modal-dialog {
+    max-width: inherit;
 }
 
 .modal-content {

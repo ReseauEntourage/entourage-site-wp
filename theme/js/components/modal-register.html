@@ -1,0 +1,118 @@
+<div class="modal-header">
+    <a
+        class="modal-close mobile-only"
+        ng-click="ctrl.close()"
+        >
+        <i class="material-icons">arrow_back</i>
+    </a>
+</div>
+<div
+    id="modal-register"
+    class="modal-body"
+    ng-class="{loading: ctrl.loading}"
+    >
+    <div class="illu"></div>
+    <div
+        class="form"
+        ng-switch on="ctrl.registrationStep"
+        >
+        <div ng-switch-default>
+            <h3>
+                Envie de passer à l'action&nbsp;? Super&nbsp;!<br>
+                Rejoignez la communauté Entourage&nbsp;!
+            </h3>
+            <div>
+                <label>Entrez votre numéro de téléphone (<a
+                    tooltip-placement="top"
+                    uib-tooltip="Entourage est un réseau entre personnes de confiance, votre numéro nous permet de vous authentifier de façon certaine et ça rassure tout le monde !"
+                    tooltip-append-to-body="true"
+                    ><u>pourquoi</u><i class="material-icons">help</i></a>) pour vous inscrire et recevoir votre code d'activation par SMS&nbsp;:</label>
+                <div class="input-parent input-phone">
+                    <div class="parent-dropdown">
+                        <div class="country-selection dropdown">
+                            <i
+                                class="iti-flag"
+                                ng-class="ctrl.country[1]"
+                                ></i>
+                            <div ng-bind="'+' + ctrl.country[2]"></div>
+                            <ul
+                                id="country-list"
+                                class="dropdown-menu"
+                                >
+                                <li ng-repeat="c in ctrl.countries">
+                                    <a ng-click="ctrl.selectCountry(c)">
+                                        <i
+                                            class="iti-flag"
+                                            ng-class="c[1]"
+                                            ></i>
+                                        <span
+                                            class="ellipsis"
+                                            ng-bind="c[0]"
+                                            ></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <input
+                        type="text"
+                        ng-model="ctrl.user.phone"
+                        placeholder="Numéro de téléphone"
+                        ng-enter="ctrl.register()"
+                        autocomplete="tel"
+                        />
+                    <a
+                        class="btn"
+                        ng-click="ctrl.register()"
+                        >
+                        Envoyer
+                    </a>
+                </div>
+                <div
+                    class="error"
+                    ng-if="ctrl.error"
+                    ng-bind="ctrl.error"
+                    ></div>
+            </div>
+        </div>
+        <div ng-switch-when="2">
+            <h3>
+                Regardez vite vos SMS !
+            </h3>
+            <div class="connection-form">
+                <div>
+                    <label>1. Entrez le code d'activation reçu&nbsp;:</label>
+                    <input
+                        type="text"
+                        ng-model="ctrl.user.sms_code"
+                        placeholder="123456"
+                        />
+                    <label>2. Choisissez votre mot de passe (au moins 8 caractères)&nbsp;:</label>
+                    <input
+                        type="password"
+                        ng-model="ctrl.password"
+                        placeholder="Mot de passe"
+                        ng-enter="ctrl.login()"
+                        />
+                </div>
+                <a
+                    class="btn"
+                    ng-click="ctrl.login()"
+                    >
+                    Connexion
+                </a>
+                <div
+                    class="error"
+                    ng-if="ctrl.error"
+                    ng-bind="ctrl.error"
+                    ></div>
+            </div>
+        </div>
+    </div>
+    <a
+        ng-click="ctrl.close()"
+        class="modal-close no-mobile"
+        >
+        <i class="material-icons">close</i>
+    </a>
+</div>

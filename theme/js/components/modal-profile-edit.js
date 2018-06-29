@@ -2,6 +2,7 @@ angular.module('entourageApp')
   .component('modalProfileEdit', {
     bindings: {
       user: '=',
+      reloadFeed: '&',
       hide: '&'
     },
     controllerAs: 'ctrlParent',
@@ -11,15 +12,13 @@ angular.module('entourageApp')
       ctrlParent.$onInit = function() {
         $uibModal.open({
           templateUrl: '/wp-content/themes/entourage/js/components/modal-profile-edit.html',
-          windowClass: 'modal-profile-edit',
+          windowClass: 'modal-no-width',
           controllerAs: 'ctrl',
           controller: function($scope, $uibModal, $uibModalInstance) {
             var ctrl = this;
-
+            
             ctrl.loading = false;
-
             ctrl.user = ctrlParent.user;
-
             ctrl.first_name = angular.copy(ctrl.user.first_name);
             ctrl.last_name = angular.copy(ctrl.user.last_name);
             ctrl.about = angular.copy(ctrl.user.about);
@@ -193,6 +192,7 @@ angular.module('entourageApp')
           }
         }).closed.then(function() {
           ctrlParent.hide();
+          ctrlParent.reloadFeed();
         });
       }
     }

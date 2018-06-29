@@ -135,6 +135,11 @@
         background: #111;
     }
 
+    #app-filters .btn .badge {
+        background: #b9b9b9;
+        color: #111;
+    }
+
     #app-search #app-search-input {
         width: 100%;   
     }
@@ -229,6 +234,7 @@
         background-color: #f9f9f9;
         border-radius: 0;
         padding-top: 0;
+        white-space: inherit;
     }
 
     #user-messages #messages-content,
@@ -332,16 +338,22 @@
         margin-left: 10px;
     }
 
-    #current-action .action-actions .action-close {
+    #current-action .action-right-actions a.action-close {
         position: absolute;
         top: 13px;
         left: 0px;
+        background: transparent;
+    }
+
+    #current-action .action-right-actions a.action-close i {
+        color: #646464;
     }
 
     #current-action .action-actions a {
         padding: 0;
         background: transparent;
         font-size: 0;
+        box-shadow: none;
     }
 
     #current-action .action-actions a i {
@@ -381,6 +393,10 @@
         text-align: left;
         align-items: center;
         font-size: 15px;
+    }
+
+    .modal-header.no-close {
+        justify-content: center;
     }
 
     .modal-header a.modal-close {
@@ -425,55 +441,48 @@
         margin: 10px;
     }
 
-    #page-registration div.content {
-        width: 100%;
-        flex-wrap: nowrap;
+    #modal-register {
+        padding: 0;
+        flex-wrap: wrap;
         flex-direction: column-reverse;
     }
 
-    #page-registration div.illu {
+    #modal-register div.illu {
         height: 210px;
-        margin: 10px auto 0;
+        margin: auto;
     }
 
-    #page-registration div.text {
-        margin: 50px 20px 0px;
+    #modal-register div.form {
+        width: 100%;
+        margin: 0;
+        padding: 40px 10px;
     }
 
-    #page-registration div.text h3 {
+    #modal-register div.text h3 {
         font-size: 17px;
     }
 
-    #page-registration div.registration-form {
-        width: inherit;
-        margin: 20px 0;
-        font-size: 15px;
-        vertical-align: middle;
-        line-height: 17px;
-    }
-
-    #page-registration div.connection-form {
+    #modal-register div.connection-form {
         padding: 0 20px;
     }
 
-    #page-registration div.input-parent {
+    #modal-register div.input-parent {
         flex-wrap: wrap;
         justify-content: center;    
     }
 
-    #page-registration div.input-parent input {
+    #modal-register div.input-parent input {
         width: auto;
         max-width: 220px;
     }
 
-    #page-registration div.input-parent .btn {
+    #modal-register div.input-parent .btn {
         margin-top: 10px;
         margin-left: 0;
     }
 
-    #page-registration .error {
+    #modal-register .error {
         background: red;
-        padding: 10px;
     }
 
 
@@ -495,7 +504,14 @@
     /** PROFILE EDIT **/
 
     #profile-edition-form textarea {
-        width: auto;
+        width: 100%;
+    }
+    
+
+    /** PICTURE EDIT **/
+
+    #modal-new-picture {
+        padding: 20px 0;
     }
 
 

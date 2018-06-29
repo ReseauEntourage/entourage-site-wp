@@ -11,6 +11,7 @@
     Editez votre profil
 </div>
 <div
+    id="modal-profile-edit"
     class="modal-body"
     ng-class="{loading: ctrl.loading}"
     >
@@ -24,7 +25,7 @@
                     <h3>Vos informations publiques</h3>
                     <fieldset>
                         <label>Votre photo de profil</label>
-                        <div class="form-picture">
+                        <div class="input-line-centered">
                             <div class="action-participants-picture-container">
                                 <div class="action-participants-picture">
                                     <div
@@ -84,7 +85,7 @@
                             />
                         </div>
                     </fieldset>
-                    <fieldset>
+                    <fieldset ng-if="ctrl.user.phone">
                         <label>Votre numéro de téléphone</label>
                         <div class="parent-input with-icon phone-icon">
                             <input

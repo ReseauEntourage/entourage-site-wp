@@ -1,15 +1,16 @@
-<div class="modal-header">
+<div class="modal-header no-close">
     <span ng-if="ctrl.has_password">Bienvenue sur Entourage ! Présentons-nous...</span>
-     <span ng-if="!ctrl.has_password">Bienvenue sur le site d'Entourage !</span>
+     <span ng-if="!ctrl.has_password">Bienvenue sur l'app web d'Entourage !</span>
 </div>
 <div
+    id="modal-profile-required"
     class="modal-body"
     ng-class="{loading: ctrl.loading}"
     >
     <div class="form">
-        <div ng-if="ctrl.has_password">
+        <div ng-if="ctrl.currentUser.has_password">
             <fieldset>
-                <label>1. Pour commencer, et si vous nous disiez qui vous êtes ? C'est obligatoire, mais pas d'inquiétude, votre nom sera masqué :</label>
+                <label>1. Pour commencer, et si vous nous disiez qui vous êtes ? C'est obligatoire mais pas d'inquiétude, votre nom sera masqué :</label>
                 <div class="input-line">
                     <input
                         type="text"
@@ -33,7 +34,7 @@
                 </div>
             </fieldset>
             <fieldset>
-                <label>3. Quel est votre email ? Il est nécessaire pour nous afin de pouvoir vous renvoyer votre mot de passe si vous perdez votre téléphone</label>
+                <label>3. Quel est votre email ? Il est nécessaire pour nous afin de pouvoir vous renvoyer votre mot de passe si vous perdez votre téléphone :</label>
                 <div class="parent-input with-icon email-icon">
                     <input
                         type="text"
@@ -43,18 +44,29 @@
                 </div>
             </fieldset>
             <fieldset>
-                <label>4. Pour finir, téléchargez une photo de vous afin de mettre un visage sur votre profil !</label>
-                <label for="file-upload" class="btn dark-btn upload-btn">
-                    <i class="material-icons">file_upload</i> Télécharger
-                </label>
-                <input
-                    id="file-upload"
-                    type="file"
-                    fileread="ctrl.avatar_key"
-                />
+                <label>4. Pour finir, téléchargez une (jolie) photo de vous afin de mettre un visage sur vos actions !</label>
+                <div class="input-line-centered">
+                    <div
+                        ng-if="ctrl.currentUser.avatar_url"
+                        class="action-participants-picture-container"
+                        >
+                        <div class="action-participants-picture">
+                            <div
+                                class="action-author-profile"
+                                ng-style="{'background-image': 'url(' + (ctrl.currentUser.avatar_url) + ')'}"
+                                ></div>
+                        </div>
+                    </div>
+                    <a
+                        class="btn dark-btn"
+                        ng-click="ctrl.showPicture = true"
+                        ng-bind="ctrl.currentUser.avatar_url ? 'Changer' : 'Choisir'"
+                        >
+                    </a>
+                </div>
             </fieldset>
         </div>
-        <div ng-if="!ctrl.has_password">
+        <div ng-if="!ctrl.currentUser.has_password">
             <fieldset>
                 <label>1. Veuillez définir un mot de passe (au moins 8 caractères)&nbsp;: </label>
                 <div class="parent-input with-icon security-icon">
@@ -104,3 +116,8 @@
         Enregistrer !
     </a>
 </div>
+<modal-new-picture
+    ng-if="ctrl.showPicture"
+    show="ctrl.showPicture"
+    user="ctrl.currentUser"
+    ></modal-new-picture>

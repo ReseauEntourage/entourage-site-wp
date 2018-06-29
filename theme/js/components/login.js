@@ -22,21 +22,61 @@ angular.module('entourageApp')
         delete ctrl.error;
 
         ctrl.validPhone = validatePhone(ctrl.country[1], ctrl.phone);
-        console.info(ctrl.validPhone);
 
         if (!ctrl.validPhone) {
           ctrl.error = "Votre numéro n'est pas valide, merci de réessayer";
           return;
         }
 
-        status = 'has_password';
+        ctrl.loading = true;
 
-        if (status == 'has_password') {
-          ctrl.step = 'password';
-        }
-        else {
-          ctrl.sendCode();
-        }
+        $.ajax({
+          type: 'POST',
+          url: getApiUrl() + '/users/lookup',
+          data: {
+            phone: ctrl.validPhone,
+          },
+          success: function(data) {
+            if (data && data.status) {
+              switch (data.status) {
+                case 'not_found':
+                  ctrl.error = "Vous ne faites pas encore partie du réseau, inscrivez-vous !";
+                  break;
+                case 'found':
+                  if (data.secret_type == 'code') {
+                    ctrl.sendCode(true);
+                    ctrl.step = 'code';
+                  }
+                  else
+                    ctrl.step = 'password';
+                  break;
+                default:
+                  ctrl.error = "Il y a eu une erreur, merci de réessayer ou de nous contacter";
+              }
+            }
+            else {
+              ctrl.error = "Il y a eu une erreur, merci de réessayer ou de nous contacter";
+            }
+            ctrl.loading = false;
+            $scope.$apply();
+          },
+          error: function(data) {
+            if (data.responseJSON && data.responseJSON.error) {
+              switch (data.responseJSON.error.code) {
+                case "INVALID_PHONE_FORMAT":
+                  ctrl.error = "Erreur : votre téléphone n'est pas au bon format"
+                  break;
+                default:
+                  ctrl.error = "Il y a eu une erreur, merci de réessayer ou de nous contacter";
+              }
+            }
+            else {
+              ctrl.error = "Il y a eu une erreur, merci de réessayer ou de nous contacter";
+            }
+            ctrl.loading = false;
+            $scope.$apply();
+          }
+        });
       }
 
       ctrl.login = function() {
@@ -101,8 +141,8 @@ angular.module('entourageApp')
         }
       }
 
-      ctrl.sendCode = function() {
-        if (ctrl.loading)
+      ctrl.sendCode = function(force) {
+        if (ctrl.loading && !force)
           return;
 
         ctrl.loading = true;
@@ -132,6 +172,10 @@ angular.module('entourageApp')
             $scope.$apply();
           }
         });
+      }
+
+      ctrl.selectCountry = function(country) {
+        ctrl.country = country;
       }
     }
   })

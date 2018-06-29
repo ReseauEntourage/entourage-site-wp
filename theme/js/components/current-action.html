@@ -28,7 +28,7 @@
                     </i>
                 </a>
                 <a
-                    ng-if="!ctrl.public && (ctrl.action.join_status == 'accepted' || ctrl.action.join_status == 'pending') && !ctrl.is_admin && ctrl.action.group_type != 'conversation'"
+                    ng-if="!ctrl.public && (ctrl.action.join_status == 'accepted' || ctrl.action.join_status == 'pending') && !ctrl.is_admin && ctrl.action.status != 'closed' && ctrl.action.group_type != 'conversation'"
                     tooltip-placement="top"
                     uib-tooltip="Quitter cette action"
                     tooltip-append-to-body="true"
@@ -41,7 +41,7 @@
                     </i>
                 </a>
                 <a
-                    ng-if="!ctrl.public && ctrl.action.status != 'closed' && ctrl.is_admin && ctrl.action.group_type != 'conversation'"
+                    ng-if="ctrl.is_admin && !ctrl.public && ctrl.action.status != 'closed' && ctrl.action.group_type != 'conversation'"
                     tooltip-placement="top"
                     uib-tooltip="Clôturer votre action"
                     tooltip-append-to-body="true"
@@ -50,7 +50,7 @@
                         class="material-icons"
                         ng-click="ctrl.finishAction()"
                         >
-                        check_circle
+                        power_settings_new
                     </i>
                 </a>
                 <a

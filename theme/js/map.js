@@ -47,10 +47,6 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
       }
     });
 
-    if (getQueryParams('preprod')) {
-      map.showOnlyInPreprod = true;
-    }
-
     // logged user?
     if (localStorage.getItem('user') && (localStorage.getItem('keep_user') || sessionStorage.getItem('logged'))) {
       map.loggedUser = JSON.parse(localStorage.getItem('user'));
@@ -100,7 +96,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
         setMarkersCustomStyle();
 
         if (!map.public) {
-          getPrivateFeed(true);
+          map.getPrivateFeed();
         }
       });
 
@@ -110,7 +106,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
           isMapEmpty();
         }
         else {
-          getPrivateFeed(true);
+          map.getPrivateFeed();
         }
       });
 
@@ -188,24 +184,22 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
             if (data.entourage && data.entourage.group_type != "conversation") {
               map.mapObject.setCenter(new google.maps.LatLng(data.entourage.location.latitude, data.entourage.location.longitude));
             }
-            getPrivateFeed();
+            map.getPrivateFeed(true);
           },
           error: function() {
-            getPrivateFeed();
+            map.getPrivateFeed(true);
           }
         });
       }
       else {
-        getPrivateFeed();
+        map.getPrivateFeed(true);
       }
     }
 
-    getPrivateFeed = function(refresh) {
-      if (refresh) {
-        clearMarkers();
-        map.actions = [];
-        map.refreshing = true;
-      }
+    map.getPrivateFeed = function(first) {
+      clearMarkers();
+      map.actions = [];
+      map.refreshing = true;
 
       map.boundsSize = getBoundsSize(map.mapObject.getBounds());
 
@@ -214,11 +208,11 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
         latitude: map.mapObject.getCenter().lat(),
         longitude: map.mapObject.getCenter().lng(),
         distance: Math.ceil(Math.max(map.boundsSize.x, map.boundsSize.y) / 2 / 1000),
-        announcements: "v1"
+        announcements: 'v1'
       };
 
       if (map.filters.period != '') {
-        data.time_range = map.filters.period * 24
+        data.time_range = map.filters.period * 24;
       }
 
       $.ajax({
@@ -254,6 +248,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
 
               if (action.type == 'Entourage') {
                 var visible = google.maps.geometry.poly.containsLocation(new google.maps.LatLng(action.location.latitude, action.location.longitude), mapPoly);
+                visible = visible && !(map.filters.status && action.status != map.filters.status)
                 if (visible) {
                   map.actions.push(createMarker(action));
                 }
@@ -282,7 +277,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
               }
             });
 
-            if (!refresh && getQueryParams('token')) {
+            if (first && getQueryParams('token')) {
               // display action if token in url
               map.showAction(getQueryParams('token'));
             } 
@@ -342,7 +337,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
         isMapEmpty();
       }
       else {
-        getPrivateFeed(true);
+        map.getPrivateFeed();
       }
       $scope.$apply(); 
     }
@@ -386,6 +381,12 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
 
 
     // ** MARKERS **/
+
+    // default action size
+    map.actionIcon = {
+      meters: 250,
+      pixels: null
+    };
 
     createMarker = function(action) {
       action.latLng = new google.maps.LatLng(action.location.latitude, action.location.longitude);
@@ -454,12 +455,6 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
       }
     }
 
-    // size of marker icons
-    map.actionIcon = {
-      meters: 250,
-      pixels: null
-    };
-
     setMarkersCustomStyle = function() {
       map.actionIcon.pixels = metersToPixels(map.actionIcon.meters, map.mapObject.getCenter().lat());
       $('#inline-style').text('.gm-style > div > div .gmnoprint {width: ' + map.actionIcon.pixels + 'px !important;height: ' + map.actionIcon.pixels + 'px !important;margin: -' + (map.actionIcon.pixels/2) + 'px !important; transform-origin: ' + (map.actionIcon.pixels/3) + 'px ' + (map.actionIcon.pixels/3) + 'px;}');
@@ -469,10 +464,13 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
       return meters / (156543.03392 * Math.cos(lat * Math.PI / 180) / Math.pow(2, map.mapObject.getZoom()));
     }
 
-    // click event on marker
+    // Click on Marker
     $(document).on('click', '.gm-info-window', function(e){
       map.showAction($(this).attr('data-id'));
     });
+
+
+    // ** MENU ** //
 
     map.logout = function() {
       localStorage.removeItem('user');
@@ -482,19 +480,13 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
     }
 
 
-    // MODALS //
+    // ** MODALS ** //
 
-    map.hideRegistration = function() {
-      map.registrationToggle = false;
-    }
-
-    map.showRegistration = function(token) {
-      map.registrationToggle = true;
-
-      if (token)
+    map.toggleRegister = function(token) {
+      map.showRegister = !map.showRegister;
+      if (map.showRegister && !isDemoMode()) {
         ga('send', 'event', 'Click', 'Join', token);
-      else
-        ga('send', 'event', 'Click', 'Join', 'Header');
+      }
     }
 
     map.toggleNewAction = function() {
@@ -577,7 +569,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
 
     // ** FILTERS ** //
 
-    // set defaults
+    // Default/saved filters
     if (map.public && map.mobileView) {
       map.filters = {
         status: 'open',
@@ -593,8 +585,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
 
     map.filterActions = function(type, value) {
       map.filters[type] = value;
-      localStorage.setItem('filter_status', map.filters.status);
-      localStorage.setItem('filter_period', map.filters.period);
+      localStorage.setItem('filter_' + type, value);
 
       if (map.public) {
         for (id in map.actions) {
@@ -603,7 +594,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
         isMapEmpty();
       }
       else {
-        getPrivateFeed(true);
+        map.getPrivateFeed();
       }
     }
 
@@ -622,8 +613,6 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
       var value = 0;
       for (f in map.filters) {
         if (map.filters[f] != '') {
-          if (f == 'status' && !map.public)
-            continue;
           value += 1;
         }
       }

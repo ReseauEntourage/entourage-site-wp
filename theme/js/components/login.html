@@ -16,7 +16,7 @@
                         <div ng-bind="'+' + ctrl.country[2]"></div>
                         <ul class="dropdown-menu">
                             <li ng-repeat="c in ctrl.countries">
-                                <a ng-click="selectCountry(c)">
+                                <a ng-click="ctrl.selectCountry(c)">
                                     <i
                                         class="iti-flag"
                                         ng-class="c[1]"

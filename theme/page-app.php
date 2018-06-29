@@ -75,9 +75,9 @@
     <script src="<?php asset_url('js/components/user-name.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/components/login.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/components/messages.js'); ?>" type="text/javascript"></script>
-    <script src="<?php asset_url('js/components/register.js'); ?>" type="text/javascript"></script>
+    <script src="<?php asset_url('js/components/modal-register.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/components/current-action.js'); ?>" type="text/javascript"></script>
-    <script src="<?php asset_url('js/components/new-action.js'); ?>" type="text/javascript"></script>
+    <script src="<?php asset_url('js/components/modal-new-action.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/components/modal-profile-required.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/components/modal-profile-edit.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/components/modal-profile-user.js'); ?>" type="text/javascript"></script>
@@ -161,7 +161,6 @@
             <div
                 id="app-filters"
                 class="parent-dropdown"
-                ng-class="{'open': showFilters, 'enabled': map.activatedFilters()}"
                 >
                 <div class="dropdown">
                     <a class="btn dropdown-toggle btn-icon">
@@ -192,7 +191,15 @@
                                         ng-click="map.filterActions('period', '7')"
                                         ng-class="{selected: map.filters.period == '7'}"
                                         >
-                                        7 derniers jours
+                                        Moins d'une semaine
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        ng-click="map.filterActions('period', '14')"
+                                        ng-class="{selected: map.filters.period == '14'}"
+                                        >
+                                        Moins de 2 semaines
                                     </a>
                                 </li>
                                 <li>
@@ -200,7 +207,7 @@
                                         ng-click="map.filterActions('period', '30')"
                                         ng-class="{selected: map.filters.period == '30'}"
                                         >
-                                        30 derniers jours
+                                        Moins d'un mois
                                     </a>
                                 </li>
                                 <li>
@@ -208,12 +215,12 @@
                                         ng-click="map.filterActions('period', '90')"
                                         ng-class="{selected: map.filters.period == '90'}"
                                         >
-                                        90 derniers jours
+                                        Moins de 3 mois
                                     </a>
                                 </li>
                             </ul>
                         </li>
-                        <li ng-if="map.public">
+                        <li>
                             <a class="dropdown-toggle">
                                 Statut
                             </a>
@@ -360,7 +367,6 @@
                 <i class="material-icons">help</i>Entourage, c'est quoi ?
             </a>
             <div
-                ng-if="map.showOnlyInPreprod"
                 id="site-header-login"
                 class="parent-dropdown click-only"
                 >
@@ -384,9 +390,8 @@
                 </div>
             </div>
             <a
-                ng-if="map.showOnlyInPreprod"
                 class="btn orange-btn"
-                ng-click="map.showRegistration()"
+                ng-click="map.toggleRegister('Header')"
                 >
                 <span class="no-mobile"><?php echo $custom_fields['bouton'][0] ?></span>
                 <span class="mobile-only">Inscription</span>
@@ -396,30 +401,24 @@
 
     <modal-profile-required
         ng-if="!map.public && (!map.loggedUser.display_name || !map.loggedUser.has_password)"
-        id="modal-profile-required"
         user="map.loggedUser"
+        reload-feed="map.getPrivateFeed()"
         ></modal-profile-required>
 
     <modal-profile-edit
         ng-if="map.showProfileEdit"
         user="map.loggedUser"
+        reload-feed="map.getPrivateFeed()"
         hide="map.toggleProfileEdit()"
         ></modal-profile-edit>
 
-    <div id="page-content">
-        <div
-            ng-if="map.registrationToggle"
-            class="overlay fade-in"
-            >
-            <div>
-                <register
-                    id="page-registration"
-                    user="map.loggedUser"
-                    toggle="map.hideRegistration()"
-                    />
-            </div>
-        </div>
+    <modal-register
+        ng-if="map.showRegister"
+        user="map.loggedUser"
+        hide="map.toggleRegister()"
+        ></modal-register>
 
+    <div id="page-content">
         <div
             id="map"
             ng-class="{'loading': map.refreshing, 'full-width': map.public || (map.emptyArea && !map.refreshing)}"
@@ -438,16 +437,10 @@
                 >
                 <i class="material-icons">error</i> Il y a peu d'action par ici... Et si vous y ajoutiez un peu de chaleur humaine en
                 <a
-                    ng-if="map.public && map.showOnlyInPreprod"
-                    ng-click="map.showRegistration()"
+                    ng-if="map.public"
+                    ng-click="map.toggleRegister('Bottom')"
                     >
                     rejoignant la communauté Entourage
-                </a>
-                <a
-                    ng-if="map.public && !map.showOnlyInPreprod"
-                    href="https://s3-eu-west-1.amazonaws.com/entourage-ressources/store_redirection.html"
-                    >
-                    téléchargeant l'application Entourage
                 </a>
                 <a
                     ng-if="!map.public"
@@ -461,9 +454,8 @@
                 map="map.mapObject"
                 action="map.currentAction"
                 public="map.public"
-                show-registration="map.showRegistration(token)"
+                show-register="map.toggleRegister('action-' + token)"
                 user="map.loggedUser"
-                show-only-in-preprod="map.showOnlyInPreprod"
                 ></current-action>
             <div id="map-container"></div>
         </div>
