@@ -67,7 +67,7 @@ angular.module('entourageApp')
 
       ctrl.askJoin = function() {
         if (ctrl.public) {
-          ctrl.showRegistration({token: ctrl.action.uuid});
+          ctrl.showRegister({token: 'action-' + ctrl.action.uuid});
         }
         else {
           ctrl.join();

@@ -454,7 +454,7 @@
                 map="map.mapObject"
                 action="map.currentAction"
                 public="map.public"
-                show-register="map.toggleRegister('action-' + token)"
+                show-register="map.toggleRegister(token)"
                 user="map.loggedUser"
                 ></current-action>
             <div id="map-container"></div>
