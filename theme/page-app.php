@@ -160,8 +160,11 @@
                 id="app-filters"
                 class="parent-dropdown"
                 >
-                <div class="dropdown">
-                    <a class="btn dropdown-toggle btn-icon">
+                <div uib-dropdown>
+                    <a
+                        uib-dropdown-toggle
+                        class="btn btn-icon"
+                        >
                         <i class="material-icons">tune</i>
                         <div
                             class="badge"
@@ -169,7 +172,7 @@
                             ng-bind="map.activatedFilters()"
                             ></div>
                     </a>
-                    <ul class="dropdown-menu">
+                    <ul uib-dropdown-menu>
                         <li>
                             <a class="dropdown-toggle">
                                 Date de création
@@ -273,8 +276,11 @@
                 id="user-messages"
                 class="parent-dropdown"
                 >
-                <div class="dropdown">
-                    <a class="btn btn-icon dropdown-toggle">
+                <div uib-dropdown>
+                    <a
+                        uib-dropdown-toggle
+                        class="btn btn-icon"
+                        >
                         <i class="material-icons">mail</i>
                         <div
                             class="badge"
@@ -294,8 +300,8 @@
                 id="user-menu"
                 class="parent-dropdown"
                 >
-                <div class="dropdown">
-                    <a class="dropdown-toggle">
+                <div uib-dropdown>
+                    <a uib-dropdown-toggle>
                         <div class="action-participants-picture-container no-mobile">
                             <div class="action-participants-picture">
                                 <div
@@ -311,7 +317,7 @@
                                 ></div>
                         </div>
                     </a>
-                    <div class="dropdown-menu">
+                    <div uib-dropdown-menu>
                         <ul>
                             <li>
                                 <a ng-click="map.toggleProfileEdit()">
@@ -366,7 +372,7 @@
             </a>
             <div
                 id="site-header-login"
-                class="parent-dropdown click-only"
+                class="parent-dropdown"
                 >
                 <div
                     class="dropdown"

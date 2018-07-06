@@ -47,14 +47,18 @@
             <label>1. Choisissez sa catégorie et précisez son emplacement :</label>
             <div class="input-line">
                 <div class="parent-dropdown">
-                    <div class="dropdown parent-select">
+                    <div
+                        uib-dropdown
+                        class="parent-select"
+                        >
                         <a
-                            class="dropdown-toggle btn white-btn"
+                            uib-dropdown-toggle
+                            class="btn white-btn"
                             ng-class="{empty: !ctrl.display_category}">
                             <i class="material-icons">toc</i>
                             <span ng-bind="ctrl.display_category ? ctrl.display_category[ctrl.entourage_type.id] : 'Catégorie'"></span>
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul uib-dropdown-menu>
                             <li ng-repeat="type in ctrl.types">
                                 <a
                                     class="dropdown-toggle"

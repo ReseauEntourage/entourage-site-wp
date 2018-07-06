@@ -8,13 +8,18 @@
             <label>1. Entrez votre numéro de téléphone :</label>
             <div class="input-parent input-phone">
                 <div class="parent-dropdown">
-                    <div class="country-selection dropdown">
-                        <i
-                            class="iti-flag"
-                            ng-class="ctrl.country[1]"
-                            ></i>
-                        <div ng-bind="'+' + ctrl.country[2]"></div>
-                        <ul class="dropdown-menu">
+                    <div
+                        uib-dropdown
+                        class="country-selection"
+                        >
+                        <span uib-dropdown-toggle>
+                            <i
+                                class="iti-flag"
+                                ng-class="ctrl.country[1]"
+                                ></i>
+                            <div ng-bind="'+' + ctrl.country[2]"></div>
+                        </span>
+                        <ul uib-dropdown-menu>
                             <li ng-repeat="c in ctrl.countries">
                                 <a ng-click="ctrl.selectCountry(c)">
                                     <i
@@ -72,16 +77,16 @@
             >
             Connexion
         </a>
-        <div
-            class="forgot-code"
-            ng-click="ctrl.sendCode()"
-            >
-            <a>Mot de passe perdu ?</a>
+        <div class="bottom-links">
+            <a ng-click="ctrl.step = 'phone'">
+                <i class="material-icons">arrow_back</i>Retour
+            </a>
+            <a ng-click="ctrl.sendCode()">Mot de passe perdu ?</a>
         </div>
     </div>
     <div ng-switch-when="code">
         <fieldset>
-            <label>2. Nous vous avons envoyé un code par SMS. Entrez ce code ci-dessous :</label>
+            <label>2. Nous vous avons envoyé un code par SMS. Entrez-le ci-dessous :</label>
             <div class="parent-input with-icon security-icon">
                 <input
                     type="password"

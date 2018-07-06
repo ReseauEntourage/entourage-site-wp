@@ -65,7 +65,6 @@ a[href]:hover {
     vertical-align: top;
 }
 
-.parent-dropdown:not(.click-only):hover .dropdown > .dropdown-menu,
 .parent-dropdown .open.dropdown > .dropdown-menu {
     position: absolute;
     height: auto;
@@ -338,6 +337,11 @@ a[href]:hover {
     cursor: pointer;
 }
 
+.form div.input-parent .country-selection .dropdown-toggle {
+    display: flex;
+    align-items: center;
+}
+
 .form div.input-parent .country-selection .dropdown-menu {
     top: 45px;
     left: 0;
@@ -362,7 +366,7 @@ a[href]:hover {
     flex-shrink: 0;
 }
 
-.form div.input-parent .parent-dropdown:hover .dropdown-menu {
+.form div.input-parent .dropdown.open .dropdown-menu {
     max-width: 300px;
     max-height: 300px;
     overflow: auto;
@@ -708,7 +712,7 @@ div.overlay.fade-out {
     box-shadow: none;
 }
 
-#user-messages:hover .dropdown-menu {
+#user-messages .dropdown.open .dropdown-menu {
     position: fixed;
     top: 47px;
     padding-top: 13px;
@@ -778,6 +782,7 @@ div.overlay.fade-out {
 #user-menu .action-participants-picture-container {
     width: 35px;
     height: 35px;
+    cursor: pointer;
 }
 
 #user-menu .dropdown-menu {
@@ -786,7 +791,7 @@ div.overlay.fade-out {
     box-shadow: none;
 }
 
-#user-menu:hover .dropdown-menu {
+#user-menu .dropdown.open .dropdown-menu {
     position: fixed;
     top: 47px;
     padding-top: 13px;
@@ -863,7 +868,7 @@ div.overlay.fade-out {
 
 #site-header-login .login-content {
     width: 300px;
-    margin: 20px;
+    padding: 20px;
     white-space: normal;
 }
 
@@ -895,15 +900,22 @@ div.overlay.fade-out {
     background: red;
 }
 
-#site-header-login .login-content .forgot-code {
+#site-header-login .login-content .bottom-links {
+    display: flex;
+    justify-content: space-between;
     font-size: 12px;
-    text-align: right;
     margin-top: 4px;
     cursor: pointer;
 }
 
-#site-header-login .login-content .forgot-code a {
+#site-header-login .login-content .bottom-links a {
     text-decoration: underline;
+}
+
+#site-header-login .login-content .bottom-links i {
+    margin-right: 4px;
+    font-size: 15px;
+    vertical-align: middle;
 }
 
 

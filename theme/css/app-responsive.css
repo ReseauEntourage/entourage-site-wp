@@ -10,10 +10,6 @@
         display: none !important;
     }
 
-    .tooltip {
-        display: none !important;
-    }
-
 
     /** DROPDOWN **/
 
@@ -32,17 +28,19 @@
         display: none;
     }
 
-    .dropdown-menu > li > .dropdown-menu {
-        position: relative;
-        height: auto;
-        max-width: initial;
-        width: auto;
-        opacity: 1;
-        margin: 0;
-        left: inherit;
-        top: inherit;
-        border-radius: 0;
-        box-shadow: none;
+    .dropdown-menu li > .dropdown-menu {
+        position: relative !important;
+        height: auto !important;
+        max-width: initial !important;
+        width: auto !important;
+        opacity: 1 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        left: inherit !important;
+        top: inherit !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        transform: none !important;
     }
 
 
@@ -88,7 +86,7 @@
         height: auto;
     }
 
-    #site-header-login .dropdown .dropdown-toggle {
+    #site-header-login .dropdown .dropdown-toggle.link {
         height: auto;
         width: auto;
         border: 1px solid #ccc;
@@ -223,14 +221,14 @@
         margin-top: 14px;
     }
 
-    #user-messages:hover {
+    #user-messages {
         bottom: 0;
         background: #fff;
         z-index: 1;
     }
 
-    #user-messages:hover .dropdown-menu,
-    #user-menu:hover .dropdown-menu {
+    #user-messages .dropdown.open .dropdown-menu,
+    #user-menu .dropdown.open .dropdown-menu {
         top: 50px;
         right: 0;
         bottom: 0;
@@ -381,6 +379,9 @@
         border-radius:  0 0 5px 5px;
     }
 
+    #current-action .tooltip {
+        display: none !important;
+    }
 
     /** MODAL **/
 
@@ -461,7 +462,7 @@
     #modal-register div.form {
         width: 100%;
         margin: 0;
-        padding: 40px 10px;
+        padding: 40px 10px 20px;
     }
 
     #modal-register div.text h3 {
