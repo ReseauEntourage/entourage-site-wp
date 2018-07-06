@@ -15,7 +15,7 @@
     <div
         class="action-participant"
         ng-repeat="participant in ctrl.action.users"
-        ng-click="participant.openProfile = true"
+        ng-click="ctrl.open(participant.id)"
         >
         <div class="action-participants-picture-container">
             <div class="action-participants-picture">
@@ -25,13 +25,6 @@
                     ng-style="{'background-image': 'url(' + participant.avatar_url + ')'}"
                     ></div>
             </div>
-            
-            <modal-profile-user
-                ng-if="participant.openProfile"
-                user="ctrl.user"
-                profile-id="participant.id"
-                open="participant.openProfile"
-                ></modal-profile-user>
         </div>
         <h3 ng-bind="participant.display_name"></h3>
     </div>  

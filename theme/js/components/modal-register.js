@@ -1,7 +1,8 @@
 angular.module('entourageApp')
   .component('modalRegister', {
     bindings: {
-      hide: '&'
+      hide: '&',
+      openLogin: '&'
     },
     controller: function($scope, $element, $attrs, $uibModal) {
       var ctrlParent = this;
@@ -24,6 +25,11 @@ angular.module('entourageApp')
 
             ctrl.close = function() {
               $uibModalInstance.close();
+            }
+
+            ctrl.openLogin = function() {
+              ctrlParent.openLogin();
+              ctrl.close();
             }
 
             ctrl.selectCountry = function(country) {

@@ -61,13 +61,23 @@
         <i class="material-icons">close</i>
     </a>
 </div>
-<div class="modal-footer">
+<div
+    ng-if="ctrl.profile.id != ctrl.user.id"
+    class="modal-footer"
+    >
     <a
         ng-click="ctrl.report()"
-        class="btn dark-btn"
+        class="btn dark-btn report-btn"
         >
         <i class="material-icons">error</i>
-        Signaler cet utilisateur
+        Signaler
+    </a>
+    <a
+        ng-click="ctrl.contact()"
+        class="btn orange-btn"
+        >
+        <i class="material-icons">send</i>
+        Contacter
     </a>
 </div>
 <modal-new-message

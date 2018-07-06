@@ -104,9 +104,8 @@ angular.module('entourageApp')
               {
                 data.user.phone = ctrl.phone;
                 localStorage.setItem('user', JSON.stringify(data.user));
+                localStorage.setItem('keepLogged', ctrl.keepLogged);
                 sessionStorage.setItem('logged', 1);
-                if (ctrl.keepLogged)
-                  localStorage.setItem('keep_user', 1);
                 window.location.reload();
               }
               else {

@@ -6,6 +6,7 @@ angular.module('entourageApp')
       action: '=',
       public: '=',
       showRegister: '&',
+      showProfile: '&',
       user: '=',
     },
     controllerAs: 'ctrl',
@@ -19,6 +20,10 @@ angular.module('entourageApp')
       ctrl.$onInit = function() {
         if (ctrl.action)
           ctrl.openAction();
+      }
+
+      ctrl.openProfile = function(id) {
+        ctrl.showProfile({id: id});
       }
 
       $scope.$watch('ctrl.action', function(newValue, oldValue) {
@@ -156,7 +161,7 @@ angular.module('entourageApp')
           ctrl.loading = true;
         }
 
-        console.info('getTimeline', ctrl.action);
+        ctrl.timeline = [];
 
         if (ctrl.action.group_type == "conversation") {
           ctrl.getMessages();

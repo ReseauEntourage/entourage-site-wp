@@ -5,7 +5,8 @@ angular.module('entourageApp')
       user: '=',
       profile: '=',
       clickable: '=',
-      withPicture: '='
+      withPicture: '=',
+      showProfile: '&'
     },
     controllerAs: 'ctrl',
     controller: function($scope, $element, $attrs) {
@@ -13,8 +14,7 @@ angular.module('entourageApp')
 
       ctrl.click = function($event) {
         if (ctrl.clickable != false) {
-          ctrl.openProfile = true;
-          $event.stopPropagation();
+          ctrl.showProfile({id: ctrl.profile.id});
         }
       }
     }

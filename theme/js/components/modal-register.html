@@ -73,6 +73,12 @@
                     ng-if="ctrl.error"
                     ng-bind="ctrl.error"
                     ></div>
+                <div
+                    ng-if="!ctrl.error"
+                    class="already-register"
+                    >
+                    Déjà inscrit ? <a ng-click="ctrl.openLogin()">Connectez-vous</a>
+                </div>
             </div>
         </div>
         <div ng-switch-when="2">

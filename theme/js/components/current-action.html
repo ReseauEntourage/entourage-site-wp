@@ -56,7 +56,7 @@
                 <a
                     class="action-close"
                     tooltip-placement="top"
-                    uib-tooltip="Fermer"
+                    uib-tooltip="Fermer la fenêtre"
                     tooltip-append-to-body="true"
                     >
                     <i
@@ -84,6 +84,7 @@
                     user="ctrl.user"
                     action="ctrl.action"
                     clickable="true"
+                    show-profile="ctrl.openProfile(id)"
                 ></action-participants-picture> 
                 <span ng-bind="ctrl.action.title"></span>
             </div>
@@ -93,6 +94,7 @@
                         <user-name
                             user="ctrl.user"
                             profile="ctrl.action.author"
+                            show-profile="ctrl.openProfile(id)"
                             ></user-name>
                         a créé l'action le
                         <span
@@ -109,18 +111,19 @@
                 </div>
                 <div ng-if="ctrl.action.status != 'closed' && ctrl.action.join_status == 'accepted'">
                     <div
+                        ng-if="ctrl.action.group_type != 'conversation'"
                         class="action-chat-date"
                         ng-bind="ctrl.action.created_at|date:'d MMMM, H:mm'"
                         ></div>
-                    <div ng-class="{'own-message': ctrl.action.author.id == ctrl.user.id}">
-                        <div
-                            ng-if="ctrl.action.group_type != 'conversation'"
-                            class="action-chat-author"
-                            >
+                    <div
+                        ng-if="ctrl.action.group_type != 'conversation'"
+                        ng-class="{'own-message': ctrl.action.author.id == ctrl.user.id}">
+                        <div class="action-chat-author">
                             <user-name
                                 user="ctrl.user"
                                 profile="ctrl.action.author"
                                 with-picture="true"
+                                show-profile="ctrl.openProfile(id)"
                                 ></user-name>
                             &nbsp;a créé l'action
                         </div>
@@ -144,6 +147,7 @@
                                 user="ctrl.user"
                                 profile="event.user"
                                 with-picture="true"
+                                show-profile="ctrl.openProfile(id)"
                                 ></user-name>
                             <span ng-if="event.type == 'user' && event.user.status == 'accepted'">&nbsp;a rejoint l'action</span>
                         </div>
@@ -163,6 +167,7 @@
                                 user="ctrl.user"
                                 profile="user"
                                 with-picture="true"
+                                show-profile="ctrl.openProfile(id)"
                                 ></user-name>
                             &nbsp;souhaite rejoindre votre action
                         </div>

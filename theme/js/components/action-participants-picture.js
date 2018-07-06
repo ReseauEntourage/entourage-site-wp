@@ -4,7 +4,8 @@ angular.module('entourageApp')
     bindings: {
       user: '=',
       action: '=',
-      clickable: '='
+      clickable: '=',
+      showProfile: '&'
     },
     controllerAs: 'ctrl',
     controller: function($scope, $element, $attrs, $uibModal) {
@@ -50,6 +51,10 @@ angular.module('entourageApp')
                   $scope.$apply();
                 }
               });
+            }
+
+            ctrl.open = function(id) {
+              ctrlParent.showProfile({id: id});
             }
 
             ctrl.close = function() {

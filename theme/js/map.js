@@ -5,7 +5,8 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
     var mapsDefer = $q.defer();
 
     // Google's url for async maps initialization accepting callback function
-    var asyncUrl = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyATSImG1p5k6KydsN7sESLVM2nREnU7hZk&libraries=places,geometry&callback=';
+    var APIKey = isDemoMode() ? 'AIzaSyATSImG1p5k6KydsN7sESLVM2nREnU7hZk' : 'AIzaSyBw3x8b-OTcK1mT3yJ94j4lhxmADI-uT-k';
+    var asyncUrl = 'https://maps.googleapis.com/maps/api/js?key=' + APIKey + '&libraries=places,geometry&callback=';
 
     // async loader
     var asyncLoad = function(asyncUrl, callbackName) {
@@ -39,16 +40,8 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
     map.public = true;
     map.mobileView = isMobile();
 
-    $.ajaxSetup({
-      beforeSend: function(request, options) {
-        if ((options.url.indexOf('https://entourage-back-preprod.herokuapp.com') == 0) || (options.url.indexOf('https://api.entourage.social') == 0)) {
-          request.setRequestHeader("X-API-KEY", "26fb18404cb9d6afebc87349");
-        }
-      }
-    });
-
     // logged user?
-    if (localStorage.getItem('user') && (localStorage.getItem('keep_user') || sessionStorage.getItem('logged'))) {
+    if (localStorage.getItem('user') && (localStorage.getItem('keepLogged') || sessionStorage.getItem('logged'))) {
       map.loggedUser = JSON.parse(localStorage.getItem('user'));
       map.public = false;
     }
@@ -379,6 +372,10 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
       }
     }
 
+    map.showProfile = function(id) {
+      map.currentProfileId = id;
+    }
+
 
     // ** MARKERS **/
 
@@ -487,6 +484,10 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
       if (map.showRegister && !isDemoMode()) {
         ga('send', 'event', 'Click', 'Join', token);
       }
+    }
+
+    map.toggleLogin = function() {
+      map.showLogin = !map.showLogin;
     }
 
     map.toggleNewAction = function() {
@@ -654,6 +655,14 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
       }
       else {
         initMap();
+      }
+    });
+
+    $.ajaxSetup({
+      beforeSend: function(request, options) {
+        if ((options.url.indexOf('https://entourage-back-preprod.herokuapp.com') == 0) || (options.url.indexOf('https://api.entourage.social') == 0)) {
+          request.setRequestHeader("X-API-KEY", "26fb18404cb9d6afebc87349");
+        }
       }
     });
 

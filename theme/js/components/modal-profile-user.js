@@ -3,7 +3,7 @@ angular.module('entourageApp')
     bindings: {
       user: '=',
       profileId: '=',
-      open: '='
+      onShowAction: '&',
     },
     controller: function($scope, $element, $attrs, $uibModal) {
       var ctrlParent = this;
@@ -12,7 +12,7 @@ angular.module('entourageApp')
         $uibModal.open({
           templateUrl: '/wp-content/themes/entourage/js/components/modal-profile-user.html',
           controllerAs: 'ctrl',
-          controller: function($scope, $uibModal, $uibModalInstance) {
+          controller: function($scope, $uibModal, $uibModalInstance, $uibModalStack) {
             var ctrl = this;
             ctrl.user = ctrlParent.user;
 
@@ -44,6 +44,11 @@ angular.module('entourageApp')
               $uibModalInstance.close();
             }
 
+            ctrl.contact = function() {
+              ctrlParent.onShowAction({uuid: ctrl.profile.conversation.uuid});
+              $uibModalStack.dismissAll();
+            }
+
             ctrl.report = function() {
               ctrl.currentMessage = {
                 type: "report_user",
@@ -52,7 +57,7 @@ angular.module('entourageApp')
             }
           }
         }).closed.then(function() {
-          ctrlParent.open = false;
+          ctrlParent.profileId = null;
         });
       }
     }

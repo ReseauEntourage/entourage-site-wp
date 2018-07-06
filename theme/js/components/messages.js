@@ -29,7 +29,9 @@ angular.module('entourageApp')
           url: getApiUrl() + '/myfeeds',
           data: {
             token: ctrl.user.token,
-            status: "all"
+            status: "all",
+            show_tours: false,
+            time_range: 24 * 365 * 3 // 3 years
           },
           success: function(data) {
             if (data.feeds) {
@@ -56,7 +58,6 @@ angular.module('entourageApp')
       }
 
       ctrl.getPendingUsers = function(action) {
-
         $.ajax({
           type: 'GET',
           url: getApiUrl() + '/entourages/' + action.uuid + '/users',

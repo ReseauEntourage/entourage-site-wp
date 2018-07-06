@@ -72,6 +72,9 @@ function transformAction(action) {
       action.title = 'TERMINÉ - ' + action.title;
     }
   }
+  if (action.group_type == 'conversation') {
+    delete action.number_of_people;
+  }
   return action;
 }
 

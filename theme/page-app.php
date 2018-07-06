@@ -31,7 +31,7 @@
 <html <?php language_attributes(); ?> class="no-js">
 <head>
     <meta charset="<?php bloginfo( 'charset' ); ?>">
-    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="icon" type="image/png" href="<?php asset_url('img/fav.png'); ?>" />
     <title><?php
             echo get_bloginfo('name');
@@ -106,11 +106,9 @@
             </div>
             <h1>
                 <a
-                        href="http://www.entourage.social/"
-                        target="_blank"
-                        >
-                    Entourage
-                </a>, <?php echo $custom_fields['titre'][0] ?>...
+                    href="http://www.entourage.social/"
+                    target="_blank"
+                    >Entourage</a>, <?php echo $custom_fields['titre'][0] ?>...
             </h1>
         </div>
     </div>
@@ -372,11 +370,11 @@
                 >
                 <div
                     class="dropdown"
-                    ng-class="{open: toggleLogin}"
+                    ng-class="{open: map.showLogin}"
                     >
                     <a
                         class="dropdown-toggle link"
-                        ng-click="toggleLogin = !toggleLogin"
+                        ng-click="map.toggleLogin()"
                         >
                         <span class="no-mobile">Connectez-vous</span>
                         <span class="mobile-only">Connexion</span>
@@ -416,7 +414,15 @@
         ng-if="map.showRegister"
         user="map.loggedUser"
         hide="map.toggleRegister()"
+        open-login="map.toggleLogin()"
         ></modal-register>
+
+    <modal-profile-user
+        ng-if="map.currentProfileId"
+        user="map.loggedUser"
+        profile-id="map.currentProfileId"
+        on-show-action="map.showAction(uuid)"
+        ></modal-profile-user>
 
     <div id="page-content">
         <div
@@ -455,8 +461,10 @@
                 action="map.currentAction"
                 public="map.public"
                 show-register="map.toggleRegister(token)"
+                show-profile="map.showProfile(id)"
                 user="map.loggedUser"
                 ></current-action>
+
             <div id="map-container"></div>
         </div>
     </div>
