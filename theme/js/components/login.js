@@ -104,6 +104,9 @@ angular.module('entourageApp')
               {
                 data.user.phone = ctrl.phone;
                 localStorage.setItem('user', JSON.stringify(data.user));
+                if (!data.user.has_password) {
+                  ga('send', 'event', 'Engagement', 'FirstConnection', 'WebApp');
+                }
                 localStorage.setItem('keepLogged', ctrl.keepLogged);
                 sessionStorage.setItem('logged', 1);
                 window.location.reload();

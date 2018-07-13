@@ -18,6 +18,7 @@ angular.module('entourageApp')
 
             ctrl.loading = false;
             ctrl.currentUser = ctrlParent.user;
+            ctrl.optinNewsletter = true;
 
             ctrl.submit = function() {
               if (ctrl.loading)
@@ -58,8 +59,13 @@ angular.module('entourageApp')
                 };
               }
 
-              if (!ctrl.currentUser.email)
+              if (!ctrl.currentUser.email) {
                 data.email = ctrl.email;
+
+                if (ctrl.optinNewsletter) {
+                  ctrl.newSubscription(ctrl.email);
+                }
+              }
 
               ctrl.updateUser(data);
             }
@@ -95,6 +101,17 @@ angular.module('entourageApp')
                     ctrl.errors.push("Il y a eu une erreur, merci de réessayer ou de nous contacter");
                   ctrl.loading = false;
                   $scope.$apply();
+                }
+              });
+            }
+
+            ctrl.newSubscription = function(email){
+              $.ajax({
+                type: "POST",
+                url: "https://api.entourage.social/api/v1/newsletter_subscriptions",
+                data: { "newsletter_subscription": { "email": email, "active": true } },
+                success: function(){
+                  ga('send', 'event', 'Engagement', 'Newsletter', 'WebApp');
                 }
               });
             }

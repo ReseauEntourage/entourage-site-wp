@@ -1,5 +1,14 @@
 jQuery(document).ready(function($) {
 
+	// MOBILE DOWNLOAD BUTTON //
+
+	var mobileOS = getMobileOperatingSystem();
+
+	if (mobileOS == 'iOS')
+    	$('.iphone-btn').css('display', 'inline-block');
+  	else if (mobileOS == 'Android')
+	    $('.android-btn').css('display', 'inline-block');
+
 
 	// FIXED HEADER //
 
@@ -105,11 +114,7 @@ jQuery(document).ready(function($) {
 			data: { "newsletter_subscription": { "email": email, "active": true } },
 			success: function(){
 				$('.section-newsletter').addClass('success').html('<p>Vous êtes bien inscrit à notre newsletter ! A bientôt :)</p>');
-				ga('send', {
-					hitType: 'event',
-					eventCategory: 'Engagement',
-					eventAction: 'Newsletter',
-				});
+				ga('send', 'event', 'Engagement', 'Newsletter', 'Website');
 				fbq('track', 'CompleteRegistration');
 			},
 			error: function(){
@@ -121,22 +126,24 @@ jQuery(document).ready(function($) {
 
 	// EVENTS TRACKING //
 
-	$('.header-download-btn').on('click', function(){
-		ga('send', {
-			hitType: 'event',
-			eventCategory: 'Click',
-			eventAction: 'TopButton'
-		});
-	});
+	$('[ga-event]').on('click', function(e){
+		var data = {
+			hitType: 'event'
+		};
+		var attr = $(this).attr('ga-event').split(" ");
 
-	$('.desktop-btn').on('click', function(){
-		ga('send', {
-			hitType: 'event',
-			eventCategory: 'Engagement',
-			eventAction: 'AppDownload',
-			eventLabel: 'Desktop'
-		});
-		fbq('track', 'Lead', {'content_name': 'Desktop'});
+		if (attr[0]) {
+			data.eventCategory = attr[0];
+		}
+		if (attr[1]) {
+			data.eventAction = attr[1];
+		}
+		if (attr[2]) {
+			data.eventLabel = attr[2];
+		}
+		
+		console.info('ga_send', data);
+		ga('send', data);
 	});
 
 	$('.iphone-btn').on('click', function(){
@@ -157,6 +164,15 @@ jQuery(document).ready(function($) {
 			eventLabel: 'Android'
 		});
 		fbq('track', 'Lead', {'content_name': 'Android'});
+	});
+
+	$('#banner-app-download').find('.app-download-btn').on('click', function(){
+		ga('send', {
+			hitType: 'event',
+			eventCategory: 'Engagement',
+			eventAction: 'AppDownload',
+			eventLabel: mobileOS
+		});
 	});
 
   /*
@@ -199,16 +215,6 @@ jQuery(document).ready(function($) {
 	});
 
 
-	// MOBILE DOWNLOAD BUTTON //
-
-	var mobileOS = getMobileOperatingSystem();
-
-	if (mobileOS == 'iOS')
-    	$('.iphone-btn').css('display', 'inline-block');
-  	else if (mobileOS == 'Android')
-	    $('.android-btn').css('display', 'inline-block');
-
-
 	// APP DOWNLOAD BANNER //
 
 	if (!localStorage.getItem('no-app-download-banner'))
@@ -217,14 +223,6 @@ jQuery(document).ready(function($) {
 	$('#banner-app-download').find('.close').on('click', function(){
 		$('body').removeClass('show-banner');
 		localStorage.setItem('no-app-download-banner', 1);
-	});
-
-	$('#banner-app-download').find('.app-download-btn').on('click', function(){
-		ga('send', {
-			hitType: 'event',
-			eventCategory: 'Click',
-			eventAction: 'DownloadBanner'
-		});
 	});
 
 

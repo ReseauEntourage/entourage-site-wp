@@ -10,12 +10,13 @@
     <div class="form">
         <div ng-if="ctrl.currentUser.has_password">
             <fieldset>
-                <label>1. Pour commencer, et si vous nous disiez qui vous êtes ? C'est obligatoire mais pas d'inquiétude, votre nom sera masqué :</label>
+                <label>1. Pour commencer, et si vous nous disiez qui vous êtes ? C'est obligatoire mais pas d'inquiétude, votre nom sera masqué&nbsp;:</label>
                 <div class="input-line">
                     <input
                         type="text"
                         ng-model="ctrl.first_name"
                         placeholder="Votre prénom"
+                        autofocus
                     />
                     <input
                         type="text"
@@ -25,7 +26,7 @@
                 </div>
             </fieldset>
             <fieldset>
-                <label>2. Présentez-vous en quelques mots à la communauté :</label>
+                <label>2. Présentez-vous en quelques mots à la communauté&nbsp;:</label>
                 <div class="parent-input with-icon message-icon">
                     <textarea
                         ng-model="ctrl.about"
@@ -34,7 +35,7 @@
                 </div>
             </fieldset>
             <fieldset>
-                <label>3. Quel est votre email ? Il est nécessaire pour nous afin de pouvoir vous renvoyer votre mot de passe si vous perdez votre téléphone :</label>
+                <label>3. Nous avons besoin de votre email afin de pouvoir vous contacter (renvoi de mot de passe, notifications, etc.)&nbsp;:</label>
                 <div class="parent-input with-icon email-icon">
                     <input
                         type="text"
@@ -42,6 +43,13 @@
                         placeholder="Votre email"
                     />
                 </div>
+                <label class="label-checkbox">
+                    <input
+                        type="checkbox"
+                        ng-model="ctrl.optinNewsletter"
+                        />
+                    <span>Recevoir la newsletter d'Entourage (1 fois par mois max !)</span>
+                </label>
             </fieldset>
             <fieldset>
                 <label>4. Pour finir, téléchargez une (jolie) photo de vous afin de mettre un visage sur vos actions !</label>
@@ -74,7 +82,8 @@
                         type="password"
                         ng-model="ctrl.password"
                         placeholder="Votre nouveau mot de passe"
-                    />
+                        autofocus
+                        />
                 </div>
             </fieldset>
             <fieldset>
@@ -85,19 +94,26 @@
                         ng-model="ctrl.password_confirm"
                         ng-enter="ctrl.submit()"
                         placeholder="Votre nouveau mot de passe"
-                    />
+                        />
                 </div>
             </fieldset>
             <fieldset ng-if="!ctrl.currentUser.email">
-                <label>3. Quel est votre email ? Il est nécessaire pour nous afin de pouvoir vous renvoyer votre mot de passe si vous perdez votre téléphone</label>
+                <label>3. Nous avons besoin de votre email afin de pouvoir vous contacter (renvoi de mot de passe, notifications, etc.)&nbsp;:</label>
                 <div class="parent-input with-icon email-icon">
                     <input
                         type="text"
                         ng-model="ctrl.email"
                         ng-enter="ctrl.submit()"
                         placeholder="Votre email"
-                    />
+                        />
                 </div>
+                <label class="label-checkbox">
+                    <input
+                        type="checkbox"
+                        ng-model="ctrl.optinNewsletter"
+                        />
+                    <span>Recevoir la newsletter d'Entourage (1 fois par mois max !)</span>
+                </label>
             </fieldset>
         </div>
         <div
@@ -113,7 +129,7 @@
         class="btn orange-btn"
         >
         <i class="material-icons">send</i>
-        Enregistrer !
+        Continuer
     </a>
 </div>
 <modal-new-picture

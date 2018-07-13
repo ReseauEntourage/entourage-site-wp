@@ -405,6 +405,20 @@
 			<form method="post" action="options.php">
 				<?php wp_nonce_field('update-options') ?>
 
+				<h2>Haut de page</h2>
+
+				<p><strong>Icone bouton orange à droite :</strong><br />
+				<input type="text" name="open_app_icon" size="150" value="<?php echo get_option('open_app_icon'); ?>" /></p>
+
+				<p><strong>Bouton orange à droite :</strong><br />
+				<input type="text" name="open_app_text" size="150" value="<?php echo get_option('open_app_text'); ?>" /></p>
+
+				<p><strong>Lien bouton orange à droite :</strong><br />
+				<input type="text" name="open_app_link" size="150" value="<?php echo get_option('open_app_link'); ?>" /></p>
+
+				<p><strong>[MOBILE] Bouton orange à droite (max 15 caractères):</strong><br />
+				<input type="text" name="open_app_text_mobile" size="150" value="<?php echo get_option('open_app_text_mobile'); ?>" /></p>
+
 				<h2>Don</h2>
 
 				<p><strong>Bouton "faire un don" (max 10 caractères) :</strong><br />
@@ -432,13 +446,10 @@
 				<p><strong>Lien adresse :</strong><br />
 				<input type="text" name="footer_address_link" size="150" value="<?php echo get_option('footer_address_link'); ?>" /></p>
 
-				<!--p><strong>Welcome Text:</strong><br />
-				<textarea name="welcomemessage" cols="100%" rows="7"><?php echo get_option('welcomemessage'); ?></textarea></p-->
-
 				<p><input type="submit" name="Submit" value="Enregistrer les textes" /></p>
 
 				<input type="hidden" name="action" value="update" />
-				<input type="hidden" name="page_options" value="newsletter, donate_text, donate_link, footer_address_text, footer_address_link,facebook_title,facebook_description" />
+				<input type="hidden" name="page_options" value="open_app_icon,open_app_text,  open_app_link, open_app_text_mobile, newsletter, donate_text, donate_link, footer_address_text, footer_address_link,facebook_title,facebook_description" />
 
 			</form>
 		</div>

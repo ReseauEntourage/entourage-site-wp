@@ -84,6 +84,8 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
 
       setMarkersCustomStyle();
 
+      definePopupClass();
+
       // when the user zooms the map
       google.maps.event.addListener(map.mapObject, 'zoom_changed', function() {
         setMarkersCustomStyle();
@@ -423,16 +425,14 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
     }
 
     showMarkerTitle = function(action, context) {
-      map.infoWindow = new google.maps.InfoWindow({
-        pixelOffset: new google.maps.Size(0, map.actionIcon.pixels / -2),
-        content: '<div class="gm-info-window" data-id="' + action.uuid + '"><b>' + action.title + '</b><div><div class="action-author-picture" style="background-image: url(' + action.author.avatar_url + ')"></div><b>' + action.author.display_name + '</b>, le ' + $filter('date')(action.created_at, 'dd/MM/yy') + '</div></div>'
-      });
-      map.infoWindow.open(map.mapObject, context);
+      map.popup = new Popup(new google.maps.LatLng(context.position.lat(), context.position.lng()), '<div class="popup-bubble-content-header capitalize-first-letter">' + action.title + '</div><div class="popup-bubble-content-bottom"><div class="action-author-picture" style="background-image: url(' + action.author.avatar_url + ')"></div><b>' + action.author.display_name + '</b>, <span class="date">le ' + $filter('date')(action.created_at, 'dd/MM/yy') + '</span></div>');
+      map.popup.setMap(map.mapObject);
     }
 
     hideMarkerTitle = function() {
-      if (map.infoWindow)
-        map.infoWindow.close();
+      if (map.popup) {
+        map.popup.setMap(null);
+      }
     }
 
     getMarkerTitle = function(status, active) {
@@ -624,6 +624,52 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
         }
       }
       return value;
+    }
+
+
+    // POPUPS //
+    function definePopupClass() {
+      /**
+       * A customized popup on the map.
+       * @param {!google.maps.LatLng} position
+       * @param {!Element} content
+       * @constructor
+       * @extends {google.maps.OverlayView}
+       */
+      Popup = function(position, html) {
+        this.position = position;
+
+        var content = document.createElement('div');
+        content.innerHTML = html;
+        content.classList.add('popup-bubble-content');
+        console.info(content);
+
+        var pixelOffset = document.createElement('div');
+        pixelOffset.classList.add('popup-bubble-anchor');
+        pixelOffset.appendChild(content);
+
+        this.anchor = document.createElement('div');
+        this.anchor.classList.add('popup-tip-anchor');
+        this.anchor.appendChild(pixelOffset);
+      };
+
+      Popup.prototype = Object.create(google.maps.OverlayView.prototype);
+
+      Popup.prototype.onAdd = function() {
+        this.getPanes().floatPane.appendChild(this.anchor);
+      };
+
+      Popup.prototype.onRemove = function() {
+        if (this.anchor.parentElement) {
+          this.anchor.parentElement.removeChild(this.anchor);
+        }
+      };
+
+      Popup.prototype.draw = function() {
+        var divPosition = this.getProjection().fromLatLngToDivPixel(this.position);
+        this.anchor.style.left = divPosition.x + 'px';
+        this.anchor.style.top = (divPosition.y - 20) + 'px';
+      };
     }
 
 

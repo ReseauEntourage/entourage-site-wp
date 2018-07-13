@@ -151,4 +151,13 @@ angular.module('entourageApp')
 				}
 			});
 		};
+	})
+	.directive('autofocus', function($timeout) {
+		return {
+		    link: function(scope, element) {
+			    $timeout(function() {
+			    	element[0].focus();
+		    	});
+		    }
+		};
 	});

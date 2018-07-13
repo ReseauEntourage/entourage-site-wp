@@ -5,13 +5,15 @@
  */
 ?>
 
-<?php $custom_fields = get_post_custom($wp_query->post->ID); ?>
+<?php $custom_fields = get_post_custom(get_post()->ID); ?>
 
 <section id="how-it-works" <?php post_class(); ?>>
 	<h3 class="section-title"><?php the_title(); ?></h3>
 	<div class="section-content">
 		<?php the_content(); ?>
-		<a class="btn orange-btn" href="<?php echo $custom_fields['lien'][0] ?>"><?php echo $custom_fields['bouton_orange'][0] ?></a>
+		<a class="btn orange-btn" href="<?php echo $custom_fields['lien'][0] ?>" ga-event="Engagement AppView SectionHowItWorks">
+			<i class="material-icons"><?php echo $custom_fields['icone'][0] ?></i><?php echo $custom_fields['bouton_orange'][0] ?>
+		</a>
 	<div>
 </section>
 

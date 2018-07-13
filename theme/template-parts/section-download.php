@@ -11,7 +11,7 @@
 	<img src="/wp-content/themes/entourage/img/app-screenshot.png" alt="Ecran de l'application mobile" title="Aperçu de l'application Entourage"/>
 	<div class="download-btns">
 		<h4><?php the_content(); ?></h4>
-		<a class="btn orange-btn map-btn mobile-only" href="/app">
+		<a class="btn orange-btn map-btn" href="/app" ga-event="Engagement AppView SectionDownloadBtn">
 			<div>
 				Ouvrir la <strong>carte</strong>
 			</div>
@@ -44,7 +44,7 @@
 	}
 
 	section.section.section_type-download h4 {
-		margin-bottom: 40px;
+		margin-bottom: 20px;
 		padding: 0 20px;
 		font-weight: 600;
 		font-size: 18px;
@@ -96,6 +96,10 @@
 		font-size: 26px;
 	}
 
+	section.section.section_type-download a.map-btn:hover {
+		text-decoration: none;
+	}
+
 	section.section.section_type-download a.btn div {
 		display: inline-block;
 	    vertical-align: top;
@@ -110,6 +114,25 @@
 		font-weight: 600;
 		font-size: 19px;
 		text-transform: uppercase;
+	}
+
+	@media screen and (min-width: 901px) {
+		section.section.section_type-download a.btn.map-btn {
+		    display: block;
+		    width: 306px;
+		    height: 44px;
+		    margin: 0 auto 10px;
+		}
+
+		section.section.section_type-download a.btn.map-btn > div {
+		    margin-top: 7px;
+	        font-size: 15px;
+	        text-transform: uppercase;	
+		}
+
+		section.section.section_type-download a.btn.map-btn strong {
+			display: inline-block;
+		}
 	}
 
 	@media screen and (max-width: 900px) {

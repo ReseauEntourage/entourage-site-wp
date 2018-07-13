@@ -86,7 +86,10 @@
                     clickable="true"
                     show-profile="ctrl.openProfile(id)"
                 ></action-participants-picture> 
-                <span ng-bind="ctrl.action.title"></span>
+                <span
+                    class="capitalize-first-letter"
+                    ng-bind="ctrl.action.title"
+                    ></span>
             </div>
             <div class="action-chat">
                 <div ng-if="ctrl.action.status == 'closed' || ctrl.action.join_status != 'accepted'">
@@ -106,7 +109,10 @@
                         ng-if="ctrl.action.description"
                         class="action-description"
                         >
-                        <span ng-bind-html="ctrl.action.description|linkify|showbr|trusted"></span>
+                        <span
+                            class="capitalize-first-letter"
+                            ng-bind-html="ctrl.action.description|linkify|showbr|trusted"
+                            ></span>
                     </p>
                 </div>
                 <div ng-if="ctrl.action.status != 'closed' && ctrl.action.join_status == 'accepted'">

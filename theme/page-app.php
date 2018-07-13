@@ -389,7 +389,7 @@
                         id="login-window"
                         class="dropdown-menu"
                         >
-                        <login></login>
+                        <login ng-if="map.showLogin"></login>
                     </div>
                 </div>
             </div>
@@ -473,6 +473,7 @@
 
             <div id="map-container"></div>
         </div>
+        <div id="popup-content"></div>
     </div>
 
 

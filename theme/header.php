@@ -149,12 +149,12 @@
 				<?php else: ?>
 					<!--a id="header-download-btn" class="btn orange-btn iphone-btn" href="<?php echo link_with_url_parameters($custom_fields_downloads['lien_ios'][0], $_SERVER['QUERY_STRING']) ?>"><?php echo $download_btn_text ?></a>
 					<a id="header-download-btn" class="btn orange-btn android-btn" href="<?php echo link_with_url_parameters($custom_fields_downloads['lien_android'][0], $_SERVER['QUERY_STRING']) ?>"><?php echo $download_btn_text ?></a-->
-					<a class="btn orange-btn header-download-btn no-mobile" title="Ouvrir la carte des actions du réseau solidaire Entourage" href="/app">
-						<?php echo $download_btn_text ?>
+					<a class="btn orange-btn header-download-btn web-app-link-tracker no-mobile" title="Ouvrir la carte des actions du réseau solidaire Entourage" href="<?php echo get_option('open_app_link'); ?>" ga-event="Engagement AppView Header">
+						<i class="material-icons"><?php echo get_option('open_app_icon'); ?></i><?php echo get_option('open_app_text'); ?>
 					</a>
 				<?php endif ?>
-				<a class="btn orange-btn header-download-btn mobile-only" title="Ouvrir la carte des actions du réseau solidaire Entourage" href="/app">
-					<?php echo $custom_fields_home['bouton_orange_mobile'][0] ?>
+				<a class="btn orange-btn header-download-btn mobile-only" title="Ouvrir la carte des actions du réseau solidaire Entourage" href="<?php echo get_option('open_app_link'); ?>" ga-event="Engagement AppView Header">
+					<i class="material-icons"><?php echo get_option('open_app_icon'); ?></i><?php echo get_option('open_app_text_mobile'); ?>
 				</a>
 			</div>
 			<?php if ($wp_query->post->ID != 417): ?>
@@ -175,15 +175,15 @@
 			<?php if ( is_front_page() ): ?>
 				<div id="site-header-search">
 					<input id="site-header-input" type="text" placeholder="<?php echo $custom_fields['recherche'][0] ?>"/>
-					<a id="ask-location" class="btn orange-btn" title="Rechercher les actions de mes voisins">
+					<a id="ask-location" class="btn orange-btn" title="Rechercher les actions de mes voisins" ga-event="Engagement AppView Search">
 						<i class="material-icons">search</i>
 					</a>
 					<div id="cities-example">
 						Ex :
-						<a href="/app/?ville=Paris,%20France" target="_blank">Paris</a>,
-						<a href="/app/?ville=Lyon,%20France" target="_blank">Lyon</a>,
-						<a href="/app/?ville=Lille,%20France" target="_blank">Lille</a>,
-						<a href="/app/?ville=Grenoble,%20France" target="_blank">Grenoble</a>
+						<a href="/app/?ville=Paris,%20France" target="_blank" ga-event="Engagement AppView Search">Paris</a>,
+						<a href="/app/?ville=Lyon,%20France" target="_blank" ga-event="Engagement AppView Search">Lyon</a>,
+						<a href="/app/?ville=Lille,%20France" target="_blank" ga-event="Engagement AppView Search">Lille</a>,
+						<a href="/app/?ville=Grenoble,%20France" target="_blank" ga-event="Engagement AppView Search">Grenoble</a>
 					</div>
 				</div>
 			<?php endif ?>

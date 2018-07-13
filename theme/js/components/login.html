@@ -41,6 +41,7 @@
                     placeholder="Votre téléphone"
                     ng-enter="ctrl.checkPhone()"
                     autocomplete="tel"
+                    autofocus
                     />
             </div>
         </fieldset>
@@ -51,7 +52,12 @@
             Continuer <i class="material-icons">arrow_forward</i>
         </a>
         <div class="bottom-links">
-            <a href="/contact/" target="_blank">Un problème ? Contactez-nous</a>
+            <a 
+                href="/contact/"
+                target="_blank"
+                >
+                Un problème ? Contactez-nous
+            </a>
         </div>
     </div>
     <div ng-switch-when="password">
@@ -64,6 +70,7 @@
                     placeholder="Votre mot de passe"
                     ng-enter="ctrl.login()"
                     autocomplete="password"
+                    autofocus
                     />
             </div>
             <label class="label-checkbox">
@@ -96,7 +103,7 @@
                     ng-model="ctrl.password"
                     placeholder="Votre code à 6 chiffres"
                     ng-enter="ctrl.login()"
-                    autocomplete="password"
+                    autofocus
                     />
             </div>
             <label class="label-checkbox">

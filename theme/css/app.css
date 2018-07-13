@@ -42,6 +42,10 @@ a[href]:hover {
     display: none !important;
 }
 
+.capitalize-first-letter:first-letter {
+    text-transform: uppercase;
+}
+
 
 /** DROPDOWN **/
 
@@ -244,6 +248,15 @@ a[href]:hover {
 .form label i {
     margin-left: 3px;
     font-size: 16px;
+}
+
+.form label.label-checkbox {
+    margin-top: 6px;
+    margin-bottom: 0;
+}
+
+.form label.label-checkbox input[type=checkbox] {
+    vertical-align: middle;
 }
 
 .form .btn {
@@ -866,10 +879,6 @@ div.overlay.fade-out {
 #site-header-login .login-content .label-checkbox {
     margin-top: 10px;
     margin-bottom: -10px;
-}
-
-#site-header-login .login-content .label-checkbox input[type=checkbox] {
-    vertical-align: middle;
 }
 
 #site-header-login .login-content .btn {
@@ -1576,6 +1585,56 @@ div.overlay.fade-out {
     cursor: pointer;
 }
 
+#map .popup-bubble-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -100%);
+    background-color: white;
+    font-size: 11px;
+    color: #333;
+    border-radius: 5px;
+    box-shadow: 0px 2px 10px 1px rgba(0,0,0,0.5);
+}
+
+#map .popup-bubble-content .popup-bubble-content-header {
+    padding: 10px 15px;
+    font-size: 13px;
+    font-weight: 600;
+    background: #f9f9f9;
+    border-bottom: 1px solid #eee;
+    border-radius: 5px 5px 0 0;
+}
+
+#map .popup-bubble-content .popup-bubble-content-bottom {
+    padding: 10px 15px;
+}
+
+#map .popup-bubble-content .popup-bubble-content-bottom .date {
+    color: #6C6F73;
+}
+
+#map .popup-tip-anchor {
+    height: 0;
+    position: absolute;
+}
+
+#map .popup-bubble-anchor {
+    min-width: 300px;
+    max-width: 300px;
+}
+
+#map .popup-bubble-anchor:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, 0);
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 8px solid white;
+}
+
 
 /** CURRENT ACTION **/
 
@@ -1918,23 +1977,6 @@ div.overlay.fade-out {
 
 .gm-style > div > div .gmnoprint:hover {
 	z-index: 9999 !important;
-}
-
-.gm-info-window {
-	cursor: pointer;
-}
-
-.gm-info-window b {
-	color: #333;
-}
-
-.gm-info-window > div {
-	display: block;
-	font-size: 11px;
-	margin-top: 5px;
-    border-top: 1px solid #eee;
-    padding-top: 5px;
-    color: #6C6F73;
 }
 
 @keyframes pulse {
