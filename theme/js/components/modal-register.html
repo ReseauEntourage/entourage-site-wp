@@ -75,7 +75,7 @@
                     ></div>
                 <div
                     ng-if="!ctrl.error"
-                    class="already-register"
+                    class="bottom-link"
                     >
                     Déjà inscrit ? <a ng-click="ctrl.openLogin()">Connectez-vous</a>
                 </div>
@@ -86,13 +86,15 @@
                 Regardez vite vos SMS !
             </h3>
             <div class="connection-form">
-                <div>
+                <fieldset>
                     <label>1. Entrez le code d'activation reçu&nbsp;:</label>
                     <input
                         type="text"
                         ng-model="ctrl.user.sms_code"
                         placeholder="123456"
                         />
+                </fieldset>
+                <fieldset>
                     <label>2. Choisissez votre mot de passe (au moins 8 caractères)&nbsp;:</label>
                     <input
                         type="password"
@@ -100,7 +102,7 @@
                         placeholder="Mot de passe"
                         ng-enter="ctrl.login()"
                         />
-                </div>
+                </fieldset>
                 <a
                     class="btn"
                     ng-click="ctrl.login()"
@@ -112,6 +114,12 @@
                     ng-if="ctrl.error"
                     ng-bind="ctrl.error"
                     ></div>
+                <div
+                    ng-if="!ctrl.error"
+                    class="bottom-link"
+                    >
+                    Un problème ? <a href="/contact/" target="_blank">Contactez-nous</a>
+                </div>
             </div>
         </div>
     </div>

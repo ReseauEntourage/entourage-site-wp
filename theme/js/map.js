@@ -281,6 +281,12 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
             map.loaded = true;
             $scope.$apply();   
           }
+        },
+        error: function(data) {
+          console.info(data);
+          if (data.responseJSON && data.responseJSON.message && data.responseJSON.message == 'unauthorized') {
+            map.logout();
+          }
         }
       });
     }
@@ -289,10 +295,10 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
       var zoomLevel = map.mapObject.getZoom();
       if (zoomLevel >= 14)
         value = 1;
-      else if (zoomLevel >= 13)
-        value = 5;
+      else if (zoomLevel == 13)
+        value = 2;
       else
-        value = 10;
+        value = 5;
 
       var count = 0;
       var bounds = map.mapObject.getBounds();

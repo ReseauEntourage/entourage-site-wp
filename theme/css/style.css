@@ -176,6 +176,21 @@ a:hover {
 	margin-top: -2px;
 }
 
+.btn i.material-icons {
+    margin-right: 7px;
+    font-size: 16px;
+    margin-top: -1px;
+}
+
+.btn.btn-icon {
+    padding: 0 8px;
+}
+
+.btn.btn-icon i.material-icons {
+    font-size: 18px;
+    margin: 0;
+}
+
 .parent-select .btn {
 	display: inline-flex;
     color: #424242;
@@ -669,6 +684,10 @@ strong {
     border-radius: 0 23px 23px 0;
 }
 
+#site-header-search #ask-location i {
+	font-size: 24px;
+}
+
 #site-header-search #cities-example {
     margin-top: 4px;
     font-size: 16px;
@@ -782,6 +801,10 @@ section.section h3.section-title {
 section.section p a:not(.btn),
 section.section li a:not(.btn) {
 	color: #ff5100;
+}
+
+section.section p a:not(.btn) {
+	text-decoration: underline;
 }
 
 section.section div.section-content img {

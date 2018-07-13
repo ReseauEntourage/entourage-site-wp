@@ -1,11 +1,14 @@
 @media screen and (min-width: 901px) {
-	#site-header-right #header-download-btn:not(.desktop-btn),
 	.mobile-only {
 		display: none;
 	}
 }
 
 @media screen and (max-width: 900px) {
+
+	.no-mobile {
+        display: none !important;
+    }
 
 	body.home #site-header {
 	    height: 280px;
@@ -96,12 +99,7 @@
 	    border: 0;
 	}
 
-	#site-header-right a:not(.btn),
-	#site-header-right a.btn {
-	    display: none;
-	}
-
-	#site-header-right #header-download-btn:not(.desktop-btn) {
+	#site-header-right .header-download-btn {
 	    font-size: 12px;
 	    padding: 0 10px;
 	    line-height: 30px;
@@ -265,6 +263,7 @@
 	}
 
 	body.show-banner #donate-btn {
+		display: none;
 		top: 156px;
 	}
 }

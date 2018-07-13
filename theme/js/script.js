@@ -121,7 +121,7 @@ jQuery(document).ready(function($) {
 
 	// EVENTS TRACKING //
 
-	$('#header-download-btn').on('click', function(){
+	$('.header-download-btn').on('click', function(){
 		ga('send', {
 			hitType: 'event',
 			eventCategory: 'Click',

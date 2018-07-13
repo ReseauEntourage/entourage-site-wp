@@ -50,6 +50,9 @@
             >
             Continuer <i class="material-icons">arrow_forward</i>
         </a>
+        <div class="bottom-links">
+            <a href="/contact/" target="_blank">Un problème ? Contactez-nous</a>
+        </div>
     </div>
     <div ng-switch-when="password">
         <fieldset>
@@ -78,10 +81,10 @@
             Connexion
         </a>
         <div class="bottom-links">
+            <a ng-click="ctrl.sendCode()">Mot de passe perdu ?</a>
             <a ng-click="ctrl.step = 'phone'">
                 <i class="material-icons">arrow_back</i>Retour
             </a>
-            <a ng-click="ctrl.sendCode()">Mot de passe perdu ?</a>
         </div>
     </div>
     <div ng-switch-when="code">
@@ -110,6 +113,9 @@
             >
             Connexion
         </a>
+        <div class="bottom-links">
+            <a href="/contact/" target="_blank">Un problème ? Contactez-nous</a>
+        </div>
     </div>
     <div
         class="error"

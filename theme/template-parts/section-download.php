@@ -10,10 +10,15 @@
 <section <?php post_class(); ?>>
 	<img src="/wp-content/themes/entourage/img/app-screenshot.png" alt="Ecran de l'application mobile" title="Aperçu de l'application Entourage"/>
 	<div class="download-btns">
+		<h4><?php the_content(); ?></h4>
+		<a class="btn orange-btn map-btn mobile-only" href="/app">
+			<div>
+				Ouvrir la <strong>carte</strong>
+			</div>
+		</a>
 		<?php 
-			the_title( '<h4>', '</h4>');
-			echo sprintf( '<a class="btn orange-btn iphone-btn" href="%s"><div>Télécharger sur <strong>iphone</strong></div></a>', link_with_url_parameters($custom_fields['lien_ios'][0], $_SERVER['QUERY_STRING']));
-			echo sprintf( '<a class="btn orange-btn android-btn" href="%s"><div>Télécharger sur <strong>android</strong></div></a>', link_with_url_parameters($custom_fields['lien_android'][0], $_SERVER['QUERY_STRING']));
+			echo sprintf( '<a class="btn dark-btn iphone-btn" href="%s"><div><span class="no-mobile">Disponible</span><span class="mobile-only">Télécharger</span> sur <strong>iphone</strong></div></a>', link_with_url_parameters($custom_fields['lien_ios'][0], $_SERVER['QUERY_STRING']));
+			echo sprintf( '<a class="btn dark-btn android-btn" href="%s"><div><span class="no-mobile">Disponible</span><span class="mobile-only">Télécharger</span> sur <strong>android</strong></div></a>', link_with_url_parameters($custom_fields['lien_android'][0], $_SERVER['QUERY_STRING']));
 		?>
 	</div>
 </section>
@@ -39,10 +44,15 @@
 	}
 
 	section.section.section_type-download h4 {
-		margin-bottom: 30px;
+		margin-bottom: 40px;
 		padding: 0 20px;
 		font-weight: 600;
 		font-size: 18px;
+	}
+
+	section.section.section_type-download h4 a {
+		color: #ff5100;
+	    text-decoration: underline;	
 	}
 
 	section.section.section_type-download a.btn {
@@ -51,6 +61,7 @@
 	    padding: 7px 20px;
 	    margin-right: 10px;
 	    font-size: 11px;
+        border-radius: 10px;	
 	}
 
 	section.section.section_type-download a.btn:last-child {
@@ -69,9 +80,20 @@
 	    vertical-align: top;
 	    margin-top: 2px;
 	    margin-right: 8px;
-	    background-image: url(/wp-content/themes/entourage/img/sprite-main.png);
+	}
+
+	section.section.section_type-download a.btn:not(.map-btn):before {
+		background-image: url(/wp-content/themes/entourage/img/sprite-main.png);
 	    background-size: 250px;
 	    background-position: 0 0;
+	}
+
+	section.section.section_type-download a.map-btn:before {
+		content: 'map';
+	    margin-top: 8px;
+    	height: inherit;
+		font-family: 'Material Icons';
+		font-size: 26px;
 	}
 
 	section.section.section_type-download a.btn div {
@@ -102,12 +124,8 @@
 			margin: 0 0 20px 0;
 		}
 
-		section.section.section_type-download div.download-btns .orange-btn {
-			width: 180px;
-		}
-
-		section.section.section_type-download div.download-btns .iphone-btn {
-			margin: 0 0 10px 0;
+		section.section.section_type-download h4 b {
+			display: block;
 		}
 	}
 	

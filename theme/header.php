@@ -136,17 +136,26 @@
 			</div>
 			<div id="site-header-right">
 				<?php if ( $custom_fields['bouton_2'] ): ?>
-					<a class="link" href="<?php echo $custom_fields['lien_2'][0] ?>"><?php echo $custom_fields['bouton_2'][0] ?></a>
+					<a class="link no-mobile" href="<?php echo $custom_fields['lien_2'][0] ?>"><?php echo $custom_fields['bouton_2'][0] ?></a>
 				<?php endif ?>
-				<?php if ( is_front_page() ): ?>
-					<a id="header-download-btn" class="btn orange-btn iphone-btn" href="<?php echo link_with_url_parameters($custom_fields_downloads['lien_ios'][0], $_SERVER['QUERY_STRING']) ?>"><?php echo $download_btn_text ?></a>
-					<a id="header-download-btn" class="btn orange-btn android-btn" href="<?php echo link_with_url_parameters($custom_fields_downloads['lien_android'][0], $_SERVER['QUERY_STRING']) ?>"><?php echo $download_btn_text ?></a>
-					<a id="header-download-btn" class="btn orange-btn desktop-btn" href="<?php echo link_with_url_parameters($download_btn_link, $_SERVER['QUERY_STRING']) ?>"><?php echo $download_btn_text ?></a>
-				<?php elseif ( $custom_fields['bouton'] ): ?>
-					<a class="btn" href="<?php echo $custom_fields['lien'][0]?: '#section-call-to-action' ?>"><?php echo $custom_fields['bouton'][0] ?></a>
+				<?php if ( $custom_fields['bouton'] ): ?>
+					<a class="btn no-mobile" href="<?php echo $custom_fields['lien'][0]?: '#section-call-to-action' ?>">
+						<?php echo $custom_fields['bouton'][0] ?>
+					</a>
 				<?php elseif ( $custom_fields['bouton_orange'] ): ?>
-					<a class="btn orange-btn" href="<?php echo $custom_fields['lien'][0]?: '#section-call-to-action' ?>"><?php echo $custom_fields['bouton_orange'][0] ?></a>
+					<a class="btn orange-btn no-mobile" href="<?php echo $custom_fields['lien'][0]?: '#section-call-to-action' ?>">
+						<?php echo $custom_fields['bouton_orange'][0] ?>
+					</a>
+				<?php else: ?>
+					<!--a id="header-download-btn" class="btn orange-btn iphone-btn" href="<?php echo link_with_url_parameters($custom_fields_downloads['lien_ios'][0], $_SERVER['QUERY_STRING']) ?>"><?php echo $download_btn_text ?></a>
+					<a id="header-download-btn" class="btn orange-btn android-btn" href="<?php echo link_with_url_parameters($custom_fields_downloads['lien_android'][0], $_SERVER['QUERY_STRING']) ?>"><?php echo $download_btn_text ?></a-->
+					<a class="btn orange-btn header-download-btn no-mobile" title="Ouvrir la carte des actions du réseau solidaire Entourage" href="/app">
+						<?php echo $download_btn_text ?>
+					</a>
 				<?php endif ?>
+				<a class="btn orange-btn header-download-btn mobile-only" title="Ouvrir la carte des actions du réseau solidaire Entourage" href="/app">
+					<?php echo $custom_fields_home['bouton_orange_mobile'][0] ?>
+				</a>
 			</div>
 			<?php if ($wp_query->post->ID != 417): ?>
 				<a id="donate-btn" href="/don" target="_blank">
@@ -166,7 +175,7 @@
 			<?php if ( is_front_page() ): ?>
 				<div id="site-header-search">
 					<input id="site-header-input" type="text" placeholder="<?php echo $custom_fields['recherche'][0] ?>"/>
-					<a id="ask-location" class="btn orange-btn">
+					<a id="ask-location" class="btn orange-btn" title="Rechercher les actions de mes voisins">
 						<i class="material-icons">search</i>
 					</a>
 					<div id="cities-example">

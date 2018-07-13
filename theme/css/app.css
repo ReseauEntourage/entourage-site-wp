@@ -24,21 +24,6 @@ a[href]:hover {
     text-decoration: underline;
 }
 
-.btn i.material-icons {
-    margin-right: 7px;
-    font-size: 16px;
-    margin-top: -1px;
-}
-
-.btn.btn-icon {
-    padding: 0 8px;
-}
-
-.btn.btn-icon i.material-icons {
-    font-size: 18px;
-    margin: 0;
-}
-
 .btn .badge {
     position: absolute;
     top: 0px;
@@ -563,6 +548,7 @@ div.overlay.fade-out {
 
 #page-title img {
     margin-bottom: 10px;
+    width: 48px;    
 }
 
 #page-title a {
@@ -901,15 +887,18 @@ div.overlay.fade-out {
 }
 
 #site-header-login .login-content .bottom-links {
+    margin-top: 7px;
+    margin-bottom: -10px;
     display: flex;
     justify-content: space-between;
+    flex-direction: row-reverse;
     font-size: 12px;
-    margin-top: 4px;
     cursor: pointer;
 }
 
 #site-header-login .login-content .bottom-links a {
     text-decoration: underline;
+    color: inherit;
 }
 
 #site-header-login .login-content .bottom-links i {
@@ -963,13 +952,14 @@ div.overlay.fade-out {
     font-size: 15px;
 }
 
-#modal-register .already-register {
+#modal-register .bottom-link {
     margin-top: 20px;
     font-size: 14px;
 }
 
-#modal-register .already-register a {
+#modal-register .bottom-link a {
     text-decoration: underline;
+    color: inherit;
 }
 
 #modal-register .connection-form {
@@ -977,8 +967,11 @@ div.overlay.fade-out {
     text-align: left;
 }
 
+#modal-register .connection-form fieldset {
+    margin-bottom: 10px;
+}
+
 #modal-register .connection-form .btn {
-    margin-top: 10px;
     margin-left: 0;
 }
 

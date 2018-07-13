@@ -59,9 +59,9 @@
     <!-- Scripts -->
     <script src="<?php asset_url('js/lib/jquery.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/lib/angular.min.js'); ?>" type="text/javascript"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-animate.min.js" type="text/javascript"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.js" type="text/javascript"></script>
-    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js" type="text/javascript"></script>
+    <!--script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-animate.min.js" type="text/javascript"></script-->
+    <script src="<?php asset_url('js/lib/angular-sanitize.min.js'); ?>" type="text/javascript"></script>
+    <script src="<?php asset_url('js/lib/ui-bootstrap-tpls-2.5.0.min.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/lib/image-crop.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/lib/jquery.csv.min.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/lib/phonenumber-js.min.js'); ?>" type="text/javascript"></script>
@@ -101,12 +101,12 @@
                 <img
                     class="app-screenshot"
                     title="Découvrez la carte des actions de la communauté d'Entourage"
-                    src="<?php echo get_template_directory_uri(); ?>/img/logo-entourage-orange.png"
+                    src="<?php echo get_template_directory_uri(); ?>/img/logo-entourage-orange-big.png"
                     />
             </div>
             <h1>
                 <a
-                    href="http://www.entourage.social/"
+                    href="/"
                     target="_blank"
                     >Entourage</a>, <?php echo $custom_fields['titre'][0] ?>...
             </h1>
@@ -397,7 +397,7 @@
                 class="btn orange-btn"
                 ng-click="map.toggleRegister('Header')"
                 >
-                <span class="no-mobile"><?php echo $custom_fields['bouton'][0] ?></span>
+                <span class="no-mobile"><i class="material-icons">group_add</i><?php echo $custom_fields['bouton'][0] ?></span>
                 <span class="mobile-only">Inscription</span>
             </a>
         </div>
