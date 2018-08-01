@@ -1,34 +1,5 @@
 angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
-  .factory('googleMapsInitializer', function($window, $q){
-
-    // maps loader deferred object
-    var mapsDefer = $q.defer();
-
-    // Google's url for async maps initialization accepting callback function
-    var APIKey = isDemoMode() ? 'AIzaSyATSImG1p5k6KydsN7sESLVM2nREnU7hZk' : 'AIzaSyBw3x8b-OTcK1mT3yJ94j4lhxmADI-uT-k';
-    var asyncUrl = 'https://maps.googleapis.com/maps/api/js?key=' + APIKey + '&libraries=places,geometry&callback=';
-
-    // async loader
-    var asyncLoad = function(asyncUrl, callbackName) {
-      var script = document.createElement('script');
-      script.src = asyncUrl + callbackName;
-      document.body.appendChild(script);
-    };
-
-    // callback function - resolving promise after maps successfully loaded
-    $window.googleMapsInitialized = function () {
-        mapsDefer.resolve();
-    };
-
-    // loading google maps
-    asyncLoad(asyncUrl, 'googleMapsInitialized');
-
-    return {
-        // usage: Initializer.mapsInitialized.then(callback)
-        mapsInitialized : mapsDefer.promise
-    };
-  })
-  .controller('MapController', ['$scope', '$filter', '$http', '$uibModal', 'googleMapsInitializer', function($scope, $filter, $http, $uibModal, googleMapsInitializer) {
+  .controller('MapController', ['$scope', '$filter', '$http', '$uibModal', '$q', function($scope, $filter, $http, $uibModal, $q) {
     map = this
     map.infoWindow = null;
     map.currentAction = null;
@@ -44,6 +15,32 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
     if (localStorage.getItem('user') && (localStorage.getItem('keepLogged') || sessionStorage.getItem('logged'))) {
       map.loggedUser = JSON.parse(localStorage.getItem('user'));
       map.public = false;
+    }
+
+    initGoogleMaps = function() {
+      // maps loader deferred object
+      var mapsDefer = $q.defer();
+
+      // Google's url for async maps initialization accepting callback function
+      var APIKey = isDemoMode() ? 'AIzaSyATSImG1p5k6KydsN7sESLVM2nREnU7hZk' : 'AIzaSyBw3x8b-OTcK1mT3yJ94j4lhxmADI-uT-k';
+      var asyncUrl = 'https://maps.googleapis.com/maps/api/js?key=' + APIKey + '&libraries=places,geometry&callback=';
+
+      // async loader
+      var asyncLoad = function(asyncUrl, callbackName) {
+        var script = document.createElement('script');
+        script.src = asyncUrl + callbackName;
+        document.body.appendChild(script);
+      };
+
+      // callback function - resolving promise after maps successfully loaded
+      window.googleMapsInitialized = function () {
+          mapsDefer.resolve();
+      };
+
+      // loading google maps
+      asyncLoad(asyncUrl, 'googleMapsInitialized');
+
+      return mapsDefer.promise;
     }
 
     initMap = function(position) {
@@ -692,7 +689,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
 
     // ** INIT ** //
 
-    googleMapsInitializer.mapsInitialized.then(function() {
+    initGoogleMaps().then(function() {
       if (getQueryParams('ville') && getQueryParams('ville') != 'undefined') {
         var city = getQueryParams('ville');
       }
