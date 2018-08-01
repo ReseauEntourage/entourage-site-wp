@@ -404,9 +404,9 @@
     </header>
 
     <modal-profile-required
-        ng-if="!map.public && (!map.loggedUser.display_name || !map.loggedUser.has_password)"
+        ng-if="map.profileRequired()"
         user="map.loggedUser"
-        reload-feed="map.getPrivateFeed()"
+        reload-feed="map.getPrivateFeed(true)"
         ></modal-profile-required>
 
     <modal-profile-edit

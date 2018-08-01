@@ -206,6 +206,11 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
     }
 
     initFeed = function() {
+      // if the profile onboarding modal is required,
+      // the "first" run (open entourage from URL, handle deeplink)
+      // will be run after that modal is closed
+      var first = !map.profileRequired();
+
       // if shared action, center map on it before loading feed
       if (getQueryParams('token')) {
         $.ajax({
@@ -218,15 +223,15 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
             if (data.entourage && data.entourage.group_type != "conversation") {
               map.mapObject.setCenter(new google.maps.LatLng(data.entourage.location.latitude, data.entourage.location.longitude));
             }
-            map.getPrivateFeed(true);
+            map.getPrivateFeed(first);
           },
           error: function() {
-            map.getPrivateFeed(true);
+            map.getPrivateFeed(first);
           }
         });
       }
       else {
-        map.getPrivateFeed(true);
+        map.getPrivateFeed(first);
       }
     }
 
@@ -383,6 +388,10 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
         map.getPrivateFeed();
       }
       $scope.$apply(); 
+    }
+
+    map.profileRequired = function() {
+      return !map.public && (!map.loggedUser.display_name || !map.loggedUser.has_password);
     }
 
     map.showAction = function(uuid, apply) {
