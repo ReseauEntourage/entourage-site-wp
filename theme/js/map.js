@@ -272,10 +272,13 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
               }
             });
 
-            if (first && getQueryParams('token')) {
-              // display action if token in url
-              map.showAction(getQueryParams('token'));
-            } 
+            if (first) {
+              if (getQueryParams('token')) {
+                // display action if token in url
+                map.showAction(getQueryParams('token'));
+              }
+              handleDeeplinks();
+            }
 
             console.info('actions', map.actions);
 
@@ -670,6 +673,20 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
         this.anchor.style.left = divPosition.x + 'px';
         this.anchor.style.top = (divPosition.y - 20) + 'px';
       };
+    }
+
+
+    // ** DEEPLINKS ** //
+
+    handleDeeplinks = function() {
+      var hash = window.location.hash;
+
+      // remove the hash from the URL
+      history.replaceState({}, document.title, window.location.pathname + window.location.search);
+
+      if (hash === '#create-action') {
+        map.toggleNewAction();
+      }
     }
 
 
