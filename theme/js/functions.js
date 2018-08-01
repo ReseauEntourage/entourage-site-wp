@@ -12,6 +12,26 @@ function getQueryParams(search) {
   return params[search];
 }
 
+function fullPathWithoutParam(param) {
+  var paramPrefix = param + '=';
+  var path = window.location.pathname;
+  var search =
+    window.location.search
+    .slice(1)
+    .split('&')
+    .filter(function(param) { return param.slice(0, paramPrefix.length) !== paramPrefix })
+    .join('&')
+
+  if (search !== '') {
+    path += '?' + search;
+  }
+  if (window.location.hash !== '') {
+    path += window.location.hash;
+  }
+
+  return path;
+}
+
 function replaceURLWithHTMLLinks(text) {
   var exp = /(\b(https?):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/i;
   return text.replace(exp,"<a href='$1' target='_blank'>$1</a>"); 

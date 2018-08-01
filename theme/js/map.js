@@ -17,6 +17,48 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
       map.public = false;
     }
 
+    autoLogin = function() {
+      var deferred = $q.defer();
+      var authToken = getQueryParams('auth');
+
+      if (!authToken) {
+        deferred.resolve();
+        return deferred.promise;
+      }
+
+      // remove the parameter from the URL
+      var pathWithoutAuth = fullPathWithoutParam('auth');
+
+      $.ajax({
+        type: 'POST',
+        url: getApiUrl() + '/login',
+        data: {
+          user: {
+            auth_token: authToken
+          }
+        },
+        success: function(data) {
+          if (!data.user) {
+            return;
+          }
+          // TODO: data.user.phone is not returned by the API, so it won't be set
+          localStorage.setItem('user', JSON.stringify(data.user));
+          localStorage.setItem('keepLogged', false);
+          sessionStorage.setItem('logged', 1);
+          if (!data.user.has_password) {
+            ga('send', 'event', 'Engagement', 'FirstConnection', 'WebApp');
+          }
+          window.location = pathWithoutAuth;
+        },
+        complete: function() {
+          history.replaceState({}, document.title, pathWithoutAuth);
+          deferred.resolve();
+        }
+      });
+
+      return deferred.promise;
+    }
+
     initGoogleMaps = function() {
       // maps loader deferred object
       var mapsDefer = $q.defer();
@@ -687,9 +729,20 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
     }
 
 
+    $.ajaxSetup({
+      beforeSend: function(request, options) {
+        if ((options.url.indexOf('https://entourage-back-preprod.herokuapp.com') == 0) || (options.url.indexOf('https://api.entourage.social') == 0)) {
+          request.setRequestHeader("X-API-KEY", "26fb18404cb9d6afebc87349");
+        }
+      }
+    });
+
+
     // ** INIT ** //
 
-    initGoogleMaps().then(function() {
+    autoLogin()
+    .then(initGoogleMaps)
+    .then(function() {
       if (getQueryParams('ville') && getQueryParams('ville') != 'undefined') {
         var city = getQueryParams('ville');
       }
@@ -723,13 +776,4 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
         initMap();
       }
     });
-
-    $.ajaxSetup({
-      beforeSend: function(request, options) {
-        if ((options.url.indexOf('https://entourage-back-preprod.herokuapp.com') == 0) || (options.url.indexOf('https://api.entourage.social') == 0)) {
-          request.setRequestHeader("X-API-KEY", "26fb18404cb9d6afebc87349");
-        }
-      }
-    });
-
   }]);
