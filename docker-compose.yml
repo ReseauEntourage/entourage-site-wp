@@ -1,0 +1,50 @@
+version: '3.4'
+
+x-wp-config: &wp-config
+  volumes:
+    - wp-files:/var/www/html:delegated
+    - ./theme:/var/www/html/wp-content/themes/entourage:delegated
+    - ./plugin:/var/www/html/wp-content/plugins/entourage:delegated
+  environment:
+    WORDPRESS_DB_HOST: mysql:3306
+    WORDPRESS_DB_PASSWORD: 2gmuBGvA
+    WORDPRESS_DEBUG: 1
+
+services:
+
+  wordpress:
+    image: wordpress:4.9-php7.0-fpm-alpine
+    restart: always
+    depends_on:
+      - mysql
+    <<: *wp-config
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - 8081:80
+    volumes:
+      - ./dev/nginx/wordpress.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx:/etc/nginx/external:ro
+      - wp-files:/var/www/html:ro
+      - ./theme:/var/www/html/wp-content/themes/entourage:ro
+      - ./plugin:/var/www/html/wp-content/plugins/entourage:ro
+    depends_on:
+      - wordpress
+
+  mysql:
+    image: mysql:5.6
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 2gmuBGvA
+      MYSQL_DATABASE: wordpress
+    volumes:
+      - mysql-data:/var/lib/mysql:delegated
+
+  console:
+    image: wordpress:cli-1-php7.0
+    <<: *wp-config
+
+volumes:
+  wp-files:
+  mysql-data:

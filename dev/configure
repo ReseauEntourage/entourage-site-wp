@@ -1,0 +1,15 @@
+#!/bin/bash
+
+dev/wp core install --url=localhost:8081 --title=entourage-site-wp --admin_user=admin --admin_email=admin@example.org
+dev/wp theme activate entourage
+dev/wp option set permalink_structure /%year%/%monthnum%/%day%/%postname%/
+dev/wp post create --post_name=app --post_type=page --post_status=publish --meta_input="$(cat <<JSON
+{
+  "bouton": "Rejoignez le réseau !",
+  "bouton_2": "Entourage, c'est quoi ?",
+  "meta_titre": "La carte des actions du réseau Entourage",
+  "meta_description": "Retrouvez toutes les actions bienveillantes de la communauté Entourage",
+  "titre": "réseau de chaleur humaine"
+}
+JSON
+)"
