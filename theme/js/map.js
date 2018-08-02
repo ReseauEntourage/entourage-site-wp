@@ -28,6 +28,14 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
 
       // remove the parameter from the URL
       var pathWithoutAuth = fullPathWithoutParam('auth');
+      var authTokenUserId = parseInt(authToken.slice(2).split('-')[0]);
+
+      if (isNaN(authTokenUserId) ||
+          (!map.public && authTokenUserId === map.loggedUser.id)) {
+        history.replaceState({}, document.title, pathWithoutAuth);
+        deferred.resolve();
+        return deferred.promise;
+      }
 
       $.ajax({
         type: 'POST',
