@@ -8,14 +8,9 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
     map.currentAddress = null;
     map.hideAskLocation = !!navigator.geolocation;
     map.emptyArea = false;
-    map.public = true;
     map.mobileView = isMobile();
-
-    // logged user?
-    if (localStorage.getItem('user') && (localStorage.getItem('keepLogged') || sessionStorage.getItem('logged'))) {
-      map.loggedUser = JSON.parse(localStorage.getItem('user'));
-      map.public = false;
-    }
+    map.loggedUser = getLoggedUser();
+    map.public = map.loggedUser ? false : true;
 
     autoLogin = function() {
       var deferred = $q.defer();
@@ -53,7 +48,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
           localStorage.setItem('user', JSON.stringify(data.user));
           localStorage.setItem('keepLogged', false);
           sessionStorage.setItem('logged', 1);
-          if (!data.user.has_password) {
+          if (!data.user.has_password && !isDemoMode()) {
             ga('send', 'event', 'Engagement', 'FirstConnection', 'WebApp');
           }
           window.location = pathWithoutAuth;
@@ -399,7 +394,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
     }
 
     map.profileRequired = function() {
-      return !map.public && (!map.loggedUser.display_name || !map.loggedUser.has_password);
+      return !map.public && (!map.loggedUser.display_name || !map.loggedUser.has_password) && map.loaded;
     }
 
     map.showAction = function(uuid, apply) {
@@ -686,7 +681,8 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
     }
 
 
-    // POPUPS //
+    // **  POPUPS ** //
+
     function definePopupClass() {
       /**
        * A customized popup on the map.
@@ -760,14 +756,21 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
     autoLogin()
     .then(initGoogleMaps)
     .then(function() {
+      var city = null;
+
       if (getQueryParams('ville') && getQueryParams('ville') != 'undefined') {
-        var city = getQueryParams('ville');
+        city = getQueryParams('ville');
       }
-      else if (localStorage.getItem('city') && !getQueryParams('token')) {
-        var city = localStorage.getItem('city');
+      else if (localStorage.getItem('city')) {
+        city = localStorage.getItem('city');
+      }
+      else if (map.loggedUser) {
+        if (map.loggedUser.address && map.loggedUser.address.display_address) {
+          city = map.loggedUser.address.display_address;
+        }
       }
       
-      if (city) {
+      if (city && !getQueryParams('token')) {
         var geocoder = new google.maps.Geocoder;
         geocoder.geocode({'address': city}, function(results, status) {
           if (status === 'OK' && results[0]) {

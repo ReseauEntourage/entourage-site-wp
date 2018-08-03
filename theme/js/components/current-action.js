@@ -415,7 +415,7 @@ angular.module('entourageApp')
         FB.ui({
           method: 'feed',
           display: 'popup',
-          link: 'http://entourage.social/app/?token=' + ctrl.action.uuid,
+          link: 'https://entourage.social/entourages/' + ctrl.action.uuid,
         }, function(response){
           console.info(response);
         });

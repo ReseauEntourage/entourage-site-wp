@@ -510,7 +510,8 @@
 
     /** PROFILE EDIT **/
 
-    #profile-edition-form textarea {
+    #profile-edition-form textarea,
+    #profile-edition-form input[type=text] {
         width: 100%;
     }
     

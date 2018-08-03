@@ -63,7 +63,8 @@ angular.module('entourageApp')
                     ctrl.user = data.user;
                     ctrl.user.phone = phone;
                     ctrl.registrationStep = 2;
-                    ga('send', 'event', 'Engagement', 'AppDownload', 'WebApp');
+                    if (!isDemoMode())
+                      ga('send', 'event', 'Engagement', 'AppDownload', 'WebApp');
                   }
                   else
                     ctrl.error = "Il y a eu une erreur, merci de réessayer ou de nous contacter";

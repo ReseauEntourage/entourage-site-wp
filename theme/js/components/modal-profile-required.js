@@ -50,6 +50,7 @@ angular.module('entourageApp')
                   first_name: ctrl.first_name,
                   last_name: ctrl.last_name,
                   about: ctrl.about,
+                  address: ctrl.address,
                   avatar_key: ctrl.avatar_key
                 };
               }
@@ -70,6 +71,18 @@ angular.module('entourageApp')
               ctrl.updateUser(data);
             }
 
+            ctrl.newSubscription = function(email){
+              $.ajax({
+                type: "POST",
+                url: "https://api.entourage.social/api/v1/newsletter_subscriptions",
+                data: { "newsletter_subscription": { "email": email, "active": true } },
+                success: function(){
+                  if (!isDemoMode())
+                    ga('send', 'event', 'Engagement', 'Newsletter', 'WebApp');
+                }
+              });
+            }
+            
             ctrl.updateUser = function(data) {
               ctrl.loading = true;
 
@@ -80,14 +93,20 @@ angular.module('entourageApp')
                   token: ctrl.currentUser.token,
                   user: data
                 },
-                success: function(data) {
-                  if (data.user) {
-                    localStorage.setItem('user', JSON.stringify(data.user));
-                    ctrl.currentUser = data.user;
-                    ctrlParent.user = ctrl.currentUser;
-                    if (ctrl.currentUser.display_name) {
-                      ctrl.close();
+                success: function({user}) {
+                  if (user) {
+                    ctrl.currentUser = user;
+                    ctrlParent.user = user;
+
+                    if (data.address && data.address.google_place_id) {
+                      ctrl.changeAddress(data.address.google_place_id);
                     }
+                    else {
+                      localStorage.setItem('user', JSON.stringify(user));
+                    }
+
+                    if (ctrl.currentUser.display_name)
+                      ctrl.close();
                   }
                   else
                     ctrl.errors.push("Il y a eu une erreur, merci de réessayer ou de nous contacter");
@@ -105,13 +124,40 @@ angular.module('entourageApp')
               });
             }
 
-            ctrl.newSubscription = function(email){
+            ctrl.changeAddress = function(google_place_id) {
               $.ajax({
-                type: "POST",
-                url: "https://api.entourage.social/api/v1/newsletter_subscriptions",
-                data: { "newsletter_subscription": { "email": email, "active": true } },
-                success: function(){
-                  ga('send', 'event', 'Engagement', 'Newsletter', 'WebApp');
+                type: 'POST',
+                url: getApiUrl() + '/users/me/address',
+                data: {
+                  token: ctrl.currentUser.token,
+                  address: {
+                    google_place_id: google_place_id
+                  }
+                },
+                success: function(data) {
+                  if (data.address) {
+                    ctrl.currentUser.address = data.address;
+                    ctrlParent.user = ctrl.currentUser;
+                    localStorage.setItem('user', JSON.stringify(ctrl.currentUser));
+                  }
+                  $scope.$apply();
+                },
+              });
+            }
+
+            ctrl.initSearchBox = function() {
+              var a = new google.maps.places.Autocomplete(document.getElementById('profile-address-search-input'), {
+                bounds: map.mapObject.getBounds()
+              });
+
+              a.addListener('place_changed', function() {
+                var place = a.getPlace();
+
+                if (place.geometry) {
+                  ctrl.address = {
+                    google_place_id: place.place_id,
+                    display_address: place.formatted_address
+                  }
                 }
               });
             }

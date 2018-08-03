@@ -55,7 +55,8 @@ angular.module('entourageApp')
                   $scope.user = data.user;
                   $scope.user.phone = phone;
                   $scope.registrationStep = 2;
-                  ga('send', 'event', 'Engagement', 'AppDownload', 'WebApp');
+                  if (!isDemoMode())
+                    ga('send', 'event', 'Engagement', 'AppDownload', 'WebApp');
                 }
                 else
                   $scope.registrationError = "Il y a eu une erreur, merci de réessayer ou de nous contacter";

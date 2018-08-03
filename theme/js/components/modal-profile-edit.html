@@ -18,7 +18,7 @@
     <div ng-if="!ctrl.success">
         <div
             id="profile-edition-form"
-            class="form two-parts"
+            class="form"
             >
             <div class="two-parts">
                 <div>
@@ -73,6 +73,18 @@
                                 ng-model="ctrl.last_name"
                                 placeholder="Votre nom (ne sera pas affiché)"
                             />
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <label>Votre zone d'action</label>
+                        <div class="parent-input with-icon address-icon">
+                            <input
+                                ng-init="ctrl.initSearchBox()"
+                                id="profile-address-search-input"
+                                type="text"
+                                ng-model="ctrl.address.display_address"
+                                placeholder="{{ 'Adresse, quartier, ville...' }}"
+                                />
                         </div>
                     </fieldset>
                     <fieldset>

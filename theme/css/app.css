@@ -998,6 +998,10 @@ div.overlay.fade-out {
     height: 60px;
 }
 
+#modal-profile-required .form label.label-checkbox span {
+    font-style: italic;
+}
+
 
 /** PROFILE EDIT **/
 
@@ -1014,9 +1018,9 @@ div.overlay.fade-out {
     border-radius: 30px;
 }
 
-#profile-edition-form textarea {
+#profile-edition-form textarea,
+#profile-edition-form input[type=text] {
     width: 300px;
-    height: 180px;  
 }
 
 #profile-edition-form .btn-delete {
@@ -1177,6 +1181,7 @@ div.overlay.fade-out {
     display: flex;
     min-height: 35px;
     align-items: center;
+    text-align: left;
 }
 
 .action-item.announcement h2 .action-icon {

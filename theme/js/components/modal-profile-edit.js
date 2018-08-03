@@ -23,6 +23,7 @@ angular.module('entourageApp')
             ctrl.last_name = angular.copy(ctrl.user.last_name);
             ctrl.about = angular.copy(ctrl.user.about);
             ctrl.email = angular.copy(ctrl.user.email);
+            ctrl.address = angular.copy(ctrl.user.address);
 
             ctrl.close = function() {
               $uibModalInstance.close();
@@ -68,13 +69,22 @@ angular.module('entourageApp')
                   if (data.user) {
                     data.user.phone = ctrlParent.user.phone;
                     ctrlParent.user = data.user;
-                    localStorage.setItem('user', JSON.stringify(data.user));
-                    ctrl.success = true;
+
+                    if (ctrl.address.google_place_id) {
+                      ctrl.changeAddress();
+                    }
+                    else {
+                      localStorage.setItem('user', JSON.stringify(data.user));
+                      ctrl.success = true;
+                      ctrl.loading = false;
+                      $scope.$apply();
+                    }
                   }
-                  else
+                  else {
                     ctrl.errors.push("Il y a eu une erreur, merci de réessayer ou de nous contacter");
-                  ctrl.loading = false;
-                  $scope.$apply();
+                    ctrl.loading = false;
+                    $scope.$apply();
+                  }
                 },
                 error: function(data) {
                   if (data.responseJSON && data.responseJSON.error && data.responseJSON.error.message)
@@ -158,6 +168,45 @@ angular.module('entourageApp')
                     ctrl.errors.push("Erreur : Votre mot de passe n'est pas le bon, merci de réessayer ou de nous contacter");
                   ctrl.loading = false;
                   $scope.$apply();
+                }
+              });
+            }
+
+            ctrl.changeAddress = function() {
+              $.ajax({
+                type: 'POST',
+                url: getApiUrl() + '/users/me/address',
+                data: {
+                  token: ctrlParent.user.token,
+                  address: {
+                    google_place_id: ctrl.address.google_place_id,
+                  }
+                },
+                success: function(data) {
+                  if (data.address) {
+                    ctrlParent.user.address = data.address
+                    localStorage.setItem('user', JSON.stringify(ctrlParent.user));
+                    ctrl.success = true;
+                    ctrl.loading = false;
+                    $scope.$apply();
+                  }
+                },
+              });
+            }
+
+            ctrl.initSearchBox = function() {
+              var a = new google.maps.places.Autocomplete(document.getElementById('profile-address-search-input'), {
+                bounds: map.mapObject.getBounds()
+              });
+
+              a.addListener('place_changed', function() {
+                var place = a.getPlace();
+
+                if (place.geometry) {
+                  ctrl.address = {
+                    google_place_id: place.place_id,
+                    display_address: place.formatted_address
+                  }
                 }
               });
             }
