@@ -1,0 +1,119 @@
+<div class="modal-header">
+    <a
+        class="modal-close mobile-only"
+        ng-click="ctrl.close()"
+        >
+        <i class="material-icons">arrow_back</i>
+    </a>
+    <span>Vous souhaitez créer une événement solidaire&nbsp;? C'est parti&nbsp;!</span>
+</div>
+<div
+    id="modal-new-action"
+    class="modal-body"
+    ng-class="{loading: ctrl.loading}"
+    >
+    <div class="form">
+        <fieldset>
+            <label>1. Donnez un titre à votre événement :</label>
+            <div class="parent-input with-icon tag-icon">
+                <input
+                    type="text"
+                    ng-model="ctrl.title"
+                    maxlength="100"
+                    placeholder="Ex : Apéro entre voisins"
+                    />
+            </div>
+        </fieldset>
+        <fieldset>
+            <label>2. Où se déroulera-t-il ?</label>
+            <div class="parent-input with-icon address-icon">
+                <input
+                    ng-init="ctrl.initSearchBox()"
+                    id="new-action-search-input"
+                    type="text"
+                    placeholder="Adresse précise"
+                    />
+            </div>
+        </fieldset>
+        <fieldset>
+            <label>3. Indiquez la date et l'heure de rendez-vous :</label>
+            <div class="input-line left-align">
+                <div class="parent-input with-icon calendar-icon">
+                    <input
+                        uib-datepicker-popup="dd/MM/yyyy"
+                        ng-model="ctrl.date"
+                        type="text"
+                        is-open="show"
+                        ng-focus="show = true"
+                        datepicker-options="ctrl.options"
+                        show-button-bar="false"
+                        placeholder="Sélectionnez une date"
+                        />
+                </div>
+                <div class="parent-dropdown small">
+                    <div
+                        uib-dropdown
+                        class="parent-select"
+                        >
+                        <a
+                            uib-dropdown-toggle
+                            class="btn"
+                            >
+                            <i class="material-icons">access_time</i>
+                            <span ng-bind="ctrl.time.hour"></span>:<span ng-bind="ctrl.time.min ? ctrl.time.min : '00'"></span>
+                        </a>
+                        <ul uib-dropdown-menu class="max-height">
+                            <li ng-repeat-start="hour in ctrl.hours">
+                                <a
+                                    ng-click="ctrl.time.hour = hour;ctrl.time.min = null"
+                                    ng-class="{selected: hour == ctrl.time}"
+                                    ng-bind="hour + ':00'"
+                                    ></a>
+                            </li>
+                            <li
+                                ng-repeat-end
+                                ng-repeat="min in ctrl.mins"
+                                >
+                              <a
+                                ng-click="ctrl.time.min = min"
+                                ng-class="{selected: ctrl.time.min == min}"
+                                ng-bind="hour + ':' + min"
+                                ></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <label>4. Quel est le but de cet événement ?</label>
+            <div class="parent-input with-icon message-icon">
+                <textarea
+                    type="text"
+                    ng-model="ctrl.description"
+                    placeholder="Je crée cet événement pour..."
+                ></textarea>
+            </div>
+        </fieldset>
+        <div
+            class="error"
+            ng-repeat="error in ctrl.errors"
+            ng-bind="error"
+            ></div>
+    </div>
+    <a
+        class="modal-close no-mobile"
+        ng-click="ctrl.close()"
+        >
+        <i class="material-icons">close</i>
+    </a>
+</div>
+<div class="modal-footer">
+    <a
+        ng-click="ctrl.submit()"
+        class="btn orange-btn"
+        >
+        <i class="material-icons">add</i>
+        Créer mon événement !
+    </a>
+</div>

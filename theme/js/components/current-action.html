@@ -58,17 +58,12 @@
                     tooltip-placement="top"
                     uib-tooltip="Fermer la fenêtre"
                     tooltip-append-to-body="true"
+                    ng-click="ctrl.hide()"
                     >
-                    <i
-                        class="material-icons no-mobile"
-                        ng-click="ctrl.hide()"
-                        >
+                    <i class="material-icons no-mobile">
                         close
                     </i>
-                    <i
-                        class="material-icons mobile-only"
-                        ng-click="ctrl.hide()"
-                        >
+                    <i class="material-icons mobile-only">
                         arrow_back
                     </i>
                 </a>
@@ -79,17 +74,35 @@
             ng-class="{loading: ctrl.loading}"
             >
             <div class="action-title">
-                <action-participants-picture
-                    class="action-participants-picture-container"
-                    user="ctrl.user"
-                    action="ctrl.action"
-                    clickable="true"
-                    show-profile="ctrl.openProfile(id)"
-                ></action-participants-picture> 
-                <span
-                    class="capitalize-first-letter"
-                    ng-bind="ctrl.action.title"
-                    ></span>
+                <div>
+                    <action-participants-picture
+                        class="action-participants-picture-container"
+                        user="ctrl.user"
+                        action="ctrl.action"
+                        show-profile="ctrl.openProfile(id)"
+                        clickable="!ctrl.public"
+                    ></action-participants-picture>
+                    <h2
+                        class="capitalize-first-letter"
+                        ng-bind="ctrl.action.title"
+                        ></h2>
+                </div>
+                <div
+                    ng-if="ctrl.action.metadata.display_address"
+                    class="action-address"
+                    >
+                    <div
+                        ng-if="ctrl.action.metadata.starts_at"
+                        class="action-date"
+                        >
+                        <!--span ng-bind="ctrl.action.metadata.starts_at|date:'EEE'|formatDate"></span-->
+                        <strong ng-bind="ctrl.action.metadata.starts_at|date:'d'"></strong>
+                        <span ng-bind="ctrl.action.metadata.starts_at|date:'MMM'|formatDate"></span>
+                    </div>
+                    <div>
+                        <strong ng-if="ctrl.action.metadata.starts_at">{{ ctrl.action.metadata.starts_at|date:'H:mm' }}&nbsp;·&nbsp;</strong><span ng-bind="ctrl.action.metadata.display_address"></span>
+                    </div>
+                </div>
             </div>
             <div class="action-chat">
                 <div ng-if="ctrl.action.status == 'closed' || ctrl.action.join_status != 'accepted'">
@@ -98,12 +111,10 @@
                             user="ctrl.user"
                             profile="ctrl.action.author"
                             show-profile="ctrl.openProfile(id)"
+                            clickable="!ctrl.public"
                             ></user-name>
                         a créé l'action le
-                        <span
-                            class="action-date"
-                            ng-bind="ctrl.action.created_at|date:'dd/MM/yy'"
-                            ></span>
+                        <span ng-bind="ctrl.action.created_at|date:'d MMMM'|formatDate"></span>
                     </div>
                     <p
                         ng-if="ctrl.action.description"
@@ -119,7 +130,7 @@
                     <div
                         ng-if="ctrl.action.group_type != 'conversation'"
                         class="action-chat-date"
-                        ng-bind="ctrl.action.created_at|date:'d MMMM, H:mm'"
+                        ng-bind="ctrl.action.created_at|date:'d MMMM, H:mm'|formatDate"
                         ></div>
                     <div
                         ng-if="ctrl.action.group_type != 'conversation'"
@@ -130,6 +141,7 @@
                                 profile="ctrl.action.author"
                                 with-picture="true"
                                 show-profile="ctrl.openProfile(id)"
+                                clickable="!ctrl.public"
                                 ></user-name>
                             &nbsp;a créé l'action
                         </div>
@@ -154,6 +166,7 @@
                                 profile="event.user"
                                 with-picture="true"
                                 show-profile="ctrl.openProfile(id)"
+                                clickable="true"
                                 ></user-name>
                             <span ng-if="event.type == 'user' && event.user.status == 'accepted'">&nbsp;a rejoint l'action</span>
                         </div>
@@ -174,6 +187,7 @@
                                 profile="user"
                                 with-picture="true"
                                 show-profile="ctrl.openProfile(id)"
+                                clickable="true"
                                 ></user-name>
                             &nbsp;souhaite rejoindre votre action
                         </div>

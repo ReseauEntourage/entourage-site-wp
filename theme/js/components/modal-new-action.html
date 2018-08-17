@@ -53,28 +53,29 @@
                         >
                         <a
                             uib-dropdown-toggle
-                            class="btn white-btn"
-                            ng-class="{empty: !ctrl.display_category}">
+                            class="btn"
+                            ng-class="{empty: !ctrl.display_category}"
+                            >
                             <i class="material-icons">toc</i>
-                            <span ng-bind="ctrl.display_category ? ctrl.display_category[ctrl.entourage_type.id] : 'Catégorie'"></span>
+                            <span ng-bind="ctrl.display_category ? ctrl.display_category.name : 'Catégorie'"></span>
                         </a>
                         <ul uib-dropdown-menu>
                             <li ng-repeat="type in ctrl.types">
                                 <a
                                     class="dropdown-toggle"
-                                    ng-bind="type.name"
+                                    ng-bind="type.text.creation"
                                     ></a>
                                 <ul class="dropdown-menu">
-                                    <li ng-repeat="category in ctrl.categories">
+                                    <li ng-repeat="category in type.types">
                                         <a
-                                            ng-click="ctrl.display_category = category;ctrl.entourage_type = type"
-                                            ng-class="{selected: (ctrl.display_category.id == category.id) && (ctrl.entourage_type.id == type.id)}"
+                                            ng-click="ctrl.display_category = category;ctrl.entourage_type = type.id"
+                                            ng-class="{selected: (ctrl.display_category.type == category.type) && (ctrl.entourage_type == type.id)}"
                                             >
                                             <div
                                                 class="action-icon"
-                                                ng-class="type.id + ' ' + category.id"
+                                                ng-class="type.id + ' ' + category.type"
                                                 ></div>
-                                            <span ng-bind="category[type.id]"></span>
+                                            <span ng-bind="category.name"></span>
                                         </a>
                                     </li>
                                 </ul>

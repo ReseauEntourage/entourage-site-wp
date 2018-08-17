@@ -12,10 +12,13 @@ angular.module('entourageApp')
     controller: function($scope, $element, $attrs) {
       var ctrl = this;
 
+      ctrl.clickable = ctrl.clickable || false;
+
       ctrl.click = function($event) {
-        if (ctrl.clickable != false) {
-          ctrl.showProfile({id: ctrl.profile.id});
-        }
+        if (!ctrl.clickable)
+          return;
+
+        ctrl.showProfile({id: ctrl.profile.id});
       }
     }
   })

@@ -11,7 +11,12 @@ angular.module('entourageApp')
     controller: function($scope, $element, $attrs, $uibModal) {
       var ctrlParent = this;
 
+      ctrlParent.clickable = ctrlParent.clickable || false;
+
       ctrlParent.showParticipants = function(){
+        if (!ctrlParent.clickable)
+          return;
+
         $uibModal.open({
           templateUrl: '/wp-content/themes/entourage/js/components/modal-action-participants.html',
           controllerAs: 'ctrl',

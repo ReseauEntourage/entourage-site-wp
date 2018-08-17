@@ -130,6 +130,8 @@
         position: fixed;
         top: 100px;
         left: 0;
+        bottom: 0;
+        overflow: auto;
         border-radius: 0;
     }
 
@@ -164,8 +166,12 @@
         position: fixed;
         bottom: 17px;
         right: 17px;
+    }
+
+    #site-header-right #btn-new-action .btn {
         width: 55px;
         height: 55px;
+        margin: 0;
         padding: 0;
         line-height: 55px;
         font-size: 0;
@@ -177,6 +183,11 @@
     #site-header-right #btn-new-action i {
         margin: 0;
         font-size: 21px;
+    }
+
+    #site-header-right #btn-new-action .dropdown-menu {
+        bottom: 60px;
+        right: 0;   
     }
 
     #site-header-right a.dropdown-toggle {
@@ -296,7 +307,7 @@
         padding-right: 80px;
     }
 
-    .gm-style > div > div .gmnoprint {
+    .gm-style .marker-action {
         animation: none !important;
         box-shadow: 0 0 6px 4px #ff8404;
     }
@@ -313,6 +324,7 @@
 
     #current-action > div {
         width: 100%;
+        height: 100%;   
     }
 
     #current-action.open {
@@ -367,12 +379,21 @@
 
     #current-action .action-content {
         max-height: inherit;
+        height: 100%;
         border-radius: 0;
         box-shadow: none;
     }
 
     #current-action .action-title {
         padding: 15px 30px; 
+    }
+
+    #current-action .action-address {
+        margin-bottom: 0px;        
+    }
+
+    #current-action .action-chat {
+        flex-grow: 1;
     }
 
     #current-action .action-buttons {

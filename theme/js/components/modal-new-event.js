@@ -1,5 +1,5 @@
 angular.module('entourageApp')
-  .component('newAction', {
+  .component('newEvent', {
     bindings: {
       user: '=',
       hide: '&',
@@ -9,28 +9,36 @@ angular.module('entourageApp')
 
       ctrlParent.$onInit = function() {
         $uibModal.open({
-          templateUrl: '/wp-content/themes/entourage/js/components/modal-new-action.html',
+          templateUrl: '/wp-content/themes/entourage/js/components/modal-new-event.html',
           controllerAs: 'ctrl',
           controller: function($scope, $uibModal, $uibModalInstance) {
             var ctrl = this;
 
             ctrl.loading = false;
-
-            ctrl.types = getCategoryTypes();
+            ctrl.websiteDirectory = _WEBSITE_DIRECTORY;
+            ctrl.options = {
+              showWeeks: false,
+              minDate: new Date(),
+              startingDay: 1,
+              formatDayTitle: "MM/yyyy"
+            };
+            ctrl.hours = ["06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "00", "01", "02", "03", "04", "05"];
+            ctrl.mins = ["15", "30", "45"];
+            ctrl.time= {
+              hour: "19",
+              min: null
+            };
 
             ctrl.initSearchBox = function() {
               var a = new google.maps.places.Autocomplete(document.getElementById('new-action-search-input'), {
-                types: ['address']
+                types: 'places'
               });
 
               a.addListener('place_changed', function() {
                 var place = a.getPlace();
 
                 if (place.geometry) {
-                  ctrl.location = {
-                    latitude: parseFloat(place.geometry.location.lat()),
-                    longitude: parseFloat(place.geometry.location.lng())
-                  }
+                  ctrl.place = place;
                   $scope.$apply();
                 }
               });
@@ -46,12 +54,12 @@ angular.module('entourageApp')
 
               ctrl.errors = [];
 
-              if (!ctrl.display_category)
-                ctrl.errors.push("Erreur : veuillez sélectionner une catégorie");
+              if (!ctrl.place)
+                ctrl.errors.push("Erreur : veuillez indiquer une adresse");
+              if (!ctrl.date)
+                ctrl.errors.push("Erreur : veuillez indiquer une date");
               if (!ctrl.title || ctrl.title.length < 10)
                 ctrl.errors.push("Erreur : veuillez entrer un titre suffisamment long");
-              if (!ctrl.location)
-                ctrl.errors.push("Erreur : veuillez entrer une localisation");
 
               if (ctrl.errors.length)
                 return;
@@ -59,11 +67,19 @@ angular.module('entourageApp')
               ctrl.loading = true;
 
               var data = {
+                group_type: 'outing',
                 title: ctrl.title,
-                entourage_type: ctrl.entourage_type,
-                display_category: ctrl.display_category.type,
+                location: {
+                  latitude: parseFloat(ctrl.place.geometry.location.lat()),
+                  longitude: parseFloat(ctrl.place.geometry.location.lng())
+                },
                 description: ctrl.description,
-                location: ctrl.location
+                metadata: {
+                  starts_at: new Date(ctrl.date.setHours(ctrl.time.hour, ctrl.time.min, null)).toISOString(),
+                  place_name: ctrl.place.name,
+                  street_address: ctrl.place.formatted_address,
+                  google_place_id: ctrl.place.place_id
+                }
               }
 
               console.info(data);

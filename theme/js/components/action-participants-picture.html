@@ -1,6 +1,7 @@
 <div
     class="action-participants-picture"
-    ng-click="ctrl.clickable && ctrl.showParticipants()"
+    ng-class="{clickable: ctrl.clickable}"
+    ng-click="ctrl.showParticipants()"
     >
     <div
         class="action-author-profile"

@@ -6,6 +6,10 @@
             ng-class="ctrl.action.entourage_type + ' ' + ctrl.action.display_category"
             ></div>
         <div
+            ng-if="ctrl.action.group_type == 'outing'"
+            class="action-icon outing"
+            ></div>
+        <div
             ng-if="ctrl.action.icon_url"
             class="action-icon"
             ng-style="{'background-image': 'url(' + ctrl.action.icon_url + ')'}"
@@ -54,12 +58,16 @@
                 ng-if="ctrl.action.status != 'closed'"
                 class="action-date"
                 >
-                Créé <span ng-bind="ctrl.action.created_at|timeAgo"></span> par
-                <user-name
-                    user="ctrl.user"
-                    profile="ctrl.action.author"
-                    clickable="false"
-                    ></user-name>
+                <div ng-if="ctrl.action.group_type != 'outing'">
+                    Créé <span ng-bind="ctrl.action.created_at|timeAgo"></span> par
+                    <user-name
+                        user="ctrl.user"
+                        profile="ctrl.action.author"
+                        ></user-name>
+                </div>
+                <div ng-if="ctrl.action.group_type == 'outing'">
+                    Rendez-vous le <strong ng-bind="ctrl.action.metadata.starts_at|date:'d MMMM à H:mm'|formatDate"></strong>
+                </div>
             </div>
         </div>
     </div>

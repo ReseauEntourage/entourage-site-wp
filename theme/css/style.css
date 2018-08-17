@@ -201,7 +201,7 @@ a:hover {
 }
 
 .parent-select .btn.empty span {
-	color: #cdcdcd;
+	color: #8c8c8c;
 	font-style: italic;
 }
 
@@ -254,6 +254,7 @@ a.link:hover {
 
 input[type=text],
 input[type=password],
+input[type=number],
 textarea {
 	display: inline-block;
 	font-size: 15px;
@@ -267,23 +268,28 @@ textarea {
 
 input::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder {
-  color: #8c8c8c;
+	color: #8c8c8c;
 }
 
 input::-moz-placeholder,
 textarea::-moz-placeholder {
-  color: #8c8c8c;
+	color: #8c8c8c;
 }
 
 input:-ms-input-placeholder,
 textarea:-ms-input-placeholder {
-  color: #8c8c8c;
+	color: #8c8c8c;
 }
 
 input:-moz-placeholder,
 textarea:-moz-placeholder {
-  color: #8c8c8c;
-  
+	color: #8c8c8c;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+	-webkit-appearance: none; 
+	margin: 0; 
 }
 
 input:focus,
@@ -293,7 +299,8 @@ select:focus {
 }
 
 input[type=text],
-input[type=password] {
+input[type=password],
+input[type=number] {
 	display: inline-block;
 	height: 41px;
 	line-height: 41px;
@@ -360,6 +367,10 @@ div.parent-input.with-icon.tag-icon:before {
 
 div.parent-input.with-icon.message-icon:before {
 	content: "chat";
+}
+
+div.parent-input.with-icon.calendar-icon:before {
+	content: "event";
 }
 
 div.parent-input.with-icon input,

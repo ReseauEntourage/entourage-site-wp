@@ -31,16 +31,19 @@ angular.module('entourageApp')
           console.info('newAction', newValue);
 
           if (oldValue && oldValue.marker)
-            oldValue.marker.setTitle(getMarkerTitle(oldValue.status));
+            toggleMarker(oldValue.uuid, true);
 
           ctrl.openAction();
         }
       });
 
+      toggleMarker = function(id, hide) {
+        $('#marker-action-' + id).toggleClass('opened', !hide);
+      }
+
       ctrl.openAction = function () {
         if (ctrl.action.marker) {
-          ctrl.action.marker.setTitle(getMarkerTitle(ctrl.action.status, true));
-          // ctrl.map.setCenter(ctrl.action.marker.getPosition());
+          toggleMarker(ctrl.action.uuid);
 
           if (ctrl.public)
             ctrl.map.setZoom(13);
@@ -250,7 +253,7 @@ angular.module('entourageApp')
         });
 
         var lastDate = ctrl.action.created_at;
-        for (var i = 0; i < ctrl.timeline.length; i++) {
+        for (i in ctrl.timeline) {
           var event = ctrl.timeline[i];
           var a = new Date(lastDate);
           var b = new Date(event.created_at);
@@ -333,7 +336,8 @@ angular.module('entourageApp')
 
       ctrl.hide = function() {
         if (ctrl.action.marker)
-          ctrl.action.marker.setTitle(getMarkerTitle(ctrl.action.status));
+          toggleMarker(ctrl.action.uuid, true);
+
         ctrl.open = false;
 
         window.history.pushState('page3', ctrl.action.title, '/app');

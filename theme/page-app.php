@@ -69,6 +69,7 @@
     <script src="<?php asset_url('js/functions.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/map.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/filters.js'); ?>" type="text/javascript"></script>
+    <script src="<?php asset_url('js/directives.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/components/feed.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/components/action.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/components/action-participants-picture.js'); ?>" type="text/javascript"></script>
@@ -78,6 +79,7 @@
     <script src="<?php asset_url('js/components/modal-register.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/components/current-action.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/components/modal-new-action.js'); ?>" type="text/javascript"></script>
+    <script src="<?php asset_url('js/components/modal-new-event.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/components/modal-profile-required.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/components/modal-profile-edit.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/components/modal-profile-user.js'); ?>" type="text/javascript"></script>
@@ -252,6 +254,58 @@
                                 </li>
                             </ul>
                         </li>
+                        <li ng-if="!map.public">
+                            <a class="dropdown-toggle">
+                                Catégorie
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!--li ng-repeat="categoryType in map.categoryTypes">
+                                    <a
+                                        ng-bind="(categoryType.id == 'ask_for_help') ? 'Demandes' : 'Contributions'"
+                                        ng-class="{selected: map.filters.types.indexOf(category.id) > -1}"
+                                        ng-click="map.toggleFilterType(category.id)"
+                                        ></a>
+                                    <ul class="dropdown-menu">
+                                        <li ng-repeat="category in map.categories">
+                                            <a
+                                                ng-click="map.toggleFilterType(categoryType.short_id + category.short_id)"
+                                                ng-class="{selected: map.filters.types.indexOf(categoryType.short_id + category.short_id) > -1}"
+                                                >
+                                                <i
+                                                    class="action-icon"
+                                                    ng-class="categoryType.id + ' ' + category.id"
+                                                    ></i>
+                                                <span ng-bind="category[categoryType.id]"></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li-->
+                                <li>
+                                    <a
+                                        ng-click="map.toggleFilterType(['as','ae','am','ar','ai','ak','ao','ah'])"
+                                        ng-class="{selected: map.filters.types.indexOf('as') > -1}"
+                                        >
+                                        Demandes
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        ng-click="map.toggleFilterType(['cs','ce','cm','cr','ci','ck','co','ch'])"
+                                        ng-class="{selected: map.filters.types.indexOf('cs') > -1}"
+                                        >
+                                        Contributions
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        ng-click="map.toggleFilterType(['ou'])"
+                                        ng-class="{selected: map.filters.types.indexOf('ou') > -1}"
+                                        >
+                                        Evénements
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -260,18 +314,34 @@
             id="site-header-right"
             ng-if="!map.public"
             >
-            <a
+            <div
                 id="btn-new-action"
-                class="btn orange-btn"
-                ng-click="map.toggleNewAction()"
+                class="parent-dropdown"
                 >
-                <i class="material-icons">add</i> Créer une action
-            </a>
+                <div class="dropdown open-hover">
+                    <a class="btn orange-btn dropdown-toggle">
+                        <i class="material-icons">add</i> Passer à l'action...
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a ng-click="map.toggleNewAction()">Créer une action solidaire</a>
+                        </li>
+                        <li>
+                            <a ng-click="map.toggleNewEvent()">Créer un événement</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
             <new-action
                 ng-if="map.showNewAction"
                 user="map.loggedUser"
                 hide="map.toggleNewAction()"
                 ></new-action>
+            <new-event
+                ng-if="map.showNewEvent"
+                user="map.loggedUser"
+                hide="map.toggleNewEvent()"
+                ></new-event>
             <div
                 id="user-messages"
                 class="parent-dropdown"
@@ -515,6 +585,10 @@
       js.src = 'https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.10&appId=280727035774134';
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));</script>
+
+    <script type="text/javascript">
+        var _WEBSITE_DIRECTORY = '<?php echo get_template_directory_uri(); ?>';
+    </script>
 
   </body>
 </html>
