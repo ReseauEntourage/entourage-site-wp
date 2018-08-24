@@ -158,7 +158,7 @@
                         <div
                             ng-if="event.formatDate"
                             class="action-chat-date"
-                            ng-bind="event.created_at|date:event.formatDate"
+                            ng-bind="event.created_at|date:event.formatDate|formatDate"
                             ></div>
                         <div class="action-chat-author">
                             <user-name

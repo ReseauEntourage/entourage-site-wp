@@ -59,7 +59,7 @@ a[href]:hover {
     position: absolute;
     height: auto;
     width: auto;
-    max-width: initial;
+    max-width: inherit;
     min-width: 100%;
     padding: 10px 0;
     opacity: 1;
@@ -141,12 +141,12 @@ a[href]:hover {
 }
 
 .dropdown-menu li > a.dropdown-toggle:after {
-    content: 'keyboard_arrow_right';
+    content: "\e315";
     display: inline-block;
     position: absolute;
     top: 0px;
     right: 14px;
-    font-family: 'Material Icons';
+    font-family: "Material Icons";
     font-size: 18px;
     font-weight: normal;
 }
@@ -164,7 +164,7 @@ a[href]:hover {
 }
 
 .dropdown-menu li > a.selected:not(.dropdown-toggle):before {
-    content: "done";
+    content: "\e876";
     font-family: 'Material Icons' ;
     display: inline-block;
     font-size: 14px;
@@ -188,7 +188,7 @@ a[href]:hover {
     position: absolute;
     height: auto;
     width: auto;
-    max-width: initial;
+    max-width: inherit;
     min-width: 100%;
     margin-bottom: 100px;
     padding: 10px 0;
@@ -199,7 +199,7 @@ a[href]:hover {
 }
 
 .dropdown.right-align > .dropdown-menu > li a.dropdown-toggle:after {
-    content: 'keyboard_arrow_left';
+    content: "\e314";
     left: 14px;
     right: inherit;
 }
@@ -406,10 +406,10 @@ a[href]:hover {
 }
 
 .form .error:before {
-    content: 'error';
+    content: "\e000";
     display: inline-block;
     margin-right: 10px;
-    font-family: 'Material Icons';
+    font-family: "Material Icons";
     font-size: 21px;
     font-weight: normal;
     vertical-align: middle;
@@ -478,7 +478,7 @@ select {
     -moz-osx-font-smoothing: grayscale;
     font-feature-settings: 'liga';
     -webkit-user-select: none;
-    content: "keyboard_arrow_down";
+    content: "\e313";
     margin-left: 10px;
     font-size: 20px;
     width: 17px;
@@ -586,9 +586,46 @@ div.overlay.fade-out {
     }
 }
 
-#page-title img {
+#page-title #page-title-logo {
+    position: relative;
+    margin: 0 auto; 
+    display: inline-block;
+}
+
+#page-title #page-title-logo:after {
+    content: "";
+    position: absolute;
+    top: 37px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    z-index: 3;
+    border-radius: 20px;
+    box-shadow: inset 0 0 0 6px #fff;
+    animation: titleLogo ease 3s infinite;
+}
+
+@keyframes titleLogo {
+    30% {
+        box-shadow: inset 0 0 0 6px #fff;
+    }
+    39% {
+        box-shadow: inset 0 0 0 4px #fff;
+    }
+    48% {
+        box-shadow: inset 0 0 0 6px #fff;
+    }
+    57% {
+        box-shadow: inset 0 0 0 4px #fff;
+    }
+    66% {
+        box-shadow: inset 0 0 0 6px #fff;
+    }
+}
+
+#page-title #page-title-logo img {
     margin-bottom: 10px;
-    width: 48px;    
+    width: 48px;   
 }
 
 #page-title a {
@@ -617,6 +654,7 @@ div.overlay.fade-out {
 
 #site-header-left {
     margin-left: 61px;
+    flex-grow: 1;
 }
 
 #site-header-left,
@@ -892,13 +930,14 @@ div.overlay.fade-out {
 }
 
 #site-header-login .login-content {
-    width: 300px;
-    padding: 20px;
+    width: 260px;
+    margin: 20px;
     white-space: normal;
 }
 
 #site-header-login .login-content input:not([type=checkbox]) {
     width: 100%;
+    flex-grow: 10;
     box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.2);
 }
 
@@ -1141,7 +1180,7 @@ div.overlay.fade-out {
 }
 
 #user-feed-list {
-    width: 340px;
+    width: 355px;
     height: 100%;
     overflow: auto;
     background: #fff;
@@ -1192,6 +1231,7 @@ div.overlay.fade-out {
 }
 
 .action-item .action-info {
+    width: 100%;
     flex-grow: 1;
     margin-right: 10px;
 }
@@ -1260,35 +1300,35 @@ div.overlay.fade-out {
 }
 
 .action-icon.event:before {
-    content: "event";
+    content: "\e878";
 }
 
 .action-icon.info:before {
-    content: "info";
+    content: "\e88e";
 }
 
 .action-icon.mat_help:before {
-    content: "local_mall";
+    content: "\e54c";
 }
 
 .action-icon.other:before {
-    content: "more_horiz";
+    content: "\e5d3";
 }
 
 .action-icon.resource:before {
-    content: "local_laundry_service";
+    content: "\e54a";
 }
 
 .action-icon.skill:before {
-    content: "edit";
+    content: "\e3c9";
 }
 
 .action-icon.social:before {
-    content: "free_breakfast";
+    content: "\eb44";
 }
 
 .action-icon.outing:before {
-    content: "event_available";
+    content: "\e614";
 }
 
 .action-item .action-status {
@@ -1369,7 +1409,7 @@ div.overlay.fade-out {
 }
 
 .action-participants-picture .action-author-profile.no-picture:before {
-    content: "person";
+    content: "\e7fd";
     font-family: 'Material Icons';
     font-size: 18px;
     line-height: 38px;
@@ -1452,7 +1492,7 @@ div.overlay.fade-out {
 }
 
 .action-author-picture.no-picture:before {
-    content: "person";
+    content: "\e7fd";
     font-family: 'Material Icons';
     font-size: 12px;
     line-height: 20px;
@@ -1688,7 +1728,6 @@ div.overlay.fade-out {
     width: 340px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
     z-index: 10;
 	transition: bottom 0.3s;
 }
@@ -2020,12 +2059,20 @@ div.overlay.fade-out {
     transition: all 0.3s;
 }
 
-.gm-style .marker-action:nth-child(2n) {
+.gm-style .marker-action.open:nth-child(2n) {
 	animation-delay: 0.5s;
 }
 
-.gm-style .marker-action:nth-child(3n) {
+.gm-style .marker-action.open:nth-child(3n) {
 	animation-delay: 1s;
+}
+
+.gm-style .marker-action.open:nth-child(5n) {
+    animation-delay: 1.5s;
+}
+
+.gm-style .marker-action.open:nth-child(7n) {
+    animation-delay: 2s;
 }
 
 .gm-style .marker-action.open {
@@ -2046,7 +2093,7 @@ div.overlay.fade-out {
 .gm-style .marker-action.opened {
     background: #ff5100;
 	z-index: 9998 !important;
-    animation: pulseActive 3s infinite;
+    animation: pulseActive 0.7s infinite;
 }
 
 .gm-style .marker-action:hover {
@@ -2070,7 +2117,7 @@ div.overlay.fade-out {
         box-shadow: 0 0 6px 4px #e04e0a;
     }
     50% {
-        box-shadow: 0 0 6px 7px #e04e0a;
+        box-shadow: 0 0 6px 6px #e04e0a;
     }
     100% {
         box-shadow: 0 0 6px 4px #e04e0a;
@@ -2441,7 +2488,7 @@ div.overlay.fade-out {
     position: absolute;
     height: auto;
     width: auto;
-    max-width: initial;
+    max-width: inherit;
     min-width: 100%;
     padding: 10px;
     opacity: 1;
@@ -2480,4 +2527,24 @@ div.overlay.fade-out {
 
 .uib-datepicker-popup .btn i {
     vertical-align: top;    
+}
+
+
+/* Edge */
+@supports (-ms-ime-align:auto) {
+    #current-action > div,
+    #current-action .action-content {
+        overflow: hidden;
+    }
+}
+
+/* IE */
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    #current-action > div,
+    #current-action .action-content {
+    }
+
+    #current-action .action-chat {
+        max-height: 300px;
+    }
 }

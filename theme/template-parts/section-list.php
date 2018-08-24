@@ -32,7 +32,7 @@
 		    line-height: 33px;
 		}
 
-		section.section.section_type-list li:before {
+		section.section.section_type-list li:not(.list-style-none):before {
 			display: inline-block;
 			content: '';
 			width: 7px;
@@ -45,6 +45,12 @@
 			opacity: 0;
 			margin: 0;
 		}
+
+		section.section.section_type-list li img.alignleft {
+	    	float: left;
+	    	width: 80px;
+	    	margin-right: 20px;
+	    }
 
 		@media screen and (max-width: 900px) {
 			section.section.section_type-list b.highlight-word {

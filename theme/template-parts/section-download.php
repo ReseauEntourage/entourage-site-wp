@@ -89,7 +89,7 @@
 	}
 
 	section.section.section_type-download a.map-btn:before {
-		content: 'map';
+		content: '\e55b';
 	    margin-top: 8px;
     	height: inherit;
 		font-family: 'Material Icons';

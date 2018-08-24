@@ -224,7 +224,7 @@
     }
 
     #user-menu .dropdown-toggle:before {
-        content: "menu";
+        content: "\e5d2";
         display: inline-block;
         font-family: "Material Icons";
         color: #646464;
@@ -289,6 +289,7 @@
     }
 
     #user-feed-list {
+        width: 340px;
         border-radius: 6px 6px 0 0;
     }
 

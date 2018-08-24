@@ -260,7 +260,8 @@ jQuery(document).ready(function($) {
 	if (searchToken) {
 		$band = $('#entourage-window');
 
-		$.get(apiUrl + '/entourages/' + searchToken[1], function({entourage}) {
+		$.get(apiUrl + '/entourages/' + searchToken[1], function(data) {
+			var entourage = data.entourage
 			var html = '<p class="need-you"><b class="user-name">' + entourage.author.display_name + '</b> a besoin de vous !</p>';
 			html += '<div class="entourage-card">';
 			html += '<h1 class="entourage-name">' + entourage.title + '</h1>';

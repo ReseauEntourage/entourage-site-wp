@@ -99,18 +99,14 @@
         ng-class="{'fade-out': map.loaded}"
         >
         <div>
-            <div>
+            <div id="page-title-logo">
                 <img
-                    class="app-screenshot"
-                    title="Découvrez la carte des actions de la communauté d'Entourage"
+                    title="La carte des actions de la communauté d'Entourage"
                     src="<?php echo get_template_directory_uri(); ?>/img/logo-entourage-orange-big.png"
                     />
             </div>
             <h1>
-                <a
-                    href="/"
-                    target="_blank"
-                    >Entourage</a>, <?php echo $custom_fields['titre'][0] ?>...
+                <a>Entourage</a>, <?php echo $custom_fields['titre'][0] ?>...
             </h1>
         </div>
     </div>

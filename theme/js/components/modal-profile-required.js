@@ -93,16 +93,16 @@ angular.module('entourageApp')
                   token: ctrl.currentUser.token,
                   user: data
                 },
-                success: function({user}) {
-                  if (user) {
-                    ctrl.currentUser = user;
-                    ctrlParent.user = user;
+                success: function(d) {
+                  if (d.user) {
+                    ctrl.currentUser = d.user;
+                    ctrlParent.user = d.user;
 
                     if (data.address && data.address.google_place_id) {
                       ctrl.changeAddress(data.address.google_place_id);
                     }
                     else {
-                      localStorage.setItem('user', JSON.stringify(user));
+                      localStorage.setItem('user', JSON.stringify(d.user));
                     }
 
                     if (ctrl.currentUser.display_name)

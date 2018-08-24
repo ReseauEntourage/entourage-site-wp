@@ -221,7 +221,7 @@ a:hover {
 }
 
 .parent-select .btn:after {
-	content: "keyboard_arrow_down";
+	content: "\e313";
 	position: absolute;
 	top: 0;
 	right: 10px;
@@ -241,7 +241,7 @@ a.link {
 
 a.link:after {
 	display: inline-block;
-	content: 'call_made';
+	content: '\e0b2';
 	font-family: 'Material Icons';
 	font-size: 17px;
 	vertical-align: middle;
@@ -313,12 +313,23 @@ div.parent-input {
 }
 
 div.parent-input.with-icon:before {
+	display: block;
 	position: absolute;
 	top: 11px;
 	left: 13px;
 	color: #b9b9b9;
 	font-size: 20px;
 	font-family: 'Material Icons';
+	direction: ltr;
+    font-style: normal;
+    font-weight: normal;
+    letter-spacing: normal;
+    line-height: 1;
+    text-transform: none;
+    white-space: nowrap;
+    word-wrap: normal;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
 }
 
 div.parent-input.with-icon.email-icon:before {
@@ -326,51 +337,51 @@ div.parent-input.with-icon.email-icon:before {
 }
 
 div.parent-input.with-icon.person-icon:before {
-	content: "face";
+	content: "\e87c";
 }
 
 div.parent-input.with-icon.text-icon:before {
-	content: "title";
+	content: "\e264";
 }
 
 div.parent-input.with-icon.book-icon:before {
-	content: "import_contacts";
+	content: "\e0e0";
 }
 
 div.parent-input.with-icon.pin-icon:before {
-	content: "pin_drop";
+	content: "\e55e";
 }
 
 div.parent-input.with-icon.phone-icon:before {
-	content: "phone";
+	content: "\e0cd";
 }
 
 div.parent-input.with-icon.address-icon:before {
-	content: "my_location";
+	content: "\e55c";
 }
 
 div.parent-input.with-icon.link-icon:before {
-	content: "link";
+	content: "\e157";
 }
 
 div.parent-input.with-icon.image-icon:before {
-	content: "image";
+	content: "\e3f4";
 }
 
 div.parent-input.with-icon.security-icon:before {
-	content: "security";
+	content: "\e32a";
 }
 
 div.parent-input.with-icon.tag-icon:before {
-	content: "loyalty";
+	content: "\e89a";
 }
 
 div.parent-input.with-icon.message-icon:before {
-	content: "chat";
+	content: "\e0b7";
 }
 
 div.parent-input.with-icon.calendar-icon:before {
-	content: "event";
+	content: "\e878";
 }
 
 div.parent-input.with-icon input,
@@ -481,6 +492,43 @@ strong {
 	left: 18px;
 	width: 24px;
     z-index: 1;
+}
+
+#site-header-logo:hover:after {
+	animation: none;
+	box-shadow: inset 0 0 0 0px #fff;
+}
+
+#site-header-logo:after {
+	content: '';
+    position: absolute;
+    top: 18px;
+    right: 5px;
+    width: 10px;
+    height: 10px;
+    z-index: 3;
+    border-radius: 10px;
+    box-shadow: inset 0 0 0 2px #fff;
+    animation: logo ease 4s infinite;
+    transition: box-shadow 0.3s;
+}
+
+@keyframes logo {
+    30% {
+        box-shadow: inset 0 0 0 2px #fff;
+    }
+    35% {
+        box-shadow: inset 0 0 0 1px #fff;
+    }
+    40% {
+        box-shadow: inset 0 0 0 2px #fff;
+    }
+    45% {
+        box-shadow: inset 0 0 0 1px #fff;
+    }
+    50% {
+        box-shadow: inset 0 0 0 2px #fff;
+    }
 }
 
 #site-header-logo img {
