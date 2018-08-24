@@ -110,9 +110,9 @@ angular.module('entourageApp')
           ctrl.user.unreadMessages -= 1;
           action.number_of_unread_messages = 0;
         }
-        else if (action.pendingUsers.length) {
+        else if (action.pendingUsers && action.pendingUsers.length) {
           ctrl.user.unreadMessages -= 1;
-          action.pendingUsers = 0;
+          delete action.pendingUsers;
         }
         simulateMouseOut();
         ctrl.onShowAction({uuid: action.uuid});
