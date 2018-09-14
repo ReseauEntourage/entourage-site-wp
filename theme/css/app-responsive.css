@@ -605,4 +605,8 @@
     .fb_customer_chat_bubble_pop_in {
         right: 18pt !important;
     }
+
+    body:not(.public-page) .fb_customer_chat_bubble_pop_in {
+        display: none !important;
+    }
 }

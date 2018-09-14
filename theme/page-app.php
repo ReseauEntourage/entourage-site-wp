@@ -92,6 +92,7 @@
     ng-app="entourageApp"
     ng-controller="MapController as map"
     ng-cloak
+    ng-class="{'public-page': map.public}"
     >
 
     <div
@@ -623,7 +624,6 @@
 
     <!-- Your customer chat code -->
     <div
-        ng-class="{'no-mobile': !map.public}"
         class="fb-customerchat"
         attribution=setup_tool
         page_id="622067231241188"
