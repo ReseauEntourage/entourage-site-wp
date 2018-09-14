@@ -623,7 +623,7 @@
 
     <!-- Your customer chat code -->
     <div
-        ng-hide="map.mobileView && !map.public"
+        ng-class="{'no-mobile': !map.public}"
         class="fb-customerchat"
         attribution=setup_tool
         page_id="622067231241188"
