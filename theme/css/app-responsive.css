@@ -155,6 +155,22 @@
         justify-content: flex-end;
     }
 
+    #site-header-right > * {
+        margin-left: 0;
+    }
+
+    #site-header-right .dropdown.open .dropdown-menu {
+        position: fixed;
+        top: 50px;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: #f9f9f9;
+        border-radius: 0;
+        padding-top: 0;
+        white-space: inherit;
+    }
+
     #site-header-right .orange-btn {
         height: auto;
         padding: 0 12px;
@@ -169,6 +185,7 @@
     }
 
     #site-header-right #btn-new-action .btn {
+        position: relative;
         width: 55px;
         height: 55px;
         margin: 0;
@@ -178,16 +195,28 @@
         text-align: center;
         border-radius: 50%;
         box-shadow: 0px 2px 3px #7d2800;
+        z-index: 101;
     }
 
-    #site-header-right #btn-new-action i {
+    #site-header-right #btn-new-action .btn i {
         margin: 0;
         font-size: 21px;
+        transition: transform 0.5s;
+    }
+
+    #site-header-right #btn-new-action .dropdown.open a.dropdown-toggle i {
+        transform: rotate(136deg);   
     }
 
     #site-header-right #btn-new-action .dropdown-menu {
-        bottom: 60px;
-        right: 0;   
+        bottom: 80px;
+        top: inherit;
+        left: inherit;
+        right: 17px;
+    }
+
+    #site-header-right #btn-new-action .dropdown-menu > ul {
+        border-radius: 3px;
     }
 
     #site-header-right a.dropdown-toggle {
@@ -201,21 +230,45 @@
         margin: 0;
     }
 
-    #user-messages .dropdown-toggle.btn {
+    #user-messages a.dropdown-toggle.btn {
         border: none;
         box-shadow: none;
         padding: 0;
     }
 
-    #user-messages .dropdown-toggle.btn i {
+    #user-messages a.dropdown-toggle.btn i {
         font-size: 23px;
         margin-top: 14px;
         color: #646464;
     }
 
-    #user-messages .btn .badge {
+    #user-messages a.btn .badge {
         top: 9px;
         right: 10px;    
+    }
+
+    #help-menu a.dropdown-toggle {
+        width: 27px;
+        padding: 0;
+        line-height: inherit;
+        font-size: 0;  
+    }
+
+    #help-menu a.dropdown-toggle:before {
+        content: "\e8fd";
+        display: inline-block;
+        font-family: "Material Icons";
+        color: #646464;
+        font-size: 23px;
+        margin-top: 14px;
+    }
+
+    #help-menu a.dropdown-toggle * {
+        display: none;
+    }
+
+    #help-menu .dropdown-menu {
+        font-size: 15px;
     }
 
     #user-menu {
@@ -223,7 +276,7 @@
         left: 0;
     }
 
-    #user-menu .dropdown-toggle:before {
+    #user-menu a.dropdown-toggle:before {
         content: "\e5d2";
         display: inline-block;
         font-family: "Material Icons";
@@ -238,20 +291,7 @@
         z-index: 1;
     }
 
-    #user-messages .dropdown.open .dropdown-menu,
-    #user-menu .dropdown.open .dropdown-menu {
-        top: 50px;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        background-color: #f9f9f9;
-        border-radius: 0;
-        padding-top: 0;
-        white-space: inherit;
-    }
-
-    #user-messages #messages-content,
-    #user-menu .dropdown-menu > ul {
+    #user-messages .dropdown-menu > ul {
         max-height: 100%;
     }
 

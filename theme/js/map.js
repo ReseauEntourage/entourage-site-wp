@@ -11,6 +11,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
     map.mobileView = isMobile();
     map.loggedUser = getLoggedUser();
     map.public = map.loggedUser ? false : true;
+    map.showModal = {};
 
     autoLogin = function() {
       var deferred = $q.defer();
@@ -544,32 +545,17 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
 
     // ** MODALS ** //
 
-    map.toggleRegister = function(token) {
-      map.showRegister = !map.showRegister;
-      if (map.showRegister && !isDemoMode()) {
+    map.toggleModal = function(name, token) {
+      map.showModal[name] = !map.showModal[name];
+
+      if (name == 'register' && map.showModal.register && !isDemoMode()) {
         ga('send', 'event', 'Click', 'Join', token);
       }
     }
 
-    map.toggleLogin = function() {
-      map.showLogin = !map.showLogin;
-    }
-
-    map.toggleNewAction = function() {
-      map.showNewAction = !map.showNewAction;
-    }
-
-    map.toggleNewEvent = function() {
-      map.showNewEvent = !map.showNewEvent;
-    }
-
-    map.toggleProfileEdit = function() {
-      map.showProfileEdit = !map.showProfileEdit;
-    }
-
     map.toggleNewMessage = function(type, action, user) {
-      map.showNewMessage = !map.showNewMessage;
-      if (map.showNewMessage) {
+      map.toggleModal('newMessage');
+      if (map.showNew.message) {
         map.currentMessage = {
           type: type,
           action: action,

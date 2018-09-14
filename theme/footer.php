@@ -30,6 +30,7 @@
 </div><!-- .site -->
 
 <?php wp_footer(); ?>
+
 <script src="<?php asset_url('js/script.js'); ?>" type="text/javascript"></script>
 
 <!-- Facebook Pixel Code -->
@@ -52,15 +53,25 @@ src="https://www.facebook.com/tr?id=1977352069219759&ev=PageView
 &noscript=1"/>
 </noscript>
 
-<!-- Facebook JS SDK -->
+<!-- Load Facebook SDK for JavaScript -->
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
-  js.src = 'https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.10&appId=131925574217236';
+  js.src = 'https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.12&autoLogAppEvents=1&appId=131925574217236';
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
+
+<!-- Your customer chat code -->
+<div
+    class="fb-customerchat"
+    attribution=setup_tool
+    page_id="622067231241188"
+    theme_color="#ff5100"
+    logged_in_greeting="Bonjour ! Comment peut-on vous aider ?"
+    logged_out_greeting="Bonjour ! Comment peut-on vous aider ?"
+    ></div>
 
 </body>
 </html>

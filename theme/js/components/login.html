@@ -1,132 +1,133 @@
-<div
-    class="login-content form"
-    ng-class="{loading: ctrl.loading}"
-    ng-switch on="ctrl.step"
-    >
-    <div ng-switch-default>
-        <fieldset>
-            <label>1. Entrez votre numéro de téléphone :</label>
-            <div class="input-parent input-phone">
-                <div class="parent-dropdown">
-                    <div
-                        uib-dropdown
-                        class="country-selection"
-                        >
-                        <span uib-dropdown-toggle>
-                            <i
-                                class="iti-flag"
-                                ng-class="ctrl.country[1]"
-                                ></i>
-                            <div ng-bind="'+' + ctrl.country[2]"></div>
-                        </span>
-                        <ul uib-dropdown-menu>
-                            <li ng-repeat="c in ctrl.countries">
-                                <a ng-click="ctrl.selectCountry(c)">
-                                    <i
-                                        class="iti-flag"
-                                        ng-class="c[1]"
-                                        ></i>
-                                    <span
-                                        class="ellipsis"
-                                        ng-bind="c[0]"
-                                        ></span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <input
-                    type="text"
-                    ng-model="ctrl.phone"
-                    placeholder="Votre téléphone"
-                    ng-enter="ctrl.checkPhone()"
-                    autocomplete="tel"
-                    autofocus
-                    />
-            </div>
-        </fieldset>
-        <a
-            class="btn dark-btn"
-            ng-click="ctrl.checkPhone()"
-            >
-            Continuer <i class="material-icons">arrow_forward</i>
-        </a>
-        <div class="bottom-links">
-            <a 
-                href="/contact/"
-                target="_blank"
-                >
-                Un problème ? Contactez-nous
-            </a>
-        </div>
-    </div>
-    <div ng-switch-when="password">
-        <fieldset>
-            <label>2. Entrez votre mot de passe :</label>
-            <div class="parent-input with-icon security-icon">
-                <input
-                    type="password"
-                    ng-model="ctrl.password"
-                    placeholder="Votre mot de passe"
-                    ng-enter="ctrl.login()"
-                    autocomplete="password"
-                    autofocus
-                    />
-            </div>
-            <label class="label-checkbox">
-                <input
-                    type="checkbox"
-                    ng-model="ctrl.keepLogged"
-                    />
-                <span>Rester connecté sur cet appareil</span>
-            </label>
-        </fieldset>
-        <a
-            class="btn dark-btn"
-            ng-click="ctrl.login()"
-            >
-            Connexion
-        </a>
-        <div class="bottom-links">
-            <a ng-click="ctrl.sendCode()">Mot de passe perdu ?</a>
-            <a ng-click="ctrl.step = 'phone'">
-                <i class="material-icons">arrow_back</i>Retour
-            </a>
-        </div>
-    </div>
-    <div ng-switch-when="code">
-        <fieldset>
-            <label>2. Nous vous avons envoyé un code par SMS. Entrez-le ci-dessous :</label>
-            <div class="parent-input with-icon security-icon">
-                <input
-                    type="password"
-                    ng-model="ctrl.password"
-                    placeholder="Votre code à 6 chiffres"
-                    ng-enter="ctrl.login()"
-                    autofocus
-                    />
-            </div>
-            <label class="label-checkbox">
-                <input
-                    type="checkbox"
-                    ng-model="ctrl.keepLogged"
-                    />
-                <span>Rester connecté sur cet appareil</span>
-            </label>
-        </fieldset>
-        <a
-            class="btn dark-btn"
-            ng-click="ctrl.login()"
-            >
-            Connexion
-        </a>
-        <div class="bottom-links">
-            <a href="/contact/" target="_blank">Un problème ? Contactez-nous</a>
-        </div>
-    </div>
+<div ng-class="{loading: ctrl.loading}">
     <div
-        class="error"
-        ng-if="ctrl.error"
-        ng-bind="ctrl.error"
-        ></div>
-</div>
+        class="login-content form"
+        ng-switch on="ctrl.step"
+        >
+        <div ng-switch-default>
+            <fieldset>
+                <label>1. Entrez votre numéro de téléphone :</label>
+                <div class="input-parent input-phone">
+                    <div class="parent-dropdown">
+                        <div
+                            uib-dropdown
+                            class="country-selection"
+                            >
+                            <span uib-dropdown-toggle>
+                                <i
+                                    class="iti-flag"
+                                    ng-class="ctrl.country[1]"
+                                    ></i>
+                                <div ng-bind="'+' + ctrl.country[2]"></div>
+                            </span>
+                            <ul uib-dropdown-menu>
+                                <li ng-repeat="c in ctrl.countries">
+                                    <a ng-click="ctrl.selectCountry(c)">
+                                        <i
+                                            class="iti-flag"
+                                            ng-class="c[1]"
+                                            ></i>
+                                        <span
+                                            class="ellipsis"
+                                            ng-bind="c[0]"
+                                            ></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <input
+                        type="text"
+                        ng-model="ctrl.phone"
+                        placeholder="Votre téléphone"
+                        ng-enter="ctrl.checkPhone()"
+                        autocomplete="tel"
+                        autofocus
+                        />
+                </div>
+            </fieldset>
+            <a
+                class="btn dark-btn"
+                ng-click="ctrl.checkPhone()"
+                >
+                Continuer <i class="material-icons">arrow_forward</i>
+            </a>
+            <div class="bottom-links">
+                <a 
+                    href="/contact/"
+                    target="_blank"
+                    >
+                    Un problème ? Contactez-nous
+                </a>
+            </div>
+        </div>
+        <div ng-switch-when="password">
+            <fieldset>
+                <label>2. Entrez votre mot de passe :</label>
+                <div class="parent-input with-icon security-icon">
+                    <input
+                        type="password"
+                        ng-model="ctrl.password"
+                        placeholder="Votre mot de passe"
+                        ng-enter="ctrl.login()"
+                        autocomplete="password"
+                        autofocus
+                        />
+                </div>
+                <label class="label-checkbox">
+                    <input
+                        type="checkbox"
+                        ng-model="ctrl.keepLogged"
+                        />
+                    <span>Rester connecté sur cet appareil</span>
+                </label>
+            </fieldset>
+            <a
+                class="btn dark-btn"
+                ng-click="ctrl.login()"
+                >
+                Connexion
+            </a>
+            <div class="bottom-links">
+                <a ng-click="ctrl.sendCode()">Mot de passe perdu ?</a>
+                <a ng-click="ctrl.step = 'phone'">
+                    <i class="material-icons">arrow_back</i>Retour
+                </a>
+            </div>
+        </div>
+        <div ng-switch-when="code">
+            <fieldset>
+                <label>2. Nous vous avons envoyé un code par SMS. Entrez-le ci-dessous :</label>
+                <div class="parent-input with-icon security-icon">
+                    <input
+                        type="password"
+                        ng-model="ctrl.password"
+                        placeholder="Votre code à 6 chiffres"
+                        ng-enter="ctrl.login()"
+                        autofocus
+                        />
+                </div>
+                <label class="label-checkbox">
+                    <input
+                        type="checkbox"
+                        ng-model="ctrl.keepLogged"
+                        />
+                    <span>Rester connecté sur cet appareil</span>
+                </label>
+            </fieldset>
+            <a
+                class="btn dark-btn"
+                ng-click="ctrl.login()"
+                >
+                Connexion
+            </a>
+            <div class="bottom-links">
+                <a href="/contact/" target="_blank">Un problème ? Contactez-nous</a>
+            </div>
+        </div>
+        <div
+            class="error"
+            ng-if="ctrl.error"
+            ng-bind="ctrl.error"
+            ></div>
+    </div>
+</div>  

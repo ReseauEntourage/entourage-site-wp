@@ -85,6 +85,7 @@
     <script src="<?php asset_url('js/components/modal-profile-user.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/components/modal-new-message.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/components/modal-new-picture.js'); ?>" type="text/javascript"></script>
+    <script src="<?php asset_url('js/components/modal-carousel.js'); ?>" type="text/javascript"></script>
 </head>
 
 <body
@@ -311,32 +312,83 @@
             ng-if="!map.public"
             >
             <div
+                id="help-menu"
+                class="parent-dropdown"
+                >
+                <div uib-dropdown>
+                    <a
+                        uib-dropdown-toggle
+                        class="btn"
+                        >
+                        <i class="material-icons">help</i> Besoin d'aide ?
+                    </a>
+                    <div uib-dropdown-menu>
+                        <ul>
+                            <!--li class="dropdown-menu-group">
+                                <a ng-click="map.toggleModal('carousel')">
+                                    <i class="material-icons">help_outline</i>Comment ça marche ?
+                                </a>
+                            </li-->
+                            <li class="dropdown-menu-group">
+                                <a href="https://blog.entourage.social/2017/04/28/quelles-actions-faire-avec-entourage/" target="_blank">
+                                    <i class="material-icons">lightbulb_outline</i> Idées d'action
+                                </a>
+                                <a href="http://www.simplecommebonjour.org/" target="_blank">
+                                    <i class="material-icons">question_answer</i> Conseils pour oser la rencontre
+                                </a>
+                                <a href="https://blog.entourage.social/2017/04/28/comment-utiliser-l-application-entourage/" target="_blank">
+                                    <i class="material-icons">help</i> Questions fréquentes
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div
                 id="btn-new-action"
                 class="parent-dropdown"
                 >
-                <div class="dropdown open-hover">
-                    <a class="btn orange-btn dropdown-toggle">
+                <div uib-dropdown>
+                    <a
+                        uib-dropdown-toggle
+                        class="btn orange-btn"
+                        >
                         <i class="material-icons">add</i> Passer à l'action...
                     </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a ng-click="map.toggleNewAction()">Créer une action solidaire</a>
-                        </li>
-                        <li>
-                            <a ng-click="map.toggleNewEvent()">Créer un événement</a>
-                        </li>
-                    </ul>
+                    <div uib-dropdown-menu>
+                        <ul>
+                            <li class="dropdown-menu-group">
+                                <a ng-click="map.toggleModal('newAction')">
+                                    <i class="material-icons">record_voice_over</i> Créer une action solidaire
+                                </a>
+                                <a ng-click="map.toggleModal('newEvent')">
+                                    <i class="material-icons">event</i> Créer un événement
+                                </a>
+                            </li>
+                            <li class="dropdown-menu-group">
+                                <a href="http://www.simplecommebonjour.org/" target="_blank">
+                                    <i class="material-icons">question_answer</i> Se former à la rencontre 
+                                </a>
+                                <a href="https://www.facebook.com/pg/EntourageReseauCivique/events/?ref=page_internal" target="_blank">
+                                    <i class="material-icons">people</i>Participer aux événements d'Entourage
+                                </a>
+                                <a href="https://www.entourage.social/don" target="_blank">
+                                    <i class="material-icons">favorite</i>Soutenir Entourage
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <new-action
-                ng-if="map.showNewAction"
+                ng-if="map.showModal.newAction"
                 user="map.loggedUser"
-                hide="map.toggleNewAction()"
+                hide="map.toggleModal('newAction')"
                 ></new-action>
             <new-event
-                ng-if="map.showNewEvent"
+                ng-if="map.showModal.newEvent"
                 user="map.loggedUser"
-                hide="map.toggleNewEvent()"
+                hide="map.toggleModal('newEvent')"
                 ></new-event>
             <div
                 id="user-messages"
@@ -354,12 +406,11 @@
                             ng-bind="map.loggedUser.unreadMessages"
                             ></div>
                     </a>
-                    <div class="dropdown-menu">
-                        <messages
-                            user="map.loggedUser"
-                            on-show-action="map.showAction(uuid)"
-                        />
-                    </div>
+                    <messages
+                        uib-dropdown-menu
+                        user="map.loggedUser"
+                        on-show-action="map.showAction(uuid)"
+                    />
                 </div>
             </div>
             <div
@@ -385,37 +436,20 @@
                     </a>
                     <div uib-dropdown-menu>
                         <ul>
-                            <li>
-                                <a ng-click="map.toggleProfileEdit()">
+                            <li class="dropdown-menu-group">
+                                <a ng-click="map.toggleModal('profileEdit')">
                                     <i class="material-icons">person_pin</i> Modifier mon profil
                                 </a>
                                 <a ng-click="map.logout()">
                                     <i class="material-icons">power_settings_new</i> Me déconnecter
                                 </a>
                             </li>
-                            <li>
-                                <a href="http://www.simplecommebonjour.org/" target="_blank">
-                                    <i class="material-icons">question_answer</i> Conseils pour oser la rencontre
+                            <li class="dropdown-menu-group">
+                                <a href="http://www.entourage.social/" target="_blank">
+                                    <i class="material-icons">question_answer</i> Visiter le site d'Entourage
                                 </a>
-                                <a href="https://blog.entourage.social/2017/04/28/quelles-actions-faire-avec-entourage/" target="_blank">
-                                    <i class="material-icons">lightbulb_outline</i> Idées d'action
-                                </a>
-                                <a href="https://blog.entourage.social/2017/04/28/comment-utiliser-l-application-entourage/" target="_blank">
-                                    <i class="material-icons">help</i> Questions fréquentes
-                                </a>
-                                <!--a href="" target="_blank">
-                                    <i class="material-icons">map</i> Carte des structures solidaires
-                                </a-->
-                            </li>
-                            <li>
                                 <a href="https://blog.entourage.social/charte-ethique-grand-public/" target="_blank">
                                     <i class="material-icons">school</i> Charte éthique
-                                </a>
-                                <a href="http://www.entourage.social/" target="_blank">
-                                    <i class="material-icons">question_answer</i> Voir le site d'Entourage
-                                </a>
-                                <a class="orange" href="https://www.entourage.social/don" target="_blank">
-                                    <i class="material-icons">favorite</i> Faire un don
                                 </a>
                             </li>
                         </ul>
@@ -442,11 +476,11 @@
                 >
                 <div
                     class="dropdown"
-                    ng-class="{open: map.showLogin}"
+                    ng-class="{open: map.showModal.login}"
                     >
                     <a
                         class="dropdown-toggle link"
-                        ng-click="map.toggleLogin()"
+                        ng-click="map.toggleModal('login')"
                         >
                         <span class="no-mobile">Connectez-vous</span>
                         <span class="mobile-only">Connexion</span>
@@ -455,13 +489,13 @@
                         id="login-window"
                         class="dropdown-menu"
                         >
-                        <login ng-if="map.showLogin"></login>
+                        <login ng-if="map.showModal.login"></login>
                     </div>
                 </div>
             </div>
             <a
                 class="btn orange-btn"
-                ng-click="map.toggleRegister('Header')"
+                ng-click="map.toggleModal('register', 'Header')"
                 >
                 <span class="no-mobile"><i class="material-icons">group_add</i><?php echo $custom_fields['bouton'][0] ?></span>
                 <span class="mobile-only">Inscription</span>
@@ -476,17 +510,17 @@
         ></modal-profile-required>
 
     <modal-profile-edit
-        ng-if="map.showProfileEdit"
+        ng-if="map.showModal.profileEdit"
         user="map.loggedUser"
         reload-feed="map.getPrivateFeed()"
-        hide="map.toggleProfileEdit()"
+        hide="map.toggleModal('profileEdit')"
         ></modal-profile-edit>
 
     <modal-register
-        ng-if="map.showRegister"
+        ng-if="map.showModal.register"
         user="map.loggedUser"
-        hide="map.toggleRegister()"
-        open-login="map.toggleLogin()"
+        hide="map.toggleModal('register')"
+        open-login="map.toggleModal('login')"
         ></modal-register>
 
     <modal-profile-user
@@ -495,6 +529,11 @@
         profile-id="map.currentProfileId"
         on-show-action="map.showAction(uuid)"
         ></modal-profile-user>
+
+    <modal-carousel
+        ng-if="map.showModal.carousel"
+        hide="map.toggleModal('carousel')"
+        ></modal-carousel>
 
     <div id="page-content">
         <div
@@ -507,7 +546,7 @@
                 actions="map.actions"
                 on-show-action="map.showAction(uuid)"
                 on-open-profile="map.toggleProfileEdit()"
-                on-open-create-action="map.toggleNewAction()"
+                on-open-create-action="map.toggleModal('newAction')"
                 ></feed>
             <div
                 id="map-bottom-band"
@@ -516,13 +555,13 @@
                 <i class="material-icons">error</i> Il y a peu d'action par ici... Et si vous y ajoutiez un peu de chaleur humaine en
                 <a
                     ng-if="map.public"
-                    ng-click="map.toggleRegister('Bottom')"
+                    ng-click="map.toggleModal('register', 'Bottom')"
                     >
                     rejoignant la communauté Entourage
                 </a>
                 <a
                     ng-if="!map.public"
-                    ng-click="map.toggleNewAction()"
+                    ng-click="map.toggleModal('newAction')"
                     >
                     créant une action solidaire
                 </a> ?!
@@ -532,7 +571,7 @@
                 map="map.mapObject"
                 action="map.currentAction"
                 public="map.public"
-                show-register="map.toggleRegister(token)"
+                show-register="map.toggleModal('register', token)"
                 show-profile="map.showProfile(id)"
                 user="map.loggedUser"
                 ></current-action>
@@ -578,9 +617,19 @@
       var js, fjs = d.getElementsByTagName(s)[0];
       if (d.getElementById(id)) return;
       js = d.createElement(s); js.id = id;
-      js.src = 'https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.10&appId=280727035774134';
+      js.src = 'https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.12&autoLogAppEvents=1&appId=280727035774134';
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));</script>
+
+    <!-- Your customer chat code -->
+    <div
+        class="fb-customerchat"
+        attribution=setup_tool
+        page_id="622067231241188"
+        theme_color="#ff5100"
+        logged_in_greeting="Bonjour ! Comment peut-on vous aider ?"
+        logged_out_greeting="Bonjour ! Comment peut-on vous aider ?"
+        ></div>
 
     <script type="text/javascript">
         var _WEBSITE_DIRECTORY = '<?php echo get_template_directory_uri(); ?>';

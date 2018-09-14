@@ -63,6 +63,10 @@
     	padding-top: 10px;
     }
 
+    section.section_type-contact .g-recaptcha {
+    	margin-top: 20px;
+    }
+
     @media screen and (max-width: 900px) {
 	    section.section_type-contact input[type=text] {
 	    	width: 100%;

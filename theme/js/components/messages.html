@@ -1,57 +1,55 @@
-<div
-    id="messages-content"
+<ul
     ng-class="{loading: ctrl.loading}"
     ng-hide="ctrl.hide"
     >
-    <ul ng-if="ctrl.actions.length">
-        <li
-            ng-repeat="(k, action) in ctrl.actions"
-            class="action-item"
-            ng-class="{unread: action.pendingUsers.length || action.number_of_unread_messages}"
-            ng-click="ctrl.showAction(action)"
-            >
-            <action-participants-picture
-                class="action-participants-picture-container"
-                action="action"
-            ></action-participants-picture>
-            <div class="action-info">
-                <h2
-                    class="ellipsis"
-                    ng-bind="action.title"
+    <li
+        ng-if="ctrl.actions.length"
+        ng-repeat="(k, action) in ctrl.actions"
+        class="action-item"
+        ng-class="{unread: action.pendingUsers.length || action.number_of_unread_messages}"
+        ng-click="ctrl.showAction(action)"
+        >
+        <action-participants-picture
+            class="action-participants-picture-container"
+            action="action"
+        ></action-participants-picture>
+        <div class="action-info">
+            <h2
+                class="ellipsis"
+                ng-bind="action.title"
+                ></span>
+            </h2>
+            <p
+                ng-if="action.join_status == 'pending'"
+                class="pending"
+                >
+                <i class="material-icons">access_time</i> Votre demande est en attente
+            </p>
+            <p
+                ng-if="action.join_status == 'accepted'"
+                class="ellipsis"
+                >
+                <span
+                    ng-if="!action.pendingUsers.length && action.lastMessage"
+                    ng-bind-html="(action.lastMessage.user.display_name + ' : ' + action.lastMessage.content)|trusted"
                     ></span>
-                </h2>
-                <p
-                    ng-if="action.join_status == 'pending'"
-                    class="pending"
-                    >
-                    <i class="material-icons">access_time</i> Votre demande est en attente
-                </p>
-                <p
-                    ng-if="action.join_status == 'accepted'"
-                    class="ellipsis"
-                    >
-                    <span
-                        ng-if="!action.pendingUsers.length && action.lastMessage"
-                        ng-bind-html="(action.lastMessage.user.display_name + ' : ' + action.lastMessage.content)|trusted"
-                        ></span>
-                    <span
-                        ng-if="action.pendingUsers.length"
-                        ng-bind="((action.pendingUsers.length > 1) ? (action.pendingUsers.length + ' personnes souhaitent') : (action.pendingUsers[0].display_name + ' souhaite')) + ' rejoindre votre action'"
-                        ></span>
-                </p>
-                <p
+                <span
                     ng-if="action.pendingUsers.length"
-                    class="ellipsis"
-                    >
-                    
-                </p>
-            </div>
-        </li>
-    </ul>
-    <div
+                    ng-bind="((action.pendingUsers.length > 1) ? (action.pendingUsers.length + ' personnes souhaitent') : (action.pendingUsers[0].display_name + ' souhaite')) + ' rejoindre votre action'"
+                    ></span>
+            </p>
+            <p
+                ng-if="action.pendingUsers.length"
+                class="ellipsis"
+                >
+                
+            </p>
+        </div>
+    </li>
+    <li
         ng-if="!ctrl.loading && !ctrl.actions.length"
         class="no-content"
         >
         Vous n'avez pas encore de messages. Rejoignez une action !
-    </div>
-</div>  
+    </li>
+</ul>

@@ -137,11 +137,6 @@ function getCategoryTypes() {
       name: "Des voisins pour entourer une personne",
     },
     {
-      id: "ae",
-      type: "event",
-      name: "Des bénévoles pour un événement",
-    },
-    {
       id: "am",
       type: "mat_help",
       name: "Un don matériel",
@@ -180,11 +175,6 @@ function getCategoryTypes() {
       name: "Passer du temps avec une personne",
     },
     {
-      id: "ce",
-      type: "event",
-      name: "Inviter à un événement solidaire",
-    },
-    {
       id: "cm",
       type: "mat_help",
       name: "Faire un don matériel",
@@ -202,7 +192,7 @@ function getCategoryTypes() {
     {
       id: "ck",
       type: "skill",
-      name: "Donner une compétence",
+      name: "Offrir une compétence",
     },
     {
       id: "co",
