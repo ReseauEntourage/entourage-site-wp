@@ -623,12 +623,14 @@
 
     <!-- Your customer chat code -->
     <div
+        ng-hide="map.mobileView && !map.public"
         class="fb-customerchat"
         attribution=setup_tool
         page_id="622067231241188"
         theme_color="#ff5100"
         logged_in_greeting="Bonjour ! Comment peut-on vous aider ?"
         logged_out_greeting="Bonjour ! Comment peut-on vous aider ?"
+        greeting_dialog_display="hide"
         ></div>
 
     <script type="text/javascript">

@@ -2552,6 +2552,10 @@ div.overlay.fade-out {
     vertical-align: top;    
 }
 
+.fb_customer_chat_bubble_pop_in {
+    right: 34px !important;
+}
+
 
 /* Edge */
 @supports (-ms-ime-align:auto) {

@@ -71,6 +71,7 @@ src="https://www.facebook.com/tr?id=1977352069219759&ev=PageView
     theme_color="#ff5100"
     logged_in_greeting="Bonjour ! Comment peut-on vous aider ?"
     logged_out_greeting="Bonjour ! Comment peut-on vous aider ?"
+    greeting_dialog_display="hide"
     ></div>
 
 </body>
