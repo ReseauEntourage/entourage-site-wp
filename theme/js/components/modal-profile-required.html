@@ -1,6 +1,6 @@
 <div class="modal-header no-close">
-    <span ng-if="ctrl.has_password">Bienvenue sur Entourage ! Présentons-nous...</span>
-     <span ng-if="!ctrl.has_password">Bienvenue sur l'app web d'Entourage !</span>
+    <span ng-if="ctrl.isNewUser">Bienvenue sur Entourage ! Présentons-nous...</span>
+     <span ng-if="!ctrl.isNewUser">Bienvenue sur l'app web d'Entourage !</span>
 </div>
 <div
     id="modal-profile-required"
@@ -10,7 +10,7 @@
     <div class="form">
         <div ng-if="ctrl.currentUser.has_password">
             <fieldset>
-                <label>1. Pour commencer, et si vous nous disiez qui vous êtes ?&nbsp;:</label>
+                <label>1. Pour commencer, et si vous nous disiez qui vous êtes&nbsp;?</label>
                 <div class="input-line">
                     <input
                         type="text"

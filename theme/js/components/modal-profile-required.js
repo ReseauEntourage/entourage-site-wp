@@ -2,7 +2,8 @@ angular.module('entourageApp')
   .component('modalProfileRequired', {
     bindings: {
       reloadFeed: '&',
-      user: '='
+      user: '=',
+      showModalCarousel: '='
     },
     controller: function($scope, $element, $attrs, $uibModal) {
       var ctrlParent = this;
@@ -18,6 +19,7 @@ angular.module('entourageApp')
 
             ctrl.loading = false;
             ctrl.currentUser = ctrlParent.user;
+            ctrl.isNewUser = angular.copy(ctrl.currentUser.has_password);
             ctrl.optinNewsletter = true;
 
             ctrl.submit = function() {
@@ -26,7 +28,7 @@ angular.module('entourageApp')
 
               ctrl.errors = [];
 
-              if (ctrl.currentUser.has_password) {
+              if (ctrl.isNewUser) {
                 if (!ctrl.first_name)
                   ctrl.errors.push("Erreur : veuillez entrer votre prénom");
                 if (!ctrl.last_name)
@@ -45,7 +47,7 @@ angular.module('entourageApp')
               if (ctrl.errors.length)
                 return;
 
-              if (ctrl.currentUser.has_password) {
+              if (ctrl.isNewUser) {
                 var data = {
                   first_name: ctrl.first_name,
                   last_name: ctrl.last_name,
@@ -105,19 +107,23 @@ angular.module('entourageApp')
                       localStorage.setItem('user', JSON.stringify(d.user));
                     }
 
-                    if (ctrl.currentUser.display_name)
+                    if (ctrl.currentUser.display_name) {
                       ctrl.close();
+                    }
                   }
-                  else
+                  else {
                     ctrl.errors.push("Il y a eu une erreur, merci de réessayer ou de nous contacter");
+                  }
                   ctrl.loading = false;
                   $scope.$apply();
                 },
                 error: function(data) {
-                  if (data.responseJSON && data.responseJSON.error && data.responseJSON.error.message)
+                  if (data.responseJSON && data.responseJSON.error && data.responseJSON.error.message) {
                     ctrl.errors.push("Erreur : " + data.responseJSON.error.message[0]);
-                  else
+                  }
+                  else {
                     ctrl.errors.push("Il y a eu une erreur, merci de réessayer ou de nous contacter");
+                  }
                   ctrl.loading = false;
                   $scope.$apply();
                 }
@@ -164,6 +170,9 @@ angular.module('entourageApp')
 
             ctrl.close = function() {
               $uibModalInstance.close();
+              if (ctrl.isNewUser) {
+                ctrlParent.showModalCarousel = true;
+              }
               ctrlParent.reloadFeed();
             }
           }

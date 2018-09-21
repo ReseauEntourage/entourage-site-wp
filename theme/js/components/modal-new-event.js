@@ -15,7 +15,6 @@ angular.module('entourageApp')
             var ctrl = this;
 
             ctrl.loading = false;
-            ctrl.websiteDirectory = _WEBSITE_DIRECTORY;
             ctrl.options = {
               showWeeks: false,
               minDate: new Date(),
@@ -31,6 +30,7 @@ angular.module('entourageApp')
 
             ctrl.initSearchBox = function() {
               var a = new google.maps.places.Autocomplete(document.getElementById('new-action-search-input'), {
+                bounds: map.mapObject.getBounds(),
                 types: 'places'
               });
 

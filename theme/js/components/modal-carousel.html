@@ -11,7 +11,49 @@
     id="modal-carousel"
     class="modal-body"
     >
-    C'est super !
+    <ul ng-style="{'left': ctrl.currentIndex * -100 + '%'}">
+        <li>
+            <img src="/wp-content/themes/entourage/img/carousel-1.png">
+            <h3>1. Rejoignez la communauté</h3>
+            <p>
+                Explorez les actions et événements solidaires créés par vos voisins et les associations de votre quartier.<br>Rejoignez-les et participez au lien social autour de chez vous&nbsp;!
+            </p>
+            <a
+                class="btn white-btn no-mobile"
+                ng-click="ctrl.close()"
+                >
+                Découvrir les actions
+            </a>
+        </li>
+        <li>
+            <img src="/wp-content/themes/entourage/img/carousel-2.png">
+            <h3>2. Osez la rencontre</h3>
+            <p>
+                Regarder dans les yeux, sourire, dire «Bonjour»...  faites le plein de bons conseils pour vous aider à entrer en relation avec les personnes sans-abri que vous croisez
+            </p>
+            <a
+                class="btn white-btn"
+                href="http://www.simplecommebonjour.org/?p=10"
+                target="_blank"
+                >
+                Voir le guide en vidéo
+            </a>
+        </li>
+        <li>
+            <img src="/wp-content/themes/entourage/img/carousel-3.png">
+            <h3>3. Passez à l’action !</h3>
+            <p>
+                Vous êtes prêt à participer à votre façon et concrètement à la vie de la communauté ? Créez vos propres actions ou événements en solidarité avec les personnes de la rue
+            </p>
+            <a
+                class="btn white-btn"
+                ng-click="ctrl.toggleNewAction()"
+                >
+                Créer une action
+            </a>
+        </li>
+    </ul>
+
     <a
         class="modal-close no-mobile"
         ng-click="ctrl.close()"
@@ -22,9 +64,33 @@
 <div class="modal-footer">
     <a
         ng-click="ctrl.close()"
-        class="btn orange-btn"
+        class="btn orange-btn no-mobile"
         >
         <i class="material-icons">close</i>
         Fermer
     </a>
+    <a
+        ng-if="ctrl.currentIndex > 0"
+        ng-click="ctrl.previous()"
+        class="btn btn-back btn-icon orange-btn mobile-only"
+        >
+        <i class="material-icons">arrow_back</i>
+    </a>
+    <div class="btn-next mobile-only">
+        <a
+            ng-if="ctrl.currentIndex == 2"
+            ng-click="ctrl.close()"
+            class="btn orange-btn"
+            >
+            <i class="material-icons">close</i>
+            Fermer
+        </a>
+        <a
+            ng-if="ctrl.currentIndex < 2"
+            ng-click="ctrl.next()"
+            class="btn orange-btn"
+            >
+            Suivant <i class="material-icons">arrow_forward</i>
+        </a>
+    </div>
 </div>

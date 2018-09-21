@@ -1,7 +1,8 @@
 angular.module('entourageApp')
   .component('modalCarousel', {
     bindings: {
-      hide: '&'
+      hide: '&',
+      toggleNewAction: '&'
     },
     controllerAs: 'ctrlParent',
     controller: function($scope, $element, $attrs, $uibModal) {
@@ -14,9 +15,28 @@ angular.module('entourageApp')
           controllerAs: 'ctrl',
           controller: function($scope, $uibModal, $uibModalInstance) {
             var ctrl = this;
+
+            ctrl.currentIndex = 0;
             
             ctrl.close = function() {
               $uibModalInstance.close();
+            }
+
+            ctrl.previous = function() {
+              if (ctrl.currentIndex > 0){
+                ctrl.currentIndex -= 1;
+              }
+            }
+
+            ctrl.next = function() {
+              if (ctrl.currentIndex < 3){
+                ctrl.currentIndex += 1;
+              }
+            }
+
+            ctrl.toggleNewAction = function() {
+              ctrl.close();
+              ctrlParent.toggleNewAction();
             }
           }
         }).closed.then(function() {

@@ -331,6 +331,9 @@
                                 </a>
                             </li-->
                             <li class="dropdown-menu-group">
+                                <a ng-click="map.toggleModal('carousel')">
+                                    <i class="material-icons">info</i> Comment ça marche ?
+                                </a>
                                 <a href="https://blog.entourage.social/2017/04/28/quelles-actions-faire-avec-entourage/" target="_blank">
                                     <i class="material-icons">lightbulb_outline</i> Idées d'action
                                 </a>
@@ -338,7 +341,7 @@
                                     <i class="material-icons">question_answer</i> Conseils pour oser la rencontre
                                 </a>
                                 <a href="https://blog.entourage.social/2017/04/28/comment-utiliser-l-application-entourage/" target="_blank">
-                                    <i class="material-icons">help</i> Questions fréquentes
+                                    <i class="material-icons">contact_support</i> Questions fréquentes
                                 </a>
                             </li>
                         </ul>
@@ -508,6 +511,7 @@
         ng-if="map.profileRequired()"
         user="map.loggedUser"
         reload-feed="map.getPrivateFeed(true)"
+        show-modal-carousel="map.showModal.carousel"
         ></modal-profile-required>
 
     <modal-profile-edit
@@ -534,6 +538,7 @@
     <modal-carousel
         ng-if="map.showModal.carousel"
         hide="map.toggleModal('carousel')"
+        toggle-new-action="map.toggleModal('newAction')"
         ></modal-carousel>
 
     <div id="page-content">
@@ -581,7 +586,6 @@
         </div>
         <div id="popup-content"></div>
     </div>
-
 
     <!-- Analytics Code -->
     <script>
@@ -633,10 +637,5 @@
         greeting_dialog_display="hide"
         ></div>
 
-    <script type="text/javascript">
-        var _WEBSITE_DIRECTORY = '<?php echo get_template_directory_uri(); ?>';
-    </script>
-
   </body>
 </html>
-

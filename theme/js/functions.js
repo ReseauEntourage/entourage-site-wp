@@ -1,9 +1,9 @@
-getLoggedUser = function() {
-    if (localStorage.getItem('user') && (localStorage.getItem('keepLogged') || sessionStorage.getItem('logged'))) {
-      return JSON.parse(localStorage.getItem('user'));
-    }
-    return false;
+function getLoggedUser() {
+  if (localStorage.getItem('user') && (localStorage.getItem('keepLogged') || sessionStorage.getItem('logged'))) {
+    return JSON.parse(localStorage.getItem('user'));
   }
+  return false;
+}
 
 function getQueryParams(search) {
   qs = window.location.search.split('+').join(' ');

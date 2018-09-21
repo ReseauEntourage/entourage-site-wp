@@ -20,7 +20,8 @@ angular.module('entourageApp')
 
             ctrl.initSearchBox = function() {
               var a = new google.maps.places.Autocomplete(document.getElementById('new-action-search-input'), {
-                types: ['address']
+                bounds: map.mapObject.getBounds(),
+                types: 'places'
               });
 
               a.addListener('place_changed', function() {
