@@ -1669,7 +1669,7 @@ div.overlay.fade-out {
 
 #map-bottom-band {
     position: absolute;
-    bottom: -100px;
+    bottom: -120px;
     left: 0;
     width: 100%;
     padding: 20px;
@@ -2028,10 +2028,13 @@ div.overlay.fade-out {
 #current-action .action-new-message textarea {
     height: 37px;
     min-height: 37px;
-    max-height: 68px;
-    overflow: hidden;
+    max-height: 105px;
     padding: 10px 20px;
     resize: none;
+}
+
+#current-action .action-new-message textarea:not(.overflow) {
+    overflow: hidden;
 }
 
 #current-action .action-new-message .textarea .content {
@@ -2554,6 +2557,7 @@ div.overlay.fade-out {
 
 .fb_customer_chat_bubble_pop_in {
     right: 34px !important;
+    z-index: 9 !important;
 }
 
 

@@ -103,6 +103,22 @@ angular.module('entourageApp')
 			});
 		};
 	})
+	.directive('autoHeight', function() {
+		return function(scope, element, attrs) {
+			element.bind("keyup", function(event) {
+				element[0].style.height = 0;
+				element[0].style.height = element[0].scrollHeight + 'px';
+				if (element[0].scrollHeight > parseInt(getComputedStyle(element[0]).maxHeight)) {
+					if (!element[0].classList.contains('overflow')) {
+						element[0].classList.add('overflow');
+					}
+				}
+				else {
+					element[0].classList.remove('overflow');
+				}
+			});
+		};
+	})
 	.directive('autofocus', function($timeout) {
 		return {
 		    link: function(scope, element) {
