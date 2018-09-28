@@ -3,6 +3,7 @@ angular.module('entourageApp')
     bindings: {
       user: '=',
       hide: '&',
+      action: '=?',
     },
     controller: function($scope, $element, $attrs, $uibModal) {
       var ctrlParent = this;
@@ -15,7 +16,8 @@ angular.module('entourageApp')
             var ctrl = this;
 
             ctrl.loading = false;
-            ctrl.options = {
+
+            ctrl.datepickerOptions = {
               showWeeks: false,
               minDate: new Date(),
               startingDay: 1,
@@ -27,6 +29,25 @@ angular.module('entourageApp')
               hour: "19",
               min: null
             };
+
+            if (ctrlParent.action) {
+              ctrl.editedAction = ctrlParent.action;
+              
+              ctrl.title = angular.copy(ctrl.editedAction.title);
+              ctrl.description = angular.copy(ctrl.editedAction.description);
+              ctrl.location = angular.copy(ctrl.editedAction.location);
+              ctrl.display_address = angular.copy(ctrl.editedAction.metadata.display_address);
+              ctrl.date = new Date(ctrl.editedAction.metadata.starts_at);
+              ctrl.time = {
+                hour: new Date(ctrl.editedAction.metadata.starts_at).getHours(),
+                min: new Date(ctrl.editedAction.metadata.starts_at).getMinutes()
+              };
+              ctrl.place = {
+                name: angular.copy(ctrl.editedAction.metadata.place_name),
+                formatted_address: angular.copy(ctrl.editedAction.metadata.street_address),
+                place_id: angular.copy(ctrl.editedAction.metadata.google_place_id),
+              };
+            }
 
             ctrl.initSearchBox = function() {
               var a = new google.maps.places.Autocomplete(document.getElementById('new-action-search-input'), {
@@ -69,21 +90,28 @@ angular.module('entourageApp')
               var data = {
                 group_type: 'outing',
                 title: ctrl.title,
-                location: {
-                  latitude: parseFloat(ctrl.place.geometry.location.lat()),
-                  longitude: parseFloat(ctrl.place.geometry.location.lng())
-                },
-                description: ctrl.description,
                 metadata: {
                   starts_at: new Date(ctrl.date.setHours(ctrl.time.hour, ctrl.time.min, null)).toISOString(),
                   place_name: ctrl.place.name,
                   street_address: ctrl.place.formatted_address,
                   google_place_id: ctrl.place.place_id
+                },
+                description: ctrl.description,
+                location: {
+                  latitude: ctrl.place.geometry ? parseFloat(ctrl.place.geometry.location.lat()) : ctrl.location.latitude,
+                  longitude: ctrl.place.geometry ? parseFloat(ctrl.place.geometry.location.lng()) : ctrl.location.longitude
                 }
-              }
+              };
 
               console.info(data);
 
+              if (ctrl.editedAction)
+                updateAction(data);
+              else
+                newAction(data);
+            }
+
+            newAction = function(data) {
               $.ajax({
                 type: 'POST',
                 url: getApiUrl() + '/entourages',
@@ -100,6 +128,40 @@ angular.module('entourageApp')
                     ctrl.errors.push("Il y a eu une erreur, merci de réessayer ou de nous contacter");
                   ctrl.loading = false;
                   $scope.$apply();
+                },
+                error: function(data) {
+                  if (data.responseJSON && data.responseJSON.error && data.responseJSON.error.message)
+                    ctrl.errors.push("Erreur : " + data.responseJSON.error.message[0]);
+                  else
+                    ctrl.errors.push("Il y a eu une erreur, merci de réessayer ou de nous contacter");
+                  ctrl.loading = false;
+                  $scope.$apply();
+                }
+              });
+            }
+
+            updateAction = function(data) {
+              $.ajax({
+                type: 'PATCH',
+                url: getApiUrl() + '/entourages/' + ctrl.editedAction.uuid,
+                data: {
+                  token: ctrlParent.user.token,
+                  entourage: data
+                },
+                success: function(data) {
+                  if (data.entourage) {
+                    ctrl.editedAction.title = data.entourage.title
+                    ctrl.editedAction.metadata = data.entourage.metadata
+                    ctrl.editedAction.description = data.entourage.description
+                    ctrl.editedAction.location = data.entourage.location
+
+                    ctrl.close();
+                  }
+                  else {
+                    ctrl.errors.push("Il y a eu une erreur, merci de réessayer ou de nous contacter");
+                    ctrl.loading = false;
+                    $scope.$apply();
+                  }
                 },
                 error: function(data) {
                   if (data.responseJSON && data.responseJSON.error && data.responseJSON.error.message)

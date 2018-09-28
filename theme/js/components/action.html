@@ -1,7 +1,7 @@
 <div class="action-info">
     <h2>
         <div
-            ng-if="ctrl.action.display_category"
+            ng-if="ctrl.action.group_type != 'outing' && ctrl.action.display_category"
             class="action-icon"
             ng-class="ctrl.action.entourage_type + ' ' + ctrl.action.display_category"
             ></div>
@@ -36,10 +36,14 @@
                 class="action-status-closed"
                 >
                 <span ng-if="ctrl.user.id != ctrl.action.author.id">
-                    <i class="material-icons">done</i> Merci d'avoir participé à cette action !
+                    <i class="material-icons">done</i>
+                    <span ng-if="ctrl.action.outcome.success"> Merci d'avoir participé au succès de cette action !</span>
+                    <span ng-if="!ctrl.action.outcome.success"> Merci d'avoir participé à cette action !</span>
                 </span>
                 <span ng-if="ctrl.user.id == ctrl.action.author.id">
-                    <i class="material-icons">done</i> Votre action est terminée !
+                    <i class="material-icons">done</i> 
+                    <span ng-if="ctrl.action.outcome.success">Votre action a été un succès, bravo !</span>
+                    <span ng-if="!ctrl.action.outcome.success">Votre action est terminée, merci !</span>
                 </span>
             </div>
             <div ng-if="ctrl.action.status != 'closed'">
@@ -52,7 +56,9 @@
                 ng-if="ctrl.action.status == 'closed'"
                 class="action-status-closed"
                 >
-                <i class="material-icons">done</i> Cette action est finie, merci à tous !
+                <i class="material-icons">done</i> 
+                <span ng-if="ctrl.action.outcome.success"> Cette action a été un succès, merci à tous !</span>
+                <span ng-if="!ctrl.action.outcome.success"> Cette action est finie, merci à tous !</span>
             </div>
             <div
                 ng-if="ctrl.action.status != 'closed'"

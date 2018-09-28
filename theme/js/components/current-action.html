@@ -41,7 +41,7 @@
                     </i>
                 </a>
                 <a
-                    ng-if="ctrl.is_admin && !ctrl.public && ctrl.action.status != 'closed' && ctrl.action.group_type != 'conversation'"
+                    ng-if="ctrl.is_admin && ctrl.action.status != 'closed' && ctrl.action.group_type != 'conversation'"
                     tooltip-placement="top"
                     uib-tooltip="Clôturer votre action"
                     tooltip-append-to-body="true"
@@ -51,6 +51,20 @@
                         ng-click="ctrl.finishAction()"
                         >
                         power_settings_new
+                    </i>
+                </a>
+                <a
+                    ng-if="ctrl.is_admin && ctrl.action.status != 'closed' && ctrl.action.group_type != 'conversation'"
+                    class="action-edit"
+                    tooltip-placement="top"
+                    uib-tooltip="Editer votre action"
+                    tooltip-append-to-body="true"
+                    >
+                    <i
+                        class="material-icons"
+                        ng-click="ctrl.edit()"
+                        >
+                        edit
                     </i>
                 </a>
                 <a
@@ -288,4 +302,16 @@
         user="ctrl.user"
         message="ctrl.currentMessage"
         ></modal-new-message>
+    <new-action
+        ng-if="ctrl.editAction"
+        user="ctrl.user"
+        hide="ctrl.editAction = false"
+        action="ctrl.action"
+        ></new-action>
+    <new-event
+        ng-if="ctrl.editEvent"
+        user="ctrl.user"
+        hide="ctrl.editEvent = false"
+        action="ctrl.action"
+        ></new-event>
 </div>

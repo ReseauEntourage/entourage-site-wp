@@ -90,11 +90,12 @@ function transformAction(action) {
     }
   }
   else if (action.type == 'Entourage') {
-    // TODO: return uuid through API
-    if (action.share_url.match(/entourages\/(.*)/))
-      action.uuid = action.share_url.match(/entourages\/(.*)/)[1];
-    else if (action.share_url.match(/token=(.*)/))
-      action.uuid = action.share_url.match(/token=(.*)/)[1];
+    if (!action.uuid) {
+      if (action.share_url.match(/entourages\/(.*)/))
+        action.uuid = action.share_url.match(/entourages\/(.*)/)[1];
+      else if (action.share_url.match(/token=(.*)/))
+        action.uuid = action.share_url.match(/token=(.*)/)[1];
+    }
     if (action.status == 'closed') {
       action.title = 'TERMINÉ - ' + action.title;
     }

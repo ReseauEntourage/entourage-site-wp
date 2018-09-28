@@ -39,7 +39,9 @@ angular.module('entourageApp')
                 action = transformAction(action.data);
 
                 if (action.join_status == 'accepted') {
-                  ctrl.getLastMessage(action);
+                  //ctrl.getLastMessage(action);
+                  if (action.number_of_unread_messages)
+                    ctrl.user.unreadMessages += 1;
 
                   ctrl.is_admin = (action.author.id == ctrl.user.id);
                   if (ctrl.is_admin) {

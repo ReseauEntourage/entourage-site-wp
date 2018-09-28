@@ -30,8 +30,12 @@
                 class="ellipsis"
                 >
                 <span
-                    ng-if="!action.pendingUsers.length && action.lastMessage"
-                    ng-bind-html="(action.lastMessage.user.display_name + ' : ' + action.lastMessage.content)|trusted"
+                    ng-if="!action.pendingUsers.length && action.last_message && action.last_message.author"
+                    ng-bind-html="(action.last_message.author.first_name + ' : ' + action.last_message.text)|trusted"
+                    ></span>
+                <span
+                    ng-if="!action.pendingUsers.length && !action.last_message && action.description"
+                    ng-bind-html="(action.author.display_name + ' : ' + action.description)|trusted"
                     ></span>
                 <span
                     ng-if="action.pendingUsers.length"

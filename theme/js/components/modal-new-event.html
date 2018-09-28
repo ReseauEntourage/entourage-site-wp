@@ -6,6 +6,8 @@
         <i class="material-icons">arrow_back</i>
     </a>
     <span>Vous souhaitez créer une événement solidaire&nbsp;? C'est parti&nbsp;!</span>
+    <span ng-show="!ctrl.editedAction">Vous souhaitez créer une action solidaire&nbsp;? C'est parti&nbsp;!</span>
+    <span ng-show="ctrl.editedAction">Editez votre action</span>
 </div>
 <div
     id="modal-new-action"
@@ -14,7 +16,8 @@
     >
     <div class="form">
         <fieldset>
-            <label>1. Donnez un titre à votre événement :</label>
+            <label ng-show="!ctrl.editedAction">1. Donnez un titre à votre événement :</label>
+            <label ng-show="ctrl.editedAction">1. Editez le titre de votre événement :</label>
             <div class="parent-input with-icon tag-icon">
                 <input
                     type="text"
@@ -31,6 +34,7 @@
                     ng-init="ctrl.initSearchBox()"
                     id="new-action-search-input"
                     type="text"
+                    ng-model="ctrl.display_address"
                     placeholder="Adresse précise"
                     />
             </div>
@@ -45,7 +49,7 @@
                         type="text"
                         is-open="show"
                         ng-focus="show = true"
-                        datepicker-options="ctrl.options"
+                        datepicker-options="ctrl.datepickerOptions"
                         show-button-bar="false"
                         placeholder="Sélectionnez une date"
                         />
@@ -113,7 +117,7 @@
         ng-click="ctrl.submit()"
         class="btn orange-btn"
         >
-        <i class="material-icons">add</i>
-        Créer mon événement !
+        <span ng-show="!ctrl.editedAction"><i class="material-icons">add</i> Créer mon événement !</span>
+        <span ng-show="ctrl.editedAction"><i class="material-icons">edit</i> Editer mon événement</span>
     </a>
 </div>

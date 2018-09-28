@@ -96,15 +96,55 @@ angular.module('entourageApp')
                   },
                   success: function(data) {
                     if (data == 'success') {
-                      ctrl.close();
+                      if (ctrl.type == 'action_feedback')
+                        finishAction();
+                      else {
+                        ctrl.close();
+                        ctrl.loading = false;
+                        $scope.$apply();
+                      }
                     }
-                    else
+                    else {
                       ctrl.errors.push("Il y a eu une erreur, merci de réessayer ou de nous contacter");
-                    ctrl.loading = false;
-                    $scope.$apply();
+                      ctrl.loading = false;
+                      $scope.$apply();
+                    }
                   }
                 });
               }
+            }
+
+            finishAction = function() {
+              $.ajax({
+                type: 'PATCH',
+                url: getApiUrl() + '/entourages/' + ctrlParent.message.action.uuid,
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                  token: ctrlParent.user.token,
+                  entourage: {
+                    status: 'closed',
+                    outcome: {
+                      success: ctrl.actionFeedback == 'success'
+                    }
+                  }
+                }),
+                success: function(data) {
+                  ctrlParent.message.action.status = 'closed';
+                  ctrlParent.message.action.outcome = {
+                    success: ctrl.actionFeedback == 'success'
+                  };
+
+                  ctrl.close();
+
+                  ctrl.loading = false;
+                  $scope.$apply();
+                },
+                error: function(data) {
+                  alert("Erreur : nous n'avons pas pu clôturer cette action, réessayez ou contactez l'équipe d'Entourage");
+                  ctrl.loading = false;
+                  $scope.$apply();
+                }
+              });
             }
           }
         }).closed.then(function() {

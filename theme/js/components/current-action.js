@@ -356,6 +356,13 @@ angular.module('entourageApp')
         };
       }
 
+      ctrl.edit = function() {
+        if (ctrl.action.group_type == 'outing')
+          ctrl.editEvent = true;
+        else if (ctrl.action.group_type == 'action')
+          ctrl.editAction = true;
+      }
+
       ctrl.leave = function() {
         if (ctrl.loading)
           return;
@@ -384,35 +391,10 @@ angular.module('entourageApp')
       }
 
       ctrl.finishAction = function() {
-        if (ctrl.loading)
-          return;
-
-        ctrl.loading = true;
-
-        $.ajax({
-          type: 'PATCH',
-          url: getApiUrl() + '/entourages/' + ctrl.action.uuid,
-          data: {
-            token: ctrl.user.token,
-            entourage: {
-              status: 'closed'
-            }
-          },
-          success: function(data) {
-            ctrl.currentMessage = {
-              type: "action_feedback",
-              action: ctrl.action
-            };
-            ctrl.action.status = 'closed';
-            ctrl.loading = false;
-            $scope.$apply();
-          },
-          error: function(data) {
-            alert("Erreur : nous n'avons pas pu clôturer cette action, réessayez ou contactez l'équipe d'Entourage");
-            ctrl.loading = false;
-            $scope.$apply();
-          }
-        });
+        ctrl.currentMessage = {
+          type: "action_feedback",
+          action: ctrl.action
+        };
       }
 
       ctrl.shareFacebook = function() {

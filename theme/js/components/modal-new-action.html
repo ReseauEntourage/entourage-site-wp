@@ -6,7 +6,8 @@
         <i class="material-icons">arrow_back</i>
     </a>
     <span ng-show="!ctrl.termsAccepted">Je respecte la <a href="https://blog.entourage.social/charte-ethique-grand-public/" target="_blank">charte d'Entourage</a>&nbsp;:</span>
-    <span ng-show="ctrl.termsAccepted">Vous souhaitez créer une action solidaire&nbsp;? C'est parti&nbsp;!</span>
+    <span ng-show="ctrl.termsAccepted && !ctrl.editedAction">Vous souhaitez créer une action solidaire&nbsp;? C'est parti&nbsp;!</span>
+    <span ng-show="ctrl.termsAccepted && ctrl.editedAction">Editez votre action</span>
 </div>
 <div
     id="modal-new-action"
@@ -43,7 +44,7 @@
         ng-show="ctrl.termsAccepted"
         class="form"
         >
-        <fieldset>
+        <fieldset ng-if="!ctrl.editedAction">
             <label>1. Choisissez une catégorie et précisez une zone géographique :</label>
             <div class="input-line">
                 <div class="parent-dropdown">
@@ -94,7 +95,8 @@
             </div>
         </fieldset>
         <fieldset>
-            <label>2. Donnez un titre clair à votre initiative :</label>
+            <label ng-if="!ctrl.editedAction">2. Donnez un titre clair à votre initiative :</label>
+            <label ng-if="ctrl.editedAction">1. Editez le titre de votre initiative :</label>
             <div class="parent-input with-icon tag-icon">
                 <input
                     type="text"
@@ -105,7 +107,8 @@
             </div>
         </fieldset>
         <fieldset>
-            <label>3. Racontez simplement votre histoire. Les actions avec une description claire attirent plus de membres et ont plus de chances d'aboutir :</label>
+            <label ng-if="!ctrl.editedAction">3. Racontez simplement votre histoire. Les actions avec une description claire attirent plus de membres et ont plus de chances d'aboutir :</label>
+            <label ng-if="ctrl.editedAction">2. Editez la description de votre initiative :</label>
             <div class="parent-input with-icon message-icon">
                 <textarea
                     type="text"
@@ -141,7 +144,7 @@
         ng-click="ctrl.submit()"
         class="btn orange-btn"
         >
-        <i class="material-icons">add</i>
-        Créer mon action !
+        <span ng-show="!ctrl.editedAction"><i class="material-icons">add</i> Créer mon action !</span>
+        <span ng-show="ctrl.editedAction"><i class="material-icons">edit</i> Editer mon action</span>
     </a>
 </div>

@@ -407,7 +407,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
       hideMarkerTitle();
 
       searchAction = map.actions.filter(function(a){
-        return (uuid == a.id || uuid == a.uuid || uuid == a.uuid_v1);
+        return (uuid == a.id || uuid == a.uuid);
       });
 
       if (!searchAction.length) {
