@@ -203,6 +203,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
 
           generateMarkers();
           isMapEmpty();
+          showCarousel();
           
           map.loaded = true;
           $scope.$apply();
@@ -443,6 +444,15 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
       map.currentProfileId = id;
     }
 
+    showCarousel = function() {
+      if (!localStorage.getItem('carouselView')) {
+        setTimeout(function() {
+          map.showModal.carousel = true;
+          $scope.$apply();
+        }, 5000);
+      }
+    }
+
 
     // ** MARKERS **/
 
@@ -527,7 +537,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
       return meters / (156543.03392 * Math.cos(lat * Math.PI / 180) / Math.pow(2, map.mapObject.getZoom()));
     }
 
-    // Click on Marker
+    // Click a Marker
     $(document).on('click', '.gm-info-window', function(e){
       map.showAction($(this).attr('data-id'));
     });
@@ -637,7 +647,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
     else {
       map.filters = {
         status: (localStorage.getItem('filter_status') != null) ? localStorage.getItem('filter_status') : 'open',
-        period: (localStorage.getItem('filter_period') != null) ? localStorage.getItem('filter_period') : '90',
+        period: (localStorage.getItem('filter_period') != null) ? localStorage.getItem('filter_period') : '14',
         types: (localStorage.getItem('filter_types') != null) ? localStorage.getItem('filter_types').split(',') : ['as','ae','am','ar','ai','ak','ao','ah','cs','ce','cm','cr','ci','ck','co','ch','ou']
       };
     }

@@ -17,9 +17,10 @@ angular.module('entourageApp')
             var ctrl = this;
 
             ctrl.currentIndex = 0;
-            
+
             ctrl.close = function() {
               $uibModalInstance.close();
+              localStorage.setItem('carouselView', '1');
             }
 
             ctrl.previous = function() {

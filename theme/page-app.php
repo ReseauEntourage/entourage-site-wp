@@ -309,8 +309,8 @@
             </div>
         </div>
         <div
-            id="site-header-right"
             ng-if="!map.public"
+            id="site-header-right"
             >
             <div
                 id="help-menu"
@@ -325,11 +325,6 @@
                     </a>
                     <div uib-dropdown-menu>
                         <ul>
-                            <!--li class="dropdown-menu-group">
-                                <a ng-click="map.toggleModal('carousel')">
-                                    <i class="material-icons">help_outline</i>Comment ça marche ?
-                                </a>
-                            </li-->
                             <li class="dropdown-menu-group">
                                 <a ng-click="map.toggleModal('carousel')">
                                     <i class="material-icons">info</i> Comment ça marche ?
@@ -370,6 +365,9 @@
                                 </a>
                             </li>
                             <li class="dropdown-menu-group">
+                                <a href="https://www.entourage.social/devenir-ambassadeur/" target="_blank">
+                                    <i class="material-icons">mic</i> Devenir ambassadeur du réseau Entourage
+                                </a>
                                 <a href="http://www.simplecommebonjour.org/" target="_blank">
                                     <i class="material-icons">question_answer</i> Se former à la rencontre 
                                 </a>
@@ -465,15 +463,42 @@
             id="site-header-right"
             ng-if="map.public"
             >
-            <a
-                id="site-header-info"
-                class="btn no-mobile"
-                href="https://www.entourage.social"
-                target="_blank"
-                title="Visiter le site de l'association Entourage"
+            <div
+                id="help-menu"
+                class="parent-dropdown"
                 >
-                <i class="material-icons">help</i>Entourage, c'est quoi ?
-            </a>
+                <div uib-dropdown>
+                    <a
+                        uib-dropdown-toggle
+                        class="btn"
+                        >
+                        <i class="material-icons">help</i> Besoin d'aide ?
+                    </a>
+                    <div uib-dropdown-menu>
+                        <ul>
+                            <li class="dropdown-menu-group">
+                                <a ng-click="map.toggleModal('carousel')">
+                                    <i class="material-icons">info</i> Comment ça marche ?
+                                </a>
+                                <a href="http://www.entourage.social/" target="_blank">
+                                    <i class="material-icons">question_answer</i> Visiter le site d'Entourage
+                                </a>
+                            </li>
+                            <li class="dropdown-menu-group">
+                                <a href="https://blog.entourage.social/2017/04/28/quelles-actions-faire-avec-entourage/" target="_blank">
+                                    <i class="material-icons">lightbulb_outline</i> Idées d'action
+                                </a>
+                                <a href="http://www.simplecommebonjour.org/" target="_blank">
+                                    <i class="material-icons">question_answer</i> Conseils pour oser la rencontre
+                                </a>
+                                <a href="https://blog.entourage.social/2017/04/28/comment-utiliser-l-application-entourage/" target="_blank">
+                                    <i class="material-icons">contact_support</i> Questions fréquentes
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
             <div
                 id="site-header-login"
                 class="parent-dropdown"
@@ -538,7 +563,7 @@
     <modal-carousel
         ng-if="map.showModal.carousel"
         hide="map.toggleModal('carousel')"
-        toggle-new-action="map.toggleModal('newAction')"
+        toggle-new-action="map.toggleModal('register')"
         ></modal-carousel>
 
     <div id="page-content">
