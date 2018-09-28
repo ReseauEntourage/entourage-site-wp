@@ -2122,7 +2122,7 @@ div.overlay.fade-out {
     border-radius: 100%;
     margin-top: -7px;
     margin-left: -7px;
-    transition: all 0.3s;
+    transition: background 0.3s, box-shadow 0.3s;
 }
 
 .gm-style .marker-action.open:nth-child(2n) {
@@ -2143,7 +2143,7 @@ div.overlay.fade-out {
 
 .gm-style .marker-action.open {
     opacity: 1 !important;
-    animation: pulse 3s infinite; /*rotate 10s linear infinite*/
+    animation: pulse 3s infinite;
 }
 
 .gm-style .marker-action.closed {
@@ -2160,6 +2160,7 @@ div.overlay.fade-out {
     background: #ff5100;
 	z-index: 9998 !important;
     animation: pulseActive 0.7s infinite;
+    animation-delay: 0;
 }
 
 .gm-style .marker-action:hover {

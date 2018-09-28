@@ -16,9 +16,9 @@
     $custom_fields = get_post_custom($wp_query->post->ID);
 
     if (!empty($entourage)) {
-        $og_url = get_bloginfo('url') . "/app?token=" . $_GET['token'];
+        $og_url = get_bloginfo('url') . "/app/?token=" . $_GET['token'];
         $og_title = $entourage->title;
-        $og_description = "Vous voulez aider ? Rejoignez " . ucfirst($entourage->author->display_name) . " et les milliers de membres du réseau solidaire Entourage et passez vous aussi concrètement à l'action pour les personnes sans-abri près de chez vous";
+        $og_description = "Vous voulez aider ? Rejoignez " . ucfirst($entourage->author->display_name) . " et les 50.000 membres du réseau solidaire Entourage et passez vous aussi concrètement à l'action pour les personnes sans-abri près de chez vous";
     }
     else {
         $og_url = get_bloginfo('url') . "/app";
