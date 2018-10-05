@@ -108,10 +108,10 @@
     	align-items: center;
     	margin: auto;
     	margin-top: 20px;
-    	padding: 15px;
+    	padding: 20px 25px 20px 20px;
     	font-size: 0;
 	    background: #e84d04;
-	    border-radius: 3px;
+	    border-radius: 63px;
 	}
 
 	section.section.section_type-orange div.section-contact-details div.section-contact-picture {

@@ -46,7 +46,7 @@
 	<meta property="og:title" content="<?php echo $og_title; ?>">
     <meta property="og:type" content="website">
     <meta property="og:url" content="<?php echo wp_get_canonical_url(); ?>">
-    <meta property="og:image" content="<?php asset_url('img/share-fb.png'); ?>">
+    <meta property="og:image" content="<?php if (!empty($custom_fields['facebook_image'])) echo $custom_fields['facebook_image'][0]; else asset_url('img/share-fb.png'); ?>">
     <meta property="og:description" content="<?php echo $og_description; ?>">
     <meta property="fb:app_id" content="280727035774134">
     <meta name="apple-mobile-web-app-capable" content="yes">

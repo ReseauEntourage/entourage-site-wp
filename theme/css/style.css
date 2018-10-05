@@ -191,6 +191,12 @@ a:hover {
     margin: 0;
 }
 
+.btn.btn-big {
+	line-height: 40px;
+    height: 40px;
+    font-size: 17px;
+}
+
 .parent-select .btn {
 	display: inline-flex;
     color: #424242;
