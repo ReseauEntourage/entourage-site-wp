@@ -16,7 +16,14 @@ get_header(); ?>
 
 		<?php if ( wc_get_loop_prop( 'total' ) ) : ?>
 
-			<h3 class="section-title">La boutique</h3>
+			<h3 class="section-title">
+				La boutique
+			</h3>
+
+			<?php if ($woocommerce->cart->get_cart()) : ?>
+				<a class="btn orange-btn" href="/panier">
+				<i class="material-icons">shopping_cart</i>Voir votre panier</a>
+			<?php endif; ?>
 
 			<ul class="product-list">
 				<?php while ( have_posts() ) : ?>

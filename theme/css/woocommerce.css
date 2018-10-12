@@ -60,6 +60,10 @@ body.woocommerce section.section.section_type-products li.type-product {
     vertical-align: top;
 }
 
+body.woocommerce section.section.section_type-products li.type-product:last-child {
+    margin-right: 0;
+}
+
 body.woocommerce section.section.section_type-products li.type-product a.woocommerce-LoopProduct-link {
 	display: block;
 	padding-bottom: 15px;
@@ -130,9 +134,7 @@ body.woocommerce.single-product div.summary.entry-summary {
     margin-top: 20px;
 	margin-bottom: 0;
 	float: none;
-}
-
-body.woocommerce.single-product .product {
+    width: 50%;
 }
 
 body.woocommerce.single-product .product h1 {
@@ -179,6 +181,7 @@ body.woocommerce.single-product .woocommerce-tabs h2 {
 body.woocommerce.single-product .woocommerce-tabs {
 	display: inline-block;
     font-size: 15px;
+    width: 50%;
 }
 
 
@@ -245,7 +248,7 @@ body.woocommerce-page #payment #place_order {
     padding: 0 20px;
     height: 40px;
     line-height: 40px;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 body.woocommerce-cart .woocommerce-shipping-calculator {
@@ -361,4 +364,43 @@ body.woocommerce-page .woocommerce-error a.button {
     background: #fff;
     color: #333;
     text-decoration: inherit;
+}
+
+body.woocommerce-page .woocommerce-order {
+    width: 800px;
+    margin: 10px auto 40px;
+    padding: 20px;
+    box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.21);
+    background: #fff;
+}
+
+body.woocommerce-page .woocommerce-notice {
+    margin-bottom: 40px;
+    font-size: 20px;
+}
+
+@media screen and (max-width: 900px) {
+    body.woocommerce div.product div.images.woocommerce-product-gallery,
+    body.woocommerce.single-product div.summary.entry-summary,
+    body.woocommerce.single-product .woocommerce-tabs,
+    body.woocommerce-cart .woocommerce-cart-form,
+    body.woocommerce-cart .woocommerce .cart-collaterals,
+    body.woocommerce-page .cart-collaterals,
+    body.woocommerce-checkout #customer_details,
+    body.woocommerce-checkout .woocommerce-checkout-review-order,
+    body.woocommerce-page .woocommerce-order {
+        width: 100%;
+    }
+
+    body.woocommerce section.section.section_type-products ul.product-list {
+        margin-top: 0;
+    }
+
+    body.woocommerce section.section.section_type-products li.type-product {
+        margin-right: 0;
+    }
+
+    body.woocommerce div.product div.images.woocommerce-product-gallery {
+        margin: 0;
+    }
 }

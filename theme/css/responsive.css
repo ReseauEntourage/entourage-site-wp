@@ -113,7 +113,7 @@
 
 	#site-header-logo {
 		left: 50%;
-    	margin-left: -23px;
+    	margin-left: -12px;
 	}
 
 	#site-header h1 {
@@ -209,7 +209,7 @@
 	}
 
 	section.section-newsletter div.parent-input #newsletter-email {
-	    width: 233px;
+	    width: 229px;
 	}
 
 	section.section:not(.section_type-simple_comme_bonjour) blockquote {
