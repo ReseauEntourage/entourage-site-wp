@@ -584,7 +584,7 @@ strong {
 	text-decoration: none;
 }
 
-#site-header-nav > ul > li > a:after {
+#site-header-nav > ul > li > a:not(:last-child):after {
 	content: '\E5C5';
 	font-family: 'Material Icons';
 	font-size: 20px;
