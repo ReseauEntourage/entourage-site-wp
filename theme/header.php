@@ -101,6 +101,7 @@
 	</script>
 
 	<script src='https://www.google.com/recaptcha/api.js'></script>
+	<?php wp_head(); ?>
 </head>
 
 <body <?php body_class(); ?>>
