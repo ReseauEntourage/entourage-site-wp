@@ -52,8 +52,6 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="google-site-verification" content="6EHu9r95V7L27wF49pEYrAovlGC0JPlECZ93h90Z0l0" />
 
-	<link rel="stylesheet" href="<?php asset_url('css/style.css'); ?>">
-	<link rel="stylesheet" href="<?php asset_url('css/responsive.css'); ?>">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link href='https://fonts.googleapis.com/css?family=Roboto:300,500,100,300italic' rel='stylesheet' type='text/css'>
 	<script src="<?php asset_url('js/lib/jquery.js'); ?>" type="text/javascript"></script>
@@ -102,6 +100,9 @@
 
 	<script src='https://www.google.com/recaptcha/api.js'></script>
 	<?php wp_head(); ?>
+	<link rel="stylesheet" href="<?php asset_url('css/style.css'); ?>">
+	<link rel="stylesheet" href="<?php asset_url('css/responsive.css'); ?>">
+	<link rel="stylesheet" href="<?php asset_url('css/woocommerce.css'); ?>">
 </head>
 
 <body <?php body_class(); ?>>

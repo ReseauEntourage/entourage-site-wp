@@ -102,6 +102,12 @@ a img {
 	border: 0;
 }
 
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
 /**
  * 2.0 - Global CSS
  */
@@ -109,6 +115,10 @@ a img {
 @font-face {
 	font-family: "KG";
 	src: url(../fonts/KGAsTheDeer.ttf);
+}
+
+html {
+	margin-top: 0!important;
 }
 
 body {
@@ -143,7 +153,10 @@ a:hover {
 	margin: auto;
 }
 
-.btn {
+.btn,
+.woocommerce button.button,
+.woocommerce a.button,
+.woocommerce input.button {
 	display: inline-block;
 	height: 33px;
 	line-height: 33px;
@@ -261,6 +274,8 @@ a.link:hover {
 input[type=text],
 input[type=password],
 input[type=number],
+input[type=tel],
+input[type=email],
 textarea {
 	display: inline-block;
 	font-size: 15px;
@@ -970,6 +985,8 @@ section.section:not(.section_type-simple_comme_bonjour) blockquote strong {
 section.section:not(.section_type-simple_comme_bonjour) blockquote p {
 	margin: 0 !important;
 }
+
+
  /**
  * 5.0 - Home
  */
@@ -981,6 +998,7 @@ body.home #site-header {
 body.home section.section.section_type-download {
 	margin-top: -30px;
 }
+
 
 /* Google Map Search */
 
@@ -1087,7 +1105,7 @@ section.section-newsletter div.parent-input {
 
 section.section-newsletter div.parent-input #newsletter-email {
 	display: inline-block;
-	width: 300px;
+	width: 294px;
 	height: 41px;
 	border-radius: 20px 0 0 20px;
 }
@@ -1095,7 +1113,7 @@ section.section-newsletter div.parent-input #newsletter-email {
 section.section-newsletter div.parent-input a.btn {
 	display: inline-block;
 	height: 41px;
-    padding: 0 15px;
+    padding: 0 20px 0 15px;
     line-height: 41px;
     border-radius: 0 20px 20px 0;
     font-weight: 500;

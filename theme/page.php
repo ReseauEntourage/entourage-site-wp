@@ -17,14 +17,21 @@ get_header();
 	    'order' => 'ASC',
 	]);
 
-	while ( $query->have_posts() ) : $query->the_post();
-		$section_types = wp_get_post_terms(get_the_ID(), ['section_type']);
-		foreach ($section_types as $section) {
-			if (!$section->parent || !isset($section_type))
-				$section_type = $section->slug;
-		}
-		get_template_part( 'template-parts/section', $section_type ?: 'text' );
-	endwhile;
+	if ($query->have_posts()) {
+		while ( $query->have_posts() ) : $query->the_post();
+			$section_types = wp_get_post_terms(get_the_ID(), ['section_type']);
+			foreach ($section_types as $section) {
+				if (!$section->parent || !isset($section_type))
+					$section_type = $section->slug;
+			}
+			get_template_part( 'template-parts/section', $section_type ?: 'text' );
+		endwhile;
+	}
+	elseif (have_posts()) {
+		while ( have_posts() ) : the_post();
+			the_content();
+		endwhile;
+	}
 
 get_footer();
 

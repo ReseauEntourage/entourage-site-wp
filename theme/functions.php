@@ -6,6 +6,15 @@
 	@ini_set( 'max_execution_time', '300' );
 
 	add_filter( 'jetpack_enable_open_graph', '__return_false' );
+
+
+	/*** ADD WOOCOMMERCE ***/
+
+	add_action( 'after_setup_theme', 'woocommerce_support' );
+	
+	function woocommerce_support() {
+	   add_theme_support( 'woocommerce' );
+	}
 	
 
 	/*** CUSTOM POST TYPES + taxonomies OPTIONS ***/
