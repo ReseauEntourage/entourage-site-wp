@@ -1707,7 +1707,7 @@ div.overlay.fade-out {
 #map {
     position: relative;
     padding-top: 60px;
-    padding-left: 340px;
+    padding-left: 355px;
     overflow: hidden;
     transition: opacity 0.3s;
 }
@@ -1798,20 +1798,15 @@ div.overlay.fade-out {
 
 #current-action {
 	position: absolute;
-    max-height: 80%;
     bottom: -600px;
     right: 18px;
     width: 340px;
-    display: flex;
-    flex-direction: column;
     z-index: 10;
 	transition: bottom 0.3s;
 }
 
 #current-action > div {
     position: relative;
-	display: flex;
-    flex-direction: column;
 }
 
 #current-action.open {
@@ -1879,7 +1874,7 @@ div.overlay.fade-out {
 }
 
 #current-action .action-content {
-    max-height: 570px;
+    max-height: 430px;
     display: flex;
     flex-direction: column;
     border-radius: 5px 5px 0 0;

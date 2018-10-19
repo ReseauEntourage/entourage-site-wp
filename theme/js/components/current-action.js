@@ -270,8 +270,10 @@ angular.module('entourageApp')
         $scope.$apply();
 
         setTimeout(function(){
-          $($element).find('.action-chat').scrollTop($($element).find('.action-chat>div').height());
-          ctrl.loading = false;
+          if (ctrl.loading) {
+            $($element).find('.action-chat').scrollTop($($element).find('.action-chat>div').height());
+            ctrl.loading = false;
+          }
           $scope.$apply();
         }, 1000);
       }

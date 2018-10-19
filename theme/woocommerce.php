@@ -8,7 +8,8 @@
  *
  */
 
-get_header(); ?>
+get_header();
+?>
 
 <section class="section section_type-products bg-gris">
 
@@ -17,7 +18,7 @@ get_header(); ?>
 		<?php if ( wc_get_loop_prop( 'total' ) ) : ?>
 
 			<h3 class="section-title">
-				La boutique
+				<?php woocommerce_page_title(); ?>
 			</h3>
 
 			<?php if ($woocommerce->cart->get_cart()) : ?>
