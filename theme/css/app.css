@@ -1251,6 +1251,12 @@ div.overlay.fade-out {
     text-decoration: underline;
 }
 
+#user-feed-end img {
+    margin-top: 10px;
+    box-shadow: 0 0 10px 3px #0000001f;
+    border-radius: 50px;    
+}
+
 
 /** ACTION ITEM **/
 

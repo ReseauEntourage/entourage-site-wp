@@ -67,10 +67,43 @@ angular.module('entourageApp')
               }
             });
           }
+          else {
+            // as the action.number_of_people is wrong for the moment
+            ctrl.getUsers();
+          }
         }
 
         window.history.pushState('page2', ctrl.action.title, '/app/?token=' + ctrl.action.uuid);
         ctrl.open = true;
+      }
+
+      ctrl.getUsers = function() {
+        if (ctrl.action.users || ctrl.loading)
+          return;
+
+        ctrl.loading = true;
+
+        $.ajax({
+          type: 'GET',
+          url: getApiUrl() + '/entourages/' + ctrl.action.uuid + '/users',
+          data: {
+            token: ctrl.user.token,
+            entourage_id: ctrl.action.uuid
+          },
+          success: function(data) {
+            if (data.users)
+            {
+              ctrl.action.users = data.users;
+              ctrl.action.number_of_people = data.users.length - 1;
+            }
+            ctrl.loading = false;
+            $scope.$apply();
+          },
+          error: function(data) {
+            ctrl.loading = false;
+            $scope.$apply();
+          }
+        });
       }
 
       ctrl.askJoin = function() {
@@ -181,6 +214,7 @@ angular.module('entourageApp')
               if (data.users)
               {
                 ctrl.action.users = data.users;
+                ctrl.action.number_of_people = data.users.length - 1;
 
                 ctrl.timeline = ctrl.action.users.filter(function(user){
                   return ((user.id != ctrl.action.author.id) && (user.status == 'accepted'));

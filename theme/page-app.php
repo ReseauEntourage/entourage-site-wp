@@ -18,7 +18,10 @@
     if (!empty($entourage)) {
         $og_url = get_bloginfo('url') . "/app/?token=" . $_GET['token'];
         $og_title = $entourage->title;
-        $og_description = "Vous voulez aider ? Rejoignez " . ucfirst($entourage->author->display_name) . " et les 50.000 membres du réseau solidaire Entourage et passez vous aussi concrètement à l'action pour les personnes sans-abri près de chez vous";
+        if ($entourage->group_type == "outing")
+            $og_description = "Rejoignez l'événement solidaire de " . ucfirst($entourage->author->display_name) . ", et comme les 50.000 membres du réseau Entourage, passez vous aussi concrètement à l'action pour les personnes sans-abri près de chez vous";
+        else
+            $og_description = "Vous pouvez aider ? Rejoignez " . ucfirst($entourage->author->display_name) . " et les 50.000 membres du réseau solidaire Entourage et passez vous aussi concrètement à l'action pour les personnes sans-abri près de chez vous";
     }
     else {
         $og_url = get_bloginfo('url') . "/app";
@@ -283,7 +286,7 @@
                                         ng-click="map.toggleFilterType(['as','ae','am','ar','ai','ak','ao','ah'])"
                                         ng-class="{selected: map.filters.types.indexOf('as') > -1}"
                                         >
-                                        Demandes
+                                        Demandes d'aide
                                     </a>
                                 </li>
                                 <li>
@@ -291,7 +294,7 @@
                                         ng-click="map.toggleFilterType(['cs','ce','cm','cr','ci','ck','co','ch'])"
                                         ng-class="{selected: map.filters.types.indexOf('cs') > -1}"
                                         >
-                                        Contributions
+                                        Offres d'aide
                                     </a>
                                 </li>
                                 <li>
@@ -299,7 +302,7 @@
                                         ng-click="map.toggleFilterType(['ou'])"
                                         ng-class="{selected: map.filters.types.indexOf('ou') > -1}"
                                         >
-                                        Evénements
+                                        Evénements solidaires
                                     </a>
                                 </li>
                             </ul>
