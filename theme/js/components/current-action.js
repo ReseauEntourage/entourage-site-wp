@@ -401,11 +401,17 @@ angular.module('entourageApp')
 
       ctrl.shareFacebook = function() {
         FB.ui({
-          method: 'feed',
-          display: 'popup',
-          link: 'https://entourage.social/entourages/' + ctrl.action.uuid,
+          method: 'share',
+          hashtag: '#chaleurHumaine',
+          href: 'https://www.entourage.social/entourages/' + ctrl.action.uuid,
         }, function(response){
           console.info(response);
+        });
+
+        ga('send', {
+          hitType: 'event',
+          eventCategory: 'Share',
+          eventAction: 'Facebook'
         });
       }
     }
