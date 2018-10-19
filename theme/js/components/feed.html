@@ -22,11 +22,20 @@
             class="action-item"
             ng-class="{announcement: action.type == 'Announcement', closed: action.status == 'closed'}"
             ng-click="ctrl.click(action)"
+            ng-mouseenter="ctrl.hover(action)"
+            ng-mouseleave="ctrl.hover(action, true)"
             >
             <action
             	user="ctrl.user"
             	action="action"
             	></action>
+        </li>
+        <li
+            id="user-feed-end"
+            ng-click="ctrl.onOpenCreateAction()"
+            class="action-item end-card"
+            >
+            Déplacez la carte pour plus d'actions&nbsp;!<br>Ou mieux, <a>créez en une vous-même&nbsp;!</a>
         </li>
     </ul>
 </div>

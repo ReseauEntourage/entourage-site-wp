@@ -38,7 +38,7 @@ angular.module('entourageApp')
       });
 
       toggleMarker = function(id, hide) {
-        $('#marker-action-' + id).toggleClass('opened', !hide);
+        $('#marker-action-' + id).toggleClass('active', !hide);
       }
 
       ctrl.openAction = function () {

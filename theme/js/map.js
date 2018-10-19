@@ -503,7 +503,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
             $(this).addClass(search[1]).removeAttr('title');
             $(this).attr('id', 'marker-action-' + search[2]);
             if (map.currentAction && map.currentAction.uuid == search[2])
-              $(this).addClass('opened');
+              $(this).addClass('active');
           });
           clearInterval(intervalGenerateMarkers);
         }

@@ -36,6 +36,10 @@ angular.module('entourageApp')
         }
       }
 
+      ctrl.hover = function(action, hide) {
+        $('#marker-action-' + action.uuid).toggleClass('active', !hide);
+      }
+
       ctrl.toggleFeed = function() {
         ctrl.hiddenFeed = !ctrl.hiddenFeed;
       }
