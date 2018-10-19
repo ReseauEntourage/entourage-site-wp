@@ -54,14 +54,24 @@ src="https://www.facebook.com/tr?id=1977352069219759&ev=PageView
 </noscript>
 
 <!-- Load Facebook SDK for JavaScript -->
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = 'https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.12&autoLogAppEvents=1&appId=131925574217236';
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+          appId            : '280727035774134',
+          autoLogAppEvents : true,
+          xfbml            : true,
+          version          : 'v3.1'
+        });
+    };
+
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
 
 <!-- Your customer chat code -->
 <div

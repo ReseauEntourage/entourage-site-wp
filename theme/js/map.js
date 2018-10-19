@@ -80,7 +80,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
 
       // callback function - resolving promise after maps successfully loaded
       window.googleMapsInitialized = function () {
-          mapsDefer.resolve();
+        mapsDefer.resolve();
       };
 
       // loading google maps
@@ -499,7 +499,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
       var intervalGenerateMarkers = setInterval(function() {
         if ($('#map-container .gm-style div[title*=marker-action]').length) {
           $('#map-container .gm-style div[title*=marker-action]').each(function(){
-            var search = $(this).attr('title').match(/([a-z- ]*)?id:([a-zA-Z0-9_]*)/);
+            var search = $(this).attr('title').match(/([a-z- ]*)?id:([a-zA-Z0-9_\-]*)/);
             $(this).addClass(search[1]).removeAttr('title');
             $(this).attr('id', 'marker-action-' + search[2]);
             if (map.currentAction && map.currentAction.uuid == search[2])
