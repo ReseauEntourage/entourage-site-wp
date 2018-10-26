@@ -68,7 +68,7 @@
                     </i>
                 </a>
                 <a
-                    class="action-close"
+                    class="action-close no-mobile"
                     tooltip-placement="top"
                     uib-tooltip="Fermer la fenêtre"
                     tooltip-append-to-body="true"
@@ -77,6 +77,11 @@
                     <i class="material-icons no-mobile">
                         close
                     </i>
+                </a>
+                <a
+                    class="action-close mobile-only"
+                    ng-click="ctrl.hide(ctrl.action)"
+                    >
                     <i class="material-icons mobile-only">
                         arrow_back
                     </i>
