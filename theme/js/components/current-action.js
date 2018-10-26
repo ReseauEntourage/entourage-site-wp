@@ -231,7 +231,7 @@ angular.module('entourageApp')
           }, 500);
         }
         else {
-          ctrl.checkingInfoInterval = setInterval(ctrl.getTimeline, 20000);
+          $($element).find('.action-chat').scrollTop(20000);
           ctrl.loading = false;
           $scope.$apply();
         }
