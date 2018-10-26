@@ -20,10 +20,10 @@
         <li
             ng-repeat="(k, action) in ctrl.actions"
             class="action-item"
-            ng-class="{announcement: action.type == 'Announcement', closed: action.status == 'closed'}"
+            ng-class="{announcement: action.type == 'Announcement', closed: action.status == 'closed', active: ctrl.currentAction.uuid == action.uuid}"
             ng-click="ctrl.click(action)"
-            ng-mouseenter="ctrl.hover(action)"
-            ng-mouseleave="ctrl.hover(action, true)"
+            ng-mouseenter="action.type != 'Announcement' && ctrl.hover(action)"
+            ng-mouseleave="action.type != 'Announcement' && ctrl.hover(action, true)"
             >
             <action
             	user="ctrl.user"
@@ -35,7 +35,7 @@
             ng-click="ctrl.onOpenCreateAction()"
             class="action-item end-card"
             >
-            Déplacez la carte pour plus d'actions&nbsp;!<br>Ou mieux, <a>créez en une vous-même&nbsp;!</a><br>
+            Déplacez la carte pour plus d'actions&nbsp;!<br>Ou mieux, <a>créez-en une vous-même&nbsp;!</a><br>
             <img src="/wp-content/themes/entourage/img/carousel-3.png">
         </li>
     </ul>

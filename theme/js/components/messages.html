@@ -6,7 +6,7 @@
         ng-if="ctrl.actions.length"
         ng-repeat="(k, action) in ctrl.actions"
         class="action-item"
-        ng-class="{unread: action.pendingUsers.length || action.number_of_unread_messages}"
+        ng-class="{unread: ctrl.user.notifications.indexOf(action.uuid) > -1}"
         ng-click="ctrl.showAction(action)"
         >
         <action-participants-picture

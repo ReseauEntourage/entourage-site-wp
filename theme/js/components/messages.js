@@ -11,18 +11,19 @@ angular.module('entourageApp')
 
       ctrl.$onInit = function() {
         ctrl.checkMessages();
+        ctrl.checkingMessagesInterval = setInterval(ctrl.checkMessages, 30000);
       }
 
       ctrl.checkMessages = function() {
-        if (ctrl.loading)
+        if (ctrl.loading) {
           return;
+        }
 
-        console.info('Checking my actions...');
-        ctrl.checkingMessagesInterval = setInterval(ctrl.checkMessages, 300000);
+        console.info('Checking user actions...');
         
         ctrl.actions = [];
         ctrl.loading = true;
-        ctrl.user.unreadMessages = 0;
+        ctrl.user.notifications = [];
 
         $.ajax({
           type: 'GET',
@@ -35,13 +36,13 @@ angular.module('entourageApp')
           },
           success: function(data) {
             if (data.feeds) {
-              data.feeds.map(function(action){
+              data.feeds.map(function(action) {
                 action = transformAction(action.data);
 
                 if (action.join_status == 'accepted') {
-                  //ctrl.getLastMessage(action);
-                  if (action.number_of_unread_messages)
-                    ctrl.user.unreadMessages += 1;
+                  if (action.number_of_unread_messages) {
+                    ctrl.pushNotification(action.uuid);
+                  }
 
                   ctrl.is_admin = (action.author.id == ctrl.user.id);
                   if (ctrl.is_admin) {
@@ -59,6 +60,12 @@ angular.module('entourageApp')
         });
       }
 
+      ctrl.pushNotification = function(notif) {
+        if (ctrl.user.notifications.indexOf(notif) == -1) {
+          ctrl.user.notifications.push(notif);
+        }
+      }
+
       ctrl.getPendingUsers = function(action) {
         $.ajax({
           type: 'GET',
@@ -72,8 +79,9 @@ angular.module('entourageApp')
               action.pendingUsers = data.users.filter(function(user){
                 return (user.status == 'pending');
               });
-              if (action.pendingUsers.length && !action.number_of_unread_messages) {
-                ctrl.user.unreadMessages += 1;
+
+              if (action.pendingUsers.length) {
+                ctrl.pushNotification(action.uuid);
               }
             }
             $scope.$apply();
@@ -83,7 +91,7 @@ angular.module('entourageApp')
 
       ctrl.getLastMessage = function(action) {
         if (action.number_of_unread_messages)
-          ctrl.user.unreadMessages += 1;
+          ctrl.user.notifications += 1;
 
         $.ajax({
           type: 'GET',
@@ -108,20 +116,13 @@ angular.module('entourageApp')
       }
 
       ctrl.showAction = function(action) {
-        if (action.number_of_unread_messages) {
-          ctrl.user.unreadMessages -= 1;
-          action.number_of_unread_messages = 0;
-        }
-        else if (action.pendingUsers && action.pendingUsers.length) {
-          ctrl.user.unreadMessages -= 1;
-          delete action.pendingUsers;
-        }
         simulateMouseOut();
         ctrl.onShowAction({uuid: action.uuid});
       }
 
       simulateMouseOut = function() {
         ctrl.hide = true;
+
         setTimeout(function(){
           delete ctrl.hide;
         }, 1000);

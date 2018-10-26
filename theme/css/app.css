@@ -1263,7 +1263,7 @@ div.overlay.fade-out {
 .action-item {
     display: flex;
     border-bottom: 1px solid #eee;
-    transition: background 0.3s;
+    transition: background 0.3s, box-shadow 0.3s;
     font-size: 11px;
     cursor: pointer;
 }
@@ -1285,6 +1285,10 @@ div.overlay.fade-out {
 
 .action-item:not(.announcement):hover {
     background: #e9e9e9;
+}
+
+.action-item.active {
+    box-shadow: inset 10px 0px 0px -4px #ff5100;
 }
 
 .action-item.announcement + .action-item.announcement {
@@ -2134,33 +2138,38 @@ div.overlay.fade-out {
 .gm-style .marker-action {
     margin-top: -7px;
     margin-left: -7px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: #ffa018;
     border-radius: 100%;
-    transition: background 0.3s, box-shadow 0.3s;
+    transform-origin: center;
+    transition: background 0.3s, box-shadow 0.3s, transform 0.3s;
 }
 
-.gm-style .marker-action.open {
+.gm-style .marker-action.status-open {
     opacity: 1 !important;
     animation: pulse 3s infinite;
 }
 
-.gm-style .marker-action.open:nth-child(2n) {
+.gm-style .marker-action.status-open:nth-child(2n) {
 	animation: pulseBis 3s infinite;
 }
 
-.gm-style .marker-action.open:nth-child(3n) {
+.gm-style .marker-action.status-open:nth-child(3n) {
 	animation: pulseTer 3s infinite;
 }
 
-.gm-style .marker-action.open:hover,
-.gm-style .marker-action.active {
+.gm-style .marker-action.status-open:hover,
+.gm-style .marker-action.active:not(.hide-animation) {
     opacity: 1 !important;
     background: #ff5100;
     animation: pulseActive 0.7s infinite !important;
     z-index: 9999 !important;
+    transform: scale(1.2);
 }
 
-.gm-style .marker-action.closed {
+.gm-style .marker-action.status-closed {
     opacity: 0.7 !important;
     box-shadow: 0 0 2px 2px #505050;
     transform: scale(0.7);
@@ -2169,11 +2178,35 @@ div.overlay.fade-out {
     z-index: -9999 !important;
 }
 
-.gm-style .marker-action.closed:hover,
-.gm-style .marker-action.closed.active {
+.gm-style .marker-action.status-closed:hover,
+.gm-style .marker-action.status-closed.active {
     opacity: 1 !important;
     background: #000 !important;
     animation: none !important;
+}
+
+.gm-style .marker-action:after {
+    margin-top: -1px;
+    display: inline-block;
+    font-family: "Material Icons";
+    color: #fff;
+    font-size: 24px;
+}
+
+.gm-style .marker-action.join-status-accepted {
+    transform: scale(1.2);
+}
+
+.gm-style .marker-action.join-status-accepted:after {
+    content: "\e7fb";
+}
+
+.gm-style .marker-action.unread:after {
+    content: "\e0be";
+}
+
+.gm-style .marker-action.join-status-pending:after {
+    content: "\e192";
 }
 
 @keyframes pulse {

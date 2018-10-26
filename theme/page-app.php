@@ -407,8 +407,8 @@
                         <i class="material-icons">mail</i>
                         <div
                             class="badge"
-                            ng-if="map.loggedUser.unreadMessages"
-                            ng-bind="map.loggedUser.unreadMessages"
+                            ng-if="map.loggedUser.notifications && map.loggedUser.notifications.length"
+                            ng-bind="map.loggedUser.notifications.length"
                             ></div>
                     </a>
                     <messages
@@ -578,6 +578,7 @@
                 ng-if="!map.public && !map.emptyArea"
                 user="map.loggedUser"
                 actions="map.actions"
+                current-action="map.currentAction"
                 on-show-action="map.showAction(uuid)"
                 on-open-profile="map.toggleProfileEdit()"
                 on-open-create-action="map.toggleModal('newAction')"
@@ -601,7 +602,6 @@
                 </a> ?!
             </div>
             <current-action
-                ng-if="map.currentAction"
                 map="map.mapObject"
                 action="map.currentAction"
                 public="map.public"

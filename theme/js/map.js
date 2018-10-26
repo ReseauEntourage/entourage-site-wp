@@ -95,7 +95,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
 
       // default parameters of our map (centered on Paris)
       map.mapObjectParams = {
-        maxZoom: 15,
+        maxZoom: 14,
         minZoom: 5,
         zoom: 13,
         zoomControl: !map.mobileView,
@@ -352,11 +352,11 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
     isMapEmpty = function() {
       var zoomLevel = map.mapObject.getZoom();
       if (zoomLevel >= 14)
-        value = 1;
+        minAction = 1;
       else if (zoomLevel == 13)
-        value = 2;
+        minAction = 2;
       else
-        value = 5;
+        minAction = 5;
 
       var count = 0;
       var bounds = map.mapObject.getBounds();
@@ -369,7 +369,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
           count += 1;
         }
       }
-      map.emptyArea = count < value;
+      map.emptyArea = count < minAction;
       $scope.$apply();
     }
 
@@ -384,9 +384,9 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
       };
     }
 
-    placeChanged = function(city, location) {
-      map.currentAddress = city;
-      localStorage.setItem('city', map.currentAddress);
+    placeChanged = function(address, location) {
+      map.currentAddress = address;
+      localStorage.setItem('address', map.currentAddress);
       map.mapObject.setCenter(location);
 
       if (map.public) {
@@ -440,6 +440,10 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
       }
     }
 
+    map.hideAction = function() {
+
+    }
+
     map.showProfile = function(id) {
       map.currentProfileId = id;
     }
@@ -454,7 +458,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
     }
 
 
-    // ** MARKERS **/
+    // ** MARKERS ** //
 
     // default action size
     map.actionIcon = {
@@ -465,12 +469,24 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
     createMarker = function(action) {
       action.latLng = new google.maps.LatLng(action.location.latitude, action.location.longitude);
 
+      var classes = ['marker-action', 'status-' + action.status];
+
+      if (action.join_status) {
+        classes.push('join-status-' + action.join_status);
+      }
+
+      if (action.number_of_unread_messages) {
+        classes.push('unread');
+      }
+
+      classes.push('id:' + action.uuid);
+
       // create marker
       action.marker = new google.maps.Marker({
         id: action.uuid,
         position: action.latLng,
         map: map.mapObject,
-        title: 'marker-action ' + action.status + ' id:' + action.uuid,
+        title: classes.join(' '),
         icon: {
           path: google.maps.SymbolPath.CIRCLE,
           fillOpacity: 0,
@@ -499,7 +515,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
       var intervalGenerateMarkers = setInterval(function() {
         if ($('#map-container .gm-style div[title*=marker-action]').length) {
           $('#map-container .gm-style div[title*=marker-action]').each(function(){
-            var search = $(this).attr('title').match(/([a-z- ]*)?id:([a-zA-Z0-9_\-]*)/);
+            var search = $(this).attr('title').match(/([a-z-_ ]*)?id:([a-zA-Z0-9_\-]*)/);
             $(this).addClass(search[1]).removeAttr('title');
             $(this).attr('id', 'marker-action-' + search[2]);
             if (map.currentAction && map.currentAction.uuid == search[2])
@@ -530,7 +546,13 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
 
     setMarkersCustomStyle = function() {
       map.actionIcon.pixels = metersToPixels(map.actionIcon.meters, map.mapObject.getCenter().lat());
-      $('#inline-style').text('.gm-style .marker-action {width: ' + map.actionIcon.pixels + 'px !important;height: ' + map.actionIcon.pixels + 'px !important;margin: -' + (map.actionIcon.pixels/2) + 'px !important; transform-origin: ' + (map.actionIcon.pixels/3) + 'px ' + (map.actionIcon.pixels/3) + 'px;}');
+      style = '.gm-style .marker-action {width: ' + map.actionIcon.pixels + 'px !important;height: ' + map.actionIcon.pixels + 'px !important;margin: -' + (map.actionIcon.pixels/2) + 'px !important;}';
+      
+      if (map.mapObject.getZoom() < 14) {
+        style += '.gm-style .marker-action:after {display: none;}';
+      }
+
+      $('#inline-style').text(style);
     }
 
     metersToPixels = function(meters, lat) {
@@ -625,7 +647,6 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
       map.currentAddress = null;
       $('#app-search-input').val('').focus();
       localStorage.removeItem('address');
-      localStorage.removeItem('city');
     }
 
     map.askLocation = function() {
@@ -786,26 +807,34 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
     autoLogin()
     .then(initGoogleMaps)
     .then(function() {
-      var city = null;
+      var address = null;
 
       if (getQueryParams('ville') && getQueryParams('ville') != 'undefined') {
-        city = getQueryParams('ville');
+        address = getQueryParams('ville');
       }
-      else if (localStorage.getItem('city')) {
-        city = localStorage.getItem('city');
-      }
-      else if (map.loggedUser) {
-        if (map.loggedUser.address && map.loggedUser.address.display_address) {
-          city = map.loggedUser.address.display_address;
+      else if (map.loggedUser && map.loggedUser.address) {
+        if (map.loggedUser.address.latitude) {
+          initMap({
+            coords: {
+              latitude: map.loggedUser.address.latitude,
+              longitude: map.loggedUser.address.longitude
+            }
+          });
+        }
+        else if (map.loggedUser.address.display_address) {
+          address = map.loggedUser.address.display_address;
         }
       }
+      else if (localStorage.getItem('address')) {
+        address = localStorage.getItem('address');
+      }
       
-      if (city && !getQueryParams('token')) {
+      if (address && !getQueryParams('token')) {
         var geocoder = new google.maps.Geocoder;
-        geocoder.geocode({'address': city}, function(results, status) {
+        geocoder.geocode({'address': address}, function(results, status) {
           if (status === 'OK' && results[0]) {
             map.currentAddress = results[0].formatted_address;
-            localStorage.setItem('city', results[0].formatted_address);
+            localStorage.setItem('address', results[0].formatted_address);
             initMap({
               coords: {
                 latitude: parseFloat(results[0].geometry.location.lat()),

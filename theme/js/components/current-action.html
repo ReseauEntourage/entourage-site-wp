@@ -72,7 +72,7 @@
                     tooltip-placement="top"
                     uib-tooltip="Fermer la fenêtre"
                     tooltip-append-to-body="true"
-                    ng-click="ctrl.hide()"
+                    ng-click="ctrl.hide(ctrl.action)"
                     >
                     <i class="material-icons no-mobile">
                         close
@@ -172,8 +172,10 @@
                         <div
                             ng-if="event.formatDate"
                             class="action-chat-date"
-                            ng-bind="event.created_at|date:event.formatDate|formatDate"
-                            ></div>
+                            >
+                            <span ng-if="event.formatDate == 'H:mm'">Aujourd'hui </span>
+                            <span ng-bind="event.created_at|date:event.formatDate|formatDate"></span>
+                        </div>
                         <div class="action-chat-author">
                             <user-name
                                 user="ctrl.user"

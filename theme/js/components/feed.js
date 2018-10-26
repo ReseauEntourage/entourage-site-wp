@@ -4,6 +4,7 @@ angular.module('entourageApp')
     bindings: {
       user: '=',
       actions: '=',
+      currentAction: '=',
       onShowAction: '&',
       onOpenProfile: '&',
       onOpenCreateAction: '&'
@@ -11,8 +12,6 @@ angular.module('entourageApp')
     controllerAs: 'ctrl',
     controller: function($scope, $element, $attrs) {
       var ctrl = this;
-
-      ctrl.hiddenFeed = true;
 
       ctrl.click = function(action) {
         if (action.type == 'Announcement') {
@@ -32,13 +31,29 @@ angular.module('entourageApp')
           }
         }
         else {
-          ctrl.onShowAction({uuid: action.uuid});
+          if (ctrl.currentAction && ctrl.currentAction.uuid == action.uuid) {
+            ctrl.currentAction = null;
+          }
+          else {
+            ctrl.onShowAction({uuid: action.uuid});
+          }
         }
       }
 
       ctrl.hover = function(action, hide) {
+        if (ctrl.currentAction) {
+          if (ctrl.currentAction.uuid != action.uuid) {
+            $('.marker-action.active').toggleClass('hide-animation', !hide);
+          }
+          else {
+            return;
+          }
+        }
         $('#marker-action-' + action.uuid).toggleClass('active', !hide);
       }
+
+      // Mobile only
+      ctrl.hiddenFeed = true;
 
       ctrl.toggleFeed = function() {
         ctrl.hiddenFeed = !ctrl.hiddenFeed;
