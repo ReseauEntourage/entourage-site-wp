@@ -19,7 +19,7 @@ angular.module('entourageApp')
 
       $scope.$watch('ctrl.action', function(newValue, oldValue) {
         if (newValue && newValue != oldValue) {
-          console.info('newAction', newValue);
+          console.info('Open action', newValue);
 
           if (oldValue && oldValue.marker)
             toggleMarker(oldValue.uuid, true);
@@ -48,6 +48,8 @@ angular.module('entourageApp')
             ctrl.checkingInfoInterval = setInterval(ctrl.getTimeline, 20000);
 
             ctrl.markAsRead();
+
+            $($element).find('.action-chat').scrollTop(20000);
           }
           else if (!ctrl.action.users) {
             // as the action.number_of_people is wrong for the moment (TO BE REMOVED)
@@ -86,8 +88,10 @@ angular.module('entourageApp')
             },
             success: function(data) {
               if (data.users) {
-                ctrl.action.users = data.users;
-                ctrl.action.number_of_people = data.users.length - 1;
+                if (!ctrl.action.users || (ctrl.action.users && ctrl.action.users.length < data.users.length)) {
+                  ctrl.action.users = data.users;
+                  ctrl.action.number_of_people = data.users.length - 1;
+                }
               }
               ctrl.getMessages();
             },
@@ -201,7 +205,7 @@ angular.module('entourageApp')
               if (now.getDate() == eventDate.getDate() && now.getMonth() == eventDate.getMonth()) {
                 event.formatDate = 'H:mm';
               }
-              else if (!(a.getDate() == eventDate.getDate() && a.getMonth() == eventDate.getMonth() && a.getHours() == eventDate.getHours())) {
+              else if (!(now.getDate() == eventDate.getDate() && now.getMonth() == eventDate.getMonth() && now.getHours() == eventDate.getHours())) {
                 event.formatDate = 'd MMMM, H:mm';
               }
             }
@@ -213,10 +217,14 @@ angular.module('entourageApp')
           $scope.$apply();
 
           setTimeout(function(){
-            $($element).find('.action-chat').scrollTop($($element).find('.action-chat>div').height());
+            $($element).find('.action-chat').scrollTop(20000);
             ctrl.loading = false;
             $scope.$apply();
           }, 500);
+        }
+        else {
+          ctrl.loading = false;
+          $scope.$apply();
         }
       }
 

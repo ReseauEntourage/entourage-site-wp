@@ -807,12 +807,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
     autoLogin()
     .then(initGoogleMaps)
     .then(function() {
-      var address = null;
-
-      if (getQueryParams('ville') && getQueryParams('ville') != 'undefined') {
-        address = getQueryParams('ville');
-      }
-      else if (map.loggedUser && map.loggedUser.address) {
+      if (map.loggedUser && map.loggedUser.address) {
         if (map.loggedUser.address.latitude) {
           initMap({
             coords: {
@@ -822,37 +817,44 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
           });
         }
         else if (map.loggedUser.address.display_address) {
-          address = map.loggedUser.address.display_address;
+          initMapFromAddress(map.loggedUser.address.display_address);
         }
       }
-      else if (localStorage.getItem('address')) {
-        address = localStorage.getItem('address');
-      }
-      
-      if (address && !getQueryParams('token')) {
-        var geocoder = new google.maps.Geocoder;
-        geocoder.geocode({'address': address}, function(results, status) {
-          if (status === 'OK' && results[0]) {
-            map.currentAddress = results[0].formatted_address;
-            localStorage.setItem('address', results[0].formatted_address);
-            initMap({
-              coords: {
-                latitude: parseFloat(results[0].geometry.location.lat()),
-                longitude: parseFloat(results[0].geometry.location.lng())
-              }
-            });
-          }
-          else {
-            initMap();
-          }
-        });
-      }
-      else if (navigator.geolocation) {
-        // ask user position
-        navigator.geolocation.getCurrentPosition(initMap, initMap);
-      }
       else {
-        initMap();
+        if (getQueryParams('ville') && getQueryParams('ville') != 'undefined') {
+          initMapFromAddress(getQueryParams('ville'));
+        }
+        else if (localStorage.getItem('address')) {
+          initMapFromAddress(localStorage.getItem('address'));
+        }
+        // ask user position
+        else if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(initMap, initMap);
+        }
+        // if not
+        else {
+          initMap();
+        }
       }
     });
+
+    initMapFromAddress = function(address) {
+      var geocoder = new google.maps.Geocoder;
+
+      geocoder.geocode({'address': address}, function(results, status) {
+        if (status === 'OK' && results[0]) {
+          map.currentAddress = results[0].formatted_address;
+          localStorage.setItem('address', results[0].formatted_address);
+          initMap({
+            coords: {
+              latitude: parseFloat(results[0].geometry.location.lat()),
+              longitude: parseFloat(results[0].geometry.location.lng())
+            }
+          });
+        }
+        else {
+          initMap();
+        }
+      });
+    }
   }]);
