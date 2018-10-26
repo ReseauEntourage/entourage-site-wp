@@ -21,8 +21,9 @@ angular.module('entourageApp')
         if (newValue && newValue != oldValue) {
           console.info('Open action', newValue);
 
-          if (oldValue && oldValue.marker)
+          if (oldValue && oldValue.marker) {
             toggleMarker(oldValue.uuid, true);
+          }
 
           ctrl.openAction();
         }
@@ -44,8 +45,9 @@ angular.module('entourageApp')
 
           if (ctrl.action.join_status == 'accepted') {
 
+            ctrl.timeline = [];
+
             ctrl.getTimeline(true);
-            ctrl.checkingInfoInterval = setInterval(ctrl.getTimeline, 20000);
 
             ctrl.markAsRead();
 
@@ -162,26 +164,32 @@ angular.module('entourageApp')
       }
 
       ctrl.buildTimeline = function() {
-        var newTimeline = ctrl.action.users.filter(function(user){
-          return ((user.id != ctrl.action.author.id) && (user.status == 'accepted'));
-        }).map(function(user) {
-          return {
-            user: user,
-            created_at: user.requested_at,
-            message: user.message,
-            type: 'user'
-          }; 
-        });
+        var newTimeline = [];
 
-        newTimeline = newTimeline.concat(ctrl.action.chat_messages.map(function(message) {
-          var data = {
-            user: message.user,
-            created_at: message.created_at,
-            message: message.content,
-            type: 'message'
-          }
-          return data; 
-        }));
+        if (ctrl.action.users) {
+          newTimeline = ctrl.action.users.filter(function(user){
+            return ((user.id != ctrl.action.author.id) && (user.status == 'accepted'));
+          }).map(function(user) {
+            return {
+              user: user,
+              created_at: user.requested_at,
+              message: user.message,
+              type: 'user'
+            }; 
+          });
+        }
+
+        if (ctrl.action.chat_messages) {
+          newTimeline = newTimeline.concat(ctrl.action.chat_messages.map(function(message) {
+            var data = {
+              user: message.user,
+              created_at: message.created_at,
+              message: message.content,
+              type: 'message'
+            }
+            return data; 
+          }));
+        }
 
         if (ctrl.timeline.length < newTimeline.length) {
           console.info('refresh timeline');
@@ -223,6 +231,7 @@ angular.module('entourageApp')
           }, 500);
         }
         else {
+          ctrl.checkingInfoInterval = setInterval(ctrl.getTimeline, 20000);
           ctrl.loading = false;
           $scope.$apply();
         }
