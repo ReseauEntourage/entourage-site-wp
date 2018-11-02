@@ -9,7 +9,7 @@
         ng-style="{'background-image': 'url(' + ctrl.action.author.avatar_url + ')'}"
         ></div>
     <div
-        ng-if="ctrl.action.number_of_people"
+        ng-if="ctrl.action.number_of_people && ctrl.action.group_type != 'conversation'"
         class="action-participants"
         ng-bind="ctrl.action.number_of_people > 99 ? '99+' : ('+' + ctrl.action.number_of_people)"
         ></div>

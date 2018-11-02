@@ -2217,6 +2217,10 @@ div.overlay.fade-out {
     content: "\e192";
 }
 
+.gm-style .marker-action.status-closed:after {
+    content: "\e876";
+}
+
 @keyframes pulse {
     0% {
         box-shadow: 0 0 6px 4px #ff8404;

@@ -327,6 +327,7 @@ function googleMapsInitialized() {
   	var Autocomplete = new google.maps.places.Autocomplete(input, {
 	    types: ['(regions)'] 
   	});
+  	Autocomplete.setComponentRestrictions({'country': ['fr', 'be', 'ca', 'ch', 'uk']});
 
 	Autocomplete.addListener('place_changed', function() {
 		var place = Autocomplete.getPlace();

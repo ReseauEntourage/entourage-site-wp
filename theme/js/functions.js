@@ -89,19 +89,10 @@ function transformAction(action) {
       }
     }
   }
-  else if (action.type == 'Entourage') {
-    if (!action.uuid) {
-      if (action.share_url.match(/entourages\/(.*)/))
-        action.uuid = action.share_url.match(/entourages\/(.*)/)[1];
-      else if (action.share_url.match(/token=(.*)/))
-        action.uuid = action.share_url.match(/token=(.*)/)[1];
-    }
+  else if (action.group_type == 'action' || action.group_type == 'outing') {
     if (action.status == 'closed') {
       action.title = 'TERMINÉ - ' + action.title;
     }
-  }
-  if (action.group_type == 'conversation') {
-    delete action.number_of_people;
   }
   return action;
 }

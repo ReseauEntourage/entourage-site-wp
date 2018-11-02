@@ -431,7 +431,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
       if (!searchAction.length) {
         if (map.public)
           return;
-        
+
         $.ajax({
           type: 'GET',
           url: getApiUrl() + '/entourages/' + uuid,
@@ -441,8 +441,9 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
           success: function(data) {
             if (data.entourage) {
               var action = transformAction(data.entourage);
-              if (action.type == 'Entourage') {
-                action = createMarker(action);
+              if (data.entourage.group_type != "conversation") {
+                map.mapObject.setCenter(new google.maps.LatLng(action.location.latitude, action.location.longitude));
+                map.getPrivateFeed();
               }
               map.currentAction = action;
               $scope.$apply();
@@ -456,10 +457,6 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
         if (apply)
           $scope.$apply();
       }
-    }
-
-    map.hideAction = function() {
-
     }
 
     map.showProfile = function(id) {
@@ -650,8 +647,9 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
 
       var Autocomplete = new google.maps.places.Autocomplete(input, {
         bounds: map.mapObject.getBounds(),
-        types: ['(regions)'] 
+        types: ['(regions)']
       });
+      Autocomplete.setComponentRestrictions({'country': ['fr', 'be', 'ca', 'ch', 'uk']});
 
       Autocomplete.addListener('place_changed', function() {
         var place = Autocomplete.getPlace();
