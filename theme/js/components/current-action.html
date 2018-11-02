@@ -153,7 +153,8 @@
                         ></div>
                     <div
                         ng-if="ctrl.action.group_type != 'conversation'"
-                        ng-class="{'own-message': ctrl.action.author.id == ctrl.user.id}">
+                        ng-class="{'own-message': ctrl.action.author.id == ctrl.user.id}"
+                        >
                         <div class="action-chat-author">
                             <user-name
                                 user="ctrl.user"
@@ -281,6 +282,7 @@
                         ng-model="ctrl.newMessage"
                         ng-alt-enter="ctrl.sendNewMessage()"
                         placeholder="Ecrivez un message..."
+                        ng-class="{empty: !ctrl.newMessage}"
                         auto-height
                         ></textarea>
                     <a

@@ -13,10 +13,6 @@ angular.module('entourageApp')
     controller: function($scope, $element, $attrs, $uibModal) {
       var ctrl = this;
 
-      ctrl.loading = false;
-      ctrl.timeline = [];
-      ctrl.newMessage = "";
-
       $scope.$watch('ctrl.action', function(newValue, oldValue) {
         if (newValue && newValue != oldValue) {
           console.info('Open action', newValue);
@@ -33,21 +29,26 @@ angular.module('entourageApp')
       });
 
       ctrl.openAction = function () {
+        ctrl.loading = false;
+        ctrl.timeline = [];
+        ctrl.newMessage = "";
+        ctrl.lastRefreshTime = null;
+        clearInterval(ctrl.checkingInfoInterval);
+
         if (ctrl.action.marker) {
           toggleMarker(ctrl.action.uuid);
 
-          if (ctrl.public)
+          if (ctrl.public) {
             ctrl.map.setZoom(13);
+          }
         }
         
         if (!ctrl.public) {
           ctrl.is_admin = (ctrl.action.author.id == ctrl.user.id);
 
           if (ctrl.action.join_status == 'accepted') {
-
-            ctrl.timeline = [];
-
             ctrl.getTimeline(true);
+            ctrl.checkingInfoInterval = setInterval(ctrl.getTimeline, 30000);
 
             ctrl.markAsRead();
 
@@ -90,10 +91,13 @@ angular.module('entourageApp')
             },
             success: function(data) {
               if (data.users) {
-                if (!ctrl.action.users || (ctrl.action.users && ctrl.action.users.length < data.users.length)) {
-                  ctrl.action.users = data.users;
-                  ctrl.action.number_of_people = data.users.length - 1;
-                }
+                ctrl.action.users = data.users;
+                ctrl.action.number_of_people = ctrl.action.users.filter(function(user) {
+                  if (user.id == ctrl.user.id && user.status == 'accepted') {
+                    ctrl.action.join_status = 'accepted';
+                  }
+                  return ((user.id != ctrl.action.author.id) && (user.status == 'accepted'));
+                }).length;
               }
               ctrl.getMessages();
             },
@@ -134,22 +138,38 @@ angular.module('entourageApp')
         });
       }
 
-      ctrl.getMessages = function() {
+      ctrl.getMessages = function(before) {
         if (ctrl.action.join_status != 'accepted') {
           return;
+        }
+
+        var data = {
+          token: ctrl.user.token,
+          entourage_id: ctrl.action.uuid
+        };
+
+        if (before) {
+          data.before = before;
         }
 
         $.ajax({
           type: 'GET',
           url: getApiUrl() + '/entourages/' + ctrl.action.uuid + '/chat_messages',
-          data: {
-            token: ctrl.user.token,
-            entourage_id: ctrl.action.uuid
-          },
+          data: data,
           success: function(data) {
             if (data.chat_messages) {
-              ctrl.action.chat_messages = data.chat_messages;
-              ctrl.buildTimeline();
+              if (before) {
+                ctrl.action.chat_messages = ctrl.action.chat_messages.concat(data.chat_messages);
+              }
+              else {
+                ctrl.action.chat_messages = data.chat_messages;
+              }
+              if (data.chat_messages.length == 25) {
+                ctrl.getMessages(ctrl.action.chat_messages[ctrl.action.chat_messages.length - 1].created_at);
+              }
+              else {
+                ctrl.buildTimeline();
+              }
             }
             else {
               ctrl.loading = false;
@@ -165,9 +185,10 @@ angular.module('entourageApp')
 
       ctrl.buildTimeline = function() {
         var newTimeline = [];
+        var refreshTimeline = false;
 
         if (ctrl.action.users) {
-          newTimeline = ctrl.action.users.filter(function(user){
+          newTimeline = ctrl.action.users.filter(function(user) {
             return ((user.id != ctrl.action.author.id) && (user.status == 'accepted'));
           }).map(function(user) {
             return {
@@ -181,17 +202,19 @@ angular.module('entourageApp')
 
         if (ctrl.action.chat_messages) {
           newTimeline = newTimeline.concat(ctrl.action.chat_messages.map(function(message) {
-            var data = {
+            if (new Date(message.created_at) > ctrl.lastRefreshTime) {
+              refreshTimeline = true;
+            }
+            return {
               user: message.user,
               created_at: message.created_at,
               message: message.content,
               type: 'message'
-            }
-            return data; 
+            }; 
           }));
         }
 
-        if (ctrl.timeline.length < newTimeline.length) {
+        if (!ctrl.lastRefreshTime || refreshTimeline) {
           console.info('refresh timeline');
 
           newTimeline.sort(function(a, b){
@@ -231,10 +254,11 @@ angular.module('entourageApp')
           }, 500);
         }
         else {
-          $($element).find('.action-chat').scrollTop(20000);
           ctrl.loading = false;
           $scope.$apply();
         }
+
+        ctrl.lastRefreshTime = new Date();
       }
 
 
@@ -359,9 +383,6 @@ angular.module('entourageApp')
       }
 
       ctrl.changeUserStatus = function(userId, status) {
-        if (ctrl.loading)
-          return;
-
         ctrl.loading = true;
 
         $.ajax({

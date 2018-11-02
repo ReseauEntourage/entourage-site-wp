@@ -2095,6 +2095,10 @@ div.overlay.fade-out {
     resize: none;
 }
 
+#current-action .action-new-message textarea.empty {
+    height: 37px !important;
+}
+
 #current-action .action-new-message textarea:not(.overflow) {
     overflow: hidden;
 }

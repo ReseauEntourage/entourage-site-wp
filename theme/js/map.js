@@ -242,8 +242,6 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
     }
 
     map.getPrivateFeed = function(first) {
-      clearMarkers();
-      map.actions = [];
       map.refreshing = true;
 
       map.boundsSize = getBoundsSize(map.mapObject.getBounds());
@@ -268,6 +266,13 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
         success: function(data) {
           if (data.feeds)
           {
+            data.feeds = data.feeds.map(function(action) {
+              action.data.type = action.type;
+              return transformAction(action.data);
+            });
+
+            // Filter actions
+
             var mapPoly = new google.maps.Polygon({
               paths: [
                 {
@@ -286,44 +291,57 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
                   lat: map.mapObject.getBounds().getSouthWest().lat(),
                   lng: map.mapObject.getBounds().getNorthEast().lng()
                 },
-              ]});
+              ]
+            });
 
-            data.feeds = data.feeds.map(function(action){
-              action.data.type = action.type;
-              action = transformAction(action.data);
-
+            var actions = data.feeds.filter(function(action) {
               if (action.type == 'Entourage') {
-                var visible = google.maps.geometry.poly.containsLocation(new google.maps.LatLng(action.location.latitude, action.location.longitude), mapPoly);
-                visible = visible && !(map.filters.status && action.status != map.filters.status)
-                if (visible) {
-                  map.actions.push(createMarker(action));
+                var inMap = google.maps.geometry.poly.containsLocation(new google.maps.LatLng(action.location.latitude, action.location.longitude), mapPoly);
+                return inMap && !(map.filters.status && action.status != map.filters.status);
+              }
+              return false;
+            }).map(function(action) {
+              for (id in map.actions) {
+                if (action.uuid == map.actions[id].uuid) {
+                  var foundAction = map.actions[id];
+                  map.actions.splice(id, 1);
                 }
               }
-
-              return action;
+              if (foundAction) {
+                return foundAction;
+              }
+              return createMarker(action);
             });
+
+            clearMarkers();
+
+            map.actions = actions;
 
             generateMarkers();
 
             map.emptyArea = !map.actions.length;
 
-            var announcementsCount = 0;
-            data.feeds.map(function(action){
-              if (action.type == 'Announcement') {
-                if (announcementsCount == 0) {
-                  map.actions.splice(1, 0, action);
+            // Add announcements
+
+            var announcements = data.feeds.filter(function(action) {
+              return (action.type == 'Announcement');
+            });
+
+            for (id in announcements) {
+              var announcement = announcements[id];
+
+              if (id == 0) {
+                map.actions.splice(1, 0, announcement);
+              }
+              else {
+                if (map.actions.length > 4) {
+                  map.actions.splice(5, 0, announcement);
                 }
                 else {
-                  if (map.actions.length > 4) {
-                    map.actions.splice(5, 0, action);
-                  }
-                  else {
-                    map.actions.splice(map.actions.length, 0, action);
-                  }
+                  map.actions.splice(map.actions.length, 0, announcement);
                 }
-                announcementsCount += 1;
               }
-            });
+            }
 
             if (first) {
               if (getQueryParams('token')) {
@@ -538,9 +556,10 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
     }
 
     clearMarkers = function() {
-      for (var i = 0; i < map.actions.length; i++) {
-        if (map.actions[i].marker)
-          map.actions[i].marker.setMap(null);
+      for (id in map.actions) {
+        if (map.actions[id].marker) {
+          map.actions[id].marker.setMap(null);
+        }
       }
     }
 
@@ -828,7 +847,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
           initMapFromAddress(localStorage.getItem('address'));
         }
         // ask user position
-        else if (navigator.geolocation) {
+        else if (navigator.geolocation && !getQueryParams('token')) {
           navigator.geolocation.getCurrentPosition(initMap, initMap);
         }
         // if not
