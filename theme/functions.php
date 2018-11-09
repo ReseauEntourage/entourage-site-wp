@@ -187,6 +187,19 @@
 			'rewrite' => ['slug' => 'contact'],
 			'supports' => [ 'title', 'custom-fields', 'thumbnail'],
 		]);
+
+		register_post_type( 'jobs', [
+			'labels' => [
+				'name' => __( 'Jobs' ),
+				'singular_name' => __( 'Personne' ),
+				'add_new' => __( 'Nouvelle personne' ),
+				'add_new_item' => __( 'Nouvelle personne' ),
+			],
+			'menu_position' => 2,
+			'public' => true,
+			'rewrite' => ['slug' => 'jobs'],
+			'supports' => [ 'title', 'editor', 'custom-fields', 'thumbnail'],
+		]);
 	}
 
 

@@ -19,13 +19,17 @@ angular.module('entourageApp')
 
             ctrl.types = getCategoryTypes();
 
+            ctrl.public = true;
+
             if (ctrlParent.action) {
               ctrl.editedAction = ctrlParent.action;
               
               ctrl.title = angular.copy(ctrl.editedAction.title);
+              ctrl.entourage_type = angular.copy(ctrl.editedAction.entourage_type);
               ctrl.description = angular.copy(ctrl.editedAction.description);
               ctrl.display_category = angular.copy(ctrl.editedAction.display_category)
               ctrl.location = angular.copy(ctrl.editedAction.location)
+              ctrl.public = angular.copy(ctrl.editedAction.public)
 
               ctrl.termsAccepted = true;
             }
@@ -76,7 +80,8 @@ angular.module('entourageApp')
                 entourage_type: ctrl.entourage_type,
                 display_category: ctrl.display_category.type,
                 description: ctrl.description,
-                location: ctrl.location
+                location: ctrl.location,
+                public: (ctrl.entourage_type == 'ask_for_help') ? false : ctrl.public
               }
 
               if (ctrl.editedAction)
@@ -124,12 +129,14 @@ angular.module('entourageApp')
                   entourage: {
                     title: data.title,
                     description: data.description,
+                    public: data.public,
                   }
                 },
                 success: function(data) {
                   if (data.entourage) {
                     ctrl.editedAction.title = data.entourage.title
                     ctrl.editedAction.description = data.entourage.description
+                    ctrl.editedAction.public = data.entourage.public
 
                     ctrl.close();
                   }

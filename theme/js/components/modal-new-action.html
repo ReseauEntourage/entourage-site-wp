@@ -117,6 +117,16 @@
                 ></textarea>
             </div>
         </fieldset>
+        <fieldset ng-if="ctrl.entourage_type == 'contribution'">
+            <label for="public">
+                <input
+                    type="checkbox"
+                    id="public"
+                    ng-model="ctrl.public"
+                    >
+                Accepter directement les membres qui veulent rejoindre l'action
+            </label>
+        </fieldset>
         <div
             class="error"
             ng-repeat="error in ctrl.errors"

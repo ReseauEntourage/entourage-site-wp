@@ -5,9 +5,8 @@
         >
         <i class="material-icons">arrow_back</i>
     </a>
-    <span>Vous souhaitez créer une événement solidaire&nbsp;? C'est parti&nbsp;!</span>
-    <span ng-show="!ctrl.editedAction">Vous souhaitez créer une action solidaire&nbsp;? C'est parti&nbsp;!</span>
-    <span ng-show="ctrl.editedAction">Editez votre action</span>
+    <span ng-show="!ctrl.editedAction">Vous souhaitez créer une événement solidaire&nbsp;? C'est parti&nbsp;!</span>
+    <span ng-show="ctrl.editedAction">Editez votre événement</span>
 </div>
 <div
     id="modal-new-action"
@@ -98,6 +97,16 @@
                     placeholder="Je crée cet événement pour..."
                 ></textarea>
             </div>
+        </fieldset>
+        <fieldset>
+            <label for="public">
+                <input
+                    type="checkbox"
+                    id="public"
+                    ng-model="ctrl.public"
+                    >
+                Accepter directement les membres qui veulent rejoindre l'événement
+            </label>
         </fieldset>
         <div
             class="error"

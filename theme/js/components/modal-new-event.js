@@ -17,6 +17,8 @@ angular.module('entourageApp')
 
             ctrl.loading = false;
 
+            ctrl.public = true;
+
             ctrl.datepickerOptions = {
               showWeeks: false,
               minDate: new Date(),
@@ -36,6 +38,7 @@ angular.module('entourageApp')
               ctrl.title = angular.copy(ctrl.editedAction.title);
               ctrl.description = angular.copy(ctrl.editedAction.description);
               ctrl.location = angular.copy(ctrl.editedAction.location);
+              ctrl.public = angular.copy(ctrl.editedAction.public);
               ctrl.display_address = angular.copy(ctrl.editedAction.metadata.display_address);
               ctrl.date = new Date(ctrl.editedAction.metadata.starts_at);
               ctrl.time = {
@@ -90,6 +93,7 @@ angular.module('entourageApp')
               var data = {
                 group_type: 'outing',
                 title: ctrl.title,
+                public: ctrl.public,
                 metadata: {
                   starts_at: new Date(ctrl.date.setHours(ctrl.time.hour, ctrl.time.min, null)).toISOString(),
                   place_name: ctrl.place.name,

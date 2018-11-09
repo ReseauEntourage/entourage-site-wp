@@ -291,9 +291,14 @@ angular.module('entourageApp')
             ctrl.loading = false;
             $scope.$apply();
 
+            if (ctrl.action.public) {
+              ctrl.getTimeline();
+            }
+            else {
+              ctrl.requestMessageModal();
+            }
+            
             ctrl.checkingInfoInterval = setInterval(ctrl.getTimeline, 30000);
-
-            ctrl.requestMessageModal();
           },
           error: function(data) {
             ctrl.loading = false;
