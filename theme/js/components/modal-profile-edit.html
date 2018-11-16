@@ -117,7 +117,7 @@
                         </a>
                     </fieldset>
                     <fieldset ng-if="ctrl.togglePassword">
-                        <label>Changer votre mot de passe</label>
+                        <label>Votre ancien mot de passe</label>
                         <fieldset>
                             <input
                                 type="text"
@@ -125,17 +125,21 @@
                                 placeholder="Votre mot de passe actuel"
                             />
                         </fieldset>
+                        <label>Votre nouveau mot de passe (+6 caractères)</label>
                         <fieldset>
                             <input
                                 type="text"
                                 ng-model="ctrl.new_password"
                                 placeholder="Votre nouveau mot de passe"
+                                ng-enter="ctrl.changePassword()"
                             />
                         </fieldset>
                         <a
                             class="btn dark-btn"
                             ng-click="ctrl.changePassword()"
-                            >Changer</a>
+                            >
+                            Changer
+                        </a>
                     </fieldset>
                 </div>
             </div>

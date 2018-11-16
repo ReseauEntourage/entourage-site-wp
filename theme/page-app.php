@@ -332,6 +332,11 @@
                                 <a ng-click="map.toggleModal('carousel')">
                                     <i class="material-icons">info</i> Comment ça marche ?
                                 </a>
+                                <a href="http://www.entourage.social/" target="_blank">
+                                    <i class="material-icons">call_made</i> Visiter le site d'Entourage
+                                </a>
+                            </li>
+                            <li class="dropdown-menu-group">
                                 <a href="https://blog.entourage.social/2017/04/28/quelles-actions-faire-avec-entourage/" target="_blank">
                                     <i class="material-icons">lightbulb_outline</i> Idées d'action
                                 </a>
@@ -340,6 +345,11 @@
                                 </a>
                                 <a href="https://blog.entourage.social/2017/04/28/comment-utiliser-l-application-entourage/" target="_blank">
                                     <i class="material-icons">contact_support</i> Questions fréquentes
+                                </a>
+                            </li>
+                            <li class="dropdown-menu-group">
+                                <a href=/contact/" target="_blank">
+                                    <i class="material-icons">email</i> Nous contacter
                                 </a>
                             </li>
                         </ul>
@@ -442,19 +452,16 @@
                     <div uib-dropdown-menu>
                         <ul>
                             <li class="dropdown-menu-group">
+                                <a href="https://blog.entourage.social/charte-ethique-grand-public/" target="_blank">
+                                    <i class="material-icons">school</i> Charte éthique
+                                </a>
+                            </li>
+                            <li class="dropdown-menu-group">
                                 <a ng-click="map.toggleModal('profileEdit')">
                                     <i class="material-icons">person_pin</i> Modifier mon profil
                                 </a>
                                 <a ng-click="map.logout()">
                                     <i class="material-icons">power_settings_new</i> Me déconnecter
-                                </a>
-                            </li>
-                            <li class="dropdown-menu-group">
-                                <a href="http://www.entourage.social/" target="_blank">
-                                    <i class="material-icons">question_answer</i> Visiter le site d'Entourage
-                                </a>
-                                <a href="https://blog.entourage.social/charte-ethique-grand-public/" target="_blank">
-                                    <i class="material-icons">school</i> Charte éthique
                                 </a>
                             </li>
                         </ul>
@@ -484,7 +491,7 @@
                                     <i class="material-icons">info</i> Comment ça marche ?
                                 </a>
                                 <a href="http://www.entourage.social/" target="_blank">
-                                    <i class="material-icons">question_answer</i> Visiter le site d'Entourage
+                                    <i class="material-icons">call_made</i> Visiter le site d'Entourage
                                 </a>
                             </li>
                             <li class="dropdown-menu-group">
@@ -496,6 +503,11 @@
                                 </a>
                                 <a href="https://blog.entourage.social/2017/04/28/comment-utiliser-l-application-entourage/" target="_blank">
                                     <i class="material-icons">contact_support</i> Questions fréquentes
+                                </a>
+                            </li>
+                            <li class="dropdown-menu-group">
+                                <a href=/contact/" target="_blank">
+                                    <i class="material-icons">email</i> Nous contacter
                                 </a>
                             </li>
                         </ul>

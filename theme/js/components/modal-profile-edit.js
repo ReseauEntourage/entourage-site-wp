@@ -104,14 +104,14 @@ angular.module('entourageApp')
                 data: {
                   token: ctrl.user.token,
                   user: {
-                    sms_code: ctrl.new_password
+                    password: ctrl.new_password
                   }
                 },
                 success: function(data) {
                   if (data.user)
                     ctrl.success = true;
                   else
-                    ctrl.errors.push("Erreur : Votre mot de passe n'est pas le bon, merci de réessayer ou de nous contacter");
+                    ctrl.errors.push("Erreur : merci de réessayer ou de nous contacter");
                   ctrl.loading = false;
                   $scope.$apply();
                 },
@@ -119,7 +119,7 @@ angular.module('entourageApp')
                   if (data.responseJSON && data.responseJSON.error && data.responseJSON.error.message)
                     ctrl.errors.push("Erreur : " + data.responseJSON.error.message);
                   else
-                    ctrl.errors.push("Erreur : Votre mot de passe n'est pas le bon, merci de réessayer ou de nous contacter");
+                    ctrl.errors.push("Erreur : merci de réessayer ou de nous contacter");
                   ctrl.loading = false;
                   $scope.$apply();
                 },
@@ -135,7 +135,7 @@ angular.module('entourageApp')
               if (!ctrl.current_password || ctrl.current_password.length < 6) {
                 ctrl.errors.push("Votre mot de passe actuel est composé d'au moins 6 caractères");
               }
-              else if (!ctrl.new_password || !ctrl.new_password.length < 6) {
+              else if (!ctrl.new_password || ctrl.new_password.length < 6) {
                 ctrl.errors.push("Votre nouveau mot de passe doit être composé d'au moins 6 caractères'");
               }
 
@@ -150,7 +150,7 @@ angular.module('entourageApp')
                 data: {
                   user: {
                     phone: ctrl.user.phone,
-                    sms_code: ctrl.current_password
+                    secret: ctrl.current_password
                   }
                 },
                 success: function(data) {
@@ -162,10 +162,7 @@ angular.module('entourageApp')
                   $scope.$apply();
                 },
                 error: function(data) {
-                  if (data.responseJSON && data.responseJSON.error && data.responseJSON.error.message)
-                    ctrl.errors.push("Erreur : " + data.responseJSON.error.message);
-                  else
-                    ctrl.errors.push("Erreur : Votre mot de passe n'est pas le bon, merci de réessayer ou de nous contacter");
+                  ctrl.errors.push("Erreur : Votre mot de passe n'est pas le bon, merci de réessayer ou de nous contacter");
                   ctrl.loading = false;
                   $scope.$apply();
                 }
