@@ -101,11 +101,12 @@
 	<script src='https://www.google.com/recaptcha/api.js'></script>
 	<?php wp_head(); ?>
 	<link rel="stylesheet" href="<?php asset_url('css/style.css'); ?>">
+	<link rel="stylesheet" href="<?php asset_url('css/custom-pages.css'); ?>">
 	<link rel="stylesheet" href="<?php asset_url('css/responsive.css'); ?>">
 	<link rel="stylesheet" href="<?php asset_url('css/woocommerce.css'); ?>">
 </head>
 
-<body <?php body_class(); ?>>
+<body id="page-<?php echo get_post_field( 'post_name', get_post() ) ?>" <?php body_class(); ?>>
 
 	<header id="site-header" role="banner"
 		<?php if ( has_post_thumbnail() ): ?>
