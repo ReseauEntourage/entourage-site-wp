@@ -27,7 +27,6 @@ get_header();
             >
             Je fais un don
         </a>
-        <em>#LeDonDeChaleurHumaine</em>
     </div>
 </div>
 
@@ -35,16 +34,17 @@ get_header();
     id="page-video"
     class="section bg-orange"
     >
+    <h2>#LeDonDeChaleurHumaine</h2>
     <iframe class="youtube-player" type="text/html" width="640" height="360" src="https://www.youtube.com/embed/DspJaZLO79k?version=3&amp;rel=1&amp;fs=1&amp;autohide=2&amp;showsearch=0&amp;showinfo=1&amp;iv_load_policy=1&amp;wmode=transparent" allowfullscreen="true"></iframe>
 
     <div class="section-content">
-        <p>Parce qu’à la rue, on souffre de la faim, du froid <strong>MAIS SURTOUT DE SOLITUDE</strong>.</p>
+        <p>Parce qu’à la rue, on souffre de la faim, du froid <strong>et surtout de solitude</strong>.</p>
 
         <p>Aider les personnes SDF, ce n’est pas seulement leur donner une pièce, à manger ou un toit, <strong>c’est avant tout leur redonner leur humanité</strong>, leur place dans la société.</p>
 
         <p>Notre vocation chez Entourage : les “entourer” d’<strong>un réseau de relations bienveillantes</strong> pour qu’elles ne se sentent plus isolées.</p>
 
-        <h3>Pour Noël, aidez-vous à réchauffer le cœur des personnes SDF et à déployer nos actions partout en France ! </h3>
+        <p><strong>Pour Noël, aidez-vous à réchauffer le cœur des personnes SDF et à déployer nos actions partout en France !</strong></p>
     </div>
     <a
         class="btn white-btn"
@@ -164,7 +164,7 @@ get_header();
     </div>      
 </section>
 
-<section class="section section_type-quotes">
+<section id="page-quotes" class="section">
     <h2><strong>Merci !</strong></h2>
 
     <ul class="section-quotes-list">
