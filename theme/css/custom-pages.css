@@ -306,7 +306,7 @@
 }
 
 #page-le-don-de-chaleur-humaine #page-impots > div {
-	max-width: 600px;
+	max-width: 720px;
 	margin: auto;
 }
 
@@ -315,7 +315,7 @@
 }
 
 #page-le-don-de-chaleur-humaine #page-impots .columns {
-	margin: 30px 0 50px;
+	margin: 30px 0 10px;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
@@ -348,6 +348,10 @@
 #page-le-don-de-chaleur-humaine #page-impots .column .middle {
 	margin: 25px;
 	color: #333;
+	height: 180px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 }
 
 #page-le-don-de-chaleur-humaine #page-impots .column .plus {
@@ -521,4 +525,41 @@
 #page-le-don-de-chaleur-humaine section.section.section_type-quotes li:last-child div.quote-content:after,
 #page-le-don-de-chaleur-humaine section.section.section_type-quotes li:last-child span.quote-author-details {
     color: #fff;
+}
+
+@media (max-width: 800px) {
+	#page-le-don-de-chaleur-humaine #page-video iframe {
+		top: -60px;
+		margin: 0 auto -60px;
+	}
+
+	#page-le-don-de-chaleur-humaine #page-video .quote {
+	    padding: 0 20px;
+	}
+
+	#page-le-don-de-chaleur-humaine #page-stories > div {
+		flex-direction: column;
+	}
+
+	#page-le-don-de-chaleur-humaine #page-stories .quote {
+		margin-top: 20px;
+		margin-left: 0;
+	}
+
+	#page-le-don-de-chaleur-humaine #page-stories .white-btn {
+		font-size: 13px;
+	}
+
+	#page-le-don-de-chaleur-humaine section.section.section_type-quotes ul.section-quotes-list {
+		justify-content: center;
+	}
+
+	#page-le-don-de-chaleur-humaine #page-impots .columns {
+		flex-direction: column;
+		align-items: center;
+	}
+
+	#page-le-don-de-chaleur-humaine #page-impots .column {
+	    margin-bottom: 20px;	
+	}
 }

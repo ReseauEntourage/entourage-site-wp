@@ -85,7 +85,7 @@ get_header();
     <div>
         <img src="<?php asset_url('img/landing-don/samia.png'); ?>">
         <div class="quote">
-            <h4>« C’était juste avant le 31 décembre et je ne me voyais pas passer ma nuit dans un foyer. C’était un peu déprimant pour moi, <strong>j’avais vraiment besoin d’être entourée...</strong> »</h4>
+            <h4>«&nbsp;C’était juste avant le 31 décembre et je ne me voyais pas passer ma nuit dans un foyer. C’était un peu déprimant pour moi, <strong>j’avais vraiment besoin d’être entourée...</strong>&nbsp;»</h4>
             <!--p><strong>Samia</strong>, mère de famille sans domicile fixe</p-->
             <a
                 class="btn white-btn"
@@ -101,37 +101,37 @@ get_header();
 <section id="page-impots" class="section bg-orange">
     <div>
         <h2>Votre don <strong>réduit vos impôts</strong></h2>
-        <p>Votre don est déductible de votre impôt sur le revenu <strong>à hauteur de 66%</strong>, dans la limite de 20 % de votre revenu net imposable.</p>
+        <p>Votre don est déductible de votre impôt sur le revenu <strong>à hauteur de 66%</strong>, dans la limite de 20% de votre revenu net imposable.</p>
         <p><strong>Avec le prélèvement à la source, la réduction d’impôt est maintenue.</strong></p>
-        <!--div class="columns">
+        <div class="columns">
             <div class="column">
                 <div class="top">Avec un don de 50€</div>
                 <div class="middle">
-                    <strong>15 nouvelles personnes rejoignent le réseau</strong>
+                    <strong>Vous permettez d’engager 25 nouveaux membres (avec ou sans-abri) dans le réseau Entourage</strong>
                     <div class="plus">+</div>
-                    Vous déduisez <strong>33€</strong> de votre impôt
+                    <div>Vous déduisez <strong>33€</strong> de votre impôt</div>
                 </div>
                 <div class="bottom">Votre don revient à 17€</div>
             </div>
             <div class="column">
                 <div class="top">Avec un don de 100€</div>
                 <div class="middle">
-                    <strong>Vous financez la formation complète d’un ambassadeur Entourage</strong>
+                    <strong>Vous financez la formation complète d’un ambassadeur sur deux jours</strong>
                     <div class="plus">+</div>
-                    Vous déduisez <strong>66€</strong> de votre impôt
+                    <div>Vous déduisez <strong>66€</strong> de votre impôt</div>
                 </div>
                 <div class="bottom">Votre don revient à 34€</div>
             </div>
             <div class="column">
                 <div class="top">Avec un don de 150€</div>
                 <div class="middle">
-                    <strong>Nous pouvons organiser une soirée solidaire rassemblant 50 voisins avec et sans abris</strong>
+                    <strong>Nous pouvons organiser une soirée solidaire rassemblant 50 voisins avec et sans-abri</strong>
                     <div class="plus">+</div>
-                    Vous déduisez <strong>99€</strong> de votre impôt
+                    <div>Vous déduisez <strong>99€</strong> de votre impôt</div>
                 </div>
                 <div class="bottom">Votre don revient à 51€</div>
             </div>
-        </div-->
+        </div>
         <a
             class="btn white-btn"
             href="/don"
