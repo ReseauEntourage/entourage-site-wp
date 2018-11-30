@@ -3,10 +3,22 @@
  * The template part for displaying section with "numbers" type
  *
  */
+
+	$response = wp_remote_retrieve_body(wp_remote_get('https://api.entourage.social/api/v1/public/stats'));
+	if (!empty($response)) {
+	    $response = json_decode($response);
+	    $members = $response->users;
+	    $actions = $response->actions + $response->events;
+	}
 ?>
 
 <section <?php post_class(); ?>>
-	<?php the_content(); ?>
+
+	<ul>
+		<li><strong><?php echo (!empty($members) ? $members : "46154"); ?></strong>&nbsp;membres</li>
+		<li><strong><?php echo (!empty($actions) ? $actions : "4071"); ?></strong>&nbsp;actions solidaires</li>
+		<li><strong>100%</strong>&nbsp;de bienveillance</li>
+	</ul>
 </section>
 
 <style type="text/css">

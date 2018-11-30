@@ -90,6 +90,9 @@ function transformAction(action) {
     }
   }
   else if (action.group_type == 'action' || action.group_type == 'outing') {
+    var uuid_v2 = action.share_url.match(/\/entourages\/([A-Za-z0-9]*)/);
+    action.uuid = uuid_v2[1];
+
     if (action.status == 'closed') {
       action.title = 'TERMINÉ - ' + action.title;
     }

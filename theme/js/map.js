@@ -204,6 +204,8 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
           generateMarkers();
           isMapEmpty();
           showCarousel();
+
+          console.info(map.actions)
           
           map.loaded = true;
           $scope.$apply();

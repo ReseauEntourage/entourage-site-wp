@@ -69,7 +69,7 @@
                             <li ng-repeat-start="hour in ctrl.hours">
                                 <a
                                     ng-click="ctrl.time.hour = hour;ctrl.time.min = null"
-                                    ng-class="{selected: hour == ctrl.time}"
+                                    ng-class="{selected: ctrl.time.hour == hour && ctrl.time.min == min}"
                                     ng-bind="hour + ':00'"
                                     ></a>
                             </li>
@@ -78,8 +78,8 @@
                                 ng-repeat="min in ctrl.mins"
                                 >
                               <a
-                                ng-click="ctrl.time.min = min"
-                                ng-class="{selected: ctrl.time.min == min}"
+                                ng-click="ctrl.time.hour = hour;ctrl.time.min = min"
+                                ng-class="{selected: ctrl.time.hour == hour && ctrl.time.min == min}"
                                 ng-bind="hour + ':' + min"
                                 ></a>
                             </li>

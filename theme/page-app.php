@@ -8,8 +8,9 @@
         $response = wp_remote_retrieve_body(wp_remote_get('https://api.entourage.social/api/v1/public/entourages/' . $_GET['token']));
         if (!empty($response)) {
             $response = json_decode($response);
-            if (!empty($response->entourage->uuid))
+            if (!empty($response->entourage->uuid)) {
                 $entourage = $response->entourage;
+            }
         }
     }
 
@@ -18,15 +19,19 @@
     if (!empty($entourage)) {
         $og_url = get_bloginfo('url') . "/app/?token=" . $_GET['token'];
         $og_title = $entourage->title;
-        if ($entourage->group_type == "outing")
-            $og_description = "Rejoignez l'événement solidaire de " . ucfirst($entourage->author->display_name) . ", et comme les 50.000 membres du réseau Entourage, passez vous aussi concrètement à l'action pour les personnes sans-abri près de chez vous";
-        else
+        if ($entourage->group_type == "outing") {
+            $og_description = "Rejoignez " . ucfirst($entourage->author->display_name) . " à cet événement convivial sur le réseau solidaire Entourage, pour ressentir la chaleur humaine des moments entre ";
+            $og_image = 'img/share-fb-event.jpg';
+        } else {
             $og_description = "Vous pouvez aider ? Rejoignez " . ucfirst($entourage->author->display_name) . " et les 50.000 membres du réseau solidaire Entourage et passez vous aussi concrètement à l'action pour les personnes sans-abri près de chez vous";
+            $og_image = 'img/share-fb-2.png';
+        }
     }
     else {
         $og_url = get_bloginfo('url') . "/app";
         $og_title = !empty($custom_fields['meta_titre']) ? $custom_fields['meta_titre'][0] : get_the_title($wp_query->post->ID);
         $og_description = !empty($custom_fields['meta_description']) ? $custom_fields['meta_description'][0] : get_bloginfo('description');
+        $og_image = 'img/share-fb-2.png';
     }
 
 ?>
@@ -45,7 +50,7 @@
     <meta property="og:title" content="<?php echo htmlentities($og_title); ?>">
     <meta property="og:type" content="website">
     <meta property="og:url" content="<?php echo $og_url; ?>">
-    <meta property="og:image" content="<?php asset_url('img/share-fb.png'); ?>">
+    <meta property="og:image" content="<?php echo asset_url($og_image); ?>">
     <meta property="og:description" content="<?php echo htmlentities($og_description); ?>">
     <meta property="fb:app_id" content="280727035774134">
     <meta name="apple-mobile-web-app-capable" content="yes">

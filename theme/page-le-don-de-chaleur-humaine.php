@@ -28,6 +28,10 @@ get_header();
             Je fais un don
         </a>
     </div>
+    <div class="names">
+        <p><strong>Eric</strong>, dans la rue depuis 3 ans</p>
+        <p><strong>Valentine</strong>, membre du réseau Entourage</p>
+    </div>
 </div>
 
 <section
@@ -38,13 +42,13 @@ get_header();
     <iframe class="youtube-player" type="text/html" width="640" height="360" src="https://www.youtube.com/embed/DspJaZLO79k?version=3&amp;rel=1&amp;fs=1&amp;autohide=2&amp;showsearch=0&amp;showinfo=1&amp;iv_load_policy=1&amp;wmode=transparent" allowfullscreen="true"></iframe>
 
     <div class="section-content">
-        <p>Parce qu’à la rue, on souffre de la faim, du froid <strong>et surtout de solitude</strong>.</p>
+        <p>Parce qu’à la rue, on souffre de la faim, du froid et surtout de solitude.</p>
 
-        <p>Aider les personnes SDF, ce n’est pas seulement leur donner une pièce, à manger ou un toit, <strong>c’est avant tout leur redonner leur humanité</strong>, leur place dans la société.</p>
+        <p>Aider les personnes SDF, ce n’est pas seulement leur donner une pièce, à manger ou un toit, c’est avant tout leur redonner leur humanité, leur place dans la société.</p>
 
-        <p>Notre vocation chez Entourage : les “entourer” d’<strong>un réseau de relations bienveillantes</strong> pour qu’elles ne se sentent plus isolées.</p>
+        <p>Notre vocation chez Entourage&nbsp;: les “entourer” d’un réseau de relations bienveillantes pour rompre leur solitude.</p>
 
-        <p><strong>Pour Noël, aidez-vous à réchauffer le cœur des personnes SDF et à déployer nos actions partout en France !</strong></p>
+        <h3>Pour Noël, aidez-nous à réchauffer le cœur des personnes SDF et à déployer nos actions partout en France&nbsp;!</h3>
     </div>
     <a
         class="btn white-btn"
@@ -52,12 +56,19 @@ get_header();
         >
         Je fais un don
     </a>
-    <p class="quote">« La chaleur du cœur a autant d’importance que la chaleur du corps. » </p>
+    <p class="quote">«&nbsp;La chaleur du cœur a autant d’importance que la chaleur du corps.&nbsp;» </p>
 </section>
 
 <section id="page-goals" class="section">
     <h2>Grâce à votre don, nous pourrons<br><strong><b>pendant les fêtes et en 2019&nbsp;:</b></strong></h2>
-    <div class="events">
+    <ul>
+        <li><img src="<?php asset_url('img/landing-don/1.jpg'); ?>"/></li>
+        <li><img src="<?php asset_url('img/landing-don/2.jpg'); ?>"/></li>
+        <li><img src="<?php asset_url('img/landing-don/3.jpg'); ?>"/></li>
+        <li><img src="<?php asset_url('img/landing-don/4.jpg'); ?>"/></li>
+        <li><img src="<?php asset_url('img/landing-don/5.jpg'); ?>"/></li>
+    </ul>
+    <!--div class="events">
         <div class="card">
             <img src="<?php asset_url('img/landing-don/groupe.png'); ?>">
             <p>Offrir <strong>2 grandes soirées de Noël entre personnes SDF et riverains</strong><br>à Paris et à Lyon</p>
@@ -71,9 +82,9 @@ get_header();
         <li>Convaincre <strong>100 000 nouveaux membres</strong> de rejoindre le réseau</li>
         <li>Passer de <strong>5 000 à 15 000 actions solidaires</strong> par an</li>
         <li>Etendre le réseau Entourage dans <strong>5 nouvelles villes</strong></li>
-    </ul>
+    </ul-->
     <a
-        class="btn white-btn"
+        class="btn orange-btn"
         href="/don"
         >
         Je fais un don
@@ -107,7 +118,7 @@ get_header();
             <div class="column">
                 <div class="top">Avec un don de 50€</div>
                 <div class="middle">
-                    <strong>Vous permettez d’engager 25 nouveaux membres (avec ou sans-abri) dans le réseau Entourage</strong>
+                    <strong>Vous permettez d’aider 2 personnes à mener une action solidaire pour aider les SDF</strong>
                     <div class="plus">+</div>
                     <div>Vous déduisez <strong>33€</strong> de votre impôt</div>
                 </div>
@@ -116,7 +127,7 @@ get_header();
             <div class="column">
                 <div class="top">Avec un don de 100€</div>
                 <div class="middle">
-                    <strong>Vous financez la formation complète d’un ambassadeur sur deux jours</strong>
+                    <strong>Vous permettez d'engager 30 nouveaux membres avec ou sans-abri dans le Réseau Entourage</strong>
                     <div class="plus">+</div>
                     <div>Vous déduisez <strong>66€</strong> de votre impôt</div>
                 </div>
@@ -125,7 +136,7 @@ get_header();
             <div class="column">
                 <div class="top">Avec un don de 150€</div>
                 <div class="middle">
-                    <strong>Nous pouvons organiser une soirée solidaire rassemblant 50 voisins avec et sans-abri</strong>
+                    <strong>Vous permettez à Entourage d'organiser une soirée solidaire rassemblant 50 voisins avec et sans-abri</strong>
                     <div class="plus">+</div>
                     <div>Vous déduisez <strong>99€</strong> de votre impôt</div>
                 </div>
@@ -216,7 +227,7 @@ get_header();
         <li class="section-quote">
             <div class="quote-content">
                 <p>
-                    <a href="/don"> Je fais un don</a> pour plus d’humanité dans la rue partout en France !
+                    <a href="/don"> Je fais un don</a> pour plus d’humanité dans la rue partout en France&nbsp;!
                 </p>
             </div>
             <div class="quote-author">
