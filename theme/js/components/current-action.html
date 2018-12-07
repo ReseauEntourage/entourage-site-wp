@@ -8,11 +8,27 @@
                 <a
                     ng-if="ctrl.action.group_type != 'conversation'"
                     ng-click="ctrl.shareFacebook()"
+                    class="no-icon action-share"
+                    tooltip-placement="top"
+                    uib-tooltip="Partager sur Facebook"
+                    tooltip-append-to-body="true"
                     >
-                    <i class="material-icons">share</i> Partager sur Facebook
+                    <i class="material-icons">share</i> Partager
                 </a>
-            </div>
-            <div class="action-right-actions">
+                <a
+                    ng-if="ctrl.is_admin && ctrl.action.status != 'closed' && ctrl.action.group_type != 'conversation'"
+                    class="action-edit"
+                    tooltip-placement="top"
+                    uib-tooltip="Editer votre action"
+                    tooltip-append-to-body="true"
+                    >
+                    <i
+                        class="material-icons"
+                        ng-click="ctrl.edit()"
+                        >
+                        edit
+                    </i>
+                </a>
                 <a
                     ng-if="!ctrl.public && !ctrl.is_admin"
                     class="action-report"
@@ -53,30 +69,16 @@
                         power_settings_new
                     </i>
                 </a>
+            </div>
+            <div class="action-right-actions">
                 <a
-                    ng-if="ctrl.is_admin && ctrl.action.status != 'closed' && ctrl.action.group_type != 'conversation'"
-                    class="action-edit"
-                    tooltip-placement="top"
-                    uib-tooltip="Editer votre action"
-                    tooltip-append-to-body="true"
-                    >
-                    <i
-                        class="material-icons"
-                        ng-click="ctrl.edit()"
-                        >
-                        edit
-                    </i>
-                </a>
-                <a
-                    class="action-close no-mobile"
-                    tooltip-placement="top"
-                    uib-tooltip="Fermer la fenêtre"
-                    tooltip-append-to-body="true"
+                    class="no-icon action-close no-mobile"
                     ng-click="ctrl.hide(ctrl.action)"
                     >
                     <i class="material-icons no-mobile">
                         close
                     </i>
+                    Fermer la fenêtre
                 </a>
                 <a
                     class="action-close mobile-only"
@@ -306,6 +308,18 @@
                     <i class="material-icons">done</i>
                     <span ng-if="ctrl.is_admin">Votre action est terminée !</span>
                     <span ng-if="!ctrl.is_admin">Cette action est terminée !</span>
+                </a>
+            </div>
+            <div
+                class="action-buttons"
+                ng-if="ctrl.action.status == 'suspended'"
+                >
+                <a
+                    class="btn orange-btn"
+                    ng-click="ctrl.sendConsent()"
+                    >
+                    <i class="material-icons">done</i>
+                    <span>J'ai eu le consentement de la personne concernée</span>
                 </a>
             </div>
         </div>

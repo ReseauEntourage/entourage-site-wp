@@ -43,10 +43,10 @@
                     ></span>
             </p>
             <p
-                ng-if="action.pendingUsers.length"
-                class="ellipsis"
+                ng-if="action.status == 'suspended'"
+                class="pending"
                 >
-                
+                <i class="material-icons">access_time</i> En attente de consentement
             </p>
         </div>
     </li>

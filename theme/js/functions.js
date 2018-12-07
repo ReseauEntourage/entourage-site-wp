@@ -97,6 +97,8 @@ function transformAction(action) {
 
     if (action.status == 'closed') {
       action.title = 'TERMINÉ - ' + action.title;
+    } else if (action.status == 'suspended') {
+      action.title = 'SUSPENDU - ' + action.title;
     }
   }
   return action;

@@ -117,6 +117,78 @@
                 ></textarea>
             </div>
         </fieldset>
+        <fieldset ng-if="!ctrl.editedAction && ctrl.entourage_type == 'ask_for_help'">
+            <label>4. Créez-vous cette action solidaire pour une personne identifiée, autre que vous : un ami en situation précaire, une personne croisée dans la rue ?</label>
+            <div class="parent-dropdown">
+                <div
+                    uib-dropdown
+                    class="parent-select"
+                    >
+                    <a
+                        uib-dropdown-toggle
+                        class="btn"
+                        ng-class="{empty: !ctrl.recipient}"
+                        >
+                        <i class="material-icons">person_pin</i>
+                        <span ng-bind="ctrl.recipient ? ctrl.recipient.label : 'Veuillez répondre'"></span>
+                    </a>
+                    <ul uib-dropdown-menu>
+                        <li 
+                            ng-repeat="recipient in ctrl.recipients"
+                            ng-click="ctrl.recipient = recipient"
+                            ng-class="{selected: ctrl.recipient == recipient}"
+                            >
+                            <a>
+                                {{ recipient.label }} 
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset ng-if="ctrl.recipient && ctrl.recipient.id == 'other'">
+            <label>5. Avez-vous obtenu son consentement pour diffuser cette action pour elle sur Entourage ?</label>
+            <div class="parent-dropdown">
+                <div
+                    uib-dropdown
+                    class="parent-select"
+                    >
+                    <a
+                        uib-dropdown-toggle
+                        class="btn"
+                        ng-class="{empty: ctrl.recipient_consent_obtained == undefined}"
+                        >
+                        <span ng-if="ctrl.recipient_consent_obtained"><i class="material-icons">done</i> Oui, j'ai son accord</span>
+                        <span ng-if="ctrl.recipient_consent_obtained == false"><i class="material-icons">close</i> Non, pas encore</span>
+                        <span ng-if="ctrl.recipient_consent_obtained == undefined"><i class="material-icons">announcement</i> Veuillez répondre</span>
+                    </a>
+                    <ul uib-dropdown-menu>
+                        <li 
+                            ng-click="ctrl.recipient_consent_obtained = true"
+                            ng-class="{selected: ctrl.recipient_consent_obtained}"
+                            >
+                            <a>
+                                Oui, j'ai son accord
+                            </a>
+                        </li>
+                        <li 
+                            ng-click="ctrl.recipient_consent_obtained = false"
+                            ng-class="{selected: ctrl.recipient_consent_obtained == false}"
+                            >
+                            <a>
+                                Non, pas encore
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div
+                ng-if="ctrl.recipient_consent_obtained == false"
+                class="error"
+                >
+                Vous allez créer votre action, mais le consentement étant indispensable pour pouvoir la diffuser à tout le réseau, elle sera mise en suspens jusqu'à ce que vous ayez l'acord de la personne
+            </div>
+        </fieldset>
         <fieldset ng-if="ctrl.entourage_type == 'contribution'">
             <label for="public">
                 <input

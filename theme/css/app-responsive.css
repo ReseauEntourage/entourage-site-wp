@@ -385,8 +385,9 @@
     #current-action .action-actions {
         height: 50px;
         margin: 0;
-        padding: 0 15px;
-        justify-content: flex-end;
+        padding-right: 15px;
+        flex-direction: row-reverse;
+        justify-content: space-between;
         background: #fff;
         border-bottom: 1px solid #eee;
     }
@@ -397,9 +398,6 @@
     }
 
     #current-action .action-right-actions a.action-close {
-        position: absolute;
-        top: 13px;
-        left: 10px;
         margin: 0;
         background: transparent;
     }
@@ -409,13 +407,16 @@
     }
 
     #current-action .action-actions a {
+        width: 28px;
         padding: 0;
         background: transparent;
         font-size: 0;
         box-shadow: none;
+        vertical-align: middle;
     }
 
     #current-action .action-actions a i {
+        height: inherit;
         margin: 0;
         font-size: 23px;
         color: #646464;

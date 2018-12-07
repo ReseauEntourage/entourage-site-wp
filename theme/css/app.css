@@ -1826,7 +1826,6 @@ div.overlay.fade-out {
 #current-action .action-actions {
     margin-bottom: 3px;
     height: 28px;
-    line-height: 28px;
     color: #fff;
     display: flex;
     align-items: center;
@@ -1837,10 +1836,14 @@ div.overlay.fade-out {
 
 #current-action .action-actions a {
     display: inline-block;
+    width: 28px;
+    line-height: 28px;  
     cursor: pointer;
     font-weight: 400;
     border-radius: 30px;
     vertical-align: top;
+    background: #f9f9f9;
+    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.4);
 }
 
 #current-action .action-actions a:not(:first-child) {
@@ -1848,39 +1851,29 @@ div.overlay.fade-out {
 }
 
 #current-action .action-actions a i {
+    color: #626262;
     font-size: 16px;
 }
 
-#current-action .action-left-actions a {
-    background-color: #365899;
+#current-action .action-actions a.no-icon {
+    width: inherit;
+    height: 28px;
     font-size: 12px;
     padding: 0 10px;
 }
 
-#current-action .action-left-actions a i {
+#current-action .action-actions a.no-icon i {
     margin-right: 4px;
     height: 20px;
     color: #fff;    
 }
 
-#current-action .action-right-actions a {
-    width: 28px;
-    background: #f9f9f9;
-    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.4);
-    vertical-align: middle;
+#current-action .action-actions a.action-share {
+    background-color: #365899;
 }
 
-#current-action .action-right-actions a i {
-    color: #626262;
-}
-
-#current-action .action-right-actions a.action-close {
-    background-color: #626262;
-    box-shadow: none;
-}
-
-#current-action .action-right-actions a.action-close i {
-    color: #fff;
+#current-action .action-actions a.action-close {
+    background-color: #333;
 }
 
 #current-action .action-content {

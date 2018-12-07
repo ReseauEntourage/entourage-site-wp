@@ -53,7 +53,11 @@ angular.module('entourageApp')
       }
 
       // Mobile only
-      ctrl.hiddenFeed = true;
+      ctrl.hiddenFeed = false;
+      
+      setTimeout(function(){
+        ctrl.toggleFeed();
+      }, 2000)
 
       ctrl.toggleFeed = function() {
         ctrl.hiddenFeed = !ctrl.hiddenFeed;

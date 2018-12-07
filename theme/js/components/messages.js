@@ -63,6 +63,7 @@ angular.module('entourageApp')
       ctrl.pushNotification = function(notif) {
         if (ctrl.user.notifications.indexOf(notif) == -1) {
           ctrl.user.notifications.push(notif);
+          document.title = 'Entourage (' + ctrl.user.notifications.length + ')';
         }
       }
 

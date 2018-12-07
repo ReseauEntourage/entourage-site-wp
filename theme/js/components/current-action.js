@@ -413,6 +413,29 @@ angular.module('entourageApp')
         });
       }
 
+      ctrl.sendConsent = function(userId, status) {
+        ctrl.loading = true;
+
+        $.ajax({
+          type: 'PATCH',
+          url: getApiUrl() + '/entourages/' + ctrl.action.uuid,
+          data: {
+            token: ctrl.user.token,
+            entourage: {
+              status: 'open'
+            }
+          },
+          success: function(data) {
+            window.location.reload();
+          },
+          error: function(data) {
+            alert("Erreur : le statut de votre action n'a pu être changé, réessayez ou contactez l'équipe d'Entourage");
+            ctrl.loading = false;
+            $scope.$apply();
+          }
+        });
+      }
+
 
       // ** TOP ACTIONS  ** //
 
@@ -511,6 +534,7 @@ angular.module('entourageApp')
           var index = ctrl.user.notifications.indexOf(ctrl.action.uuid);
           if (index > -1) {
             ctrl.user.notifications.splice(index, 1);
+            document.title = 'Entourage (' + ctrl.user.notifications.length + ')';
           }
         }
 

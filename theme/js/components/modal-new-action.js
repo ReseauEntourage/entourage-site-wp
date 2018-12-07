@@ -19,6 +19,19 @@ angular.module('entourageApp')
 
             ctrl.types = getCategoryTypes();
 
+            ctrl.recipients = [{
+              id: 'other',
+              label: 'Oui'
+            },
+            {
+              id: 'me',
+              label: 'Non, je demande pour moi'
+            },
+            {
+              id: 'association',
+              label: 'Non, pour une association'
+            }];
+
             ctrl.public = true;
 
             if (ctrlParent.action) {
@@ -58,20 +71,32 @@ angular.module('entourageApp')
             }
 
             ctrl.submit = function() {
-              if (ctrl.loading)
+              if (ctrl.loading) {
                 return;
+              }
 
               ctrl.errors = [];
 
-              if (!ctrl.display_category)
+              if (!ctrl.display_category) {
                 ctrl.errors.push("Erreur : veuillez sélectionner une catégorie");
-              if (!ctrl.title || ctrl.title.length < 10)
+              }
+              if (!ctrl.title || ctrl.title.length < 10) {
                 ctrl.errors.push("Erreur : veuillez entrer un titre suffisamment long");
-              if (!ctrl.location)
+              }
+              if (!ctrl.location) {
                 ctrl.errors.push("Erreur : veuillez entrer une localisation");
+              }
+              if (!ctrl.editedAction && ctrl.entourage_type == 'ask_for_help') {
+                if (!ctrl.recipient) {
+                  ctrl.errors.push("Erreur : veuillez répondre à la question 4");
+                } else if (ctrl.recipient.id == "other" && ctrl.recipient_consent_obtained === undefined) {
+                  ctrl.errors.push("Erreur : veuillez répondre à la question sur le consentement");
+                }
+              }
 
-              if (ctrl.errors.length)
+              if (ctrl.errors.length) {
                 return;
+              }
 
               ctrl.loading = true;
 
@@ -84,10 +109,15 @@ angular.module('entourageApp')
                 public: (ctrl.entourage_type == 'ask_for_help') ? false : ctrl.public
               }
 
-              if (ctrl.editedAction)
+              if (ctrl.entourage_type == 'ask_for_help' && ctrl.recipient_consent_obtained == false) {
+                data.recipient_consent_obtained = ctrl.recipient_consent_obtained;  
+              }
+
+              if (ctrl.editedAction) {
                 updateAction(data);
-              else
+              } else {
                 newAction(data);
+              }
             }
 
             newAction = function(data) {
@@ -102,18 +132,18 @@ angular.module('entourageApp')
                   if (data.entourage) {
                     window.history.pushState('page2', data.entourage.title, '/app/?token=' + data.entourage.id);
                     window.location.reload();
-                  }
-                  else {
+                  } else {
                     ctrl.errors.push("Il y a eu une erreur, merci de réessayer ou de nous contacter");
                     ctrl.loading = false;
                     $scope.$apply();
                   }
                 },
                 error: function(data) {
-                  if (data.responseJSON && data.responseJSON.error && data.responseJSON.error.message)
+                  if (data.responseJSON && data.responseJSON.error && data.responseJSON.error.message) {
                     ctrl.errors.push("Erreur : " + data.responseJSON.error.message[0]);
-                  else
+                  } else {
                     ctrl.errors.push("Il y a eu une erreur, merci de réessayer ou de nous contacter");
+                  }
                   ctrl.loading = false;
                   $scope.$apply();
                 }
@@ -139,18 +169,18 @@ angular.module('entourageApp')
                     ctrl.editedAction.public = data.entourage.public
 
                     ctrl.close();
-                  }
-                  else {
+                  } else {
                     ctrl.errors.push("Il y a eu une erreur, merci de réessayer ou de nous contacter");
                     ctrl.loading = false;
                     $scope.$apply();
                   }
                 },
                 error: function(data) {
-                  if (data.responseJSON && data.responseJSON.error && data.responseJSON.error.message)
+                  if (data.responseJSON && data.responseJSON.error && data.responseJSON.error.message) {
                     ctrl.errors.push("Erreur : " + data.responseJSON.error.message[0]);
-                  else
+                  } else {
                     ctrl.errors.push("Il y a eu une erreur, merci de réessayer ou de nous contacter");
+                  }
                   ctrl.loading = false;
                   $scope.$apply();
                 }
