@@ -129,7 +129,6 @@
 
 #page-le-don-de-chaleur-humaine #page-header .title h1 b {
 	display: block;
-	color: #ff5100;
 }
 
 #page-le-don-de-chaleur-humaine #page-header .title #heart {
@@ -160,7 +159,13 @@
     justify-content: space-between;
     padding: 0 60px;
     font-size: 14px;
-    text-shadow: 0px 0px 9px #000, 0px 0px 2px #000;
+    text-shadow: 0px 0px 2px #000, 0px 0px 2px #000, 0px 0px 2px #000, 0px 0px 6px #000;
+}
+
+#page-le-don-de-chaleur-humaine #page-header .names p {
+	background: rgba(0, 0, 0, 0.39);
+    border-radius: 20px;
+    padding: 2px 11px;
 }
 
 @keyframes pulseHeart {

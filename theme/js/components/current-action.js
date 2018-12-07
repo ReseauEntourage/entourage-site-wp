@@ -209,6 +209,7 @@ angular.module('entourageApp')
               user: message.user,
               created_at: message.created_at,
               message: message.content,
+              message_type: message.message_type,
               type: 'message'
             }; 
           }));

@@ -124,7 +124,7 @@
                 </div>
             </div>
             <div class="action-chat">
-                <div ng-if="ctrl.action.status == 'closed' || ctrl.action.join_status != 'accepted'">
+                <div ng-if="ctrl.action.join_status != 'accepted'">
                     <div class="action-details">
                         <user-name
                             user="ctrl.user"
@@ -145,7 +145,7 @@
                             ></span>
                     </p>
                 </div>
-                <div ng-if="ctrl.action.status != 'closed' && ctrl.action.join_status == 'accepted'">
+                <div ng-if="ctrl.action.join_status == 'accepted'">
                     <div
                         ng-if="ctrl.action.group_type != 'conversation'"
                         class="action-chat-date"
@@ -191,9 +191,13 @@
                                 clickable="true"
                                 ></user-name>
                             <span ng-if="event.type == 'user' && event.user.status == 'accepted'">&nbsp;a rejoint l'action</span>
+                            <span
+                                ng-if="event.message_type == 'status_update'"
+                                ng-bind="'&nbsp;' + event.message"
+                                ></span>
                         </div>
                         <div
-                            ng-if="event.message"
+                            ng-if="event.message && event.message_type != 'status_update'"
                             class="action-chat-message"
                             ng-bind-html="event.message|linkify|showbr|trusted"
                             ></div>
