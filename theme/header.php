@@ -106,7 +106,7 @@
 	<link rel="stylesheet" href="<?php asset_url('css/woocommerce.css'); ?>">
 </head>
 
-<body id="page-<?php echo get_post_field( 'post_name', get_post() ) ?>" <?php body_class(); ?>>
+<body id="page-<?php echo get_post_field( 'post_name', get_post() ) ?>" <?php body_class("show-banner-don"); ?>>
 
 	<header id="site-header" role="banner"
 		<?php if ( has_post_thumbnail() ): ?>
@@ -134,7 +134,10 @@
 				<img src="<?php asset_url('img/logo-entourage-orange.png'); ?>" alt="Logo de l'association Entourage" title="Association Entourage"/>
 			</a>
 			<div id="site-header-nav">
-				<a id="site-header-nav-mobile"><i class="material-icons">menu</i></a>
+				<a id="site-header-nav-mobile">
+					<i class="material-icons">menu</i>
+					<i class="material-icons close">close</i>
+				</a>
 				<?php echo get_post(178)->post_content; ?>
 			</div>
 			<div id="site-header-right">
@@ -160,13 +163,20 @@
 					<i class="material-icons"><?php echo get_option('open_app_icon'); ?></i><?php echo get_option('open_app_text_mobile'); ?>
 				</a>
 			</div>
-			<?php if ($wp_query->post->ID != 417): ?>
-				<a id="donate-btn" href="/don" target="_blank">
-					<i class="material-icons">favorite</i>
-					<span><?php echo get_option('donate_text'); ?></span>
-				</a>
-			<?php endif ?>
 		</div>
+
+		<?php if ($wp_query->post->ID != 417): ?>
+			<!--a id="donate-btn" href="/don" target="_blank">
+				<i class="material-icons">favorite</i>
+				<span><?php echo get_option('donate_text'); ?></span>
+			</a-->
+			<div id="banner-don">
+				<div id="heart" class="no-mobile"><i class="material-icons">favorite</i></div>
+				<span class="no-mobile">Pour Noël, réchauffons le coeur des sans-abri</span>
+				<span class="mobile-only">#LeDonDeChaleurHumaine</span>
+				<a class="btn white-btn" href="/le-don-de-chaleur-humaine?src=banner">Je fais un don</a>
+			</div>
+		<?php endif ?>
 
 		<div id="site-header-title">
 			<h1><?php echo $custom_fields['titre'][0] ?></h1>

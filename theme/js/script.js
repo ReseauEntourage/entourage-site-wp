@@ -251,6 +251,10 @@ jQuery(document).ready(function($) {
 	    });
     }
 
+    $('#banner-don').on('click', function(){
+    	window.location = "/le-don-de-chaleur-humaine?src=banner";
+    });
+
 
 	// ENTOURAGE SHARING WINDOW 
 

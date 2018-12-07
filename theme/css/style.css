@@ -430,8 +430,81 @@ strong {
  	background-size: cover;
  	background-image: url(../img/homepage.jpg);
  	color: rgb(255, 255, 255);
- 	margin-top: 60px;
+ 	margin-top: 59px;
  	transition: margin-top 0.5s ease;
+}
+
+body.show-banner-don #site-header {
+	margin-top: 99px;
+}
+
+body.show-banner-don #site-header-fixed {
+	top: 40px;
+}
+
+#banner-don {
+    position: fixed;
+    top: 0px;
+    left: 0;
+    right: 0;
+	background-color: #ff5100;
+	color: #fff;
+	z-index: 998;
+    height: 40px;	
+	line-height: 40px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+#banner-don div {
+	position: relative;
+	display: inline-block;
+}
+
+#banner-don a {
+	line-height: 25px;
+	height: 25px;
+	vertical-align: middle;
+	margin-left: 10px;
+}
+
+#banner-don #heart {
+	display: inline-block;
+	height: 36px;
+	width: 38px;
+	background-image: url(../img/landing-don/heart.png);
+	background-size: 100%;
+	vertical-align: middle;
+	text-align: center;
+}
+
+#banner-don #heart i {
+    margin: -8px 0px 0 2px;
+    color: #fff;
+    font-size: 17px;
+    transform: rotate(-20deg) scale(0.8);
+    animation: pulseHeart ease 4s infinite;
+    transition: transform 0.3s;
+}
+
+@keyframes pulseHeart {
+    30% {
+        transform: rotate(-20deg) scale(0.8);
+    }
+    40% {
+        transform: rotate(-20deg) scale(1);
+    }
+    50% {
+        transform: rotate(-20deg) scale(0.8);
+    }
+    60% {
+        transform: rotate(-20deg) scale(1);
+    }
+    70% {
+        transform: rotate(-20deg) scale(0.8);
+    }
 }
 
 #banner-app-download {
@@ -497,7 +570,7 @@ strong {
 
 #site-header-fixed {
 	position: fixed;
-	top: 0;
+	top: 0px;
 	left: 0;
 	right: 0;
 	height: 60px;

@@ -28,15 +28,21 @@
 	}
 
 	#site-header-nav-mobile {
-		display: block;
+		display: flex;
 		width: 60px;
 	    height: 60px;
-	    text-align: center;
+	    align-items: center;
+	    justify-content: center;
 	    line-height: 56px;
+        text-decoration: none;	
 	}
 
 	#site-header-nav-mobile i {
 		line-height: 56px;
+	}
+
+	#site-header-nav-mobile i.close {
+		display: none;
 	}
 
 	#site-header-nav > ul {
@@ -58,6 +64,14 @@
 
 	html.nav-open #site-header-nav-mobile {
 		background-color: #eee;
+	}
+
+	html.nav-open #site-header-nav-mobile .close {
+		display: block;
+	}
+
+	html.nav-open #site-header-nav-mobile i:not(.close) {
+		display: none;
 	}
 
 	html.nav-open #site-header-nav > ul {
@@ -247,9 +261,9 @@
 	iframe {
 		max-width: 100%;
 	}
-}
 
-@media screen and (max-width: 900px) {
+	/* DOWNLOAD APP BANNER */
+
 	body.show-banner #site-header {
 		margin-top: 150px;
 	}
@@ -265,6 +279,32 @@
 	body.show-banner #donate-btn {
 		display: none;
 		top: 156px;
+	}
+
+	#banner-don {
+		font-size: 14px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: row-reverse;
+	}
+
+	#banner-don a {
+		font-size: 12px;
+		font-weight: 600;
+		margin-right: 10px;
+	}
+
+	body.show-banner.show-banner-don #site-header {
+		margin-top: 190px;
+	}
+
+	body.show-banner.show-banner-don #banner-don {
+	    top: 90px;
+	}
+
+	body.show-banner.show-banner-don #site-header-fixed {
+	    top: 130px;
 	}
 }
 
