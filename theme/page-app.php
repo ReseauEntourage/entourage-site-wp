@@ -94,6 +94,7 @@
     <script src="<?php asset_url('js/components/modal-new-message.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/components/modal-new-picture.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/components/modal-carousel.js'); ?>" type="text/javascript"></script>
+    <script src="<?php asset_url('js/components/modal-calendar.js'); ?>" type="text/javascript"></script>
 </head>
 
 <body
@@ -134,25 +135,14 @@
         <div id="site-header-left">
             <div
                 id="app-search"
-                ng-class="{'active': searchFocus, 'enabled': map.currentAddress}"
+                ng-class="{'active': searchFocus}"
                 ng-click="map.currentAddress && map.clearAddress()"
                 >
                 <i class="icon material-icons">room</i>
-                <span
-                    id="app-search-address"
-                    ng-bind="map.currentAddress"
-                    ></span>
-                <i
-                    ng-if="map.currentAddress"
-                    class="material-icons erase"
-                    >
-                    close 
-                </i>
                 <input
                     id="app-search-input"
                     type="text"
                     placeholder="Cherchez une ville..."
-                    ng-hide="map.currentAddress"
                     ng-focus="searchFocus = true"
                     ng-blur="searchFocus = false"
                     autocomplete="nope"
@@ -163,158 +153,145 @@
                     class="material-icons"
                     ng-click="map.askLocation()"
                     >my_location</i>
-            </div>
-            <div
-                id="app-filters"
-                class="parent-dropdown"
-                >
-                <div uib-dropdown>
-                    <a
-                        uib-dropdown-toggle
-                        class="btn btn-icon"
-                        >
-                        <i class="material-icons">tune</i>
-                        <div
-                            class="badge"
-                            ng-if="map.activatedFilters()"
-                            ng-bind="map.activatedFilters()"
-                            ></div>
-                    </a>
-                    <ul uib-dropdown-menu>
-                        <li>
-                            <a class="dropdown-toggle">
-                                Date de création
-                            </a>
-                            <ul class="dropdown-menu">
-                                <!--li>
-                                    <a
-                                        ng-if="map.public"
-                                        ng-click="map.filterActions('period', '')"
-                                        ng-class="{selected: !map.filters.period}"
-                                        >
-                                        Peu importe
-                                    </a>
-                                </li-->
-                                <li>
-                                    <a
-                                        ng-click="map.filterActions('period', '7')"
-                                        ng-class="{selected: map.filters.period == '7'}"
-                                        >
-                                        Moins d'une semaine
-                                    </a>
-                                </li>
-                                <li>
-                                    <a
-                                        ng-click="map.filterActions('period', '14')"
-                                        ng-class="{selected: map.filters.period == '14'}"
-                                        >
-                                        Moins de 2 semaines
-                                    </a>
-                                </li>
-                                <li>
-                                    <a
-                                        ng-click="map.filterActions('period', '30')"
-                                        ng-class="{selected: map.filters.period == '30'}"
-                                        >
-                                        Moins d'un mois
-                                    </a>
-                                </li>
-                                <li>
-                                    <a
-                                        ng-click="map.filterActions('period', '90')"
-                                        ng-class="{selected: map.filters.period == '90'}"
-                                        >
-                                        Moins de 3 mois
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown-toggle">
-                                Statut
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a
-                                        ng-click="map.filterActions('status', '')"
-                                        ng-class="{selected: !map.filters.status}"
-                                        >
-                                        Peu importe
-                                    </a>
-                                </li>
-                                <li>
-                                    <a
-                                        ng-click="map.filterActions('status', 'open')"
-                                        ng-class="{selected: map.filters.status == 'open'}"
-                                        >
-                                        En cours
-                                    </a>
-                                </li>
-                                <li>
-                                    <a
-                                        ng-click="map.filterActions('status', 'closed')"
-                                        ng-class="{selected: map.filters.status == 'closed'}"
-                                        >
-                                        Terminé
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li ng-if="!map.public">
-                            <a class="dropdown-toggle">
-                                Catégorie
-                            </a>
-                            <ul class="dropdown-menu">
-                                <!--li ng-repeat="categoryType in map.categoryTypes">
-                                    <a
-                                        ng-bind="(categoryType.id == 'ask_for_help') ? 'Demandes' : 'Contributions'"
-                                        ng-class="{selected: map.filters.types.indexOf(category.id) > -1}"
-                                        ng-click="map.toggleFilterType(category.id)"
-                                        ></a>
-                                    <ul class="dropdown-menu">
-                                        <li ng-repeat="category in map.categories">
-                                            <a
-                                                ng-click="map.toggleFilterType(categoryType.short_id + category.short_id)"
-                                                ng-class="{selected: map.filters.types.indexOf(categoryType.short_id + category.short_id) > -1}"
-                                                >
-                                                <i
-                                                    class="action-icon"
-                                                    ng-class="categoryType.id + ' ' + category.id"
-                                                    ></i>
-                                                <span ng-bind="category[categoryType.id]"></span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li-->
-                                <li>
-                                    <a
-                                        ng-click="map.toggleFilterType(['as','ae','am','ar','ai','ak','ao','ah'])"
-                                        ng-class="{selected: map.filters.types.indexOf('as') > -1}"
-                                        >
-                                        Demandes d'aide
-                                    </a>
-                                </li>
-                                <li>
-                                    <a
-                                        ng-click="map.toggleFilterType(['cs','ce','cm','cr','ci','ck','co','ch'])"
-                                        ng-class="{selected: map.filters.types.indexOf('cs') > -1}"
-                                        >
-                                        Offres d'aide
-                                    </a>
-                                </li>
-                                <li>
-                                    <a
-                                        ng-click="map.toggleFilterType(['ou'])"
-                                        ng-class="{selected: map.filters.types.indexOf('ou') > -1}"
-                                        >
-                                        Evénements solidaires
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
+                <div
+                    id="app-filters"
+                    class="parent-dropdown"
+                    >
+                    <div uib-dropdown>
+                        <a
+                            uib-dropdown-toggle
+                            class="btn btn-icon"
+                            >
+                            <i class="material-icons">tune</i>
+                            <div
+                                class="badge"
+                                ng-if="map.activatedFilters()"
+                                ng-bind="map.activatedFilters()"
+                                ></div>
+                        </a>
+                        <ul uib-dropdown-menu>
+                            <li>
+                                <a class="dropdown-toggle">
+                                    Date de création
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <!--li>
+                                        <a
+                                            ng-if="map.public"
+                                            ng-click="map.filterActions('period', '')"
+                                            ng-class="{selected: !map.filters.period}"
+                                            >
+                                            Peu importe
+                                        </a>
+                                    </li-->
+                                    <li>
+                                        <a
+                                            ng-click="map.filterActions('period', '7')"
+                                            ng-class="{selected: map.filters.period == '7'}"
+                                            >
+                                            Moins d'une semaine
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a
+                                            ng-click="map.filterActions('period', '14')"
+                                            ng-class="{selected: map.filters.period == '14'}"
+                                            >
+                                            Moins de 2 semaines
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a
+                                            ng-click="map.filterActions('period', '30')"
+                                            ng-class="{selected: map.filters.period == '30'}"
+                                            >
+                                            Moins d'un mois
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a
+                                            ng-click="map.filterActions('period', '90')"
+                                            ng-class="{selected: map.filters.period == '90'}"
+                                            >
+                                            Moins de 3 mois
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a class="dropdown-toggle">
+                                    Statut
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a
+                                            ng-click="map.filterActions('status', '')"
+                                            ng-class="{selected: !map.filters.status}"
+                                            >
+                                            Peu importe
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a
+                                            ng-click="map.filterActions('status', 'open')"
+                                            ng-class="{selected: map.filters.status == 'open'}"
+                                            >
+                                            En cours
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a
+                                            ng-click="map.filterActions('status', 'closed')"
+                                            ng-class="{selected: map.filters.status == 'closed'}"
+                                            >
+                                            Terminé
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li ng-if="!map.public">
+                                <a class="dropdown-toggle">
+                                    Catégorie
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a
+                                            ng-click="map.toggleFilterType(['as','ae','am','ar','ai','ak','ao','ah'])"
+                                            ng-class="{selected: map.filters.types.indexOf('as') > -1}"
+                                            >
+                                            Demandes d'aide
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a
+                                            ng-click="map.toggleFilterType(['cs','ce','cm','cr','ci','ck','co','ch'])"
+                                            ng-class="{selected: map.filters.types.indexOf('cs') > -1}"
+                                            >
+                                            Offres d'aide
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a
+                                            ng-click="map.toggleFilterType(['ou'])"
+                                            ng-class="{selected: map.filters.types.indexOf('ou') > -1}"
+                                            >
+                                            Evénements solidaires
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
+            <a
+                ng-if="!map.public"
+                id="app-events"
+                class="btn"
+                ng-click="map.toggleModal('calendar')"
+                >
+                <i class="material-icons">event</i> Calendrier
+            </a>
         </div>
         <div
             ng-if="!map.public"
@@ -333,7 +310,7 @@
                     </a>
                     <div uib-dropdown-menu>
                         <ul>
-                            <li class="dropdown-menu-group">
+                            <li class="dropdown-menu-group no-mobile">
                                 <a ng-click="map.toggleModal('carousel')">
                                     <i class="material-icons">info</i> Comment ça marche ?
                                 </a>
@@ -353,6 +330,9 @@
                                 </a>
                             </li>
                             <li class="dropdown-menu-group">
+                                <a href="https://blog.entourage.social/charte-ethique-grand-public/" target="_blank">
+                                    <i class="material-icons">school</i> Charte éthique
+                                </a>
                                 <a href=/contact/" target="_blank">
                                     <i class="material-icons">email</i> Nous contacter
                                 </a>
@@ -384,13 +364,13 @@
                             </li>
                             <li class="dropdown-menu-group">
                                 <a href="https://www.entourage.social/devenir-ambassadeur/" target="_blank">
-                                    <i class="material-icons">mic</i> Devenir ambassadeur du réseau Entourage
+                                    <i class="material-icons">mic</i> Devenir ambassadeur d'Entourage'
                                 </a>
                                 <a href="http://www.simplecommebonjour.org/" target="_blank">
                                     <i class="material-icons">question_answer</i> Se former à la rencontre 
                                 </a>
                                 <a href="https://www.facebook.com/pg/EntourageReseauCivique/events/?ref=page_internal" target="_blank">
-                                    <i class="material-icons">people</i>Participer aux événements d'Entourage
+                                    <i class="material-icons">people</i>Participer à nos événements
                                 </a>
                                 <a href="https://www.entourage.social/don" target="_blank">
                                     <i class="material-icons">favorite</i>Soutenir Entourage
@@ -456,9 +436,12 @@
                     </a>
                     <div uib-dropdown-menu>
                         <ul>
-                            <li class="dropdown-menu-group">
-                                <a href="https://blog.entourage.social/charte-ethique-grand-public/" target="_blank">
-                                    <i class="material-icons">school</i> Charte éthique
+                            <li class="dropdown-menu-group mobile-only">
+                                <a ng-click="map.toggleModal('carousel')">
+                                    <i class="material-icons">info</i> Comment ça marche ?
+                                </a>
+                                <a href="http://www.entourage.social/" target="_blank">
+                                    <i class="material-icons">call_made</i> Visiter le site d'Entourage
                                 </a>
                             </li>
                             <li class="dropdown-menu-group">
@@ -491,7 +474,7 @@
                     </a>
                     <div uib-dropdown-menu>
                         <ul>
-                            <li class="dropdown-menu-group">
+                            <li class="dropdown-menu-group no-mobile">
                                 <a ng-click="map.toggleModal('carousel')">
                                     <i class="material-icons">info</i> Comment ça marche ?
                                 </a>
@@ -511,6 +494,9 @@
                                 </a>
                             </li>
                             <li class="dropdown-menu-group">
+                                <a href="https://blog.entourage.social/charte-ethique-grand-public/" target="_blank" class="mobile-only">
+                                    <i class="material-icons">school</i> Charte éthique
+                                </a>
                                 <a href=/contact/" target="_blank">
                                     <i class="material-icons">email</i> Nous contacter
                                 </a>
@@ -585,6 +571,13 @@
         hide="map.toggleModal('carousel')"
         toggle-new-action="map.toggleModal('register')"
         ></modal-carousel>
+
+    <modal-calendar
+        ng-if="map.showModal.calendar"
+        user="map.loggedUser"
+        map="map.mapObject"
+        hide="map.toggleModal('calendar')"
+        ></modal-calendar>
 
     <div id="page-content">
         <div
@@ -676,7 +669,7 @@
           var js, fjs = d.getElementsByTagName(s)[0];
           if (d.getElementById(id)) return;
           js = d.createElement(s); js.id = id;
-          js.src = "https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js";
+          js.src = "https://connect.facebook.net/fr_FR/sdk/xfbml.customerchat.js";
           fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
     </script>

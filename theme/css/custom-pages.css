@@ -604,7 +604,16 @@
 
 @media (max-width: 800px) {
 	#page-le-don-de-chaleur-humaine #page-header {
-	    background-position: 0;	
+		height: 410px;
+	}
+	
+	#page-le-don-de-chaleur-humaine #page-header .circle {
+		top: 66px;
+		margin-left: -150px;
+	}
+
+	#page-le-don-de-chaleur-humaine #page-header .title {
+		margin-top: 43px;
 	}
 
 	#page-le-don-de-chaleur-humaine #page-header .names {

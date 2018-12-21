@@ -11,7 +11,7 @@
 	<h3 class="section-title"><?php the_title(); ?></h3>
 	<div class="section-content">
 		<?php the_content(); ?>
-		<a class="btn orange-btn" href="<?php echo $custom_fields['lien'][0] ?>" ga-event="Engagement AppView SectionHowItWorks">
+		<a class="btn orange-btn btn-big" href="<?php echo $custom_fields['lien'][0] ?>" ga-event="Engagement AppView SectionHowItWorks">
 			<i class="material-icons"><?php echo $custom_fields['icone'][0] ?></i><?php echo $custom_fields['bouton_orange'][0] ?>
 		</a>
 	<div>

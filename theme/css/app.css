@@ -719,72 +719,53 @@ div.overlay.fade-out {
     padding-right: 10px;
 }
 
-#site-header-fixed .btn.btn-icon {
-    color: #b9b9b9;
-    box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.2);
-}
-
 
 /* SEARCH */
 
 #app-search {
     position: relative;
-    margin-right: 13px;
     display: flex;
-    padding: 0 10px;
+    padding-left: 10px;
     height: 33px;
     font-size: 14px;
     line-height: 33px;
     border-radius: 20px;
     box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.2);
     cursor: pointer;
-    color: #8c8c8c;
 }
 
 #app-search .icon {
     color: #b9b9b9;
     font-size: 20px;
     line-height: 33px;
-    margin-right: 7px;
-}
-
-#app-search:hover {
-    box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.2);
-}
-
-#app-search.enabled {
-    color: #fff;
-    font-weight: bold;
-    box-shadow: none;
-    background: #454545;
-    padding-right: 30px;
-}
-
-#app-search.enabled .icon {
-    color: #fff;
-}
-
-#app-search.enabled #app-search-input {
-    display: none;
 }
 
 #app-search #app-search-input {
     width: 220px;
     height: 33px;
-    padding-right: 0;
-    margin-left: -20px;
+    padding-right: 5px;
+    padding-left: 35px;
+    margin-left: -30px;
     background: transparent;
     line-height: 33px;
     font-size: 14px;
     color: #8c8c8c;
+    border-radius: 20px 0 0 20px;
 }
 
 #app-search #app-search-input:focus {
     outline: none;
 }
 
+#app-search #app-search-input:hover {
+    box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.1);
+}
+
 #app-search #app-search-address {
+    margin: 0 8px;
     max-width: 200px;
+    color: #fff;
+    font-weight: bold;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -793,16 +774,34 @@ div.overlay.fade-out {
 }
 
 #app-search .erase {
-    position: absolute;
-    right: 8px;
-    top: 9px;
+    margin-right: 10px;
     font-size: 15px;
 }
 
-#app-filters .btn .badge {
+#app-search #app-filters .icon {
+    margin: 0;
+    font-size: 18px;
+}
+
+#app-search #app-filters .btn {
+    border-left: 1px solid #eee;
+    border-radius: 0 20px 20px 0;
+    background: #eee;   
+ }
+
+#app-search #app-filters .btn .badge {
     background: #454545;
 }
 
+#app-events {
+    margin-left: 20px;
+    padding: 0 15px;
+    box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.2);
+}
+
+#app-events:hover {
+    box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.2);
+}
 
 /** NEW ACTION **/
 
@@ -823,6 +822,15 @@ div.overlay.fade-out {
 
 
 /** MESSAGES **/
+
+#user-messages .dropdown-toggle {
+    color: #b9b9b9;
+    box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.2);
+}
+
+#user-messages .dropdown-toggle:hover {
+    box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.2);
+}
 
 #user-messages .dropdown-menu {
     right: -68px;
@@ -1075,6 +1083,119 @@ div.overlay.fade-out {
 
 #modal-profile-required .form label.label-checkbox span {
     font-style: italic;
+}
+
+
+/** MODAL CALENDAR **/
+
+#modal-calendar img {
+    margin: 0 auto 20px;
+    display: block; 
+}
+
+#modal-calendar .calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #fff;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+#modal-calendar .calendar-header h3 {
+    font-size: 17px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+#modal-calendar .calendar-header i {
+    font-size: 20px;
+    cursor: pointer;
+    transition: box-shadow 0.3s;
+    border-radius: 20px;
+}
+
+#modal-calendar .calendar-header i:hover {
+    box-shadow: 0 0 0 5px #fff;
+    background: #fff;
+    color: #ff5100;
+}
+
+#modal-calendar .calendar {
+    width: 254px;
+}
+
+#modal-calendar .week-days,
+#modal-calendar .month-days {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#modal-calendar .day {
+    display: inline-block;
+    min-width: 36px;
+    max-width: 36px;
+    line-height: 32px;
+    font-size: 16px;
+    text-align: center;
+    font-weight: 300;   
+}
+
+#modal-calendar .day.today {
+    text-decoration: underline;
+}
+
+#modal-calendar .day.past {
+    opacity: 0.5;
+}
+
+#modal-calendar .day.active a {
+    background: #fff;
+    color: #ff5100;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: all 0.3s;
+}
+
+#modal-calendar .day.active a:hover {
+    box-shadow: 0 0 0 5px #fff;
+    text-decoration: underline;
+}
+
+#modal-calendar .day.week-day {
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+#modal-calendar .day a {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+}
+
+.popover-calendar-event:not(:last-child) {
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.popover-calendar-event h3 {
+    font-weight: bold;
+}
+
+.popover-calendar-event .details {
+    color: #767676;
+}
+
+.popover-calendar-event a {
+    margin-top: 7px;
 }
 
 

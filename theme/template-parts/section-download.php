@@ -11,14 +11,14 @@
 	<img src="/wp-content/themes/entourage/img/app-screenshot.png" alt="Ecran de l'application mobile" title="Aperçu de l'application Entourage"/>
 	<div class="download-btns">
 		<h4><?php the_content(); ?></h4>
-		<a class="btn orange-btn map-btn" href="/app" ga-event="Engagement AppView SectionDownloadBtn">
+		<a class="btn orange-btn map-btn" href="/app" ga-event="Engagement AppView SectionDownloadBtn" target="_blank">
 			<div>
 				Ouvrir la <strong>carte</strong>
 			</div>
 		</a>
 		<?php 
-			echo sprintf( '<a class="btn dark-btn iphone-btn" href="%s"><div><span class="no-mobile">Disponible</span><span class="mobile-only">Télécharger</span> sur <strong>iphone</strong></div></a>', link_with_url_parameters($custom_fields['lien_ios'][0], $_SERVER['QUERY_STRING']));
-			echo sprintf( '<a class="btn dark-btn android-btn" href="%s"><div><span class="no-mobile">Disponible</span><span class="mobile-only">Télécharger</span> sur <strong>android</strong></div></a>', link_with_url_parameters($custom_fields['lien_android'][0], $_SERVER['QUERY_STRING']));
+			echo sprintf( '<a class="btn dark-btn iphone-btn" href="%s" target="_blank"><div><span class="no-mobile">Disponible</span><span class="mobile-only">Télécharger</span> sur <strong>iphone</strong></div></a>', link_with_url_parameters($custom_fields['lien_ios'][0], $_SERVER['QUERY_STRING']));
+			echo sprintf( '<a class="btn dark-btn android-btn" href="%s" target="_blank"><div><span class="no-mobile">Disponible</span><span class="mobile-only">Télécharger</span> sur <strong>android</strong></div></a>', link_with_url_parameters($custom_fields['lien_android'][0], $_SERVER['QUERY_STRING']));
 		?>
 	</div>
 </section>

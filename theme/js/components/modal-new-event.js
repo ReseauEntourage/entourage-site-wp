@@ -127,17 +127,18 @@ angular.module('entourageApp')
                   if (data.entourage) {
                     window.history.pushState('page2', data.entourage.title, '/app/?token=' + data.entourage.id);
                     window.location.reload();
-                  }
-                  else
+                  } else {
                     ctrl.errors.push("Il y a eu une erreur, merci de réessayer ou de nous contacter");
-                  ctrl.loading = false;
-                  $scope.$apply();
+                    ctrl.loading = false;
+                    $scope.$apply();
+                  }
                 },
                 error: function(data) {
-                  if (data.responseJSON && data.responseJSON.error && data.responseJSON.error.message)
+                  if (data.responseJSON && data.responseJSON.error && data.responseJSON.error.message) {
                     ctrl.errors.push("Erreur : " + data.responseJSON.error.message[0]);
-                  else
+                  } else {
                     ctrl.errors.push("Il y a eu une erreur, merci de réessayer ou de nous contacter");
+                  }
                   ctrl.loading = false;
                   $scope.$apply();
                 }

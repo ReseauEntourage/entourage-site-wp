@@ -274,8 +274,8 @@
 	    {
 	        $headers  = 'MIME-Version: 1.0' . "\r\n";
 	        $headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
-	        $headers .= 'From: entourage.social <'.get_option('admin_email').'>' . "\r\n";
-	        $headers .= 'Reply-To: '.$_POST['email']. "\r\n";
+	        $headers .= 'Reply-To: '.$_POST['name'].' <'.$_POST['email'].'>' . "\r\n";
+	        $headers .= 'From: '.$_POST['email']. "\r\n";
 
 	        $message = 'Message de : <b>'.$_POST['name'].'</b> '.$_POST['email'].'';
 	        $message .= '<br><br>'.nl2br($_POST['message']);

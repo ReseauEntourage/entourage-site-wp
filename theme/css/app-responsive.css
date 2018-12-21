@@ -130,7 +130,7 @@
         background: #111;
     }
 
-    #app-filters .dropdown > .dropdown-menu {
+    #app-search #app-filters .dropdown > .dropdown-menu {
         position: fixed;
         top: 100px;
         left: 0;
@@ -139,17 +139,30 @@
         border-radius: 0;
     }
 
-    #app-filters .btn-icon {
+    #app-search #app-filters .btn {
         background: #111;
+        color: #b9b9b9;
+        border-color: #333;
     }
 
-    #app-filters .btn .badge {
+    #app-search #app-filters .btn .badge {
         background: #b9b9b9;
         color: #111;
     }
 
     #app-search #app-search-input {
         width: 100%;   
+    }
+
+    #app-events {
+        margin: 0;
+        font-size: 0;
+        padding: 0 8px;
+        background: #111;
+        color: #b9b9b9;
+    }
+    #app-events i {
+        margin: 0;
     }
 
     #site-header-right {
@@ -302,6 +315,7 @@
     #site-header-right .dropdown-menu li > a {
         height: 40px;
         line-height: 41px;
+        overflow: hidden;
     }
 
 

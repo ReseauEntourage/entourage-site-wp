@@ -1381,3 +1381,81 @@ footer.site-footer a {
 #bitnami-banner {
 	display: none !important;
 }
+
+/** Popovers **/
+
+
+.popover {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 99999;
+	display: none;
+	max-width: 300px;
+	padding: 1px;
+	font-size: 14px;
+	background-color: #fff;
+	background-clip: padding-box;
+	border-radius: 5px;
+	box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+
+.popover.top     { margin-top: -12px; }
+.popover.right   { margin-left: 12px; }
+.popover.bottom  { margin-top: 12px; }
+.popover.left    { margin-left: -12px; }
+
+.popover-title {
+	margin: 0;
+	padding: 8px 14px;
+	font-size: 13px;
+	background-color: #eee;
+	border-bottom: 1px solid #333;
+	border-radius: 5px 5px 0 0;
+}
+
+.popover-content {
+  	padding: 14px;
+}
+
+.popover > .arrow {
+	position: absolute;
+	display: block;
+	width: 0;
+	height: 0;
+	border-color: transparent;
+	border-style: solid;
+	border-width: 12px;
+}
+
+.popover.top > .arrow {
+    left: 50%;
+    margin-left: -12px;
+    border-bottom-width: 0;
+    border-top-color: #fff;
+    bottom: -12px;
+}
+
+.popover.right > .arrow {
+    top: 50%;
+    left: -12px;
+    margin-top: -12px;
+    border-left-width: 0;
+    border-right-color: #fff;
+}
+
+.popover.bottom > .arrow {
+    left: 50%;
+    margin-left: -12px;
+    border-top-width: 0;
+    border-bottom-color: #fff;
+    top: -12px;
+}
+
+.popover.left > .arrow {
+    top: 50%;
+    right: -12px;
+    margin-top: -12px;
+    border-right-width: 0;
+    border-left-color: #fff;
+}

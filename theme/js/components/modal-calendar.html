@@ -1,0 +1,78 @@
+<div class="modal-header">
+    <a
+        class="modal-close mobile-only"
+        ng-click="ctrl.close()"
+        >
+        <i class="material-icons">arrow_back</i>
+    </a>
+    Les événements à venir
+</div>
+<div
+    id="modal-calendar"
+    class="modal-body"
+    ng-class="{loading: ctrl.loading}"
+    >
+    <div>
+        <img src="/wp-content/themes/entourage/img/calendar-illu.png" />
+        <div class="calendar-header">
+            <div>
+                <i
+                    ng-show="ctrl.index"
+                    ng-click="ctrl.previousMonth()"
+                    class="material-icons"
+                    >
+                    arrow_back
+                </i>
+            </div>
+            <h3 ng-bind="ctrl.months[ctrl.currentMonth]"></h3>
+            <div>
+                <i
+                    ng-show="ctrl.index < 6"
+                    ng-click="ctrl.nextMonth()"
+                    class="material-icons"
+                    >
+                    arrow_forward
+                </i>
+            </div>
+        </div>
+        <div class="calendar">
+            <div class="week-days">
+                <span class="day week-day">Lun</span>
+                <span class="day week-day">Mar</span>
+                <span class="day week-day">Mer</span>
+                <span class="day week-day">Jeu</span>
+                <span class="day week-day">Ven</span>
+                <span class="day week-day">Sam</span>
+                <span class="day week-day">Dim</span>
+            </div>
+            <div class="month-days">
+                <div
+                    class="day"
+                    ng-repeat="day in ctrl.emptyDays track by $index"
+                    >
+                </div>
+                <div
+                    class="day"
+                    ng-repeat="day in ctrl.days track by $index"
+                    ng-class="{
+                        today: day.today,
+                        past: day.past,
+                        active: day.events.length
+                    }"
+                    uib-popover-html="day.html"
+                    popover-trigger="'outsideClick'"
+                    popover-placement="top"
+                    popover-append-to-body="true"
+                    >
+                    <a ng-bind="day.number"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a
+        class="modal-close no-mobile"
+        ng-click="ctrl.close()"
+        >
+        <i class="material-icons">close</i>
+    </a>
+</div>

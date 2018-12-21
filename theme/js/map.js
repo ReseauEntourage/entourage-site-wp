@@ -95,7 +95,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
 
       // default parameters of our map (centered on Paris)
       map.mapObjectParams = {
-        maxZoom: 14,
+        maxZoom: 15,
         minZoom: 5,
         zoom: 13,
         zoomControl: !map.mobileView,
@@ -112,7 +112,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
 
       // center the map on a custom position (if given)
       if (position && position.coords) {
-        map.mapObjectParams.zoom = 13;
+        map.mapObjectParams.zoom = 14;
         map.mapObjectParams.center.lat = position.coords.latitude;
         map.mapObjectParams.center.lng = position.coords.longitude;
       }
@@ -120,7 +120,6 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
       if (!map.public) {
         map.mapObjectParams.zoom = 14;
         map.mapObjectParams.minZoom = 12;
-        map.mapObjectParams.maxZoom = 14;
       }
 
       map.mapObject = new google.maps.Map(document.getElementById('map-container'), map.mapObjectParams);
@@ -410,7 +409,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
       map.mapObject.setCenter(location);
 
       if (map.public) {
-        map.mapObject.setZoom(13);
+        map.mapObject.setZoom(14);
         isMapEmpty();
       }
       else {
@@ -455,6 +454,10 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
       }
       else {
         map.currentAction = searchAction[0];
+
+        if (map.public) {
+          map.mapObject.setCenter(new google.maps.LatLng(map.currentAction.location.latitude, map.currentAction.location.longitude));
+        }
 
         if (apply)
           $scope.$apply();
