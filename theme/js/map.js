@@ -12,6 +12,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
     map.loggedUser = getLoggedUser();
     map.public = map.loggedUser ? false : true;
     map.showModal = {};
+    map.showMessages = false;
 
     autoLogin = function() {
       var deferred = $q.defer();

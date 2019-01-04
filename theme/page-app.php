@@ -380,21 +380,25 @@
                     </div>
                 </div>
             </div>
-            <new-action
+            <modal-new-action
                 ng-if="map.showModal.newAction"
                 user="map.loggedUser"
                 hide="map.toggleModal('newAction')"
-                ></new-action>
-            <new-event
+                ></modal-new-action>
+            <modal-new-event
                 ng-if="map.showModal.newEvent"
                 user="map.loggedUser"
                 hide="map.toggleModal('newEvent')"
-                ></new-event>
+                ></modal-new-event>
             <div
                 id="user-messages"
                 class="parent-dropdown"
                 >
-                <div uib-dropdown>
+                <div
+                    uib-dropdown
+                    auto-close="outsideClick"
+                    is-open="map.showMessages"
+                    >
                     <a
                         uib-dropdown-toggle
                         class="btn btn-icon"
@@ -409,6 +413,7 @@
                     <messages
                         uib-dropdown-menu
                         user="map.loggedUser"
+                        show="map.showMessages"
                         on-show-action="map.showAction(uuid)"
                     />
                 </div>

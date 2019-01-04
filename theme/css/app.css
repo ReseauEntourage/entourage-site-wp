@@ -837,12 +837,36 @@ div.overlay.fade-out {
 }
 
 #user-messages .dropdown-menu > ul {
-    max-height: 270px;
+    max-height: 290px;
+    min-width: 310px;
     border-radius: 0 0 0 3px;
+}
+
+#user-messages .dropdown-menu > ul.loading {
+    height: 100px;
 }
 
 #user-messages .no-content {
     padding: 20px;
+}
+
+#user-messages .messages-actions {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    border-bottom: 1px solid #eee;  
+}
+
+#user-messages .messages-actions:hover {
+    background-color: transparent;
+}
+
+#user-messages .messages-actions a {
+    text-decoration: underline;
+}
+
+#user-messages .messages-actions a:hover {
+    text-decoration: underline;
 }
 
 #user-messages .action-item {
@@ -850,8 +874,16 @@ div.overlay.fade-out {
     align-items: center;
 }
 
+#user-messages .action-item h2 {
+    font-size: 500;
+}
+
 #user-messages .action-item.unread {
-    background-color: #f9f9f9;
+    background-color: #e9e9e9;
+}
+
+#user-messages .action-item.unread h2 {
+    font-size: 600;
 }
 
 #user-messages .action-info {
@@ -2056,6 +2088,11 @@ div.overlay.fade-out {
     font-size: 12px;
     font-weight: normal;
     line-height: 13px;
+}
+
+#current-action .action-address-link {
+    color: #ff5100;
+    text-decoration: underline;
 }
 
 #current-action .action-chat {

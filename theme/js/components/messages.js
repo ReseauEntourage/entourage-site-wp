@@ -3,11 +3,14 @@ angular.module('entourageApp')
     templateUrl: '/wp-content/themes/entourage/js/components/messages.html',
     bindings: {
       user: '=',
+      show: '=',
       onShowAction: '&'
     },
     controllerAs: 'ctrl',
     controller: function($scope, $element, $attrs) {
       var ctrl = this;
+
+      ctrl.unreadOnly = false;
 
       ctrl.$onInit = function() {
         ctrl.checkMessages();
@@ -19,10 +22,8 @@ angular.module('entourageApp')
           return;
         }
 
-        console.info('Checking user actions...');
-        
-        ctrl.actions = [];
         ctrl.loading = true;
+        ctrl.messages = [];
         ctrl.user.notifications = [];
 
         $.ajax({
@@ -49,8 +50,7 @@ angular.module('entourageApp')
                     ctrl.getPendingUsers(action);
                   }
                 }
-
-                ctrl.actions.push(action);
+                ctrl.messages.push(action);
                 return action;
               });
             }
@@ -64,6 +64,18 @@ angular.module('entourageApp')
         if (ctrl.user.notifications.indexOf(notif) == -1) {
           ctrl.user.notifications.push(notif);
           document.title = 'Entourage (' + ctrl.user.notifications.length + ')';
+        }
+      }
+
+      ctrl.removeNotification = function(notif) {
+        var index = ctrl.user.notifications.indexOf(notif);
+        if (index > -1) {
+          ctrl.user.notifications.splice(index, 1);
+          if (ctrl.user.notifications.length) {
+            document.title = 'Entourage (' + ctrl.user.notifications.length + ')';
+          } else {
+            document.title = 'Entourage';
+          }
         }
       }
 
@@ -90,35 +102,34 @@ angular.module('entourageApp')
         });
       }
 
-      ctrl.getLastMessage = function(action) {
-        if (action.number_of_unread_messages)
-          ctrl.user.notifications += 1;
-
-        $.ajax({
-          type: 'GET',
-          url: getApiUrl() + '/entourages/' + action.id + '/chat_messages',
-          data: {
-            token: ctrl.user.token,
-            entourage_id: action.id
-          },
-          success: function(data) {
-            if (data.chat_messages && data.chat_messages.length) {
-              action.lastMessage = data.chat_messages[0];
-            }
-            else if (action.description) {
-              action.lastMessage = {
-                user: ctrl.user,
-                content: action.description
-              };
-            }
-            $scope.$apply();
-          }
-        });
+      ctrl.showAction = function(action) {
+        ctrl.show = false;
+        ctrl.onShowAction({uuid: action.uuid});
       }
 
-      ctrl.showAction = function(action) {
-        simulateMouseOut();
-        ctrl.onShowAction({uuid: action.uuid});
+      ctrl.filterUnread = function() {
+        ctrl.unreadOnly = !ctrl.unreadOnly;
+      }
+
+      ctrl.markAllAsRead = function() {
+        ctrl.unreadOnly = false;
+
+        ctrl.messages.map(function(action){
+          if (action.number_of_unread_messages) {
+            ctrl.removeNotification(action.uuid);
+
+            $.ajax({
+              type: 'PUT',
+              url: getApiUrl() + '/entourages/' + action.uuid + '/read',
+              data: {
+                token: ctrl.user.token,
+                id: action.uuid
+              }
+            });
+          }
+
+          return action;
+        });
       }
 
       simulateMouseOut = function() {

@@ -1,5 +1,5 @@
 angular.module('entourageApp')
-  .component('newAction', {
+  .component('modalNewAction', {
     bindings: {
       user: '=',
       hide: '&',

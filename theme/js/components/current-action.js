@@ -56,7 +56,7 @@ angular.module('entourageApp')
           }
           else if (!ctrl.action.users) {
             // as the action.number_of_people is wrong for the moment (TO BE REMOVED)
-            ctrl.getUsers();
+            // ctrl.getUsers();
           }
         }
 

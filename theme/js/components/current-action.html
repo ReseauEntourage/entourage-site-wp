@@ -121,7 +121,13 @@
                         <span ng-bind="ctrl.action.metadata.starts_at|date:'MMM'|formatDate"></span>
                     </div>
                     <div>
-                        <strong ng-if="ctrl.action.metadata.starts_at">{{ ctrl.action.metadata.starts_at|date:'H:mm' }}&nbsp;·&nbsp;</strong><span ng-bind="ctrl.action.metadata.display_address"></span>
+                        <strong ng-if="ctrl.action.metadata.starts_at">{{ ctrl.action.metadata.starts_at|date:'H:mm' }}&nbsp;·&nbsp;</strong>
+                        <a
+                            class="action-address-link"
+                            ng-href="{{ 'https://www.google.com/maps/place/?q=place_id:' + ctrl.action.metadata.google_place_id }}" 
+                            target="_blank"
+                            ng-bind="ctrl.action.metadata.display_address"
+                            ></a>
                     </div>
                 </div>
             </div>

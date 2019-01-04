@@ -1,10 +1,24 @@
-<ul
-    ng-class="{loading: ctrl.loading}"
-    ng-hide="ctrl.hide"
-    >
+<ul ng-class="{loading: ctrl.loading}">
     <li
-        ng-if="ctrl.actions.length"
-        ng-repeat="(k, action) in ctrl.actions"
+        ng-if="ctrl.messages.length && ctrl.messages.length > 15 && (ctrl.unreadOnly || ctrl.user.notifications.length)"
+        class="messages-actions"
+        >
+        <a
+            ng-if="ctrl.unreadOnly || ctrl.user.notifications.length"
+            ng-click="ctrl.filterUnread()"
+            ng-bind="ctrl.unreadOnly ? 'Afficher tout' : ('Actions en attente (' + ctrl.user.notifications.length + ')')"
+            ></a>
+        <a
+            ng-if="ctrl.user.notifications.length"
+            ng-click="ctrl.markAllAsRead()"
+            >
+            Tout marquer comme lu
+        </a>
+    </li>
+    <li
+        ng-if="ctrl.messages.length"
+        ng-repeat="(k, action) in ctrl.messages"
+        ng-show="ctrl.unreadOnly ? ctrl.user.notifications.indexOf(action.uuid) > -1 : true"
         class="action-item"
         ng-class="{unread: ctrl.user.notifications.indexOf(action.uuid) > -1}"
         ng-click="ctrl.showAction(action)"
@@ -51,7 +65,7 @@
         </div>
     </li>
     <li
-        ng-if="!ctrl.loading && !ctrl.actions.length"
+        ng-if="!ctrl.loading && !ctrl.messages.length"
         class="no-content"
         >
         Vous n'avez pas encore de messages. Rejoignez une action !
