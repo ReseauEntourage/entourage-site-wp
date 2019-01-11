@@ -218,10 +218,10 @@ jQuery(document).ready(function($) {
 	// APP DOWNLOAD BANNER //
 
 	if (!localStorage.getItem('no-app-download-banner'))
-		$('body').addClass('show-banner');
+		$('body').addClass('show-banner-app');
 
 	$('#banner-app-download').find('.close').on('click', function(){
-		$('body').removeClass('show-banner');
+		$('body').removeClass('show-banner-app');
 		localStorage.setItem('no-app-download-banner', 1);
 	});
 

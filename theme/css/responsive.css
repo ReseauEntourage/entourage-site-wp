@@ -264,24 +264,24 @@
 
 	/* DOWNLOAD APP BANNER */
 
-	body.show-banner #site-header {
+	body.show-banner-app #site-header {
 		margin-top: 150px;
 	}
 
-	body.show-banner #banner-app-download {
+	body.show-banner-app #banner-app-download {
 		top: 0;
 	}
 
-	body.show-banner #site-header-fixed {
+	body.show-banner-app #site-header-fixed {
 		top: 90px;
 	}
 
-	body.show-banner #donate-btn {
+	body.show-banner-app #donate-btn {
 		display: none;
 		top: 156px;
 	}
 
-	#banner-don {
+	#banner-top {
 		font-size: 14px;
 		display: flex;
 		align-items: center;
@@ -289,21 +289,21 @@
 		flex-direction: row-reverse;
 	}
 
-	#banner-don a {
+	#banner-top a {
 		font-size: 12px;
 		font-weight: 600;
 		margin-right: 10px;
 	}
 
-	body.show-banner.show-banner-don #site-header {
+	body.show-banner.show-banner-top #site-header {
 		margin-top: 190px;
 	}
 
-	body.show-banner.show-banner-don #banner-don {
+	body.show-banner.show-banner-top #banner-don {
 	    top: 90px;
 	}
 
-	body.show-banner.show-banner-don #site-header-fixed {
+	body.show-banner.show-banner-top #site-header-fixed {
 	    top: 130px;
 	}
 }

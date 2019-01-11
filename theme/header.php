@@ -106,7 +106,7 @@
 	<link rel="stylesheet" href="<?php asset_url('css/woocommerce.css'); ?>">
 </head>
 
-<body id="page-<?php echo get_post_field( 'post_name', get_post() ) ?>" <?php body_class("show-banner-don"); ?>>
+<body id="page-<?php echo get_post_field( 'post_name', get_post() ) ?>" <?php body_class( true ? "" : "show-banner-top"); ?>>
 
 	<header id="site-header" role="banner"
 		<?php if ( has_post_thumbnail() ): ?>
