@@ -434,15 +434,15 @@ strong {
  	transition: margin-top 0.5s ease;
 }
 
-body.show-banner-don #site-header {
+body.show-banner-top #site-header {
 	margin-top: 99px;
 }
 
-body.show-banner-don #site-header-fixed {
+body.show-banner-top #site-header-fixed {
 	top: 40px;
 }
 
-#banner-don {
+#banner-top {
     position: fixed;
     top: 0px;
     left: 0;
@@ -458,19 +458,19 @@ body.show-banner-don #site-header-fixed {
     cursor: pointer;
 }
 
-#banner-don div {
+#banner-top div {
 	position: relative;
 	display: inline-block;
 }
 
-#banner-don a {
+#banner-top a {
 	line-height: 25px;
 	height: 25px;
 	vertical-align: middle;
 	margin-left: 10px;
 }
 
-#banner-don #heart {
+#banner-top #heart {
 	display: inline-block;
 	height: 36px;
 	width: 38px;
@@ -480,7 +480,7 @@ body.show-banner-don #site-header-fixed {
 	text-align: center;
 }
 
-#banner-don #heart i {
+#banner-top #heart i {
     margin: -8px 0px 0 2px;
     color: #fff;
     font-size: 17px;

@@ -112,7 +112,7 @@
 		<?php if ( has_post_thumbnail() ): ?>
 			style="background-image: url(<?php echo the_post_thumbnail_url(); ?>);background-position: <?php echo $custom_fields['alignement_photo'][0]; ?>"
 		<?php endif ?>
-	>
+		>
 		<div id="banner-app-download">
 			<i class="close material-icons">close</i>
 			<div class="app-picture">
@@ -165,18 +165,14 @@
 			</div>
 		</div>
 
-		<?php if ($wp_query->post->ID != 417): ?>
-			<!--a id="donate-btn" href="/don" target="_blank">
-				<i class="material-icons">favorite</i>
-				<span><?php echo get_option('donate_text'); ?></span>
-			</a-->
-			<div id="banner-don">
+		<!--<?php if ($wp_query->post->ID != 417): ?>
+			<div id="banner-top">
 				<div id="heart" class="no-mobile"><i class="material-icons">favorite</i></div>
 				<span class="no-mobile">Pour Noël, réchauffons le coeur des sans-abri</span>
 				<span class="mobile-only">#LeDonDeChaleurHumaine</span>
 				<a class="btn white-btn" href="/le-don-de-chaleur-humaine?src=banner">Je fais un don</a>
 			</div>
-		<?php endif ?>
+		<?php endif ?>-->
 
 		<div id="site-header-title">
 			<h1><?php echo $custom_fields['titre'][0] ?></h1>
