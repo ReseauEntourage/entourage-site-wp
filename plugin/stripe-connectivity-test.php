@@ -4,7 +4,7 @@
 
     curl_setopt($ch, CURLOPT_URL,            "https://api.stripe.com/v1");
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_TIMEOUT,        3);
+    curl_setopt($ch, CURLOPT_TIMEOUT,        10);
 
     curl_exec($ch);
 
