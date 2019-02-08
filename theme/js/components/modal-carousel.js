@@ -30,7 +30,7 @@ angular.module('entourageApp')
             }
 
             ctrl.next = function() {
-              if (ctrl.currentIndex < 3){
+              if (ctrl.currentIndex < 2){
                 ctrl.currentIndex += 1;
               }
             }

@@ -3,7 +3,10 @@ angular.module('entourageApp')
     bindings: {
       user: '=',
       map: '=',
-      hide: '&'
+      public: '=',
+      actions: '=',
+      hide: '&',
+      onShowAction: '&'
     },
     controller: function($scope, $element, $attrs, $uibModal) {
       var ctrlParent = this;
@@ -90,39 +93,74 @@ angular.module('entourageApp')
             }
 
             getEvents = function() {
-              ctrl.loading = true;
+              if (ctrlParent.public) {
+                ctrl.events = ctrlParent.actions.filter(function(action){
+                  var mapPoly = new google.maps.Polygon({
+                    paths: [
+                      {
+                        lat: ctrlParent.map.getBounds().getNorthEast().lat(),
+                        lng: ctrlParent.map.getBounds().getNorthEast().lng()
+                      },
+                      {
+                        lat: ctrlParent.map.getBounds().getNorthEast().lat(),
+                        lng: ctrlParent.map.getBounds().getSouthWest().lng()
+                      },
+                      {
+                        lat: ctrlParent.map.getBounds().getSouthWest().lat(),
+                        lng: ctrlParent.map.getBounds().getSouthWest().lng()
+                      },
+                      {
+                        lat: ctrlParent.map.getBounds().getSouthWest().lat(),
+                        lng: ctrlParent.map.getBounds().getNorthEast().lng()
+                      },
+                    ]
+                  });
 
-              $.ajax({
-                type: 'GET',
-                url: getApiUrl() + '/feeds/outings',
-                data: {
-                  token: ctrlParent.user.token,
-                  latitude: ctrlParent.map.getCenter().lat(),
-                  longitude: ctrlParent.map.getCenter().lng(),
-                },
-                success: function(data) {
-                  if (data.feeds)
-                  {
-                    ctrl.events = data.feeds.map(function(action) {
-                      return transformAction(action.data);
-                    });
+                  if (action.group_type == 'outing' && action.status == 'open') {
+                    return google.maps.geometry.poly.containsLocation(new google.maps.LatLng(action.location.latitude, action.location.longitude), mapPoly);
                   }
-                  console.info('events', ctrl.events);
+                  return false
+                });
+                initDays();
+              } else {
+                ctrl.loading = true;
 
-                  initDays();
-                  ctrl.loading = false;
-                  $scope.$apply();
-                },
-                error: function(data) {
-                  initDays();
-                  ctrl.loading = false;
-                  $scope.$apply();
-                }
-              });
+                $.ajax({
+                  type: 'GET',
+                  url: getApiUrl() + '/feeds/outings',
+                  data: {
+                    token: ctrlParent.user.token,
+                    latitude: ctrlParent.map.getCenter().lat(),
+                    longitude: ctrlParent.map.getCenter().lng(),
+                  },
+                  success: function(data) {
+                    if (data.feeds)
+                    {
+                      ctrl.events = data.feeds.map(function(action) {
+                        return transformAction(action.data);
+                      });
+                    }
+                    console.info('events', ctrl.events);
+
+                    initDays();
+                    ctrl.loading = false;
+                    $scope.$apply();
+                  },
+                  error: function(data) {
+                    initDays();
+                    ctrl.loading = false;
+                    $scope.$apply();
+                  }
+                });
+              }
             }
 
             ctrl.close = function() {
               $uibModalInstance.close();
+            }
+
+            ctrl.openEvent = function(uuid) {
+              ctrlParent.onShowAction({uuid: uuid});
             }
 
             getEvents();

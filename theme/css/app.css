@@ -1160,6 +1160,7 @@ div.overlay.fade-out {
 
 #modal-calendar .calendar {
     width: 254px;
+    margin: auto;
 }
 
 #modal-calendar .week-days,
@@ -1169,16 +1170,18 @@ div.overlay.fade-out {
 }
 
 #modal-calendar .day {
+    position: relative;
     display: inline-block;
     min-width: 36px;
     max-width: 36px;
+    height: 35px;   
     line-height: 32px;
     font-size: 16px;
     text-align: center;
     font-weight: 300;   
 }
 
-#modal-calendar .day.today {
+#modal-calendar .day.today a {
     text-decoration: underline;
 }
 
@@ -1196,7 +1199,7 @@ div.overlay.fade-out {
 }
 
 #modal-calendar .day.active a:hover {
-    box-shadow: 0 0 0 5px #fff;
+    box-shadow: 0 0 0 2px #fff;
     text-decoration: underline;
 }
 
@@ -1210,6 +1213,20 @@ div.overlay.fade-out {
     width: 32px;
     height: 32px;
     line-height: 32px;
+}
+
+#modal-calendar .day em {
+    position: absolute;
+    top: 0;
+    right: -2px;
+    background: #ffffff;
+    font-size: 10px;
+    line-height: 14px;
+    border-radius: 10px;
+    padding: 0 3px;
+    min-width: 14px;
+    color: #ff5100;
+    box-shadow: 0 0 6px 0px #8e8e8e;
 }
 
 .popover-calendar-event:not(:last-child) {
@@ -1672,8 +1689,10 @@ div.overlay.fade-out {
     width: 18px;
     height: 18px;
     border-radius: 10px;
-    background-size: 100%;
+    background-size: contain;
     background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 /** MODAL PARTICIPANTS **/
@@ -1801,6 +1820,14 @@ div.overlay.fade-out {
     font-size: 48px;
 }
 
+#modal-profile-user .action-participants-picture-container .action-author-badge {
+    left: 61px;
+    width: 30px;
+    height: 30px;
+    border-radius: 20px;
+    border: 2px solid #fff;
+}
+
 #modal-profile-user .modal-profile-user-name {
     margin: 10px 0;
     text-align: center;
@@ -1885,25 +1912,36 @@ div.overlay.fade-out {
 
 #map-bottom-band {
     position: absolute;
-    bottom: -120px;
+    top: -120px;
     left: 0;
     width: 100%;
     padding: 20px;
+    display: flex;
+    align-items: center;   
     background: #ff5100;
     color: #fff;
-    font-size: 14px;
+    font-size: 15px;
+    line-height: 22px;
     z-index: 1;
-    transition: bottom 1s;
+    transition: top 1s;
 }
 
 #map-bottom-band.open {
-    bottom: 0px;
+    top: 60px;
 }
 
 #map-bottom-band a {
     font-weight: bold;
     text-decoration: underline;
     cursor: pointer;
+    color: #fff;
+}
+
+#map-bottom-band img {
+    margin-right: 20px;
+    height: 60px;
+    box-shadow: 0 0 10px 3px #0000001f;
+    border-radius: 50px; 
 }
 
 #map .popup-bubble-content {
@@ -1961,19 +1999,28 @@ div.overlay.fade-out {
 
 #current-action {
 	position: absolute;
-    bottom: -600px;
-    right: 18px;
+    top: 95px;
+    bottom: 0px;
+    right: -340px;
     width: 340px;
     z-index: 10;
-	transition: bottom 0.3s;
+	transition: right 0.3s;
 }
 
 #current-action > div {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
 }
 
 #current-action.open {
-	bottom: 0px;
+	right: 10px;
+}
+
+#current-action.show-over-modal {
+    z-index: 10000;
 }
 
 #current-action .action-actions {
@@ -2026,12 +2073,23 @@ div.overlay.fade-out {
 }
 
 #current-action .action-actions a.action-close {
+    padding-left: 14px;
     background-color: #333;
 }
 
+#current-action .action-actions a.action-close i {
+    margin-right: 0;
+    margin-left: 3px;
+    transition: transform 0.3s;
+}
+
+#current-action .action-actions a.action-close:hover i {
+    transform: translate(5px);
+}
+
 #current-action .action-content {
-    max-height: 430px;
     display: flex;
+    max-height: 100%;
     flex-direction: column;
     border-radius: 5px 5px 0 0;
     background: #fff;
@@ -2045,6 +2103,7 @@ div.overlay.fade-out {
     background: #f9f9f9;
     border-bottom: 1px solid #eee;
     border-radius: 5px 5px 0 0;
+    flex-shrink: 0;
 }
 
 #current-action .action-title > div {
@@ -2097,6 +2156,7 @@ div.overlay.fade-out {
 
 #current-action .action-chat {
 	padding: 20px;
+    flex-shrink: 10;
 	overflow: auto;
     font-size: 13px;
 }
@@ -2106,8 +2166,7 @@ div.overlay.fade-out {
     font-size: 12px;
     color: #6C6F73;
     text-align: left;
-    line-height: 26px;
-    padding-right: 10px;
+    padding-bottom: 5px;
 }
 
 #current-action .action-details + .action-description {
@@ -2217,6 +2276,7 @@ div.overlay.fade-out {
     background: #f9f9f9;
     border-top: 1px solid #eee;
     text-align: center;
+    flex-shrink: 0;
 }
 
 #current-action .action-new-message {
@@ -2437,6 +2497,7 @@ div.overlay.fade-out {
 
 .gm-bundled-control {
     zoom: 0.6;
+    z-index: 999;
 }
 
 

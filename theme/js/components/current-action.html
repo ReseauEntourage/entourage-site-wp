@@ -1,6 +1,6 @@
 <div
     id="current-action"
-    ng-class="{open: ctrl.open}"
+    ng-class="{open: ctrl.open, 'show-over-modal': ctrl.showOverModal}"
     >
     <div>
         <div class="action-actions">
@@ -19,7 +19,7 @@
                     ng-if="ctrl.is_admin && ctrl.action.status != 'closed' && ctrl.action.group_type != 'conversation'"
                     class="action-edit"
                     tooltip-placement="top"
-                    uib-tooltip="Editer votre action"
+                    uib-tooltip="Modifier votre action"
                     tooltip-append-to-body="true"
                     >
                     <i
@@ -75,10 +75,10 @@
                     class="no-icon action-close no-mobile"
                     ng-click="ctrl.hide(ctrl.action)"
                     >
-                    <i class="material-icons no-mobile">
-                        close
-                    </i>
                     Fermer la fenêtre
+                    <i class="material-icons">
+                        arrow_forward
+                    </i>
                 </a>
                 <a
                     class="action-close mobile-only"
@@ -335,16 +335,16 @@
         user="ctrl.user"
         message="ctrl.currentMessage"
         ></modal-new-message>
-    <new-action
+    <modal-new-action
         ng-if="ctrl.editAction"
         user="ctrl.user"
         hide="ctrl.editAction = false"
         action="ctrl.action"
-        ></new-action>
-    <new-event
+        ></modal-new-action>
+    <modal-new-event
         ng-if="ctrl.editEvent"
         user="ctrl.user"
         hide="ctrl.editEvent = false"
         action="ctrl.action"
-        ></new-event>
+        ></modal-new-event>
 </div>

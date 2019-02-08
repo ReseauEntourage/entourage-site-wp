@@ -19,3 +19,8 @@
 	class="action-author-badge"
 	ng-style="{'background-image': 'url(' + ctrl.action.author.partner.small_logo_url + ')'}"
 	></div>
+<div
+    ng-if="ctrl.action.author.roles.indexOf('ambassador') > -1"
+    class="action-author-badge"
+    ng-style="{'background-image': 'url(/wp-content/themes/entourage/img/logo-entourage-orange.png)'}"
+    ></div>

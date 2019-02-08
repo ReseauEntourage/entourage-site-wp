@@ -151,6 +151,10 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
       getActions();
 
       initSearchbox();
+
+      if (getQueryParams('page') && getQueryParams('page') == 'calendrier') {
+        map.toggleModal('calendar');
+      }
     }
 
 
@@ -173,7 +177,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
     getPublicActions = function() {
       $.ajax({
         type: "GET",
-        url: "https://entourage-csv.s3-eu-west-1.amazonaws.com/production/entourages.csv",
+        url: "https://entourage-csv.s3.eu-west-1.amazonaws.com/production/entourages.csv",
         dataType: "text",
         success: function(data) {
           data = $.csv.toObjects(data);
@@ -189,6 +193,15 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
               avatar_url: action.author_avatar_url
             };
             action.description = replaceURLWithHTMLLinks(action.description);
+
+            if (action.group_type == 'outing') {
+              action.metadata = {
+                starts_at: action.event_starts_at,
+                display_address: action.event_display_address,
+                google_place_id: action.google_place_id,
+              }
+            }
+
             action = createMarker(action);
             map.actions.push(action);
 
@@ -333,15 +346,10 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
               var announcement = announcements[id];
 
               if (id == 0) {
-                map.actions.splice(1, 0, announcement);
+                map.actions.splice(2, 0, announcement);
               }
               else {
-                if (map.actions.length > 4) {
-                  map.actions.splice(5, 0, announcement);
-                }
-                else {
-                  map.actions.splice(map.actions.length, 0, announcement);
-                }
+                map.actions.splice(5 * id, 0, announcement);
               }
             }
 
@@ -601,6 +609,10 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
 
     map.toggleModal = function(name, token) {
       map.showModal[name] = !map.showModal[name];
+
+      if (name == 'calendar' && map.showModal[name]) {
+        map.currentAction = null;
+      }
 
       if (name == 'register' && map.showModal.register && !isDemoMode()) {
         ga('send', 'event', 'Click', 'Join', token);

@@ -6,7 +6,7 @@
         <a
             ng-if="ctrl.unreadOnly || ctrl.user.notifications.length"
             ng-click="ctrl.filterUnread()"
-            ng-bind="ctrl.unreadOnly ? 'Afficher tout' : ('Actions en attente (' + ctrl.user.notifications.length + ')')"
+            ng-bind="ctrl.unreadOnly ? 'Afficher tout' : ('En attente (' + ctrl.user.notifications.length + ')')"
             ></a>
         <a
             ng-if="ctrl.user.notifications.length"

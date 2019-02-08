@@ -172,7 +172,7 @@
                         <ul uib-dropdown-menu>
                             <li>
                                 <a class="dropdown-toggle">
-                                    Date de création
+                                    Mis à jour il y a...
                                 </a>
                                 <ul class="dropdown-menu">
                                     <!--li>
@@ -218,37 +218,6 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li>
-                                <a class="dropdown-toggle">
-                                    Statut
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a
-                                            ng-click="map.filterActions('status', '')"
-                                            ng-class="{selected: !map.filters.status}"
-                                            >
-                                            Peu importe
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            ng-click="map.filterActions('status', 'open')"
-                                            ng-class="{selected: map.filters.status == 'open'}"
-                                            >
-                                            En cours
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            ng-click="map.filterActions('status', 'closed')"
-                                            ng-class="{selected: map.filters.status == 'closed'}"
-                                            >
-                                            Terminé
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
                             <li ng-if="!map.public">
                                 <a class="dropdown-toggle">
                                     Catégorie
@@ -280,17 +249,47 @@
                                     </li>
                                 </ul>
                             </li>
+                            <li>
+                                <a class="dropdown-toggle">
+                                    Statut
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a
+                                            ng-click="map.filterActions('status', '')"
+                                            ng-class="{selected: !map.filters.status}"
+                                            >
+                                            Peu importe
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a
+                                            ng-click="map.filterActions('status', 'open')"
+                                            ng-class="{selected: map.filters.status == 'open'}"
+                                            >
+                                            En cours
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a
+                                            ng-click="map.filterActions('status', 'closed')"
+                                            ng-class="{selected: map.filters.status == 'closed'}"
+                                            >
+                                            Terminé
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
                         </ul>
                     </div>
                 </div>
             </div>
             <a
-                ng-if="!map.public"
                 id="app-events"
                 class="btn"
                 ng-click="map.toggleModal('calendar')"
                 >
-                <i class="material-icons">event</i> Calendrier
+                <i class="material-icons">event</i> Calendrier des événements
             </a>
         </div>
         <div
@@ -364,7 +363,7 @@
                             </li>
                             <li class="dropdown-menu-group">
                                 <a href="https://www.entourage.social/devenir-ambassadeur/" target="_blank">
-                                    <i class="material-icons">mic</i> Devenir ambassadeur d'Entourage'
+                                    <i class="material-icons">mic</i> Devenir ambassadeur d'Entourage
                                 </a>
                                 <a href="http://www.simplecommebonjour.org/" target="_blank">
                                     <i class="material-icons">question_answer</i> Se former à la rencontre 
@@ -581,7 +580,10 @@
         ng-if="map.showModal.calendar"
         user="map.loggedUser"
         map="map.mapObject"
+        public="map.public"
+        actions="map.actions"
         hide="map.toggleModal('calendar')"
+        on-show-action="map.showAction(uuid)"
         ></modal-calendar>
 
     <div id="page-content">
@@ -602,19 +604,28 @@
                 id="map-bottom-band"
                 ng-class="{open: map.emptyArea && !map.refreshing}"
                 >
-                <i class="material-icons">error</i> Il y a peu d'action par ici... Et si vous y ajoutiez un peu de chaleur humaine en
-                <a
-                    ng-if="map.public"
-                    ng-click="map.toggleModal('register', 'Bottom')"
-                    >
-                    rejoignant la communauté Entourage
-                </a>
-                <a
-                    ng-if="!map.public"
-                    ng-click="map.toggleModal('newAction')"
-                    >
-                    créant une action solidaire
-                </a> ?!
+                <img src="/wp-content/themes/entourage/img/carousel-3.png">
+                <div>
+                    Il y a peu d'action par ici... Répandez la chaleur humaine jusqu'ici en
+                    <a
+                        ng-if="map.public"
+                        ng-click="map.toggleModal('register', 'Bottom')"
+                        >
+                        rejoignant la communauté Entourage&nbsp;!
+                    </a>
+                    <span ng-if="!map.public">
+                        <a ng-click="map.toggleModal('newAction')">
+                            créant une action solidaire
+                        </a>
+                        ou en 
+                        <a ng-click="map.toggleModal('newEvent')">
+                            organisant un événement&nbsp;!
+                        </a>
+                    </span>
+                    <div class="no-mobile">
+                        Vous voulez faire plus et vous associer au développement d'Entourage dans votre ville ? <a href="https://entourage-asso.typeform.com/to/RO79jI" target="_blank">Cliquez ici </a> pour devenir ambassadeur !
+                    </div>
+                </div>
             </div>
             <current-action
                 map="map.mapObject"
@@ -623,6 +634,7 @@
                 show-register="map.toggleModal('register', token)"
                 show-profile="map.showProfile(id)"
                 user="map.loggedUser"
+                show-over-modal="map.showModal.calendar"
                 ></current-action>
 
             <div id="map-container"></div>

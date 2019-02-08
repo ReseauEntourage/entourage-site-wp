@@ -18,6 +18,11 @@
                 ng-class="{'no-picture': !ctrl.profile.avatar_url}"
                 ng-style="{'background-image': 'url(' + ctrl.profile.avatar_url + ')'}"
                 ></div>
+            <div
+                ng-if="ctrl.profile.roles.indexOf('ambassador') > -1"
+                class="action-author-badge"
+                ng-style="{'background-image': 'url(/wp-content/themes/entourage/img/logo-entourage-orange.png)'}"
+                ></div>
         </div>
     </div>
     <h2
@@ -44,10 +49,13 @@
                 <span ng-if="ctrl.profile.stats.entourage_count == 1">action créée</span>
             </li>
         </ul>
-        <ul ng-if="ctrl.profile.organization || ctrl.profile.partner">
+        <ul ng-if="ctrl.profile.organization || ctrl.profile.partner || ctrl.profile.roles.indexOf('ambassador') > -1">
             <li>Associations</li>
+            <li ng-if="ctrl.profile.roles.indexOf('ambassador') > -1">
+                <i class="material-icons">favorite</i> Ambassadeur d'<b>Entourage</b>
+            </li>
             <li ng-if="ctrl.profile.partner">
-                <i class="material-icons">favorite</i> Sympathisant de <a ng-href="http://{{ ctrl.profile.partner.website_url }}" target="_blank" ng-bind="ctrl.profile.partner.name"></a>
+                <i class="material-icons">thumb_up</i> Sympathisant de <a ng-href="http://{{ ctrl.profile.partner.website_url }}" target="_blank" ng-bind="ctrl.profile.partner.name"></a>
             </li>
             <li ng-if="ctrl.profile.organization">
                 <i class="material-icons">directions_walk</i> Maraudeur avec <b ng-bind="ctrl.profile.organization.name"></b>

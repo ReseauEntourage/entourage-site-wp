@@ -8,10 +8,14 @@ angular.module('entourageApp')
       showRegister: '&',
       showProfile: '&',
       user: '=',
+      showOverModal: "="
     },
     controllerAs: 'ctrl',
     controller: function($scope, $element, $attrs, $uibModal) {
       var ctrl = this;
+
+      ctrl.editEvent = false;
+      ctrl.editAction = false;
 
       $scope.$watch('ctrl.action', function(newValue, oldValue) {
         if (newValue && newValue != oldValue) {
@@ -497,10 +501,11 @@ angular.module('entourageApp')
       }
 
       ctrl.edit = function() {
-        if (ctrl.action.group_type == 'outing')
+        if (ctrl.action.group_type == 'outing') {
           ctrl.editEvent = true;
-        else if (ctrl.action.group_type == 'action')
+        } else if (ctrl.action.group_type == 'action') {
           ctrl.editAction = true;
+        }
       }
 
       ctrl.hide = function(action) {
@@ -508,8 +513,9 @@ angular.module('entourageApp')
           return;
         }
 
-        if (action.marker)
+        if (action.marker) {
           toggleMarker(action.uuid, true);
+        }
 
         ctrl.open = false;
 

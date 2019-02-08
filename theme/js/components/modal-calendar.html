@@ -5,7 +5,7 @@
         >
         <i class="material-icons">arrow_back</i>
     </a>
-    Les événements à venir
+    Les événements dans le coin
 </div>
 <div
     id="modal-calendar"
@@ -59,12 +59,18 @@
                         past: day.past,
                         active: day.events.length
                     }"
+                    ng-click="day.events.length == 1 && ctrl.openEvent(day.events[0].uuid)"
                     uib-popover-html="day.html"
+                    popover-enable="day.events.length > 1"
                     popover-trigger="'outsideClick'"
                     popover-placement="top"
                     popover-append-to-body="true"
                     >
                     <a ng-bind="day.number"></a>
+                    <em
+                        ng-if="day.events.length > 1"
+                        ng-bind="day.events.length"
+                        ></em>
                 </div>
             </div>
         </div>

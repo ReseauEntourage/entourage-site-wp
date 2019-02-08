@@ -61,7 +61,6 @@ function getApiUrl() {
 }
 
 function getAjaxHeaders(request) {
-  console.info(request);
   request.setRequestHeader("X-API-KEY", "26fb18404cb9d6afebc87349");
   return request;
 }
