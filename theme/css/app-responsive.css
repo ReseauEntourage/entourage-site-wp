@@ -67,7 +67,7 @@
     }
 
     #page-title h1 {
-        margin: 0 50px;
+        margin: 0 10px;
     }
 
 
@@ -125,6 +125,10 @@
         padding: 15px;
         flex-direction: initial;
         display: flex;
+    }
+
+    #help-menu {
+        margin-right: 6px;
     }
 
     #app-search {
@@ -397,8 +401,6 @@
 
     #current-action > div {
         width: 100%;
-        height: inherit;
-        max-height: 100%;
         justify-content: start;
     }
 
@@ -447,6 +449,14 @@
         color: #646464;
     }
 
+    #current-action .action-actions a.no-icon i {
+        font-size: 17px;
+    }
+
+    #current-action .action-actions a.action-close:hover i {
+        transform: translate(-5px);
+    }
+
     #current-action .action-content {
         border-radius: 0;
         box-shadow: none;
@@ -461,12 +471,14 @@
     }
 
     #current-action .action-chat {
-        max-height: 100%;
-        flex-grow: 1;
     }
 
     #current-action .action-buttons {
         border-radius:  0 0 5px 5px;
+    }
+
+    #current-action .action-buttons .btn {
+        overflow: hidden;   
     }
 
     #current-action .tooltip {

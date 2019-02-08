@@ -32,6 +32,8 @@ angular.module('entourageApp')
             ctrl.next = function() {
               if (ctrl.currentIndex < 2){
                 ctrl.currentIndex += 1;
+              } else {
+                ctrl.close();
               }
             }
 

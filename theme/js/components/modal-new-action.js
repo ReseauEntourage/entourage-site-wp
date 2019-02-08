@@ -130,6 +130,9 @@ angular.module('entourageApp')
                 },
                 success: function(data) {
                   if (data.entourage) {
+                    if (!isDemoMode()) {
+                      ga('send', 'event', 'Engagement', 'NewAction', 'WebApp');
+                    }
                     window.history.pushState('page2', data.entourage.title, '/app/?token=' + data.entourage.id);
                     window.location.reload();
                   } else {

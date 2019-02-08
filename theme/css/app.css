@@ -2360,32 +2360,9 @@ div.overlay.fade-out {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #ffa018;
-    border-radius: 100%;
+    background: #ffa018bd;
+    border-radius: 50%;
     transform-origin: center;
-    transition: background 0.3s, box-shadow 0.3s, transform 0.3s;
-}
-
-.gm-style .marker-action.status-open {
-    opacity: 1 !important;
-    animation: pulse 3s infinite;
-}
-
-.gm-style .marker-action.status-open:nth-child(2n) {
-	animation: pulseBis 3s infinite;
-}
-
-.gm-style .marker-action.status-open:nth-child(3n) {
-	animation: pulseTer 3s infinite;
-}
-
-.gm-style .marker-action.status-open:hover,
-.gm-style .marker-action.active:not(.hide-animation) {
-    opacity: 1 !important;
-    background: #ff5100;
-    animation: pulseActive 0.7s infinite !important;
-    z-index: 9999 !important;
-    transform: scale(1.2);
 }
 
 .gm-style .marker-action.status-closed {
@@ -2404,9 +2381,77 @@ div.overlay.fade-out {
     animation: none !important;
 }
 
+.gm-style .marker-action.status-open {
+    overflow: visible !important;
+    opacity: 1 !important;
+    animation: pulse 3s infinite cubic-bezier(0.4, 0, 1, 1);
+    box-shadow: inset 0 0 0px 1px #f59c1f;
+}
+
+.gm-style .marker-action.status-open:before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: #ffa018;
+    opacity: 0;
+    animation: scaleIn 3s infinite cubic-bezier(0.4, 0, 1, 1);
+}
+
+.gm-style .marker-action.status-open:nth-child(2n),
+.gm-style .marker-action.status-open:nth-child(2n):before {
+    animation-delay: 1s;
+}
+
+.gm-style .marker-action.status-open:nth-child(3n),
+.gm-style .marker-action.status-open:nth-child(3n):before {
+    animation-delay: 2s;
+}
+
+.gm-style .marker-action.status-open:hover,
+.gm-style .marker-action.active:not(.hide-animation) {
+    opacity: 1 !important;
+    z-index: 9999 !important;
+    box-shadow: inset 0 0 0px 1px #c53f00;
+}
+
+.gm-style .marker-action.status-open:hover,
+.gm-style .marker-action.active:not(.hide-animation),
+.gm-style .marker-action.status-open:hover:before,
+.gm-style .marker-action.active:not(.hide-animation):before {
+    background: #ff5100;
+    animation-duration: 1s;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.9);
+    }
+    70% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(0.9);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0);
+        opacity: .8;
+    }
+    to {
+        transform: scale(2.5);
+        opacity: 0;
+    }
+}          
+
 .gm-style .marker-action:after {
-    margin-top: -1px;
-    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     font-family: "Material Icons";
     color: #fff;
     font-size: 20px;
@@ -2424,75 +2469,17 @@ div.overlay.fade-out {
     content: "\e0be";
 }
 
+.gm-style .marker-action.event:after {
+    content: "\e878";
+    margin-top: 0;
+}
+
 .gm-style .marker-action.join-status-pending:after {
     content: "\e192";
 }
 
 .gm-style .marker-action.status-closed:after {
     content: "\e876";
-}
-
-@keyframes pulse {
-    0% {
-        box-shadow: 0 0 6px 4px #ff8404;
-    }
-    50% {
-        box-shadow: 0 0 6px 7px #ff8404;
-    }
-    100% {
-        box-shadow: 0 0 6px 4px #ff8404;
-    }
-}
-
-@keyframes pulseBis {
-    0% {
-        box-shadow: 0 0 6px 4px #ff8404;
-    }
-    10% {
-        box-shadow: 0 0 6px 4px #ff8404;
-    }
-    50% {
-        box-shadow: 0 0 6px 7px #ff8404;
-    }
-    100% {
-        box-shadow: 0 0 6px 4px #ff8404;
-    }
-}
-
-@keyframes pulseTer {
-    0% {
-        box-shadow: 0 0 6px 4px #ff8404;
-    }
-    20% {
-        box-shadow: 0 0 6px 4px #ff8404;
-    }
-    50% {
-        box-shadow: 0 0 6px 7px #ff8404;
-    }
-    100% {
-        box-shadow: 0 0 6px 4px #ff8404;
-    }
-}
-
-@keyframes pulseActive {
-    0% {
-        box-shadow: 0 0 6px 4px #e04e0a;
-    }
-    50% {
-        box-shadow: 0 0 6px 6px #e04e0a;
-    }
-    100% {
-        box-shadow: 0 0 6px 4px #e04e0a;
-    }
-}
-
-@keyframes rotate {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
 }
 
 .gm-bundled-control {

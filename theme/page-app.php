@@ -69,6 +69,7 @@
     <script src="<?php asset_url('js/lib/angular.min.js'); ?>" type="text/javascript"></script>
     <!--script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-animate.min.js" type="text/javascript"></script-->
     <script src="<?php asset_url('js/lib/angular-sanitize.min.js'); ?>" type="text/javascript"></script>
+    <script src="<?php asset_url('js/lib/angular-touch.min.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/lib/ui-bootstrap-tpls-2.5.0.min.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/lib/image-crop.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/lib/jquery.csv.min.js'); ?>" type="text/javascript"></script>
@@ -208,14 +209,6 @@
                                             Moins d'un mois
                                         </a>
                                     </li>
-                                    <li>
-                                        <a
-                                            ng-click="map.filterActions('period', '90')"
-                                            ng-class="{selected: map.filters.period == '90'}"
-                                            >
-                                            Moins de 3 mois
-                                        </a>
-                                    </li>
                                 </ul>
                             </li>
                             <li ng-if="!map.public">
@@ -309,7 +302,7 @@
                     </a>
                     <div uib-dropdown-menu>
                         <ul>
-                            <li class="dropdown-menu-group no-mobile">
+                            <li class="dropdown-menu-group">
                                 <a ng-click="map.toggleModal('carousel')">
                                     <i class="material-icons">info</i> Comment ça marche ?
                                 </a>
@@ -440,14 +433,6 @@
                     </a>
                     <div uib-dropdown-menu>
                         <ul>
-                            <li class="dropdown-menu-group mobile-only">
-                                <a ng-click="map.toggleModal('carousel')">
-                                    <i class="material-icons">info</i> Comment ça marche ?
-                                </a>
-                                <a href="http://www.entourage.social/" target="_blank">
-                                    <i class="material-icons">call_made</i> Visiter le site d'Entourage
-                                </a>
-                            </li>
                             <li class="dropdown-menu-group">
                                 <a ng-click="map.toggleModal('profileEdit')">
                                     <i class="material-icons">person_pin</i> Modifier mon profil
@@ -478,7 +463,7 @@
                     </a>
                     <div uib-dropdown-menu>
                         <ul>
-                            <li class="dropdown-menu-group no-mobile">
+                            <li class="dropdown-menu-group">
                                 <a ng-click="map.toggleModal('carousel')">
                                     <i class="material-icons">info</i> Comment ça marche ?
                                 </a>

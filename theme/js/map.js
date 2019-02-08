@@ -1,4 +1,4 @@
-angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
+angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
   .controller('MapController', ['$scope', '$filter', '$http', '$uibModal', '$q', function($scope, $filter, $http, $uibModal, $q) {
     map = this
     map.infoWindow = null;
@@ -508,6 +508,10 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
         classes.push('unread');
       }
 
+      if (action.group_type == 'outing') {
+        classes.push('event');
+      }
+
       classes.push('id:' + action.uuid);
 
       // create marker
@@ -610,7 +614,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper'])
     map.toggleModal = function(name, token) {
       map.showModal[name] = !map.showModal[name];
 
-      if (name == 'calendar' && map.showModal[name]) {
+      if ((name == 'calendar' || name == 'login') && map.showModal[name]) {
         map.currentAction = null;
       }
 

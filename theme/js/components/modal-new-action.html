@@ -13,10 +13,12 @@
     id="modal-new-action"
     class="modal-body"
     ng-class="{loading: ctrl.loading}"
+    ng-swipe-right="ctrl.close()"
     >
     <ul
         id="terms-list"
         ng-show="!ctrl.termsAccepted"
+        ng-swipe-left="ctrl.termsAccepted = true"
         >
         <li>
             <div class="material-icons">record_voice_over</div>
