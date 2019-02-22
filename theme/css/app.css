@@ -114,6 +114,12 @@ a[href]:hover {
     position: relative;
 }
 
+.dropdown-menu li.with-separator {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
 .dropdown-menu li.dropdown-menu-group {
     padding: 15px 0;
     border-top: 1px solid #f2f2f2;
@@ -132,13 +138,14 @@ a[href]:hover {
 }
 
 .dropdown-menu li > a {
-    display: block;
+    display: flex;
     padding: 0 20px;
     height: 30px;
     line-height: 31px;
     text-align: left;
     cursor: pointer;
     color: inherit;
+    align-items: center;
 }
 
 .dropdown-menu li > a:focus,
@@ -155,6 +162,10 @@ a[href]:hover {
     margin-right: 5px;
     font-size: 18px;
     color: #575757;
+}
+
+.dropdown-menu li > a .action-icon {
+    margin-right: 5px;
 }
 
 .dropdown-menu li > a.dropdown-toggle:after {
@@ -669,16 +680,20 @@ div.overlay.fade-out {
 	top: -100px;
 }
 
-#site-header-left {
-    margin-left: 61px;
-    flex-grow: 1;
-}
-
 #site-header-left,
 #site-header-right {
     display: flex;
     height: 100%;
     align-items: center;
+}
+
+#site-header-left {
+    margin-left: 61px;
+    flex-grow: 1;
+}
+
+#site-header-left > *:not(:last-child) {
+    margin-right: 15px;
 }
 
 #site-header-right {
@@ -717,6 +732,15 @@ div.overlay.fade-out {
 
 #site-header-info {
     padding-right: 10px;
+}
+
+.site-header-btn {
+    padding: 0 15px;
+    box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.2);
+}
+
+.site-header-btn:hover {
+    box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.2);
 }
 
 
@@ -793,15 +817,6 @@ div.overlay.fade-out {
     background: #454545;
 }
 
-#app-events {
-    margin-left: 20px;
-    padding: 0 15px;
-    box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.2);
-}
-
-#app-events:hover {
-    box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.2);
-}
 
 /** NEW ACTION **/
 
@@ -1526,6 +1541,7 @@ div.overlay.fade-out {
     font-style: normal;
     vertical-align: text-top;
     color: #fff;
+    flex-shrink: 0;
 }
 
 .action-icon.contribution {
@@ -1585,6 +1601,62 @@ div.overlay.fade-out {
 
 .action-icon.outing:before {
     content: "\e614";
+}
+
+.poi-icon.category-1 {
+    background: #b74bb4;
+}
+
+.poi-icon.category-1:before {
+    content: "\e56c";
+}
+
+.poi-icon.category-2 {
+    background: #27bb5b;
+}
+
+.poi-icon.category-2:before {
+    content: "\e88a";
+}
+
+.poi-icon.category-3 {
+    background: #f54e7c;
+}
+
+.poi-icon.category-3:before {
+    content: "\e548";
+}
+
+.poi-icon.category-4 {
+    background: orange;
+}
+
+.poi-icon.category-4:before {
+    content: "\e544";
+}
+
+.poi-icon.category-5 {
+    background: #6f6e6e;
+}
+
+.poi-icon.category-5:before {
+    content: "\e87a";
+}
+
+.poi-icon.category-6 {
+    background: #e880d2;
+}
+
+.poi-icon.category-6:before {
+    content: "\eb4c";
+}
+
+.poi-icon.category-7 {
+    background: #22bfa2;
+}
+
+.poi-icon.category-7:before {
+    content: "\e7ef";
 }
 
 .action-item .action-status {
@@ -1965,6 +2037,10 @@ div.overlay.fade-out {
     border-radius: 5px 5px 0 0;
 }
 
+#map .popup-bubble-content .popup-bubble-content-header:last-child {
+    border-radius: 5px;
+}
+
 #map .popup-bubble-content .popup-bubble-content-bottom {
     padding: 10px 15px;
 }
@@ -2149,7 +2225,18 @@ div.overlay.fade-out {
     line-height: 13px;
 }
 
-#current-action .action-address-link {
+#current-action.is-poi .action-address {
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: start;
+    line-height: 18px;
+}
+
+#current-action.is-poi .action-address i {
+    font-size: 15px;
+}
+
+#current-action .action-address a {
     color: #ff5100;
     text-decoration: underline;
 }
@@ -2349,6 +2436,7 @@ div.overlay.fade-out {
     padding: 0 10px;
     height: 37px;
     line-height: 37px;
+    flex-shrink: 0;
 }
 
 
@@ -2363,6 +2451,7 @@ div.overlay.fade-out {
     background: #ffa018bd;
     border-radius: 50%;
     transform-origin: center;
+    z-index: 1 !important;
 }
 
 .gm-style .marker-action.status-closed {
@@ -2485,6 +2574,32 @@ div.overlay.fade-out {
 .gm-bundled-control {
     zoom: 0.6;
     z-index: 999;
+}
+
+
+.gm-style .marker-poi {
+    margin-top: -7px;
+    margin-left: -7px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1 !important;
+    border-radius: 5px;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.2);
+    transform-origin: center;
+    transition: transform 0.3s,
+}
+
+.gm-style .marker-poi:before {
+    margin-top: -1px;
+    font-family: "Material Icons";
+    color: #fff;
+    font-size: 11px;
+}
+
+.gm-style .marker-poi.active,
+.gm-style .marker-poi:hover {
+    transform: scale(1.2);
 }
 
 

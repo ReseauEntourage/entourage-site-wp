@@ -1,3 +1,19 @@
+@media (max-width: 1080px) {
+
+    #help-menu .btn,
+    .site-header-btn {
+        font-size: 0;
+        padding: 0 10px;    
+    }
+
+    #help-menu .btn i,
+    .site-header-btn i.material-icons {
+        margin: 0;
+    }
+
+}
+
+
 /*** MOBILE VIEW */
 
 @media (max-width: 800px) {
@@ -127,17 +143,20 @@
         display: flex;
     }
 
+    #site-header-left > *:not(:last-child) {
+        margin-right: 10px;
+    }
+
     #help-menu {
         margin-right: 6px;
     }
 
     #app-search {
         width: 100%;
-        margin-right: 10px;
         background: #111;
     }
 
-    #app-search #app-filters .dropdown > .dropdown-menu {
+    #site-header-left .dropdown > .dropdown-menu {
         position: fixed;
         top: 100px;
         left: 0;
@@ -161,14 +180,15 @@
         width: 100%;   
     }
 
-    #app-events {
+    .site-header-btn {
         margin: 0;
         font-size: 0;
         padding: 0 8px;
         background: #111;
         color: #b9b9b9;
     }
-    #app-events i {
+
+    .site-header-btn i {
         margin: 0;
     }
 
@@ -382,6 +402,10 @@
     .gm-style .marker-action {
         animation: none !important;
         box-shadow: 0 0 6px 4px #ff8404;
+    }
+
+    .gm-style .marker-action:before {
+        animation: none !important;
     }
 
     button.gm-control-active {

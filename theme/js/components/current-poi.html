@@ -1,0 +1,77 @@
+<div
+    id="current-action"
+    class="is-poi"
+    ng-class="{open: ctrl.open}"
+    ng-swipe-right="ctrl.hide(ctrl.poi)"
+    >
+    <div>
+        <div class="action-actions">
+            <div class="action-left-actions"></div>
+            <div class="action-right-actions">
+                <a
+                    class="no-icon action-close no-mobile"
+                    ng-click="ctrl.hide(ctrl.poi)"
+                    >
+                    Fermer la fenêtre
+                    <i class="material-icons">
+                        arrow_forward
+                    </i>
+                </a>
+                <a
+                    class="action-close mobile-only"
+                    ng-click="ctrl.hide(ctrl.poi)"
+                    >
+                    <i class="material-icons mobile-only">
+                        arrow_back
+                    </i>
+                </a>
+            </div>
+        </div>
+        <div
+            class="action-content"
+            ng-class="{loading: ctrl.loading}"
+            >
+            <div class="action-title">
+                <div>
+                    <div
+                        class="action-icon poi-icon"
+                        ng-class="'category-' + ctrl.poi.category_id"
+                        ></div>
+                    <h2
+                        class="capitalize-first-letter"
+                        ng-bind="ctrl.poi.name"
+                        ></h2>
+                </div>
+                <div
+                    ng-if="ctrl.poi.adress"
+                    class="action-address"
+                    >
+                    <div>
+                        <i class="material-icons">location_on</i>
+                        <span ng-bind="ctrl.poi.adress"></span>
+                    </div>
+                    <div ng-if="ctrl.poi.phone">
+                        <i class="material-icons">phone</i>
+                        <a
+                            ng-href="{{ 'tel:' + ctrl.poi.phone}}"
+                            ng-bind="ctrl.poi.phone"
+                            ></a>
+                    </div>
+                </div>
+            </div>
+            <div class="action-chat">
+                <div ng-if="ctrl.action.join_status != 'accepted'">
+                    <p
+                        ng-if="ctrl.poi.description"
+                        class="action-description"
+                        >
+                        <span
+                            class="capitalize-first-letter"
+                            ng-bind-html="ctrl.poi.description|linkify|showbr|trusted"
+                            ></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

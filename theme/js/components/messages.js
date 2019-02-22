@@ -63,7 +63,7 @@ angular.module('entourageApp')
       ctrl.pushNotification = function(notif) {
         if (ctrl.user.notifications.indexOf(notif) == -1) {
           ctrl.user.notifications.push(notif);
-          document.title = 'Entourage (' + ctrl.user.notifications.length + ')';
+          document.title = document.title.replace(/Entourage( \([0-9]*\))? \|/g, 'Entourage (' + ctrl.user.notifications.length + ') |');
         }
       }
 
@@ -72,9 +72,9 @@ angular.module('entourageApp')
         if (index > -1) {
           ctrl.user.notifications.splice(index, 1);
           if (ctrl.user.notifications.length) {
-            document.title = 'Entourage (' + ctrl.user.notifications.length + ')';
+            document.title = document.title.replace(/Entourage( \([0-9]*\))? \|/g, 'Entourage (' + ctrl.user.notifications.length + ') |');
           } else {
-            document.title = 'Entourage';
+            document.title = document.title.replace(/Entourage( \([0-9]*\))? \|/g, 'Entourage |');
           }
         }
       }

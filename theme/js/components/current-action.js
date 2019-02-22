@@ -41,10 +41,6 @@ angular.module('entourageApp')
 
         if (ctrl.action.marker) {
           toggleMarker(ctrl.action.uuid);
-
-          if (ctrl.public) {
-            ctrl.map.setZoom(13);
-          }
         }
         
         if (!ctrl.public) {
@@ -57,10 +53,6 @@ angular.module('entourageApp')
             ctrl.markAsRead();
 
             $($element).find('.action-chat').scrollTop(20000);
-          }
-          else if (!ctrl.action.users) {
-            // as the action.number_of_people is wrong for the moment (TO BE REMOVED)
-            // ctrl.getUsers();
           }
         }
 
@@ -540,7 +532,11 @@ angular.module('entourageApp')
           var index = ctrl.user.notifications.indexOf(ctrl.action.uuid);
           if (index > -1) {
             ctrl.user.notifications.splice(index, 1);
-            document.title = 'Entourage (' + ctrl.user.notifications.length + ')';
+            if (ctrl.user.notifications.length) {
+              document.title = document.title.replace(/Entourage( \([0-9]*\))? \|/g, 'Entourage (' + ctrl.user.notifications.length + ') |');
+            } else {
+              document.title = document.title.replace(/Entourage( \([0-9]*\))? \|/g, 'Entourage |');
+            }
           }
         }
 
@@ -561,7 +557,7 @@ angular.module('entourageApp')
       }
 
       toggleMarker = function(id, hide) {
-        $('#marker-action-' + id).toggleClass('active', !hide);
+        $('#marker-map-' + id).toggleClass('active', !hide);
       }
     }
   });

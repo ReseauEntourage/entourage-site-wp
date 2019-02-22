@@ -190,7 +190,7 @@ a:hover {
 }
 
 .btn i.material-icons {
-    margin-right: 7px;
+    margin-right: 5px;
     font-size: 16px;
     margin-top: -1px;
 }
@@ -231,12 +231,12 @@ a:hover {
 }
 
 .parent-select .btn i.material-icons {
-    width: 41px;
+	width: 41px;
     text-align: center;
-    line-height: 41px;
     margin-right: 0px;
     color: #b9b9b9;
     flex-shrink: 0;
+    line-height: 41px;
 }
 
 .parent-select .btn:after {
