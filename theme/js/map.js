@@ -490,7 +490,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
               // display action title when marker hovered
               poi.marker.addListener('mouseover', function() {
                 poi.marker.setTitle('');
-                map.popup = new Popup(new google.maps.LatLng(this.position.lat(), this.position.lng()), '<div class="popup-bubble-content-header popup-poi capitalize-first-letter">' + poi.name + '</div>');
+                map.popup = new Popup(new google.maps.LatLng(this.position.lat(), this.position.lng()), `<div class="popup-bubble-content-header popup-poi capitalize-first-letter">${poi.name}</div><div class="popup-bubble-content-bottom"><i class="action-icon poi-icon category-${poi.category.id}"></i><b>${poi.category.name}</b></div>`);
                 map.popup.setMap(map.mapObject);
               });
               poi.marker.addListener('mouseout', hideMarkerTitle);
@@ -724,7 +724,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
     }
 
     showMarkerTitle = function(action, context) {
-      map.popup = new Popup(new google.maps.LatLng(context.position.lat(), context.position.lng()), '<div class="popup-bubble-content-header capitalize-first-letter">' + action.title + '</div><div class="popup-bubble-content-bottom"><div class="action-author-picture" style="background-image: url(' + action.author.avatar_url + ')"></div><b>' + action.author.display_name + '</b>, <span class="date">le ' + $filter('date')(action.created_at, 'dd/MM') + '</span></div>');
+      map.popup = new Popup(new google.maps.LatLng(context.position.lat(), context.position.lng()), '<div class="popup-bubble-content-header capitalize-first-letter">' + action.title + '</div><div class="popup-bubble-content-bottom"><div class="action-author-picture" style="background-image: url(' + action.author.avatar_url + ')"></div><b>' + action.author.display_name + '</b>,&nbsp;<span class="date">le ' + $filter('date')(action.created_at, 'dd/MM') + '</span></div>');
       map.popup.setMap(map.mapObject);
     }
 

@@ -66,17 +66,10 @@
             <fieldset>
                 <label>5. Pour finir, téléchargez une photo de vous afin de mettre un visage sur vos actions !</label>
                 <div class="input-line-centered">
-                    <div
+                    <user-picture
                         ng-if="ctrl.currentUser.avatar_url"
-                        class="action-participants-picture-container"
-                        >
-                        <div class="action-participants-picture">
-                            <div
-                                class="action-author-profile"
-                                ng-style="{'background-image': 'url(' + (ctrl.currentUser.avatar_url) + ')'}"
-                                ></div>
-                        </div>
-                    </div>
+                        user="ctrl.currentUser"
+                        ></user-picture>
                     <a
                         class="btn dark-btn"
                         ng-click="ctrl.showPicture = true"

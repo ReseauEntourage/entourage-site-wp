@@ -27,15 +27,7 @@
                     <fieldset>
                         <label>Votre photo de profil</label>
                         <div class="input-line-centered">
-                            <div class="action-participants-picture-container">
-                                <div class="action-participants-picture">
-                                    <div
-                                        class="action-author-profile"
-                                        ng-class="{'no-picture': !ctrl.user.avatar_url}"
-                                        ng-style="{'background-image': 'url(' + (ctrl.avatar_key || ctrl.user.avatar_url) + ')'}"
-                                        ></div>
-                                </div>
-                            </div>
+                            <user-picture user="ctrl.user"></user-picture>
                             <a
                                 class="btn dark-btn"
                                 ng-click="ctrl.showPicture = true"

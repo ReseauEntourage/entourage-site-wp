@@ -1,0 +1,26 @@
+<div class="user-picture-container">
+    <div
+        class="user-picture"
+        ng-class="{clickable: ctrl.clickable}"
+        ng-click="ctrl.showParticipants()"
+        >
+        <div
+            class="user-picture-profile"
+            ng-class="{'no-picture': !ctrl.getUser().avatar_url}"
+            ng-style="{'background-image': 'url(' + ctrl.getUser().avatar_url + ')'}"
+            ></div>
+        <div
+            ng-if="ctrl.action && ctrl.action.number_of_people && ctrl.action.group_type != 'conversation'"
+            class="action-participants"
+            ng-bind="ctrl.action.number_of_people > 99 ? '99+' : ('+' + ctrl.action.number_of_people)"
+            ></div>
+    </div>
+    <div
+        ng-if="ctrl.getUser().partner || (ctrl.getUser().roles && ctrl.getUser().roles.indexOf('ambassador') > -1)"
+        class="user-picture-badge"
+        ng-class="{
+            'partner': ctrl.getUser().partner,
+            'entourage': ctrl.getUser().roles && ctrl.getUser().roles.indexOf('ambassador') > -1
+        }"
+        ></div>
+</div>

@@ -97,13 +97,12 @@
             >
             <div class="action-title">
                 <div>
-                    <action-participants-picture
-                        class="action-participants-picture-container"
+                    <user-picture
                         user="ctrl.user"
                         action="ctrl.action"
                         show-profile="ctrl.openProfile(id)"
                         clickable="!ctrl.public"
-                    ></action-participants-picture>
+                    ></user-picture>
                     <h2
                         class="capitalize-first-letter"
                         ng-bind="ctrl.action.title"

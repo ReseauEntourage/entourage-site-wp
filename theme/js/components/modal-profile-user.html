@@ -12,20 +12,7 @@
     ng-class="{loading: ctrl.loading}"
     ng-swipe-right="ctrl.close()"
     >
-    <div class="action-participants-picture-container">
-        <div class="action-participants-picture">
-            <div
-                class="action-author-profile"
-                ng-class="{'no-picture': !ctrl.profile.avatar_url}"
-                ng-style="{'background-image': 'url(' + ctrl.profile.avatar_url + ')'}"
-                ></div>
-            <div
-                ng-if="ctrl.profile.roles.indexOf('ambassador') > -1"
-                class="action-author-badge"
-                ng-style="{'background-image': 'url(/wp-content/themes/entourage/img/logo-entourage-orange.png)'}"
-                ></div>
-        </div>
-    </div>
+    <user-picture user="ctrl.profile"></user-picture>
     <h2
         class="modal-profile-user-name"
         ng-bind="ctrl.profile.display_name"
@@ -34,8 +21,7 @@
         ng-if="ctrl.profile.about"
         class="modal-profile-user-description"
         >
-        "<span ng-bind="ctrl.profile.about|linkify"
-        ></span>"
+        "<span ng-bind="ctrl.profile.about|linkify"></span>"
     </div>
     <div
         ng-if="ctrl.profile.stats.entourage_count || ctrl.profile.organization || ctrl.profile.partner"

@@ -81,7 +81,7 @@
     <script src="<?php asset_url('js/directives.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/components/feed.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/components/action.js'); ?>" type="text/javascript"></script>
-    <script src="<?php asset_url('js/components/action-participants-picture.js'); ?>" type="text/javascript"></script>
+    <script src="<?php asset_url('js/components/user-picture.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/components/user-name.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/components/login.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/components/messages.js'); ?>" type="text/javascript"></script>
@@ -240,7 +240,6 @@
                 </div>
             </div>
             <a
-                id="app-events"
                 class="btn site-header-btn"
                 ng-click="map.toggleModal('calendar')"
                 >
@@ -248,6 +247,7 @@
             </a>
             <div
                 ng-if="!map.public"
+                id="pois-filter"
                 class="parent-dropdown"
                 >
                 <div uib-dropdown>
@@ -312,6 +312,20 @@
                                 ng-class="{selected: map.filters.pois.indexOf('7') > -1}"
                                 >
                                 <i class="action-icon poi-icon category-7"></i> Se réinsérer
+                            </a>
+                        </li>
+                        <li class="bottom-actions">
+                            <a
+                                ng-if="!map.filters.pois.length"
+                                ng-click="map.toggleFilterIds('pois', ['1', '2', '3', '4', '5', '6', '7'])"
+                                >
+                                Tout afficher
+                            </a>
+                            <a
+                                ng-if="map.filters.pois.length"
+                                ng-click="map.toggleFilterIds('pois', [])"
+                                >
+                                Tout cacher
                             </a>
                         </li>
                     </ul>
@@ -429,7 +443,7 @@
                         user="map.loggedUser"
                         show="map.showMessages"
                         on-show-action="map.showAction(uuid)"
-                    />
+                        ></messages>
                 </div>
             </div>
             <div
@@ -439,20 +453,11 @@
                 >
                 <div uib-dropdown>
                     <a uib-dropdown-toggle>
-                        <div class="action-participants-picture-container no-mobile">
-                            <div class="action-participants-picture">
-                                <div
-                                    class="action-author-profile"
-                                    ng-class="{'no-picture': !map.loggedUser.avatar_url}"
-                                    ng-style="{'background-image': 'url(' + map.loggedUser.avatar_url + ')'}"
-                                    ></div>
-                            </div>
-                            <div
-                                ng-if="map.loggedUser.partner"
-                                class="action-author-badge"
-                                ng-style="{'background-image': 'url(' + map.loggedUser.partner.small_logo_url + ')'}"
-                                ></div>
-                        </div>
+                        <user-picture
+                            class="no-mobile"
+                            user="map.loggedUser"
+                            clickable="false"
+                            ></user-picture>
                     </a>
                     <div uib-dropdown-menu>
                         <ul>

@@ -18,15 +18,7 @@
         ng-repeat="participant in ctrl.action.users"
         ng-click="ctrl.open(participant.id)"
         >
-        <div class="action-participants-picture-container">
-            <div class="action-participants-picture">
-                <div
-                    class="action-author-profile"
-                    ng-class="{'no-picture': !participant.avatar_url}"
-                    ng-style="{'background-image': 'url(' + participant.avatar_url + ')'}"
-                    ></div>
-            </div>
-        </div>
+        <user-picture user="participant"></user-picture>
         <h3 ng-bind="participant.display_name"></h3>
     </div>  
     <a

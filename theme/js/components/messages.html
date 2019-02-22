@@ -1,7 +1,7 @@
 <ul ng-class="{loading: ctrl.loading}">
     <li
         ng-if="ctrl.messages.length && ctrl.messages.length > 15 && (ctrl.unreadOnly || ctrl.user.notifications.length)"
-        class="messages-actions"
+        class="top-actions"
         >
         <a
             ng-if="ctrl.unreadOnly || ctrl.user.notifications.length"
@@ -23,10 +23,10 @@
         ng-class="{unread: ctrl.user.notifications.indexOf(action.uuid) > -1}"
         ng-click="ctrl.showAction(action)"
         >
-        <action-participants-picture
-            class="action-participants-picture-container"
+        <user-picture
+            user="ctrl.user"
             action="action"
-        ></action-participants-picture>
+        ></user-picture>
         <div class="action-info">
             <h2
                 class="ellipsis"

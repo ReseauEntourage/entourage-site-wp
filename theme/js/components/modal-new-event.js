@@ -11,6 +11,7 @@ angular.module('entourageApp')
       ctrlParent.$onInit = function() {
         $uibModal.open({
           templateUrl: '/wp-content/themes/entourage/js/components/modal-new-event.html',
+          backdrop: 'static',
           controllerAs: 'ctrl',
           controller: function($scope, $uibModal, $uibModalInstance) {
             var ctrl = this;

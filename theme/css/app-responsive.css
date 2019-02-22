@@ -180,6 +180,13 @@
         width: 100%;   
     }
 
+    .pac-container {
+        top: 99px !important;
+        left: 0 !important;
+        width: 100% !important;
+        margin: 0;
+    }
+
     .site-header-btn {
         margin: 0;
         font-size: 0;
