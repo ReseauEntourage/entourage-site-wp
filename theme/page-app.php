@@ -119,7 +119,15 @@
                     />
             </div>
             <h1>
-                <a>Entourage</a>, <?php echo $custom_fields['titre'][0] ?>...
+                <span
+                    class="title"
+                    ng-bind-html="map.verbatim.title|trusted"
+                    ></span>
+                <span
+                    ng-if="map.verbatim.subtitle"
+                    class="subtitle"
+                    ng-bind-html="map.verbatim.subtitle|trusted"
+                    ></span>
             </h1>
         </div>
     </div>
@@ -147,7 +155,8 @@
                     placeholder="Cherchez une ville..."
                     ng-focus="searchFocus = true"
                     ng-blur="searchFocus = false"
-                    autocomplete="nope"
+                    autocomplete="false"
+                    name="city"
                     >
                 <i
                     id="ask-location"
@@ -369,7 +378,7 @@
                                 <a href="https://blog.entourage.social/charte-ethique-grand-public/" target="_blank">
                                     <i class="material-icons">school</i> Charte éthique
                                 </a>
-                                <a href=/contact/" target="_blank">
+                                <a href="/contact/" target="_blank">
                                     <i class="material-icons">email</i> Nous contacter
                                 </a>
                             </li>
@@ -492,7 +501,7 @@
                                 <a href="https://blog.entourage.social/charte-ethique-grand-public/" target="_blank">
                                     <i class="material-icons">school</i> Charte éthique
                                 </a>
-                                <a href=/contact/" target="_blank">
+                                <a href="/contact/" target="_blank">
                                     <i class="material-icons">email</i> Nous contacter
                                 </a>
                             </li>
@@ -594,10 +603,10 @@
     <div id="page-content">
         <div
             id="map"
-            ng-class="{'loading': map.refreshing, 'full-width': map.public || (map.emptyArea && !map.refreshing)}"
+            ng-class="{'loading': map.refreshing, 'full-width': (map.emptyArea && !map.refreshing)}"
             >
             <feed
-                ng-if="!map.public && !map.emptyArea"
+                ng-if="!(map.emptyArea && !map.refreshing)"
                 user="map.loggedUser"
                 actions="map.actions"
                 current-action="map.currentAction"
@@ -645,7 +654,6 @@
                 map="map.mapObject"
                 poi="map.currentPoi"
                 ></current-poi>
-
             <div id="map-container"></div>
         </div>
         <div id="popup-content"></div>

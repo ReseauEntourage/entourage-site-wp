@@ -49,7 +49,7 @@ angular.module('entourageApp')
             return;
           }
         }
-        $('#marker-action-' + action.uuid).toggleClass('active', !hide);
+        $('#marker-map-' + action.uuid).toggleClass('active', !hide);
       }
 
       // Mobile only

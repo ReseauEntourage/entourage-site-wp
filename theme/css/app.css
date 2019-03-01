@@ -639,6 +639,13 @@ div.overlay.fade-out {
     height: 100%;
     margin: 0;
     flex-direction: column;
+}
+
+
+#page-title #page-title-logo {
+    position: relative;
+    margin: 0 auto; 
+    display: inline-block;
     animation: opacity ease-in 3s infinite;
 }
 
@@ -652,12 +659,6 @@ div.overlay.fade-out {
     100% {
         opacity: 1;
     }
-}
-
-#page-title #page-title-logo {
-    position: relative;
-    margin: 0 auto; 
-    display: inline-block;
 }
 
 #page-title #page-title-logo:after {
@@ -705,9 +706,24 @@ div.overlay.fade-out {
     font-size: 16px;
     font-weight: 300;
     color: #797979;
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
 }
 
+#page-title h1 .title {
+    font-weight: bold;
+    max-width: 320px;
+    margin: auto;
+}
 
+#page-title h1 .subtitle {
+    font-style: italic;
+    margin-top: 6px;
+    font-size: 13px;
+}
 
 /** HEADER **/
 
@@ -880,6 +896,9 @@ div.overlay.fade-out {
     right: -70px;
 }
 
+.public-page #btn-new-action .dropdown-menu {
+    right: -20px;
+}
 
 /** HELP **/
 
@@ -1136,6 +1155,7 @@ div.overlay.fade-out {
 #modal-register .bottom-link a {
     text-decoration: underline;
     color: inherit;
+    cursor: pointer;
 }
 
 #modal-register .connection-form {
@@ -1302,10 +1322,6 @@ div.overlay.fade-out {
 
 /** WELCOME CAROUSEL **/
 
-#modal-carousel {
-
-}
-
 #modal-carousel > ul {
     position: relative; 
     display: flex;
@@ -1372,9 +1388,6 @@ div.overlay.fade-out {
 
 
 /** PICTURE EDIT **/
-
-#modal-new-picture {
-}
 
 .step-download {
     margin: 20px;
@@ -1822,11 +1835,8 @@ div.overlay.fade-out {
     color: #fff;
 }
 
+
 /** MODAL PARTICIPANTS **/
-
-#modal-action-participants {
-
-}
 
 #modal-action-participants .action-participant {
     display: flex;

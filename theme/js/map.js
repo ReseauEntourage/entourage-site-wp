@@ -14,6 +14,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
     map.public = map.loggedUser ? false : true;
     map.showModal = {};
     map.showMessages = false;
+    map.verbatim = getVerbatim();
 
     autoLogin = function() {
       var deferred = $q.defer();
@@ -110,72 +111,10 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
           lat: 48.85453279673971,
           lng: 2.3678111456542865
         },
-        styles: [
-          {
-            "featureType": "poi.attraction",
-            "stylers": [
-              {
-                "visibility": "off"
-              }
-            ]
-          },
-          {
-            "featureType": "poi.business",
-            "stylers": [
-              {
-                "visibility": "off"
-              }
-            ]
-          },
-          {
-            "featureType": "poi.government",
-            "stylers": [
-              {
-                "visibility": "off"
-              }
-            ]
-          },
-          {
-            "featureType": "poi.medical",
-            "elementType": "labels.text",
-            "stylers": [
-              {
-                "visibility": "off"
-              },
-              {
-                "weight": 1.5
-              }
-            ]
-          },
-          {
-            "featureType": "poi.park",
-            "elementType": "labels.text",
-            "stylers": [
-              {
-                "visibility": "off"
-              }
-            ]
-          },
-          {
-            "featureType": "poi.school",
-            "stylers": [
-              {
-                "visibility": "off"
-              }
-            ]
-          },
-          {
-            "featureType": "poi.sports_complex",
-            "stylers": [
-              {
-                "visibility": "off"
-              }
-            ]
-          }
-        ]
+        styles: getMapStyle()
       };
 
-      // center the map on a custom position (if given)
+      // center the map on a custom position if given
       if (position && position.coords) {
         map.mapObjectParams.zoom = 14;
         map.mapObjectParams.center.lat = position.coords.latitude;
@@ -195,17 +134,14 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
 
       // when the user zooms the map
       google.maps.event.addListener(map.mapObject, 'zoom_changed', function() {
-
         resizeMarkers();
 
-        if (map.currentZoom > map.mapObject.getZoom()) {
-          if (map.public) {
-            isMapEmpty();
-          }
-          else {
-            map.getPrivateFeed();
-            map.getPois();
-          }
+        if (map.public) {
+          filterActions();
+        }
+        else {
+          map.getPrivateFeed();
+          map.getPois();
         }
         map.currentZoom = map.mapObject.getZoom();
       });
@@ -213,7 +149,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
       // when the user drags the map
       google.maps.event.addListener(map.mapObject, 'dragend', function(){
         if (map.public) {
-          isMapEmpty();
+          filterActions();
         }
         else {
           map.getPrivateFeed();
@@ -251,6 +187,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
           data = $.csv.toObjects(data);
           for (var i = 0; i < Object.keys(data).length; i++) {
             action = data[i];
+            action.type = 'Entourage';
             action.location = {
               latitude: action.latitude,
               longitude: action.longitude
@@ -273,26 +210,22 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
               }
             }
 
-            action = associateMarker(action);
-            map.actions.push(action);
-
-            // hide if filters
-            map.filterPublicAction(i);
+            map.actions.push(associateMarker(action));
           }
 
-          // display action if token in url
-          if (getQueryParams('token')) {
-            map.showAction(getQueryParams('token'));
-          } 
+          filterActions();
 
-          generateMarkers();
-          isMapEmpty();
           showCarousel();
 
           console.info(map.actions)
           
           map.loaded = true;
           $scope.$apply();
+
+          // display action if token in url
+          if (getQueryParams('token')) {
+            map.showAction(getQueryParams('token'));
+          } 
         }
       });
     }
@@ -334,6 +267,8 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
       map.refreshing = true;
       map.boundsSize = getBoundsSize(map.mapObject.getBounds());
 
+      clearAllMarkers('actions');
+
       data = {
         token: map.loggedUser.token,
         latitude: map.mapObject.getCenter().lat(),
@@ -358,37 +293,8 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
               return transformAction(action.data);
             });
 
-            // Hide actions:
-            // - not shown in map rectangle
-            // - with filtered status
-
-            var mapPoly = new google.maps.Polygon({
-              paths: [
-                {
-                  lat: map.mapObject.getBounds().getNorthEast().lat(),
-                  lng: map.mapObject.getBounds().getNorthEast().lng()
-                },
-                {
-                  lat: map.mapObject.getBounds().getNorthEast().lat(),
-                  lng: map.mapObject.getBounds().getSouthWest().lng()
-                },
-                {
-                  lat: map.mapObject.getBounds().getSouthWest().lat(),
-                  lng: map.mapObject.getBounds().getSouthWest().lng()
-                },
-                {
-                  lat: map.mapObject.getBounds().getSouthWest().lat(),
-                  lng: map.mapObject.getBounds().getNorthEast().lng()
-                },
-              ]
-            });
-
             var actions = data.feeds.filter(function(action) {
-              if (action.type == 'Entourage' && action.status != 'closed') {
-                var inMap = google.maps.geometry.poly.containsLocation(new google.maps.LatLng(action.location.latitude, action.location.longitude), mapPoly);
-                return inMap;
-              }
-              return false;
+              return (action.type == 'Entourage');
             }).map(function(action) {
               for (id in map.actions) {
                 if (action.uuid == map.actions[id].uuid) {
@@ -406,7 +312,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
 
             map.actions = actions;
 
-            map.emptyArea = !map.actions.length;
+            filterActions();
 
             // Add announcements
 
@@ -435,8 +341,6 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
 
             console.info('actions', map.actions);
 
-            generateMarkers();
-
             map.refreshing = false;
             map.loaded = true;
             $scope.$apply();
@@ -448,6 +352,57 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
           }
         }
       });
+    }
+
+    filterActions = function() {
+      var mapPoly = new google.maps.Polygon({
+        paths: [
+          {
+            lat: map.mapObject.getBounds().getNorthEast().lat(),
+            lng: map.mapObject.getBounds().getNorthEast().lng()
+          },
+          {
+            lat: map.mapObject.getBounds().getNorthEast().lat(),
+            lng: map.mapObject.getBounds().getSouthWest().lng()
+          },
+          {
+            lat: map.mapObject.getBounds().getSouthWest().lat(),
+            lng: map.mapObject.getBounds().getSouthWest().lng()
+          },
+          {
+            lat: map.mapObject.getBounds().getSouthWest().lat(),
+            lng: map.mapObject.getBounds().getNorthEast().lng()
+          },
+        ]
+      });
+
+      map.actions = map.actions.filter(function(action) {
+        var visible = true;
+        if (action.type == 'Entourage' && action.status != 'closed') {
+          var inMap = google.maps.geometry.poly.containsLocation(new google.maps.LatLng(action.location.latitude, action.location.longitude), mapPoly);
+          visible = inMap;
+        }
+        if (visible && map.filters.period != '') {
+          visible = action.created_at.getTime() >= new Date().setDate(new Date().getDate() - map.filters.period);
+        }
+        if (visible && action.status == 'closed') {
+          visible = false;
+        }
+        if (map.public) {
+          action.marker.setVisible(visible);
+          action.hidden = !visible;
+          return true;
+        }
+        else {
+          if (!visible) {
+            action.marker.setMap(null);
+          }
+          return visible;
+        }
+      });
+
+      generateMarkers();
+      isMapEmpty();
     }
 
     map.getPois = function() {
@@ -524,32 +479,39 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
     }
 
     isMapEmpty = function() {
-      var zoomLevel = map.mapObject.getZoom();
-      if (zoomLevel >= 14) {
-        minAction = 1;
+      if (!map.public) {
+        map.emptyArea = !map.actions.filter(function(action) {
+          return (action.type == 'Entourage');
+        }).length;
       }
-      else if (zoomLevel == 13) {
-        minAction = 2;
-      }
-      else {
-        minAction = 5;
-      }
-
-      var count = 0;
-      var bounds = map.mapObject.getBounds();
-      if (!bounds) {
-        return;
-      }
-
-      for (id in map.actions) {
-        if (!map.actions[id].marker) {
-          continue;
+      else { 
+        var zoomLevel = map.mapObject.getZoom();
+        if (zoomLevel >= 14) {
+          minAction = 1;
         }
-        if (map.actions[id].marker.visible && bounds.contains(map.actions[id].marker.getPosition())){
-          count += 1;
+        else if (zoomLevel == 13) {
+          minAction = 2;
         }
+        else {
+          minAction = 5;
+        }
+
+        var count = 0;
+        var bounds = map.mapObject.getBounds();
+        if (!bounds) {
+          return;
+        }
+
+        for (id in map.actions) {
+          if (!map.actions[id].marker) {
+            continue;
+          }
+          if (map.actions[id].marker.visible && bounds.contains(map.actions[id].marker.getPosition())){
+            count += 1;
+          }
+        }
+        map.emptyArea = count < minAction;
       }
-      map.emptyArea = count < minAction;
       $scope.$apply();
     }
 
@@ -570,8 +532,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
       map.mapObject.setCenter(location);
 
       if (map.public) {
-        map.mapObject.setZoom(14);
-        isMapEmpty();
+        filterActions();
       }
       else {
         map.getPrivateFeed();
@@ -777,6 +738,11 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
     // ** MODALS ** //
 
     map.toggleModal = function(name, token) {
+      if (map.public && name != 'carousel' && name != 'register' && name != 'login' && name != 'calendar') {
+        map.toggleModal('register');
+        return;
+      }
+
       map.showModal[name] = !map.showModal[name];
 
       if ((name == 'calendar' || name == 'login') && map.showModal[name]) {
@@ -902,11 +868,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
       localStorage.setItem('filter_' + type, value);
 
       if (map.public) {
-        for (id in map.actions) {
-          map.filterPublicAction(id);
-        }
-        generateMarkers();
-        isMapEmpty();
+        filterActions();
       }
       else if (type == 'pois') {
         map.getPois();
@@ -917,24 +879,16 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
       console.info(map.filters);
     }
 
-    map.filterPublicAction = function(id) {
-      var visible = true;
-
-      if (map.filters.period != '') {
-        visible = new Date(map.actions[id].creation_date).getTime() >= new Date().setDate(new Date().getDate() - map.filters.period);
-      }
-      if (map.actions[id].status == 'closed') {
-        visible = false;
-      }
-      map.actions[id].marker.setVisible(visible);
-    }
-
     map.activatedFilters = function() {
       var value = 0;
       for (f in map.filters) {
+        if (f == 'pois') {
+          continue;
+        }
         if (f == 'types') {
-          if (!map.public && (map.filters[f].indexOf('ou') == -1 || map.filters[f].indexOf('as') == -1 || map.filters[f].indexOf('cs') == -1))
+          if (!map.public && (map.filters[f].indexOf('ou') == -1 || map.filters[f].indexOf('as') == -1 || map.filters[f].indexOf('cs') == -1)) {
             value += 1;
+          }
         }
         else if (map.filters[f] != '') {
           value += 1;
