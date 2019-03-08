@@ -30,6 +30,11 @@ angular.module('entourageApp')
               }
             }
 
+            ctrl.shareMessenger = function() {
+              window.open('fb-messenger://share?link=' + encodeURIComponent('https://www.entourage.social/entourages/' + ctrlParent.action.uuid) + '&app_id=' + encodeURIComponent(280727035774134));
+              ctrl.gaEvent('Messenger')
+            }
+
             ctrl.shareFacebook = function() {
               FB.ui({
                 method: 'share',
