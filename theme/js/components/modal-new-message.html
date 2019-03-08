@@ -49,14 +49,14 @@
                 <div class="btn-group">
                     <a
                         class="btn"
-                        ng-class="{'white-btn': ctrl.actionFeedback == 'success', 'dark-btn': ctrl.actionFeedback != 'success'}"
+                        ng-class="{'orange-btn': ctrl.actionFeedback == 'success', 'white-btn': ctrl.actionFeedback != 'success'}"
                         ng-click="ctrl.actionFeedback = 'success'"
                         >
                         Oui, c'est un succès !
                     </a>
                     <a
-                        class="btn dark-btn"
-                        ng-class="{'white-btn': ctrl.actionFeedback == 'fail', 'dark-btn': ctrl.actionFeedback != 'fail'}"
+                        class="btn"
+                        ng-class="{'orange-btn': ctrl.actionFeedback == 'fail', 'white-btn': ctrl.actionFeedback != 'fail'}"
                         ng-click="ctrl.actionFeedback = 'fail'"
                         >
                         Pas vraiment...
@@ -69,7 +69,7 @@
                     <textarea
                         type="text"
                         ng-model="ctrl.message"
-                        placeholder="Ecrivez quelque chose..."
+                        ng-attr-placeholder="{{ ctrl.actionFeedback == 'success' ? 'Pourquoi êtes-vous content de cette action ?' : 'Pourquoi êtes-vous déçu de cette action ?' }}"
                     ></textarea>
                 </div>
             </fieldset>

@@ -8,13 +8,10 @@
             <div class="action-left-actions">
                 <a
                     ng-if="ctrl.action.group_type != 'conversation'"
-                    ng-click="ctrl.shareFacebook()"
+                    ng-click="ctrl.showShare = true"
                     class="no-icon action-share"
-                    tooltip-placement="top"
-                    uib-tooltip="Partager sur Facebook"
-                    tooltip-append-to-body="true"
                     >
-                    <i class="material-icons">share</i> Partager
+                    <i class="material-icons">share</i> Partager...
                 </a>
                 <a
                     ng-if="ctrl.is_admin && ctrl.action.status != 'closed' && ctrl.action.group_type != 'conversation'"
@@ -346,4 +343,9 @@
         hide="ctrl.editEvent = false"
         action="ctrl.action"
         ></modal-new-event>
+    <modal-action-share
+        ng-if="ctrl.showShare"
+        hide="ctrl.showShare = false"
+        action="ctrl.action"
+        ></modal-action-share>
 </div>

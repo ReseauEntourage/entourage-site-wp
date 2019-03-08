@@ -5,7 +5,10 @@
         >
         <i class="material-icons">arrow_back</i>
     </a>
-    <span ng-bind="ctrl.action.users.length + ' participant' + (ctrl.action.users.length > 1 ? 's' : '')"></span>
+    <span
+        ng-if="ctrl.action.users"
+        ng-bind="ctrl.action.users.length + ' participant' + (ctrl.action.users.length > 1 ? 's' : '')"
+        ></span>
 </div>
 <div
     id="modal-action-participants"

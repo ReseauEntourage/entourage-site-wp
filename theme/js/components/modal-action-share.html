@@ -1,0 +1,108 @@
+<div class="modal-header">
+    <a
+        class="modal-close mobile-only"
+        ng-click="ctrl.close()"
+        >
+        <i class="material-icons">arrow_back</i>
+    </a>
+</div>
+<div
+    id="modal-action-share"
+    class="modal-body"
+    ng-swipe-right="ctrl.close()"
+    >
+    <ul>
+        <li>
+            <a
+                ng-click="ctrl.gaEvent('Messenger')"
+                class="btn btn-messenger mobile-only"
+                ng-href="fb-messenger://share/?link={{ ctrl.shareUrl }}&app_id=280727035774134"
+                target="_blank"
+                >
+                Envoyer par Messenger
+            </a>
+        </li>
+        <li>
+            <a
+                ng-click="ctrl.shareFacebook()"
+                class="btn btn-facebook"
+                >
+                Partager sur Facebook
+            </a>
+        </li>
+        <li>
+            <a
+                ng-click="ctrl.gaEvent('Twitter')"
+                ng-href="https://twitter.com/intent/tweet?text={{ ctrl.twitterText }}"
+                class="btn btn-twitter"
+                target="_blank"
+                >
+                Partager sur Twitter
+            </a>
+        </li>
+        <li>
+            <a
+                ng-click="ctrl.gaEvent('Whatsapp')"
+                class="btn btn-whatsapp"
+                ng-href="https://api.whatsapp.com/send?text={{ ctrl.whatsappMessage }}"
+                target="_blank"
+                >
+                Envoyer par Whatsapp
+            </a>
+        </li>
+        <li>
+            <a 
+                ng-click="ctrl.gaEvent('Email')"
+                class="btn btn-email orange-btn"
+                ng-href="mailto:?subject={{ ctrl.emailSubject }}&body={{ ctrl.emailMessage }}"
+                target="_blank"
+                >
+                Envoyer par email
+            </a>
+        </li>
+    </ul>
+
+    <a
+        class="modal-close no-mobile"
+        ng-click="ctrl.close()"
+        >
+        <i class="material-icons">close</i>
+    </a>
+</div>
+
+<style>
+
+    #modal-action-share ul {
+        margin: 10px;
+        text-align: center;
+    }
+
+    #modal-action-share ul li+li {
+        margin-top: 13px;
+    }
+
+    #modal-action-share .btn:hover {
+        text-decoration: none;
+    }
+
+    .btn-messenger {
+        color: #fff;
+        background-color: #0078FF;
+    }
+
+    .btn-facebook {
+        color: #fff;
+        background-color: #3C5A99;
+    }
+
+    .btn-whatsapp {
+        color: #fff;
+        background-color: #4AC959;
+    }
+
+    .btn-twitter {
+        color: #fff;
+        background-color: #1DA1F2;
+    }
+
+</style>

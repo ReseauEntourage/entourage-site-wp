@@ -31,6 +31,7 @@ angular.module('entourageApp')
 
         $uibModal.open({
           templateUrl: '/wp-content/themes/entourage/js/components/modal-action-participants.html',
+          windowClass: 'modal-white',
           controllerAs: 'ctrl',
           controller: function($scope, $uibModal, $uibModalInstance) {
             var ctrl = this;

@@ -1,3 +1,4 @@
+/* no more used
 angular.module('entourageApp')
   .component('newAction', {
     bindings: {
@@ -89,15 +90,18 @@ angular.module('entourageApp')
 
               ctrl.errors = [];
 
-              if (!ctrl.display_category)
+              if (!ctrl.display_category) {
                 ctrl.errors.push("Erreur : veuillez sélectionner une catégorie");
-              if (!ctrl.title || ctrl.title.length < 10)
+              }
+              if (!ctrl.title || ctrl.title.length < 10) {
                 ctrl.errors.push("Erreur : veuillez entrer un titre suffisamment long");
-              if (!ctrl.location)
+              }
+              if (!ctrl.location) {
                 ctrl.errors.push("Erreur : veuillez entrer une localisation");
-
-              if (ctrl.errors.length)
+              }
+              if (ctrl.errors.length) {
                 return;
+              }
 
               ctrl.loading = true;
 
@@ -109,8 +113,6 @@ angular.module('entourageApp')
                 location: ctrl.location
               }
 
-              console.info(data);
-
               $.ajax({
                 type: 'POST',
                 url: getApiUrl() + '/entourages',
@@ -120,21 +122,25 @@ angular.module('entourageApp')
                 },
                 success: function(data) {
                   if (data.entourage) {
-                    if (!isDemoMode())
+                    if (!isDemoMode()) {
                       ga('send', 'event', 'Engagement', 'NewAction', 'WebApp');
+                    }
                     window.history.pushState('page2', data.entourage.title, '/app/?token=' + data.entourage.id);
                     window.location.reload();
                   }
-                  else
+                  else {
                     ctrl.errors.push("Il y a eu une erreur, merci de réessayer ou de nous contacter");
+                  }
                   ctrl.loading = false;
                   $scope.$apply();
                 },
                 error: function(data) {
-                  if (data.responseJSON && data.responseJSON.error && data.responseJSON.error.message)
+                  if (data.responseJSON && data.responseJSON.error && data.responseJSON.error.message) {
                     ctrl.errors.push("Erreur : " + data.responseJSON.error.message[0]);
-                  else
+                  }
+                  else {
                     ctrl.errors.push("Il y a eu une erreur, merci de réessayer ou de nous contacter");
+                  }
                   ctrl.loading = false;
                   $scope.$apply();
                 }
@@ -146,4 +152,4 @@ angular.module('entourageApp')
         });
       }
     }
-  })
+  }) */

@@ -14,6 +14,7 @@ angular.module('entourageApp')
     controller: function($scope, $element, $attrs, $uibModal) {
       var ctrl = this;
 
+      ctrl.showShare = false;
       ctrl.editEvent = false;
       ctrl.editAction = false;
 
@@ -434,22 +435,6 @@ angular.module('entourageApp')
 
 
       // ** TOP ACTIONS  ** //
-
-      ctrl.shareFacebook = function() {
-        FB.ui({
-          method: 'share',
-          hashtag: '#chaleurHumaine',
-          href: 'https://www.entourage.social/entourages/' + ctrl.action.uuid,
-        }, function(response){
-          console.info(response);
-        });
-
-        ga('send', {
-          hitType: 'event',
-          eventCategory: 'Share',
-          eventAction: 'Facebook'
-        });
-      }
 
       ctrl.report = function() {
         ctrl.currentMessage = {

@@ -96,6 +96,8 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
 
       map.actions = [];
 
+      initFilters();
+
       // default parameters of our map (centered on Paris)
       map.mapObjectParams = {
         maxZoom: 15,
@@ -141,8 +143,8 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
         }
         else {
           map.getPrivateFeed();
-          map.getPois();
         }
+        getPois();
         map.currentZoom = map.mapObject.getZoom();
       });
 
@@ -153,8 +155,8 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
         }
         else {
           map.getPrivateFeed();
-          map.getPois();
         }
+        getPois();
       });
 
       initSearchbox();
@@ -165,17 +167,12 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
     // ** ACTIONS **/
 
     getActions = function() {
-      if (map.public) {
-        getPublicActions();
-      }
-      else {
-        google.maps.event.addListener(map.mapObject, 'bounds_changed', function() {
-          if (!map.isMapReady) {
-            map.isMapReady = true;
-            initFeed();
-          }
-        });
-      }
+      google.maps.event.addListener(map.mapObject, 'bounds_changed', function() {
+        if (!map.isMapReady) {
+          map.isMapReady = true;
+          initFeed();
+        }
+      });
     }
 
     getPublicActions = function() {
@@ -231,43 +228,45 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
     }
 
     initFeed = function() {
-      // if the profile onboarding modal is required,
-      // the "first" run (open entourage from URL, handle deeplink)
-      // will be run after that modal is closed
-      var first = !map.profileRequired();
-
-      // if shared action, center map on it before loading feed
-      if (getQueryParams('token')) {
-        $.ajax({
-          type: 'GET',
-          url: getApiUrl() + '/entourages/' + getQueryParams('token'),
-          data: {
-            token: map.loggedUser.token
-          },
-          success: function(data) {
-            if (data.entourage && data.entourage.group_type != "conversation") {
-              map.mapObject.setCenter(new google.maps.LatLng(data.entourage.location.latitude, data.entourage.location.longitude));
-            }
-            map.getPrivateFeed(first);
-            map.getPois();
-          },
-          error: function() {
-            map.getPrivateFeed(first);
-            map.getPois();
-          }
-        });
+      if (map.public) {
+        getPublicActions();
       }
       else {
-        map.getPrivateFeed(first);
-        map.getPois();
+        // if the profile onboarding modal is required,
+        // the "first" run (open entourage from URL, handle deeplink)
+        // will be run after that modal is closed
+        var first = !map.profileRequired();
+
+        // if shared action, center map on it before loading feed
+        if (getQueryParams('token')) {
+          $.ajax({
+            type: 'GET',
+            url: getApiUrl() + '/entourages/' + getQueryParams('token'),
+            data: {
+              token: map.loggedUser.token
+            },
+            success: function(data) {
+              if (data.entourage && data.entourage.group_type != "conversation") {
+                map.mapObject.setCenter(new google.maps.LatLng(data.entourage.location.latitude, data.entourage.location.longitude));
+              }
+              map.getPrivateFeed(first);
+            },
+            error: function() {
+              map.getPrivateFeed(first);
+            }
+          });
+        }
+        else {
+          map.getPrivateFeed(first);
+        }
       }
+
+      getPois();
     }
 
     map.getPrivateFeed = function(first) {
       map.refreshing = true;
       map.boundsSize = getBoundsSize(map.mapObject.getBounds());
-
-      clearAllMarkers('actions');
 
       data = {
         token: map.loggedUser.token,
@@ -405,7 +404,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
       isMapEmpty();
     }
 
-    map.getPois = function() {
+    getPois = function() {
       
       clearAllMarkers('pois');
 
@@ -416,7 +415,6 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
       map.boundsSize = getBoundsSize(map.mapObject.getBounds());
 
       data = {
-        token: map.loggedUser.token,
         latitude: map.mapObject.getCenter().lat(),
         longitude: map.mapObject.getCenter().lng(),
         distance: Math.ceil(Math.max(map.boundsSize.x, map.boundsSize.y) / 1000),
@@ -536,8 +534,8 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
       }
       else {
         map.getPrivateFeed();
-        map.getPois();
       }
+      getPois();
       $scope.$apply(); 
     }
 
@@ -577,7 +575,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
               if (data.entourage.group_type != "conversation") {
                 map.mapObject.setCenter(new google.maps.LatLng(action.location.latitude, action.location.longitude));
                 map.getPrivateFeed();
-                map.getPois();
+                getPois();
               }
               map.currentAction = action;
               $scope.$apply();
@@ -826,15 +824,9 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
 
     // ** FILTERS ** //
 
-    map.categoryTypes = getCategoryTypes();
+    initFilters = function() {
+      map.categoryTypes = getCategoryTypes();
 
-    // Default/saved filters
-    if (map.public && map.mobileView) {
-      map.filters = {
-        period: '7'
-      };
-    }
-    else {
       map.filters = {
         period: (localStorage.getItem('filter_period') != null) ? localStorage.getItem('filter_period') : '14',
         types: (localStorage.getItem('filter_types') != null) ? localStorage.getItem('filter_types').split(',') : ['as','ae','am','ar','ai','ak','ao','ah','cs','ce','cm','cr','ci','ck','co','ch','ou'],
@@ -867,16 +859,15 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
       }
       localStorage.setItem('filter_' + type, value);
 
-      if (map.public) {
-        filterActions();
+      if (type == 'pois') {
+        getPois();
       }
-      else if (type == 'pois') {
-        map.getPois();
+      else if (map.public) {
+        filterActions();
       }
       else {
         map.getPrivateFeed();
       }
-      console.info(map.filters);
     }
 
     map.activatedFilters = function() {

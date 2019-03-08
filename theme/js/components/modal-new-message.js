@@ -4,14 +4,15 @@ angular.module('entourageApp')
       user: '=',
       message: '='
     },
-    controller: function($scope, $element, $attrs, $uibModal) {
+    controller: function($uibModal) {
       var ctrlParent = this;
 
       ctrlParent.$onInit = function() {
         $uibModal.open({
           templateUrl: '/wp-content/themes/entourage/js/components/modal-new-message.html',
+          windowClass: 'modal-white',
           controllerAs: 'ctrl',
-          controller: function($scope, $uibModal, $uibModalInstance) {
+          controller: function($scope, $uibModalInstance) {
             var ctrl = this;
             ctrl.type = ctrlParent.message.type; 
 

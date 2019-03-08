@@ -5,15 +5,17 @@ angular.module('entourageApp')
       hide: '&',
       action: '=?',
     },
-    controller: function($scope, $element, $attrs, $uibModal) {
+    controller: function($uibModal) {
       var ctrlParent = this;
 
       ctrlParent.$onInit = function() {
         $uibModal.open({
           templateUrl: '/wp-content/themes/entourage/js/components/modal-new-action.html',
           backdrop: 'static',
+          keyboard: false,
+          windowClass: 'modal-white',
           controllerAs: 'ctrl',
-          controller: function($scope, $uibModal, $uibModalInstance) {
+          controller: function($scope, $uibModalInstance) {
             var ctrl = this;
 
             ctrl.loading = false;

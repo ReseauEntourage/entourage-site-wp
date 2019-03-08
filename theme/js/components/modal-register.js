@@ -4,7 +4,7 @@ angular.module('entourageApp')
       hide: '&',
       openLogin: '&'
     },
-    controller: function($scope, $element, $attrs, $uibModal) {
+    controller: function($uibModal) {
       var ctrlParent = this;
 
       ctrlParent.$onInit = function() {
@@ -12,7 +12,7 @@ angular.module('entourageApp')
           templateUrl: '/wp-content/themes/entourage/js/components/modal-register.html',
           windowClass: 'modal-no-width',
           controllerAs: 'ctrl',
-          controller: function($scope, $uibModal, $uibModalInstance) {
+          controller: function($scope, $uibModalInstance) {
             var ctrl = this;
 
             ctrl.registrationStep = 1;

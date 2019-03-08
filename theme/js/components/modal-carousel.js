@@ -5,7 +5,7 @@ angular.module('entourageApp')
       toggleNewAction: '&'
     },
     controllerAs: 'ctrlParent',
-    controller: function($scope, $element, $attrs, $uibModal) {
+    controller: function($uibModal) {
       var ctrlParent = this;
       
       ctrlParent.$onInit = function() {
@@ -13,7 +13,7 @@ angular.module('entourageApp')
           templateUrl: '/wp-content/themes/entourage/js/components/modal-carousel.html',
           windowClass: 'modal-no-width',
           controllerAs: 'ctrl',
-          controller: function($scope, $uibModal, $uibModalInstance) {
+          controller: function($uibModalInstance) {
             var ctrl = this;
 
             ctrl.currentIndex = 0;

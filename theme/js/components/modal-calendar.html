@@ -15,29 +15,32 @@
     ng-swipe-left="ctrl.nextMonth()"
     >
     <div>
-        <img src="/wp-content/themes/entourage/img/calendar-illu.png" />
-        <div class="calendar-header">
-            <div>
-                <i
-                    ng-show="ctrl.index"
-                    ng-click="ctrl.previousMonth()"
-                    class="material-icons"
-                    >
-                    arrow_back
-                </i>
-            </div>
-            <h3 ng-bind="ctrl.months[ctrl.currentMonth]"></h3>
-            <div>
-                <i
-                    ng-show="ctrl.index < 6"
-                    ng-click="ctrl.nextMonth()"
-                    class="material-icons"
-                    >
-                    arrow_forward
-                </i>
-            </div>
+        <div class="calendar-image">
+            <img src="/wp-content/themes/entourage/img/calendar-illu.png" />
         </div>
+
         <div class="calendar">
+            <div class="calendar-header">
+                <div>
+                    <i
+                        ng-show="ctrl.index"
+                        ng-click="ctrl.previousMonth()"
+                        class="material-icons"
+                        >
+                        arrow_back
+                    </i>
+                </div>
+                <h3 ng-bind="ctrl.months[ctrl.currentMonth]"></h3>
+                <div>
+                    <i
+                        ng-show="ctrl.index < 6"
+                        ng-click="ctrl.nextMonth()"
+                        class="material-icons"
+                        >
+                        arrow_forward
+                    </i>
+                </div>
+            </div>
             <div class="week-days">
                 <span class="day week-day">Lun</span>
                 <span class="day week-day">Mar</span>

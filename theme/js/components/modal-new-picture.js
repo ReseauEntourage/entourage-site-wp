@@ -5,7 +5,7 @@ angular.module('entourageApp')
       show: '='
     },
     controllerAs: 'ctrlParent',
-    controller: function($scope, $element, $attrs, $uibModal) {
+    controller: function($uibModal) {
       var ctrlParent = this;
       
       ctrlParent.$onInit = function() {
@@ -13,7 +13,7 @@ angular.module('entourageApp')
           templateUrl: '/wp-content/themes/entourage/js/components/modal-new-picture.html',
           windowClass: 'modal-dark',
           controllerAs: 'ctrl',
-          controller: function($scope, $uibModal, $uibModalInstance) {
+          controller: function($scope, $uibModalInstance) {
             var ctrl = this;
 
             ctrl.imageCropStep = 1;

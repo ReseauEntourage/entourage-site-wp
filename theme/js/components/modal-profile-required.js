@@ -5,7 +5,7 @@ angular.module('entourageApp')
       user: '=',
       showModalCarousel: '='
     },
-    controller: function($scope, $element, $attrs, $uibModal) {
+    controller: function($uibModal) {
       var ctrlParent = this;
 
       ctrlParent.$onInit = function() {
@@ -14,7 +14,7 @@ angular.module('entourageApp')
           backdrop: 'static',
           keyboard: false,
           controllerAs: 'ctrl',
-          controller: function($scope, $uibModal, $uibModalInstance) {
+          controller: function($scope, $uibModalInstance) {
             var ctrl = this;
 
             ctrl.loading = false;

@@ -5,14 +5,15 @@ angular.module('entourageApp')
       profileId: '=',
       onShowAction: '&',
     },
-    controller: function($scope, $element, $attrs, $uibModal) {
+    controller: function($uibModal) {
       var ctrlParent = this;
 
       ctrlParent.$onInit = function() {
         $uibModal.open({
           templateUrl: '/wp-content/themes/entourage/js/components/modal-profile-user.html',
+          windowClass: 'modal-white',
           controllerAs: 'ctrl',
-          controller: function($scope, $uibModal, $uibModalInstance, $uibModalStack) {
+          controller: function($scope, $uibModalInstance, $uibModalStack) {
             var ctrl = this;
             ctrl.user = ctrlParent.user;
 

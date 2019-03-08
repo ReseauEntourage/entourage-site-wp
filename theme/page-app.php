@@ -97,6 +97,7 @@
     <script src="<?php asset_url('js/components/modal-new-picture.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/components/modal-carousel.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/components/modal-calendar.js'); ?>" type="text/javascript"></script>
+    <script src="<?php asset_url('js/components/modal-action-share.js'); ?>" type="text/javascript"></script>
 </head>
 
 <body
@@ -255,7 +256,6 @@
                 <i class="material-icons">event</i> Calendrier
             </a>
             <div
-                ng-if="!map.public"
                 id="pois-filter"
                 class="parent-dropdown"
                 >

@@ -8,15 +8,15 @@ angular.module('entourageApp')
       hide: '&',
       onShowAction: '&'
     },
-    controller: function($scope, $element, $attrs, $uibModal) {
+    controller: function($uibModal) {
       var ctrlParent = this;
 
       ctrlParent.$onInit = function() {
         $uibModal.open({
           templateUrl: '/wp-content/themes/entourage/js/components/modal-calendar.html',
-          windowClass: 'modal-small',
+          windowClass: 'modal-small modal-white low-z-index',
           controllerAs: 'ctrl',
-          controller: function($scope, $sce, $uibModal, $uibModalInstance) {
+          controller: function($scope, $sce, $uibModalInstance) {
             var ctrl = this;
 
             ctrl.months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];

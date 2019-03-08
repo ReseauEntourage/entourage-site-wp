@@ -283,26 +283,32 @@ a[href]:hover {
 .form .two-parts > *:first-child {
     margin-right: 30px;
     padding-right: 30px;
-    border-right: 1px solid #fff;
+    border-right: 1px solid #eee;
     flex-shrink: 0;
 }
 
 .form .two-parts h3 {
-    color: #fff;
-    font-weight: bold;
+    margin-left: -30px;
     margin-bottom: 20px;
+    padding: 4px 8px;
+    display: inline-block;
+    text-transform: uppercase;
+    font-size: 10px;
+    background: #eee;
 }
 
 .form input:not([type=checkbox]):not([type=file]),
 .form textarea {
     width: 100%;
     box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.2);
+    background: #F9F9F9;
     transition: box-shadow 0.2s;
 }
 
 .form input:not([type=checkbox]):not([type=file]):focus,
 .form textarea:focus {
-    box-shadow: 0 0 0 1px #fff;
+    background: #fff;
+    box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.2);
 }
 
 .form input:not([type=checkbox]):not([type=file]).tiny {
@@ -312,7 +318,11 @@ a[href]:hover {
 .form textarea {
     padding: 10px;
     height: 120px;
-    max-width: 100%;    
+    max-width: 100%;
+    min-width: 100%;
+    min-height: 120px;   
+    max-height: 200px;   
+    border-radius: 8px;
 }
 
 .form fieldset:not(:last-child) {
@@ -927,7 +937,7 @@ div.overlay.fade-out {
 }
 
 #user-messages .dropdown-menu > ul {
-    max-height: 290px;
+    max-height: 325px;
     min-width: 310px;
     border-radius: 0 0 0 3px;
 }
@@ -1075,6 +1085,11 @@ div.overlay.fade-out {
 #site-header-login .login-content .btn i {
     margin-left: 5px;
     margin-right: 0;
+    transition: all 0.3s;
+}
+
+#site-header-login .login-content .btn:hover i {
+    transform: translateX(14px);
 }
 
 #site-header-login .error {
@@ -1190,11 +1205,23 @@ div.overlay.fade-out {
 }
 
 
+/** MODAL NEW MESSAGE **/ 
+
+#modal-new-message textarea {
+    min-width: 300px;
+}
+
+
 /** MODAL CALENDAR **/
 
-#modal-calendar img {
-    margin: 0 auto 20px;
-    display: block; 
+#modal-calendar .calendar-image {
+    margin: -30px;
+    background: #eee;
+    margin-bottom: 20px;
+    padding: 10px;
+    text-align: center;
+    font-size: 0;
+    border-radius: 10px 10px 0 0;
 }
 
 #modal-calendar .calendar-header {
@@ -1203,7 +1230,7 @@ div.overlay.fade-out {
     justify-content: space-between;
     margin-bottom: 10px;
     padding-bottom: 14px;
-    border-bottom: 1px solid #fff;
+    border-bottom: 1px solid #eee;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -1220,14 +1247,12 @@ div.overlay.fade-out {
 #modal-calendar .calendar-header i {
     font-size: 20px;
     cursor: pointer;
-    transition: box-shadow 0.3s;
+    transition: all 0.3s;
     border-radius: 20px;
 }
 
 #modal-calendar .calendar-header i:hover {
-    box-shadow: 0 0 0 5px #fff;
-    background: #fff;
-    color: #ff5100;
+    transform: translateX(4px);
 }
 
 #modal-calendar .calendar {
@@ -1262,8 +1287,8 @@ div.overlay.fade-out {
 }
 
 #modal-calendar .day.active a {
-    background: #fff;
-    color: #ff5100;
+    background: #ff5100;
+    color: #fff;
     font-weight: 500;
     cursor: pointer;
     border-radius: 20px;
@@ -1271,12 +1296,12 @@ div.overlay.fade-out {
 }
 
 #modal-calendar .day.active a:hover {
-    box-shadow: 0 0 0 2px #fff;
+    box-shadow: 0 0 0 2px #ff5100;
     text-decoration: underline;
 }
 
 #modal-calendar .day.week-day {
-    font-size: 14px;
+    font-size: 12px;
     text-transform: uppercase;
 }
 
@@ -1297,7 +1322,7 @@ div.overlay.fade-out {
     border-radius: 10px;
     padding: 0 3px;
     min-width: 14px;
-    color: #ff5100;
+    color: #333;
     box-shadow: 0 0 6px 0px #8e8e8e;
 }
 
@@ -1851,7 +1876,6 @@ div.overlay.fade-out {
 }
 
 #modal-action-participants .action-participant + .action-participant {
-    margin-top: 10px;
     border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
@@ -1907,8 +1931,7 @@ div.overlay.fade-out {
 }
 
 #terms-list {
-    padding: 30px;
-    color: #fff;
+    padding: 20px;
 }
 
 #terms-list li {
@@ -1967,7 +1990,6 @@ div.overlay.fade-out {
     width: 30px;
     height: 30px;
     border-radius: 20px;
-    border: 2px solid #fff;
 }
 
 #modal-profile-user .modal-profile-user-name {
@@ -1982,8 +2004,8 @@ div.overlay.fade-out {
     margin-bottom: 30px;
     padding: 17px;
     font-size: 15px;
-    color: #fff;
-    background-color: rgba(255,255,255,0.18);
+    color: #333;
+    background-color: #eee;
     border-radius: 5px;
 }
 
@@ -1993,7 +2015,7 @@ div.overlay.fade-out {
 }
 
 #modal-profile-user .modal-profile-user-name + .modal-profile-user-info {
-    border-top: 1px solid rgba(255,255,255,0.3);
+    border-top: 1px solid rgba(0,0,0,0.1);
     padding-top: 30px;
 }
 
@@ -2025,14 +2047,8 @@ div.overlay.fade-out {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 20px 0;
 }
-
-#modal-profile-user + .modal-footer .btn {
-    height: 30px;
-    line-height: 30px;
-    font-size: 12px;
-}
-
 
 /** MAP **/
 
@@ -2160,6 +2176,10 @@ div.overlay.fade-out {
 	transition: right 0.3s;
 }
 
+#current-action.show-over-modal.open {
+    z-index: 1050;
+}
+
 #current-action > div {
     position: relative;
     display: flex;
@@ -2170,10 +2190,6 @@ div.overlay.fade-out {
 
 #current-action.open {
 	right: 10px;
-}
-
-#current-action.show-over-modal {
-    z-index: 10000;
 }
 
 #current-action .action-actions {
@@ -2516,6 +2532,14 @@ div.overlay.fade-out {
     flex-shrink: 0;
 }
 
+#current-action .action-new-message a i {
+    transition: transform 0.3s;
+}
+
+#current-action .action-new-message a:hover i {
+    transform: rotate(360deg);
+}
+
 
 /* GMAPS CSS */
 
@@ -2579,7 +2603,7 @@ div.overlay.fade-out {
 .gm-style .marker-action.active:not(.hide-animation) {
     opacity: 1 !important;
     z-index: 9999 !important;
-    box-shadow: inset 0 0 0px 1px #c53f00;
+    box-shadow: inset 0 0 0px 0px #c53f00;
 }
 
 .gm-style .marker-action.status-open:hover,
@@ -2792,6 +2816,10 @@ div.overlay.fade-out {
     background-color: rgba(255,255,255,0.9);
 }
 
+.modal-open .modal.low-z-index {
+    z-index: 1041 !important;
+}
+
 .modal-backdrop.fade {
     opacity: 0;
 }
@@ -2818,6 +2846,11 @@ div.overlay.fade-out {
     color: #333;
 }
 
+.modal-white .modal-header,
+.modal-white .modal-header a {
+    color: #646464;
+}
+
 .modal-title {
     margin: 0;
     line-height: 1.42857143;
@@ -2827,13 +2860,19 @@ div.overlay.fade-out {
     position: relative;
     padding: 30px;
     background-color: #ff5100;
-    border-radius: 15px;
+    border-radius: 10px;
     text-align: left;
     color: #fff;
 }
 
 .modal-dark .modal-body {
     background-color: #333;
+}
+
+.modal-white .modal-body {
+    background-color: #fff;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+    color: #646464;
 }
 
 .modal-body .parent-dropdown {
@@ -2851,14 +2890,23 @@ div.overlay.fade-out {
 
 .modal-body .modal-close {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 6px;
+    right: 6px;
     color: #FFF;
     cursor: pointer;
 }
 
+.modal-white .modal-body .modal-close {
+    color: #646464;
+}
+
 .modal-body .modal-close i {
     font-size: 21px;
+    transition: transform 0.3s;
+}
+
+.modal-body .modal-close i:hover {
+    transform: rotate(90deg);
 }
 
 .modal-body.loading + .modal-footer {

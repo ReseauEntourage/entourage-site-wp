@@ -6,15 +6,15 @@ angular.module('entourageApp')
       hide: '&'
     },
     controllerAs: 'ctrlParent',
-    controller: function($scope, $element, $attrs, $uibModal) {
+    controller: function($uibModal) {
       var ctrlParent = this;
       
       ctrlParent.$onInit = function() {
         $uibModal.open({
           templateUrl: '/wp-content/themes/entourage/js/components/modal-profile-edit.html',
-          windowClass: 'modal-no-width',
+          windowClass: 'modal-no-width modal-white',
           controllerAs: 'ctrl',
-          controller: function($scope, $uibModal, $uibModalInstance) {
+          controller: function($scope, $uibModalInstance) {
             var ctrl = this;
             
             ctrl.loading = false;
