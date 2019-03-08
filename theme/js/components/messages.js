@@ -41,7 +41,9 @@ angular.module('entourageApp')
                 action = transformAction(action.data);
 
                 if (action.join_status == 'accepted') {
+                  if (action.number_of_unread_messages) {
                     ctrl.pushNotification(action.uuid);
+                  }
 
                   ctrl.is_admin = (action.author.id == ctrl.user.id);
                   if (ctrl.is_admin) {
