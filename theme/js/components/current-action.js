@@ -521,6 +521,8 @@ angular.module('entourageApp')
               document.title = document.title.replace(/Entourage( \([0-9]*\))? \|/g, 'Entourage (' + ctrl.user.notifications.length + ') |');
             } else {
               document.title = document.title.replace(/Entourage( \([0-9]*\))? \|/g, 'Entourage |');
+              var link = document.querySelector("head link[rel*='icon']");
+              link.href = link.href.replace('fav-active.png', 'fav.png');
             }
           }
         }

@@ -13,6 +13,7 @@ angular.module('entourageApp')
           templateUrl: '/wp-content/themes/entourage/js/components/modal-profile-required.html',
           backdrop: 'static',
           keyboard: false,
+          windowClass: 'modal-white',
           controllerAs: 'ctrl',
           controller: function($scope, $uibModalInstance) {
             var ctrl = this;

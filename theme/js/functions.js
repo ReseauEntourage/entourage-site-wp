@@ -79,7 +79,7 @@ function transformAction(action) {
             break;
           case 'entourage':
           case 'entourages':
-            action.url = '/app?token=' + action.url.replace(action.url.match(/^entourage\:\/\/entourages?\/([a-zA-Z0-9]+)/));
+            action.url = '/app/?token=' + action.url.match(/^entourage\:\/\/entourages?\/([a-zA-Z0-9_\-]+)/)[1];
             break;
           default:
             action.open_page = match[1];

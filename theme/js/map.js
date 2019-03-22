@@ -101,8 +101,8 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
       // default parameters of our map (centered on Paris)
       map.mapObjectParams = {
         maxZoom: 15,
-        minZoom: 13,
-        zoom: map.public ? 13 : 14,
+        minZoom: 14,
+        zoom: 14,
         zoomControl: !map.mobileView,
         mapTypeControl: false,
         scaleControl: false,
@@ -381,7 +381,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
           var inMap = google.maps.geometry.poly.containsLocation(new google.maps.LatLng(action.location.latitude, action.location.longitude), mapPoly);
           visible = inMap;
         }
-        if (visible && map.filters.period != '') {
+        if (visible && action.group_type != 'outing' && map.filters.period != '') {
           visible = action.created_at.getTime() >= new Date().setDate(new Date().getDate() - map.filters.period);
         }
         if (visible && action.status == 'closed') {

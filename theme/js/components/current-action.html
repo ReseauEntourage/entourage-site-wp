@@ -150,6 +150,16 @@
                     </p>
                 </div>
                 <div ng-if="ctrl.action.join_status == 'accepted'">
+                    <div ng-if="ctrl.action.group_type == 'conversation' && !ctrl.timeline.length">
+                        <div class="action-chat-author">
+                            Ecrivez un message privé à
+                            <user-name
+                                user="ctrl.user"
+                                profile="ctrl.action.author"
+                                with-picture="false"
+                                ></user-name>&nbsp;!
+                        </div>
+                    </div>
                     <div
                         ng-if="ctrl.action.group_type != 'conversation'"
                         class="action-chat-date"
