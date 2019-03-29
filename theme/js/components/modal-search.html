@@ -1,0 +1,141 @@
+<div class="modal-header">
+    <a
+        class="modal-close mobile-only"
+        ng-click="ctrl.close()"
+        >
+        <i class="material-icons">arrow_back</i>
+    </a>
+    Chercher une structure
+</div>
+<div
+    id="modal-search"
+    class="modal-body"
+    ng-class="{loading: ctrl.loading}"
+    ng-swipe-right="ctrl.close()"
+    >
+    <div class="form">
+        <div class="two-parts">
+            <div>
+                <h3>Votre recherche</h3>
+                <fieldset>
+                    <label>Ville :</label>
+                    <div class="parent-input with-icon address-icon">
+                        <input
+                            ng-init="ctrl.initSearchBox()"
+                            id="new-search-input"
+                            type="text"
+                            ng-model="ctrl.locationName"
+                            />
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <label>Catégories :</label>
+                    <div class="parent-dropdown">
+                        <div
+                            uib-dropdown
+                            auto-close="outsideClick"
+                            class="parent-select"
+                            >
+                            <a
+                                uib-dropdown-toggle
+                                class="btn"
+                                >
+                                <i class="material-icons">location_city</i> Catégories
+                            </a>
+                            <ul uib-dropdown-menu>
+                                <li>
+                                    <a
+                                        ng-repeat="category in ctrl.poisCategories"
+                                        ng-click="category.selected = !!!category.selected"
+                                        ng-class="{
+                                            selected: category.selected,
+                                            unselected: !category.selected
+                                        }"
+                                        >
+                                        <i
+                                            class="action-icon poi-icon"
+                                            ng-class="'category-' + category.id"
+                                            ></i>
+                                        <span ng-bind="category.label"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <label>Mot recherché :</label>
+                    <div class="parent-input with-icon tag-icon">
+                        <input
+                            type="text"
+                            ng-model="ctrl.text"
+                            placeholder="Ex : papiers, écoute, distribution..."
+                            ng-enter="ctrl.submit()"
+                            />
+                    </div>
+                </fieldset>
+                <a
+                    ng-if="ctrl.results"
+                    ng-click="ctrl.submit()"
+                    class="btn orange-btn"
+                    >
+                    <i class="material-icons">search</i>
+                    <span ng-if="ctrl.results">Relancer la recherche</span>
+                    <span ng-if="!ctrl.results">Lancer la recherche</span>
+                </a>
+                <div
+                    class="error"
+                    ng-repeat="error in ctrl.errors"
+                    ng-bind="error"
+                    ></div>
+            </div>
+            <div
+                ng-if="ctrl.results"
+                class="result"
+                >
+                <h3>Résultats de recherche (<span ng-bind="ctrl.results.length"></span>)</h3>
+                <ul class="result-list">
+                    <li
+                        class="result-item"
+                        ng-repeat="result in ctrl.results"
+                        ng-click="ctrl.openPoi(result)"
+                        >
+                        <h4>
+                            <i
+                                class="action-icon poi-icon"
+                                ng-class="'category-' + result.category_id"
+                                ></i>
+                            <span
+                                class="capitalize-first-letter"
+                                ng-bind="result.name"
+                                ></span>
+                        </h4>
+                        <span
+                            class="capitalize-first-letter"
+                            ng-bind="result.adress"
+                            ></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <a
+        class="modal-close no-mobile"
+        ng-click="ctrl.close()"
+        >
+        <i class="material-icons">close</i>
+    </a>
+</div>
+<div
+    ng-if="!ctrl.results"
+    class="modal-footer"
+    >
+    <a
+        ng-click="ctrl.submit()"
+        class="btn orange-btn"
+        >
+        <i class="material-icons">search</i>
+        <span ng-if="ctrl.results">Relancer la recherche</span>
+        <span ng-if="!ctrl.results">Lancer la recherche</span>
+    </a>
+</div>

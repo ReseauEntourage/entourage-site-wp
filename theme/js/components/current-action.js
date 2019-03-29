@@ -11,7 +11,7 @@ angular.module('entourageApp')
       showOverModal: "="
     },
     controllerAs: 'ctrl',
-    controller: function($scope, $element, $attrs, $uibModal) {
+    controller: function($scope, $element, $uibModal) {
       var ctrl = this;
 
       ctrl.showShare = false;

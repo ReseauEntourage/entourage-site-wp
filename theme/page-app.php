@@ -98,6 +98,7 @@
     <script src="<?php asset_url('js/components/modal-carousel.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/components/modal-calendar.js'); ?>" type="text/javascript"></script>
     <script src="<?php asset_url('js/components/modal-action-share.js'); ?>" type="text/javascript"></script>
+    <script src="<?php asset_url('js/components/modal-search.js'); ?>" type="text/javascript"></script>
 </head>
 
 <body
@@ -145,201 +146,181 @@
         </a>
         <div id="site-header-left">
             <div
-                id="app-search"
-                ng-class="{'active': searchFocus}"
-                ng-click="map.currentAddress && map.clearAddress()"
-                >
-                <i class="icon material-icons">room</i>
-                <input
-                    id="app-search-input"
-                    type="text"
-                    placeholder="Cherchez une ville..."
-                    ng-focus="searchFocus = true"
-                    ng-blur="searchFocus = false"
-                    autocomplete="false"
-                    name="city"
-                    >
-                <i
-                    id="ask-location"
-                    ng-hide="map.hideAskLocation || map.currentAddress"
-                    class="material-icons"
-                    ng-click="map.askLocation()"
-                    >my_location</i>
-                <div
-                    id="app-filters"
-                    class="parent-dropdown"
-                    >
-                    <div uib-dropdown>
-                        <a
-                            uib-dropdown-toggle
-                            class="btn btn-icon"
-                            >
-                            <i class="material-icons">tune</i>
-                            <div
-                                class="badge"
-                                ng-if="map.activatedFilters()"
-                                ng-bind="map.activatedFilters()"
-                                ></div>
-                        </a>
-                        <ul uib-dropdown-menu>
-                            <li>
-                                <a class="dropdown-toggle">
-                                    <span ng-if="!map.public">Mis à jour il y a...</span>
-                                    <span ng-if="map.public">Date de création</span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a
-                                            ng-click="map.filterMarkers('period', '7')"
-                                            ng-class="{selected: map.filters.period == '7'}"
-                                            >
-                                            Moins d'une semaine
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            ng-click="map.filterMarkers('period', '14')"
-                                            ng-class="{selected: map.filters.period == '14'}"
-                                            >
-                                            Moins de 2 semaines
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            ng-click="map.filterMarkers('period', '30')"
-                                            ng-class="{selected: map.filters.period == '30'}"
-                                            >
-                                            Moins d'un mois
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li ng-if="!map.public">
-                                <a class="dropdown-toggle">
-                                    Catégorie
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a
-                                            ng-click="map.toggleFilterIds('types', ['as','ae','am','ar','ai','ak','ao','ah'])"
-                                            ng-class="{selected: map.filters.types.indexOf('as') > -1}"
-                                            >
-                                            Demandes d'aide
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            ng-click="map.toggleFilterIds('types', ['cs','ce','cm','cr','ci','ck','co','ch'])"
-                                            ng-class="{selected: map.filters.types.indexOf('cs') > -1}"
-                                            >
-                                            Offres d'aide
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            ng-click="map.toggleFilterIds('types', ['ou'])"
-                                            ng-class="{selected: map.filters.types.indexOf('ou') > -1}"
-                                            >
-                                            Evénements solidaires
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <a
-                class="btn site-header-btn"
-                ng-click="map.toggleModal('calendar')"
-                >
-                <i class="material-icons">event</i> Calendrier
-            </a>
-            <div
-                id="pois-filter"
+                id="app-location"
                 class="parent-dropdown"
                 >
-                <div uib-dropdown>
+                <div
+                    uib-dropdown
+                    auto-close="outsideClick"
+                    >
                     <a
                         uib-dropdown-toggle
-                        class="btn site-header-btn"
-                        > 
-                        <i class="material-icons">location_on</i> Structures solidaires
+                        class="btn site-header-btn select-custom"
+                        >
+                        <i class="material-icons">room</i>
+                        <span
+                            class="ellipsis"
+                            ng-if="map.currentLocation"
+                            ng-bind="map.currentLocation.short_name"
+                            ></span>
                     </a>
                     <ul uib-dropdown-menu>
-                        <li>
-                            <a
-                                ng-click="map.toggleFilterIds('pois', ['1'])"
-                                ng-class="{selected: map.filters.pois.indexOf('1') > -1}"
-                                >
-                                <i class="action-icon poi-icon category-1"></i> Se nourrir
+                        <li
+                            id="app-location-search"
+                            class="dropdown-menu-group"
+                            >
+                            <a>
+                                <i class="material-icons">search</i>
+                                <input
+                                    id="app-location-search-input"
+                                    type="text"
+                                    ng-model="map.searchPlace"
+                                    placeholder="Cherchez une ville..."
+                                    autocomplete="false"
+                                    name="city"
+                                    />
                             </a>
                         </li>
-                        <li>
-                            <a
-                                ng-click="map.toggleFilterIds('pois', ['2'])"
-                                ng-class="{selected: map.filters.pois.indexOf('2') > -1}"
-                                >
-                                <i class="action-icon poi-icon category-2"></i> Se loger
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                ng-click="map.toggleFilterIds('pois', ['3'])"
-                                ng-class="{selected: map.filters.pois.indexOf('3') > -1}"
-                                >
-                                <i class="action-icon poi-icon category-3"></i> Se soigner
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                ng-click="map.toggleFilterIds('pois', ['4'])"
-                                ng-class="{selected: map.filters.pois.indexOf('4') > -1}"
-                                >
-                                <i class="action-icon poi-icon category-4"></i> Se rafraîchir
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                ng-click="map.toggleFilterIds('pois', ['5'])"
-                                ng-class="{selected: map.filters.pois.indexOf('5') > -1}"
-                                >
-                                <i class="action-icon poi-icon category-5"></i> S'orienter
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                ng-click="map.toggleFilterIds('pois', ['6'])"
-                                ng-class="{selected: map.filters.pois.indexOf('6') > -1}"
-                                >
-                                <i class="action-icon poi-icon category-6"></i> S'occuper de soi
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                ng-click="map.toggleFilterIds('pois', ['7'])"
-                                ng-class="{selected: map.filters.pois.indexOf('7') > -1}"
-                                >
-                                <i class="action-icon poi-icon category-7"></i> Se réinsérer
-                            </a>
-                        </li>
-                        <li class="bottom-actions">
-                            <a
-                                ng-if="!map.filters.pois.length"
-                                ng-click="map.toggleFilterIds('pois', ['1', '2', '3', '4', '5', '6', '7'])"
-                                >
-                                Tout afficher
-                            </a>
-                            <a
-                                ng-if="map.filters.pois.length"
-                                ng-click="map.toggleFilterIds('pois', [])"
-                                >
-                                Tout cacher
+                        <li
+                            ng-if="map.showAskLocation"
+                            class="dropdown-menu-group"
+                            >
+                            <a ng-click="map.askLocation()">
+                                <i class="material-icons">my_location</i>Ma position
                             </a>
                         </li>
                     </ul>
                 </div>
             </div>
+            <label class="no-mobile">Filtres :</label>
+            <div
+                id="app-filters"
+                class="parent-dropdown"
+                >
+                <div
+                    uib-dropdown
+                    auto-close="outsideClick"
+                    >
+                    <a
+                        uib-dropdown-toggle
+                        class="btn site-header-btn select-custom"
+                        >
+                        <i class="material-icons">accessibility_new</i>
+                        Actions
+                    </a>
+                    <ul uib-dropdown-menu>
+                        <li
+                            ng-if="!map.public"
+                            class="dropdown-menu-group"
+                            >
+                            <a
+                                ng-click="map.toggleFilterIds('types', ['as','ae','am','ar','ai','ak','ao','ah'])"
+                                ng-class="{
+                                    selected: map.filters.types.indexOf('as') > -1,
+                                    unselected: map.filters.types.indexOf('as') == -1
+                                }"
+                                >
+                                <i class="material-icons">error</i>
+                                Demandes d'aide
+                            </a>
+                            <a
+                                ng-click="map.toggleFilterIds('types', ['cs','ce','cm','cr','ci','ck','co','ch'])"
+                                ng-class="{
+                                    selected: map.filters.types.indexOf('cs') > -1,
+                                    unselected: map.filters.types.indexOf('cs') == -1
+                                }"
+                                >
+                                <i class="material-icons">people</i>
+                                Offres d'aide
+                            </a>
+                            <a
+                                ng-click="map.toggleFilterIds('types', ['ou'])"
+                                ng-class="{
+                                    selected: map.filters.types.indexOf('ou') > -1,
+                                    unselected: map.filters.types.indexOf('ou') == -1
+                                }"
+                                >
+                                <i class="material-icons">event</i>
+                                Evénements solidaires
+                            </a>
+                        </li>
+                        <li
+                            ng-if="map.filters.types.length"
+                            class="dropdown-menu-group"
+                            >
+                            <a class="dropdown-toggle">
+                                <span ng-if="!map.public">Dernière mise à jour</span>
+                                <span ng-if="map.public">Date de création</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li ng-repeat="period in map.availableFilters.periods">
+                                    <a
+                                        ng-click="map.filterMarkers('period', period.value)"
+                                        ng-class="{
+                                            selected: map.filters.period == period.value,
+                                            unselected: map.filters.period != period.value
+                                        }"
+                                        ng-bind="period.label"
+                                        >
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div
+                id="pois-filter"
+                class="parent-dropdown"
+                >
+                <div
+                    uib-dropdown
+                    auto-close="outsideClick"
+                    >
+                    <a
+                        uib-dropdown-toggle
+                        class="btn site-header-btn select-custom"
+                        > 
+                        <i class="material-icons">location_city</i> Structures solidaires
+                    </a>
+                    <ul uib-dropdown-menu>
+                        <li class="dropdown-menu-group">
+                             <a ng-click="map.toggleModal('search')">
+                                <i class="material-icons">search</i> Rechercher
+                            </a>    
+                        </li>
+                        <li class="dropdown-menu-group">
+                            <a
+                                ng-repeat="category in map.poisCategories"
+                                ng-click="map.toggleFilterIds('pois', [category.id])"
+                                ng-class="{
+                                    selected: map.filters.pois.indexOf(category.id) > -1,
+                                    unselected: map.filters.pois.indexOf(category.id) == -1
+                                }"
+                                >
+                                <i
+                                    class="action-icon poi-icon"
+                                    ng-class="'category-' + category.id"
+                                    ></i>
+                                <span ng-bind="category.label"></span>
+                            </a>
+                        </li>
+                        <li class="bottom-actions">
+                            <a ng-click="map.toggleAllFilters('pois')">
+                                <span ng-if="!map.filters.pois.length">Tout afficher</span>
+                                <span ng-if="map.filters.pois.length">Tout cacher</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <a
+                id="btn-calendar"
+                class="btn dark-btn"
+                ng-click="map.toggleModal('calendar')"
+                >
+                <i class="material-icons">event</i> Calendrier
+            </a>
         </div>
         <div id="site-header-right">
             <div
@@ -353,37 +334,35 @@
                         >
                         <i class="material-icons">help</i> Besoin d'aide ?
                     </a>
-                    <div uib-dropdown-menu>
-                        <ul>
-                            <li class="dropdown-menu-group">
-                                <a ng-click="map.toggleModal('carousel')">
-                                    <i class="material-icons">info</i> Comment ça marche ?
-                                </a>
-                                <a href="http://www.entourage.social/" target="_blank">
-                                    <i class="material-icons">call_made</i> Visiter le site d'Entourage
-                                </a>
-                            </li>
-                            <li class="dropdown-menu-group">
-                                <a href="https://blog.entourage.social/2017/04/28/quelles-actions-faire-avec-entourage/" target="_blank">
-                                    <i class="material-icons">lightbulb_outline</i> Idées d'action
-                                </a>
-                                <a href="http://www.simplecommebonjour.org/" target="_blank">
-                                    <i class="material-icons">question_answer</i> Conseils pour oser la rencontre
-                                </a>
-                                <a href="https://blog.entourage.social/2017/04/28/comment-utiliser-l-application-entourage/" target="_blank">
-                                    <i class="material-icons">contact_support</i> Questions fréquentes
-                                </a>
-                            </li>
-                            <li class="dropdown-menu-group">
-                                <a href="https://blog.entourage.social/charte-ethique-grand-public/" target="_blank">
-                                    <i class="material-icons">school</i> Charte éthique
-                                </a>
-                                <a href="/contact/" target="_blank">
-                                    <i class="material-icons">email</i> Nous contacter
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                    <ul uib-dropdown-menu>
+                        <li class="dropdown-menu-group">
+                            <a ng-click="map.toggleModal('carousel')">
+                                <i class="material-icons">info</i> Comment ça marche ?
+                            </a>
+                            <a href="http://www.entourage.social/" target="_blank">
+                                <i class="material-icons">call_made</i> Visiter le site d'Entourage
+                            </a>
+                        </li>
+                        <li class="dropdown-menu-group">
+                            <a href="https://blog.entourage.social/2017/04/28/quelles-actions-faire-avec-entourage/" target="_blank">
+                                <i class="material-icons">lightbulb_outline</i> Idées d'action
+                            </a>
+                            <a href="http://www.simplecommebonjour.org/" target="_blank">
+                                <i class="material-icons">question_answer</i> Conseils pour oser la rencontre
+                            </a>
+                            <a href="https://blog.entourage.social/2017/04/28/comment-utiliser-l-application-entourage/" target="_blank">
+                                <i class="material-icons">contact_support</i> Questions fréquentes
+                            </a>
+                        </li>
+                        <li class="dropdown-menu-group">
+                            <a href="https://blog.entourage.social/charte-ethique-grand-public/" target="_blank">
+                                <i class="material-icons">school</i> Charte éthique
+                            </a>
+                            <a href="/contact/" target="_blank">
+                                <i class="material-icons">email</i> Nous contacter
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div
@@ -391,39 +370,40 @@
                 id="btn-new-action"
                 class="parent-dropdown"
                 >
-                <div uib-dropdown>
+                <div
+                    uib-dropdown
+                    class="right-align"
+                    >
                     <a
                         uib-dropdown-toggle
                         class="btn orange-btn"
                         >
                         <i class="material-icons">add</i> Passer à l'action...
                     </a>
-                    <div uib-dropdown-menu>
-                        <ul>
-                            <li class="dropdown-menu-group">
-                                <a ng-click="map.toggleModal('newAction')">
-                                    <i class="material-icons">record_voice_over</i> Créer une action solidaire
-                                </a>
-                                <a ng-click="map.toggleModal('newEvent')">
-                                    <i class="material-icons">event</i> Créer un événement
-                                </a>
-                            </li>
-                            <li class="dropdown-menu-group">
-                                <a href="https://www.entourage.social/devenir-ambassadeur/" target="_blank">
-                                    <i class="material-icons">mic</i> Devenir ambassadeur d'Entourage
-                                </a>
-                                <a href="http://www.simplecommebonjour.org/" target="_blank">
-                                    <i class="material-icons">question_answer</i> Se former à la rencontre 
-                                </a>
-                                <a href="https://www.facebook.com/pg/EntourageReseauCivique/events/?ref=page_internal" target="_blank">
-                                    <i class="material-icons">people</i>Participer à nos événements
-                                </a>
-                                <a href="https://www.entourage.social/don" target="_blank">
-                                    <i class="material-icons">favorite</i>Soutenir Entourage
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                    <ul uib-dropdown-menu>
+                        <li class="dropdown-menu-group">
+                            <a ng-click="map.toggleModal('newAction')">
+                                <i class="material-icons">record_voice_over</i> Créer une action solidaire
+                            </a>
+                            <a ng-click="map.toggleModal('newEvent')">
+                                <i class="material-icons">event</i> Créer un événement
+                            </a>
+                        </li>
+                        <li class="dropdown-menu-group">
+                            <a href="https://www.entourage.social/devenir-ambassadeur/" target="_blank">
+                                <i class="material-icons">mic</i> Devenir ambassadeur d'Entourage
+                            </a>
+                            <a href="http://www.simplecommebonjour.org/" target="_blank">
+                                <i class="material-icons">question_answer</i> Se former à la rencontre 
+                            </a>
+                            <a href="https://www.facebook.com/pg/EntourageReseauCivique/events/?ref=page_internal" target="_blank">
+                                <i class="material-icons">people</i>Participer à nos événements
+                            </a>
+                            <a href="https://www.entourage.social/don" target="_blank">
+                                <i class="material-icons">favorite</i>Soutenir Entourage
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div
@@ -468,45 +448,51 @@
                             clickable="false"
                             ></user-picture>
                     </a>
-                    <div uib-dropdown-menu>
-                        <ul>
-                            <li class="dropdown-menu-group">
-                                <a ng-click="map.toggleModal('profileEdit')">
-                                    <i class="material-icons">person_pin</i> Modifier mon profil
-                                </a>
-                                <a ng-click="map.logout()">
-                                    <i class="material-icons">power_settings_new</i> Me déconnecter
-                                </a>
-                            </li>
-                            <li class="dropdown-menu-group mobile-only">
-                                <a ng-click="map.toggleModal('carousel')">
-                                    <i class="material-icons">info</i> Comment ça marche ?
-                                </a>
-                                <a href="http://www.entourage.social/" target="_blank">
-                                    <i class="material-icons">call_made</i> Visiter le site d'Entourage
-                                </a>
-                            </li>
-                            <li class="dropdown-menu-group mobile-only">
-                                <a href="https://blog.entourage.social/2017/04/28/quelles-actions-faire-avec-entourage/" target="_blank">
-                                    <i class="material-icons">lightbulb_outline</i> Idées d'action
-                                </a>
-                                <a href="http://www.simplecommebonjour.org/" target="_blank">
-                                    <i class="material-icons">question_answer</i> Conseils pour oser la rencontre
-                                </a>
-                                <a href="https://blog.entourage.social/2017/04/28/comment-utiliser-l-application-entourage/" target="_blank">
-                                    <i class="material-icons">contact_support</i> Questions fréquentes
-                                </a>
-                            </li>
-                            <li class="dropdown-menu-group mobile-only">
-                                <a href="https://blog.entourage.social/charte-ethique-grand-public/" target="_blank">
-                                    <i class="material-icons">school</i> Charte éthique
-                                </a>
-                                <a href="/contact/" target="_blank">
-                                    <i class="material-icons">email</i> Nous contacter
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                    <ul uib-dropdown-menu>
+                        <li class="dropdown-menu-group mobile-only">
+                            <a ng-click="map.toggleModal('profileEdit')">
+                                <i class="material-icons">person_pin</i> Modifier mon profil
+                            </a>
+                            <a ng-click="map.logout()">
+                                <i class="material-icons">power_settings_new</i> Me déconnecter
+                            </a>
+                        </li>
+                        <li class="dropdown-menu-group mobile-only">
+                            <a ng-click="map.toggleModal('carousel')">
+                                <i class="material-icons">info</i> Comment ça marche ?
+                            </a>
+                            <a href="http://www.entourage.social/" target="_blank">
+                                <i class="material-icons">call_made</i> Visiter le site d'Entourage
+                            </a>
+                        </li>
+                        <li class="dropdown-menu-group mobile-only">
+                            <a href="https://blog.entourage.social/2017/04/28/quelles-actions-faire-avec-entourage/" target="_blank">
+                                <i class="material-icons">lightbulb_outline</i> Idées d'action
+                            </a>
+                            <a href="http://www.simplecommebonjour.org/" target="_blank">
+                                <i class="material-icons">question_answer</i> Conseils pour oser la rencontre
+                            </a>
+                            <a href="https://blog.entourage.social/2017/04/28/comment-utiliser-l-application-entourage/" target="_blank">
+                                <i class="material-icons">contact_support</i> Questions fréquentes
+                            </a>
+                        </li>
+                        <li class="dropdown-menu-group mobile-only">
+                            <a href="https://blog.entourage.social/charte-ethique-grand-public/" target="_blank">
+                                <i class="material-icons">school</i> Charte éthique
+                            </a>
+                            <a href="/contact/" target="_blank">
+                                <i class="material-icons">email</i> Nous contacter
+                            </a>
+                        </li>
+                        <li class="no-mobile">
+                            <a ng-click="map.toggleModal('profileEdit')">
+                                <i class="material-icons">person_pin</i> Modifier mon profil
+                            </a>
+                            <a ng-click="map.logout()">
+                                <i class="material-icons">power_settings_new</i> Me déconnecter
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div
@@ -587,7 +573,7 @@
     <modal-carousel
         ng-if="map.showModal.carousel"
         hide="map.toggleModal('carousel')"
-        toggle-new-action="map.toggleModal('register')"
+        toggle-new-action="map.toggleModal('newAction')"
         ></modal-carousel>
 
     <modal-calendar
@@ -600,47 +586,27 @@
         on-show-action="map.showAction(uuid)"
         ></modal-calendar>
 
+    <modal-search
+        ng-if="map.showModal.search"
+        hide="map.toggleModal('search')"
+        current-location="map.currentLocation"
+        on-show-poi="map.showPoi(poi)"
+        ></modal-search>
+
     <div id="page-content">
         <div
             id="map"
-            ng-class="{'loading': map.refreshing, 'full-width': (map.emptyArea && !map.refreshing)}"
+            ng-class="{'loading': map.refreshing}"
             >
             <feed
-                ng-if="!(map.emptyArea && !map.refreshing)"
                 user="map.loggedUser"
                 actions="map.actions"
                 current-action="map.currentAction"
+                empty-area="map.emptyArea"
                 on-show-action="map.showAction(uuid)"
                 on-open-profile="map.toggleProfileEdit()"
-                on-open-create-action="map.toggleModal('newAction')"
+                on-toggle-modal="map.toggleModal(page, token)"
                 ></feed>
-            <div
-                id="map-bottom-band"
-                ng-class="{open: map.emptyArea && !map.refreshing}"
-                >
-                <img src="/wp-content/themes/entourage/img/carousel-3.png">
-                <div>
-                    Il y a peu d'action par ici... Répandez la chaleur humaine jusqu'ici en
-                    <a
-                        ng-if="map.public"
-                        ng-click="map.toggleModal('register', 'Bottom')"
-                        >
-                        rejoignant la communauté Entourage&nbsp;!
-                    </a>
-                    <span ng-if="!map.public">
-                        <a ng-click="map.toggleModal('newAction')">
-                            créant une action solidaire
-                        </a>
-                        ou en 
-                        <a ng-click="map.toggleModal('newEvent')">
-                            organisant un événement&nbsp;!
-                        </a>
-                    </span>
-                    <div class="no-mobile">
-                        Vous voulez faire plus et vous associer au développement d'Entourage dans votre ville ? <a href="https://entourage-asso.typeform.com/to/RO79jI" target="_blank">Cliquez ici </a> pour devenir ambassadeur !
-                    </div>
-                </div>
-            </div>
             <current-action
                 map="map.mapObject"
                 action="map.currentAction"
@@ -653,6 +619,7 @@
             <current-poi
                 map="map.mapObject"
                 poi="map.currentPoi"
+                show-over-modal="map.showModal.search"
                 ></current-poi>
             <div id="map-container"></div>
         </div>

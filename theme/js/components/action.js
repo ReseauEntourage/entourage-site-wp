@@ -6,7 +6,7 @@ angular.module('entourageApp')
       action: '='
     },
     controllerAs: 'ctrl',
-    controller: function($scope, $element, $attrs) {
+    controller: function() {
       var ctrl = this;
 
       if (!ctrl.user) {

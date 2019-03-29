@@ -4,9 +4,10 @@ angular.module('entourageApp')
     bindings: {
       map: '=',
       poi: '=',
+      showOverModal: "="
     },
     controllerAs: 'ctrl',
-    controller: function($scope, $element, $attrs, $uibModal) {
+    controller: function($scope) {
       var ctrl = this;
 
       $scope.$watch('ctrl.poi', function(newValue, oldValue) {
@@ -28,6 +29,7 @@ angular.module('entourageApp')
           toggleMarker(ctrl.poi.id);
         }
 
+        window.history.pushState('page2', ctrl.poi.name, `/app/?lat=${ctrl.poi.latitude}&lng=${ctrl.poi.longitude}`);
         ctrl.open = true;
       }
 
@@ -41,6 +43,8 @@ angular.module('entourageApp')
         }
 
         ctrl.open = false;
+
+        window.history.pushState('page3', 'app', '/app');
 
         setTimeout(function(){
           ctrl.poi = null;

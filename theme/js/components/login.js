@@ -2,7 +2,7 @@ angular.module('entourageApp')
   .component('login', {
     templateUrl: '/wp-content/themes/entourage/js/components/login.html',
     controllerAs: 'ctrl',
-    controller: function($scope, $element, $attrs, $uibModal) {
+    controller: function($scope) {
       var ctrl = this;
 
       ctrl.loading = false;

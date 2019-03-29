@@ -8,7 +8,7 @@ angular.module('entourageApp')
       showProfile: '&'
     },
     controllerAs: 'ctrl',
-    controller: function($scope, $element, $attrs, $uibModal) {
+    controller: function($uibModal) {
       var ctrlParent = this;
 
       ctrlParent.$onInit = function() {

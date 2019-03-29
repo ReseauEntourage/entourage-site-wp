@@ -5,12 +5,13 @@ angular.module('entourageApp')
       user: '=',
       actions: '=',
       currentAction: '=',
+      emptyArea: '=',
       onShowAction: '&',
       onOpenProfile: '&',
-      onOpenCreateAction: '&'
+      toggleModal: '&'
     },
     controllerAs: 'ctrl',
-    controller: function($scope, $element, $attrs) {
+    controller: function($scope) {
       var ctrl = this;
 
       ctrl.click = function(action) {

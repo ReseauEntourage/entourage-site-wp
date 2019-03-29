@@ -4,7 +4,7 @@ angular.module('entourageApp')
     bindings: {
       toggle: '&'
     },
-    controller: function($scope, $element, $attrs) {
+    controller: function($scope) {
       var ctrl = this;
 
       $scope.registrationStep = 1;

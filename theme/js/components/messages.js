@@ -7,7 +7,7 @@ angular.module('entourageApp')
       onShowAction: '&'
     },
     controllerAs: 'ctrl',
-    controller: function($scope, $element, $attrs) {
+    controller: function($scope) {
       var ctrl = this;
 
       ctrl.unreadOnly = false;

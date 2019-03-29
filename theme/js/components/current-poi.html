@@ -1,7 +1,7 @@
 <div
     id="current-action"
     class="is-poi"
-    ng-class="{open: ctrl.open}"
+    ng-class="{open: ctrl.open, 'show-over-modal': ctrl.showOverModal}"
     ng-swipe-right="ctrl.hide(ctrl.poi)"
     >
     <div>
@@ -33,25 +33,23 @@
             >
             <div class="action-title">
                 <div>
-                    <div
+                    <i
                         class="action-icon poi-icon"
                         ng-class="'category-' + ctrl.poi.category_id"
-                        ></div>
+                        ></i>
                     <h2
                         class="capitalize-first-letter"
                         ng-bind="ctrl.poi.name"
                         ></h2>
                 </div>
-                <div
-                    ng-if="ctrl.poi.adress"
-                    class="action-address"
-                    >
-                    <div>
+                <div class="action-address">
+                    <div ng-if="ctrl.poi.adress">
                         <i class="material-icons">location_on</i>
                         <a
-                            ng-href="https://www.google.fr/maps/?q={{ ctrl.poi.adress }}"
+                            ng-href="https://www.google.fr/maps/?q={{ ctrl.poi.latitude }},{{ ctrl.poi.longitude }}"
                             target="_blank"
                             ng-bind="ctrl.poi.adress"
+                            class="capitalize-first-letter"
                             ></a>
                     </div>
                     <div ng-if="ctrl.poi.phone">
@@ -62,10 +60,26 @@
                             ng-bind="ctrl.poi.phone"
                             ></a>
                     </div>
+                    <div ng-if="ctrl.poi.email">
+                        <i class="material-icons">mail</i>
+                        <a
+                            ng-href="mailto:{{ ctrl.poi.email }}"
+                            target="_blank"
+                            ng-bind="ctrl.poi.email"
+                            ></a>
+                    </div>
+                    <div ng-if="ctrl.poi.website">
+                        <i class="material-icons">link</i>
+                        <a
+                            ng-href="{{ ctrl.poi.website }}"
+                            target="_blank"
+                            ng-bind="ctrl.poi.website"
+                            ></a>
+                    </div>
                 </div>
             </div>
             <div class="action-chat">
-                <div ng-if="ctrl.action.join_status != 'accepted'">
+                <div>
                     <p
                         ng-if="ctrl.poi.description"
                         class="action-description"
@@ -74,6 +88,18 @@
                             class="capitalize-first-letter"
                             ng-bind-html="ctrl.poi.description|linkify|showbr|trusted"
                             ></span>
+                    </p>
+                    <p
+                        ng-if="ctrl.poi.audience"
+                        class="action-description"
+                        >
+                        <br>
+                        <b>Pour qui ?</b>
+                        <span
+                            class="capitalize-first-letter"
+                            ng-bind="ctrl.poi.audience"
+                            ></span>
+                        <br><br>
                     </p>
                 </div>
             </div>

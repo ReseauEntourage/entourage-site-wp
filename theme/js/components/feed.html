@@ -16,28 +16,62 @@
                 Masquer la liste
             </div>
     </a>
-    <ul id="user-feed-list">
-        <li
-            ng-repeat="(k, action) in ctrl.actions"
-            ng-show="!action.hidden"
-            class="action-item"
-            ng-class="{announcement: action.type == 'Announcement', closed: action.status == 'closed', active: ctrl.currentAction.uuid == action.uuid}"
-            ng-click="ctrl.click(action)"
-            ng-mouseenter="action.type != 'Announcement' && ctrl.hover(action)"
-            ng-mouseleave="action.type != 'Announcement' && ctrl.hover(action, true)"
+    <div id="user-feed-list">
+        <ul ng-if="!ctrl.emptyArea">
+            <li
+                ng-repeat="(k, action) in ctrl.actions"
+                ng-show="!action.hidden"
+                class="action-item"
+                ng-class="{announcement: action.type == 'Announcement', closed: action.status == 'closed', active: ctrl.currentAction.uuid == action.uuid}"
+                ng-click="ctrl.click(action)"
+                ng-mouseenter="action.type != 'Announcement' && ctrl.hover(action)"
+                ng-mouseleave="action.type != 'Announcement' && ctrl.hover(action, true)"
+                >
+                <action
+                    user="ctrl.user"
+                    action="action"
+                    ></action>
+            </li>
+            <li
+                ng-click="ctrl.onOpenCreateAction()"
+                class="action-item end-card"
+                >
+                Déplacez la carte pour plus d'actions&nbsp;!<br>Ou mieux, <a ng-click="ctrl.toggleModal({page: 'newAction'})">créez-en une vous-même&nbsp; !</a><br>
+                <img src="/wp-content/themes/entourage/img/carousel-3.png">
+            </li>
+        </ul>
+        <div
+            ng-if="ctrl.emptyArea"
+            class="empty-list end-card"
             >
-            <action
-            	user="ctrl.user"
-            	action="action"
-            	></action>
-        </li>
-        <li
-            id="user-feed-end"
-            ng-click="ctrl.onOpenCreateAction()"
-            class="action-item end-card"
-            >
-            Déplacez la carte pour plus d'actions&nbsp;!<br>Ou mieux, <a>créez-en une vous-même&nbsp;!</a><br>
+            <div>
+                Il y a peu d'action par ici...<br>
+                Répandez la chaleur humaine jusqu'ici<br>en
+                <span ng-if="map.public">
+                    <a
+                        ng-if="map.public"
+                        ng-click="map.toggleModal({page: 'register', token: 'Bottom'})"
+                        >
+                        rejoignant la communauté Entourage
+                    </a>&nbsp;!
+                </span>
+                <span ng-if="!map.public">
+                    créant
+                    <a ng-click="map.toggleModal({page: 'newAction'})">
+                        une action
+                    </a>
+                    ou
+                    <a ng-click="map.toggleModal({page: 'newEvent'})">
+                        un événement
+                    </a>
+                    solidaire&nbsp;!
+                </span>
+            </div>
             <img src="/wp-content/themes/entourage/img/carousel-3.png">
-        </li>
-    </ul>
+            <div class="more">
+                Vous voulez faire plus et vous associer au développement d'Entourage dans votre ville&nbsp;?<br>
+                <b><a href="https://entourage-asso.typeform.com/to/RO79jI" target="_blank">Cliquez ici </a> pour devenir ambassadeur&nbsp;!</b>
+            </div>
+        </div>
+    </div>
 </div>

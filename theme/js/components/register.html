@@ -85,7 +85,7 @@
                         type="text"
                         ng-model="$parent.password"
                         placeholder="Mot de passe"
-                        ng-keypress="isKeyEnter($event) && login()"
+                        ng-enter="login()"
                         />
                 </div>
                 <a

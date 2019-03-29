@@ -6,8 +6,8 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
     map.currentPoi = null;
     map.loaded = false;
     map.registrationToggle = false;
-    map.currentAddress = null;
-    map.hideAskLocation = !!navigator.geolocation;
+    map.currentLocation = null;
+    map.showAskLocation = !!navigator.geolocation;
     map.emptyArea = false;
     map.mobileView = isMobile();
     map.loggedUser = getLoggedUser();
@@ -92,11 +92,44 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
       return mapsDefer.promise;
     }
 
+    searchToken = function() {
+      var deferred = $q.defer();
+    
+      if (!map.loggedUser || !getQueryParams('token')) {
+        deferred.resolve();
+        return deferred.promise;
+      }
+
+      $.ajax({
+        type: 'GET',
+        url: getApiUrl() + '/entourages/' + getQueryParams('token'),
+        data: {
+          token: map.loggedUser.token
+        },
+        success: function(data) {
+          if (data.entourage && data.entourage.group_type != "conversation") {
+            initMap({
+              coords: {
+                latitude: data.entourage.location.latitude,
+                longitude: data.entourage.location.longitude
+              }
+            });
+          } else {
+            deferred.resolve();
+          }
+        },
+        error: function() {
+          deferred.resolve();
+        }
+      });
+
+      return deferred.promise;
+    }
+
     initMap = function(position) {
 
-      map.actions = [];
-
       initFilters();
+      initPopupClass();
 
       // default parameters of our map (centered on Paris)
       map.mapObjectParams = {
@@ -124,58 +157,103 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
       }
 
       map.mapObject = new google.maps.Map(document.getElementById('map-container'), map.mapObjectParams);
-      map.currentZoom = map.mapObject.getZoom();
+
+      // load/filter actions and get the name of the current city
+      google.maps.event.addListener(map.mapObject, 'bounds_changed', function() {
+        if (!map.isMapReady) {
+          // if the profile onboarding modal is required,
+          // the "first" run (open entourage from URL, handle deeplink)
+          // will be run after that modal is closed
+          var first = !map.profileRequired();
+  
+          map.actions = [];
+          map.isMapReady = true;
+  
+          if (map.public) {
+            getPublicActions()
+            .then(getPois(true))
+            .then(function(){
+              getCurrentAddress();
+  
+              map.loaded = true;
+              map.refreshing = false;
+            });
+          } else {
+            map.getPrivateFeed(first)
+            .then(getPois(first))
+            .then(function(){
+              getCurrentAddress();
+  
+              map.loaded = true;
+              map.refreshing = false;
+            });
+          }
+        }
+      });
+      google.maps.event.addListener(map.mapObject, 'center_changed', refreshMap);
 
       resizeMarkers();
+      map.currentZoom = map.mapObject.getZoom();
 
-      getActions();
+      // when the user zooms the map
+      google.maps.event.addListener(map.mapObject, 'zoom_changed', function() {
+        resizeMarkers();
+        map.currentZoom = map.mapObject.getZoom();
+      });
 
       if (getQueryParams('page') && getQueryParams('page') == 'calendrier') {
         map.toggleModal('calendar');
       }
 
-      // when the user zooms the map
-      google.maps.event.addListener(map.mapObject, 'zoom_changed', function() {
-        resizeMarkers();
-
-        if (map.public) {
-          filterActions();
-        }
-        else {
-          map.getPrivateFeed();
-        }
-        getPois();
-        map.currentZoom = map.mapObject.getZoom();
-      });
-
-      // when the user drags the map
-      google.maps.event.addListener(map.mapObject, 'dragend', function(){
-        if (map.public) {
-          filterActions();
-        }
-        else {
-          map.getPrivateFeed();
-        }
-        getPois();
-      });
-
       initSearchbox();
-      initPopupClass();
     }
+
+    getCurrentAddress = function() {
+      var geocoder = new google.maps.Geocoder();
+      geocoder.geocode({'location': map.mapObject.getCenter()}, function(results, status) {
+        if (status === 'OK' && results[0]) {
+          map.currentLocation = results[0];
+          if (results[0].address_components) {
+            map.currentLocation.short_name = results[0].address_components.filter(function(e){
+              return e.types && e.types.indexOf('locality') > -1;
+            })[0].short_name;
+          }
+          $scope.$apply();
+        }
+      });
+    }
+
+    var refreshMap = debounce(function() {
+      if (map.refreshing) {
+        return;
+      }
+      console.info("refreshMap");
+
+      map.refreshing = true;
+      
+      if (map.public) {
+        filterActions();
+        getPois().then(function(){
+          getCurrentAddress()
+          map.refreshing = false;
+        });
+      }
+      else {
+        map.getPrivateFeed()
+        .then(getPois)
+        .then(function(){
+          getCurrentAddress()
+          map.refreshing = false;
+        });
+      }
+    }, 200);
 
 
     // ** ACTIONS **/
 
-    getActions = function() {
-      google.maps.event.addListener(map.mapObject, 'bounds_changed', function() {
-        if (!map.isMapReady) {
-          map.isMapReady = true;
-          initFeed();
-        }
-      });
-    }
-
     getPublicActions = function() {
+      var deferred = $q.defer();
+      
       $.ajax({
         type: "GET",
         url: "https://entourage-csv.s3.eu-west-1.amazonaws.com/production/entourages.csv",
@@ -194,7 +272,6 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
               display_name: action.author_name,
               avatar_url: action.author_avatar_url
             };
-            action.description = replaceURLWithHTMLLinks(action.description);
 
             if (action.group_type == 'outing') {
               action.metadata = {
@@ -211,61 +288,25 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
           }
 
           filterActions();
-
           showCarousel();
 
           console.info(map.actions)
-          
-          map.loaded = true;
-          $scope.$apply();
 
           // display action if token in url
           if (getQueryParams('token')) {
-            map.showAction(getQueryParams('token'));
-          } 
+            map.showAction(getQueryParams('token'), false, true);
+          }
+
+          deferred.resolve();
         }
       });
-    }
 
-    initFeed = function() {
-      if (map.public) {
-        getPublicActions();
-      }
-      else {
-        // if the profile onboarding modal is required,
-        // the "first" run (open entourage from URL, handle deeplink)
-        // will be run after that modal is closed
-        var first = !map.profileRequired();
-
-        // if shared action, center map on it before loading feed
-        if (getQueryParams('token')) {
-          $.ajax({
-            type: 'GET',
-            url: getApiUrl() + '/entourages/' + getQueryParams('token'),
-            data: {
-              token: map.loggedUser.token
-            },
-            success: function(data) {
-              if (data.entourage && data.entourage.group_type != "conversation") {
-                map.mapObject.setCenter(new google.maps.LatLng(data.entourage.location.latitude, data.entourage.location.longitude));
-              }
-              map.getPrivateFeed(first);
-            },
-            error: function() {
-              map.getPrivateFeed(first);
-            }
-          });
-        }
-        else {
-          map.getPrivateFeed(first);
-        }
-      }
-
-      getPois();
+      return deferred.promise;
     }
 
     map.getPrivateFeed = function(first) {
-      map.refreshing = true;
+      var deferred = $q.defer();
+
       map.boundsSize = getBoundsSize(map.mapObject.getBounds());
 
       data = {
@@ -340,17 +381,18 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
 
             console.info('actions', map.actions);
 
-            map.refreshing = false;
-            map.loaded = true;
-            $scope.$apply();
+            deferred.resolve();
           }
         },
         error: function(data) {
           if (data.responseJSON && data.responseJSON.message && data.responseJSON.message == 'unauthorized') {
             map.logout();
           }
+          deferred.resolve();
         }
       });
+
+      return deferred.promise;
     }
 
     filterActions = function() {
@@ -404,14 +446,15 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
       isMapEmpty();
     }
 
-    getPois = function() {
-      
+    getPois = function(first) {
+      var deferred = $q.defer();
+
       clearAllMarkers('pois');
 
       if (!map.filters.pois.length) {
-        return;
+        deferred.resolve();
+        return deferred.promise;
       }
-      map.refreshing = true;
       map.boundsSize = getBoundsSize(map.mapObject.getBounds());
 
       data = {
@@ -450,30 +493,31 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
               
               // show detailed window when marker clicked
               poi.marker.addListener('click', function(){
-                if (map.currentPoi && map.currentPoi.id == poi.id) {
-                  map.currentPoi = null;
-                }
-                else {
+                map.showPoi(poi, true);
+              });
+
+              if (first && getQueryParams('lat') && getQueryParams('lng')) {
+                if (poi.latitude == getQueryParams('lat') && poi.longitude == getQueryParams('lng')) {
                   map.currentPoi = poi;
                 }
-                map.currentAction = null;
-                $scope.$apply();
-              });
+              }
 
               return poi;
             });
           }
           generateMarkers();
 
-          map.refreshing = false;
-          $scope.$apply();
+          deferred.resolve();
         },
         error: function(data) {
           if (data.responseJSON && data.responseJSON.message && data.responseJSON.message == 'unauthorized') {
             map.logout();
           }
+          deferred.resolve();
         }
       });
+
+      return deferred.promise;
     }
 
     isMapEmpty = function() {
@@ -486,11 +530,9 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
         var zoomLevel = map.mapObject.getZoom();
         if (zoomLevel >= 14) {
           minAction = 1;
-        }
-        else if (zoomLevel == 13) {
+        } else if (zoomLevel == 13) {
           minAction = 2;
-        }
-        else {
+        } else {
           minAction = 5;
         }
 
@@ -524,26 +566,24 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
       };
     }
 
-    placeChanged = function(address, location) {
-      map.currentAddress = address;
-      localStorage.setItem('address', map.currentAddress);
-      map.mapObject.setCenter(location);
-
-      if (map.public) {
-        filterActions();
-      }
-      else {
-        map.getPrivateFeed();
-      }
-      getPois();
-      $scope.$apply(); 
-    }
-
     map.profileRequired = function() {
       return !map.public && (!map.loggedUser.display_name || !map.loggedUser.has_password) && map.loaded;
     }
 
-    map.showAction = function(uuid, apply) {
+    map.showPoi = function(poi, apply) {
+      if (map.currentPoi && map.currentPoi.id == poi.id) {
+        map.currentPoi = null;
+        return;
+      }
+      map.currentAction = null;
+      map.currentPoi = poi;
+
+      if (apply) {
+        $scope.$apply();
+      }
+    }
+
+    map.showAction = function(uuid, apply, setCenter) {
       if (map.currentAction && map.currentAction.uuid == uuid) {
         map.currentAction = null;
         $scope.$apply();
@@ -574,8 +614,6 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
               var action = transformAction(data.entourage);
               if (data.entourage.group_type != "conversation") {
                 map.mapObject.setCenter(new google.maps.LatLng(action.location.latitude, action.location.longitude));
-                map.getPrivateFeed();
-                getPois();
               }
               map.currentAction = action;
               $scope.$apply();
@@ -585,6 +623,10 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
       }
       else {
         map.currentAction = searchAction[0];
+
+        if (map.public && setCenter) {
+          map.mapObject.setCenter(new google.maps.LatLng(map.currentAction.location.latitude, map.currentAction.location.longitude));
+        }
 
         if (apply) {
           $scope.$apply();
@@ -735,8 +777,8 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
 
     // ** MODALS ** //
 
-    map.toggleModal = function(name, token) {
-      if (map.public && name != 'carousel' && name != 'register' && name != 'login' && name != 'calendar') {
+    map.toggleModal = function(name, eventInfo) {
+      if (map.public && name != 'carousel' && name != 'register' && name != 'login' && name != 'calendar' && name != 'search') {
         map.toggleModal('register');
         return;
       }
@@ -748,7 +790,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
       }
 
       if (name == 'register' && map.showModal.register && !isDemoMode()) {
-        ga('send', 'event', 'Click', 'Join', token);
+        ga('send', 'event', 'Click', 'Join', eventInfo);
       }
     }
 
@@ -770,7 +812,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
     // ** SEARCH ** //
 
     initSearchbox = function() {
-      var input = document.getElementById('app-search-input');
+      var input = document.getElementById('app-location-search-input');
       var _addEventListener = (input.addEventListener) ? input.addEventListener : input.attachEvent;
 
       function addEventListenerWrapper(type, listener) {
@@ -806,15 +848,11 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
         var place = Autocomplete.getPlace();
 
         if (place.geometry) {
-          placeChanged(place.formatted_address, place.geometry.location);
+          localStorage.setItem('address', place.formatted_address);
+          map.mapObject.setCenter(place.geometry.location);
         }
+        map.searchPlace = null;
       });
-    }
-
-    map.clearAddress = function() {
-      map.currentAddress = null;
-      $('#app-search-input').val('').focus();
-      localStorage.removeItem('address');
     }
 
     map.askLocation = function() {
@@ -825,12 +863,30 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
     // ** FILTERS ** //
 
     initFilters = function() {
-      map.categoryTypes = getCategoryTypes();
+      map.poisCategories = getPoisCategories();
+      map.availableFilters = {
+        periods: [{
+          value: '7',
+          label: 'Moins d\'une semaine'
+        },
+        {
+          value: '14',
+          label: 'Moins de 2 semaines'
+        },
+        {
+          value: '30',
+          label: 'Moins d\'un mois'
+        }],
+        types: ['as','ae','am','ar','ai','ak','ao','ah','cs','ce','cm','cr','ci','ck','co','ch','ou'],
+        pois: map.poisCategories.map(function(cat){
+          return cat.id;
+        })
+      };
 
       map.filters = {
         period: (localStorage.getItem('filter_period') != null) ? localStorage.getItem('filter_period') : '14',
-        types: (localStorage.getItem('filter_types') != null) ? localStorage.getItem('filter_types').split(',') : ['as','ae','am','ar','ai','ak','ao','ah','cs','ce','cm','cr','ci','ck','co','ch','ou'],
-        pois: (localStorage.getItem('filter_pois') != null) ? (localStorage.getItem('filter_pois').length ? localStorage.getItem('filter_pois').split(',') : []) : ['1', '2', '3', '4', '5', '6', '7']
+        types: (localStorage.getItem('filter_types') != null) ? (localStorage.getItem('filter_types').length ? localStorage.getItem('filter_types').split(',') : []) : map.availableFilters.types,
+        pois: (localStorage.getItem('filter_pois') != null) ? (localStorage.getItem('filter_pois').length ? localStorage.getItem('filter_pois').split(',') : []) : map.availableFilters.pois
       };
     }
 
@@ -870,22 +926,12 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
       }
     }
 
-    map.activatedFilters = function() {
-      var value = 0;
-      for (f in map.filters) {
-        if (f == 'pois') {
-          continue;
-        }
-        if (f == 'types') {
-          if (!map.public && (map.filters[f].indexOf('ou') == -1 || map.filters[f].indexOf('as') == -1 || map.filters[f].indexOf('cs') == -1)) {
-            value += 1;
-          }
-        }
-        else if (map.filters[f] != '') {
-          value += 1;
-        }
+    map.toggleAllFilters = function(type) {
+      if (map.filters[type].length) {
+        map.toggleFilterIds(type, []);
+      } else {
+        map.toggleFilterIds(type, map.availableFilters[type]);
       }
-      return value;
     }
 
 
@@ -944,10 +990,10 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
       history.replaceState({}, document.title, window.location.pathname + window.location.search);
 
       if (hash === '#create-action') {
-        map.toggleNewAction();
+        map.toggleModal('newAction');
       }
       else if (hash === '#create-event') {
-        map.toggleNewEvent();
+        map.toggleModal('newEvent');
       }
     }
 
@@ -965,7 +1011,21 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
 
     autoLogin()
     .then(initGoogleMaps)
+    .then(searchToken)
     .then(function() {
+      if (getQueryParams('lat') && getQueryParams('lng')) {
+        initMap({
+          coords: {
+            latitude: parseFloat(getQueryParams('lat')),
+            longitude: parseFloat(getQueryParams('lng'))
+          }
+        });
+        return;
+      }
+      if (getQueryParams('ville') && getQueryParams('ville') != 'undefined') {
+        initMapFromAddress(getQueryParams('ville'));
+        return;
+      }
       if (map.loggedUser && map.loggedUser.address) {
         if (map.loggedUser.address.latitude) {
           initMap({
@@ -974,27 +1034,23 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
               longitude: map.loggedUser.address.longitude
             }
           });
+          return;
         }
         else if (map.loggedUser.address.display_address) {
           initMapFromAddress(map.loggedUser.address.display_address);
+          return;
         }
       }
-      else {
-        if (getQueryParams('ville') && getQueryParams('ville') != 'undefined') {
-          initMapFromAddress(getQueryParams('ville'));
-        }
-        else if (localStorage.getItem('address')) {
-          initMapFromAddress(localStorage.getItem('address'));
-        }
-        // ask user position
-        else if (navigator.geolocation && !getQueryParams('token')) {
-          navigator.geolocation.getCurrentPosition(initMap, initMap);
-        }
-        // if not
-        else {
-          initMap();
-        }
+      if (localStorage.getItem('address')) {
+        initMapFromAddress(localStorage.getItem('address'));
+        return;
       }
+      if (navigator.geolocation && !getQueryParams('token')) {
+        navigator.geolocation.getCurrentPosition(initMap, initMap);
+        return;
+      }
+      
+      initMap();
     });
 
     initMapFromAddress = function(address) {
@@ -1002,7 +1058,6 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
 
       geocoder.geocode({'address': address}, function(results, status) {
         if (status === 'OK' && results[0]) {
-          map.currentAddress = results[0].formatted_address;
           localStorage.setItem('address', results[0].formatted_address);
           initMap({
             coords: {
