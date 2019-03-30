@@ -54,7 +54,7 @@ function isDemoMode() {
 }
 
 function getApiUrl() {
-  if (!isDemoMode())
+  if (isDemoMode())
     return 'https://entourage-back-preprod.herokuapp.com/api/v1';
   else
     return 'https://api.entourage.social/api/v1';
