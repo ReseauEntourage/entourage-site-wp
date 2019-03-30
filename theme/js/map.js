@@ -422,12 +422,26 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
         if (action.type == 'Entourage' && action.status != 'closed') {
           var inMap = google.maps.geometry.poly.containsLocation(new google.maps.LatLng(action.location.latitude, action.location.longitude), mapPoly);
           visible = inMap;
+          if (!visible) {
+            console.info("not in map", action.title, action);
+          }
         }
         if (visible && action.group_type != 'outing' && map.filters.period != '') {
-          visible = action.created_at.getTime() >= new Date().setDate(new Date().getDate() - map.filters.period);
+          if (action.updated_at) {
+            visible = new Date(action.updated_at).getTime() >= new Date().setDate(new Date().getDate() - map.filters.period);
+            if (!visible) {
+              console.info("old updated time", action.title, action);
+            }
+          } else {
+            visible = action.created_at.getTime() >= new Date().setDate(new Date().getDate() - map.filters.period);
+            if (!visible) {
+              console.info("old created time", action.title, action);
+            }
+          }
         }
         if (visible && action.status == 'closed') {
           visible = false;
+          console.info("closed", action.title, action);
         }
         if (map.public) {
           action.marker.setVisible(visible);

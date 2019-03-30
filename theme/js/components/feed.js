@@ -8,7 +8,7 @@ angular.module('entourageApp')
       emptyArea: '=',
       onShowAction: '&',
       onOpenProfile: '&',
-      toggleModal: '&'
+      onToggleModal: '&'
     },
     controllerAs: 'ctrl',
     controller: function($scope) {

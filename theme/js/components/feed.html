@@ -36,7 +36,7 @@
                 ng-click="ctrl.onOpenCreateAction()"
                 class="action-item end-card"
                 >
-                Déplacez la carte pour plus d'actions&nbsp;!<br>Ou mieux, <a ng-click="ctrl.toggleModal({page: 'newAction'})">créez-en une vous-même&nbsp; !</a><br>
+                Déplacez la carte pour plus d'actions&nbsp;!<br>Ou mieux, <a ng-click="ctrl.onToggleModal({page: 'newAction'})">créez-en une vous-même&nbsp; !</a><br>
                 <img src="/wp-content/themes/entourage/img/carousel-3.png">
             </li>
         </ul>
@@ -50,18 +50,18 @@
                 <span ng-if="map.public">
                     <a
                         ng-if="map.public"
-                        ng-click="map.toggleModal({page: 'register', token: 'Bottom'})"
+                        ng-click="map.onToggleModal({page: 'register', token: 'Bottom'})"
                         >
                         rejoignant la communauté Entourage
                     </a>&nbsp;!
                 </span>
                 <span ng-if="!map.public">
                     créant
-                    <a ng-click="map.toggleModal({page: 'newAction'})">
+                    <a ng-click="map.onToggleModal({page: 'newAction'})">
                         une action
                     </a>
                     ou
-                    <a ng-click="map.toggleModal({page: 'newEvent'})">
+                    <a ng-click="map.onToggleModal({page: 'newEvent'})">
                         un événement
                     </a>
                     solidaire&nbsp;!
