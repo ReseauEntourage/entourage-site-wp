@@ -171,14 +171,14 @@
                             >
                             <a>
                                 <i class="material-icons">search</i>
-                                <input
-                                    id="app-location-search-input"
-                                    type="text"
-                                    ng-model="map.searchPlace"
-                                    placeholder="Cherchez une ville..."
-                                    autocomplete="false"
-                                    name="city"
-                                    />
+                                <form autocomplete="off">
+                                    <input
+                                        id="app-location-search-input"
+                                        type="text"
+                                        ng-model="map.searchPlace"
+                                        placeholder="Cherchez une ville..."
+                                        />
+                                </form>
                             </a>
                         </li>
                         <li
@@ -446,6 +446,7 @@
                             class="no-mobile"
                             user="map.loggedUser"
                             clickable="false"
+                            show-as-user="true"
                             ></user-picture>
                     </a>
                     <ul uib-dropdown-menu>

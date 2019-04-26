@@ -89,12 +89,6 @@ angular.module('entourageApp')
             success: function(data) {
               if (data.users) {
                 ctrl.action.users = data.users;
-                ctrl.action.number_of_people = ctrl.action.users.filter(function(user) {
-                  if (user.id == ctrl.user.id && user.status == 'accepted') {
-                    ctrl.action.join_status = 'accepted';
-                  }
-                  return ((user.id != ctrl.action.author.id) && (user.status == 'accepted'));
-                }).length;
               }
               ctrl.getMessages();
             },
@@ -106,34 +100,36 @@ angular.module('entourageApp')
         }
       }
 
-      ctrl.getUsers = function() {
-        if (ctrl.loading)
-          return;
+      // NO MORE USED
 
-        ctrl.loading = true;
+      // ctrl.getUsers = function() {
+      //   if (ctrl.loading)
+      //     return;
 
-        $.ajax({
-          type: 'GET',
-          url: getApiUrl() + '/entourages/' + ctrl.action.uuid + '/users',
-          data: {
-            token: ctrl.user.token,
-            entourage_id: ctrl.action.uuid
-          },
-          success: function(data) {
-            if (data.users)
-            {
-              ctrl.action.users = data.users;
-              ctrl.action.number_of_people = data.users.length - 1;
-            }
-            ctrl.loading = false;
-            $scope.$apply();
-          },
-          error: function(data) {
-            ctrl.loading = false;
-            $scope.$apply();
-          }
-        });
-      }
+      //   ctrl.loading = true;
+
+      //   $.ajax({
+      //     type: 'GET',
+      //     url: getApiUrl() + '/entourages/' + ctrl.action.uuid + '/users',
+      //     data: {
+      //       token: ctrl.user.token,
+      //       entourage_id: ctrl.action.uuid
+      //     },
+      //     success: function(data) {
+      //       if (data.users)
+      //       {
+      //         ctrl.action.users = data.users;
+      //         ctrl.action.number_of_people = data.users.length - 1;
+      //       }
+      //       ctrl.loading = false;
+      //       $scope.$apply();
+      //     },
+      //     error: function(data) {
+      //       ctrl.loading = false;
+      //       $scope.$apply();
+      //     }
+      //   });
+      // }
 
       ctrl.getMessages = function(before) {
         if (ctrl.action.join_status != 'accepted') {

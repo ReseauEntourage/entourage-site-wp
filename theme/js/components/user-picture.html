@@ -1,4 +1,7 @@
-<div class="user-picture-container">
+<div
+    ng-if="ctrl.user"
+    class="user-picture-container"
+    >
     <div
         class="user-picture"
         ng-class="{clickable: ctrl.clickable}"
@@ -6,21 +9,21 @@
         >
         <div
             class="user-picture-profile"
-            ng-class="{'no-picture': !ctrl.getUser().avatar_url}"
-            ng-style="{'background-image': 'url(' + ctrl.getUser().avatar_url + ')'}"
+            ng-class="{'no-picture': !ctrl.imageUrl}"
+            ng-style="{'background-image': 'url(' + ctrl.imageUrl + ')'}"
             ></div>
         <div
             ng-if="ctrl.action && ctrl.action.number_of_people && ctrl.action.group_type != 'conversation'"
             class="action-participants"
-            ng-bind="ctrl.action.number_of_people > 99 ? '99+' : ('+' + ctrl.action.number_of_people)"
+            ng-bind="ctrl.action.number_of_people > 99 ? '99+' : ('+' + (ctrl.action.number_of_people - 1))"
             ></div>
     </div>
     <div
-        ng-if="ctrl.getUser().partner || (ctrl.getUser().roles && ctrl.getUser().roles.indexOf('ambassador') > -1)"
+        ng-if="ctrl.user.partner || ctrl.isAmbassador"
         class="user-picture-badge"
         ng-class="{
-            'partner': ctrl.getUser().partner,
-            'entourage': ctrl.getUser().roles && ctrl.getUser().roles.indexOf('ambassador') > -1
+            'partner': ctrl.user.partner,
+            'entourage': ctrl.isAmbassador
         }"
         ></div>
 </div>

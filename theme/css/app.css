@@ -1378,6 +1378,23 @@ div.overlay.fade-out {
     transform: scale(0.7);
 }
 
+#modal-search .selected-categories {
+    display: flex;
+}
+
+#modal-search .selected-categories i {
+    margin-right: 3px;
+    cursor: pointer;
+}
+
+#modal-search .selected-categories i:hover:before {
+    content: "close";
+}
+
+#modal-search div.parent-input {
+    width: 300px;
+}
+
 
 /** WELCOME CAROUSEL **/
 
@@ -1840,6 +1857,7 @@ div.overlay.fade-out {
     height: 100%;
     border-radius: 50%;
     overflow: hidden;
+    box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.2);
 }
 
 .user-picture.clickable {
@@ -1879,8 +1897,8 @@ div.overlay.fade-out {
 
 .user-picture-container .user-picture-badge {
     position: absolute;
-    bottom: -7px;
-    left: 50%;
+    bottom: -3px;
+    right: -2px;
     width: 16px;
     height: 16px;
     display: flex;
@@ -1891,7 +1909,6 @@ div.overlay.fade-out {
     background-color: #fff;
     background-repeat: no-repeat;
     background-position: center;
-    transform: translate(-50%);
 }
 
 .user-picture-container .user-picture-badge.entourage {
@@ -1900,14 +1917,14 @@ div.overlay.fade-out {
 }
 
 .user-picture-container .user-picture-badge.partner:not(.entourage) {
-    background-color: #1ed01b;
-    box-shadow: 0 0 0 2px #fff;
+    background-color: #27bb5c;
+    box-shadow: inset 0 0 0 1px #fff;
 }
 
 .user-picture-container .user-picture-badge.partner:not(.entourage):after {
     display: inline-block;
     font-family: 'Material Icons';
-    font-size: 12px;
+    font-size: 8px;
     content: "done";
     color: #fff;
 }
@@ -1915,43 +1932,64 @@ div.overlay.fade-out {
 
 /** MODAL PARTICIPANTS **/
 
+#modal-action-participants {
+    padding: 0;
+}
+
 #modal-action-participants .action-participant {
+    padding: 10px;
+    padding-right: 20px;
     display: flex;
-    padding: 10px 0;
     align-items: center;
+    justify-content: space-between;
     cursor: pointer;
     transition: background 0.3s;
 }
 
-#modal-action-participants .action-participant:hover {
-    text-decoration: underline;
+#modal-action-participants .action-participant > div {
+    display: flex;
+    align-items: center;
 }
 
 #modal-action-participants .action-participant + .action-participant {
-    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    border-top: 1px solid #e9e9e9;
 }
 
 #modal-action-participants .action-participant .user-picture-container {
     margin-right: 10px;
 }
 
-#modal-action-participants .user-picture-container .user-picture-badge.partner:not(.entourage) {
-    box-shadow: 0 0 0 2px #ff5100;
-}
-
-#modal-action-participants .action-participant h3 {
+#modal-action-participants .action-participant b {
+    display: block;
     font-weight: bold;
     font-size: 14px;
 }
 
+#modal-action-participants .action-participant:hover {
+    background: #e9e9e9;
+}
 
-/** ACTION PICTURE **/
+#modal-action-participants .action-participant .role {
+    margin-left: 30px;
+    padding: 2px 11px;
+    font-size: 12px;
+    background: #737373;
+    color: #fff;
+    border-radius: 10px;
+}
+
+#modal-action-participants .modal-close {
+    top: -34px;
+}
+
+
+/** USER NAME **/
 
 .action-author-link.clickable {
     cursor: pointer;
 }
 
-.action-author-picture {
+.action-author-link .user-picture-container {
     display: inline-block;
     width: 20px;
     height: 20px;
@@ -1962,19 +2000,22 @@ div.overlay.fade-out {
     vertical-align: middle;
 }
 
-.action-author-picture.no-picture {
-    background-color: #eee;
-    text-align: center;
+.action-author-link .user-picture {
+    box-shadow: none;
 }
 
-.action-author-picture.no-picture:before {
-    content: "\e7fd";
-    font-family: 'Material Icons';
-    font-size: 12px;
-    line-height: 20px;
-    color: #737373;
+.action-author-link .user-picture-container .user-picture-badge {
+    display: none;
 }
 
+.action-author-link .action-partner-name {
+    font-weight: normal;
+    font-style: italic;
+}
+
+.action-author-link .action-partner-name:before {
+    content: " - ";
+}
 
 /** NEW ACTION **/
 
@@ -2042,6 +2083,11 @@ div.overlay.fade-out {
     width: 30px;
     height: 30px;
     border-radius: 20px;
+    box-shadow: 0 0 0 2px #fff, 0px 0px 4px 3px rgba(0, 0, 0, 0.15);
+}
+
+#modal-profile-user .user-picture-container .user-picture-badge:after {
+    font-size: 16px;
 }
 
 #modal-profile-user .modal-profile-user-name {

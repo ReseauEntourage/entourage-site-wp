@@ -750,4 +750,8 @@
     #modal-search .result-list {
         max-height: inherit;
     }
+
+    #modal-search div.parent-input {
+        width: auto;
+    }
 }

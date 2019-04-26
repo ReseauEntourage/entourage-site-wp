@@ -11,6 +11,8 @@ angular.module('entourageApp')
       ctrlParent.$onInit = function() {
         $uibModal.open({
           templateUrl: '/wp-content/themes/entourage/js/components/modal-search.html',
+          backdrop: 'static',
+          keyboard: false,
           windowClass: 'modal-no-width modal-white low-z-index',
           controllerAs: 'ctrl',
           controller: function($scope, $uibModalInstance) {
@@ -52,15 +54,26 @@ angular.module('entourageApp')
               $uibModalInstance.close();
             }
 
+            ctrl.toggleCategory = function(category) {
+              category.selected = !category.selected;
+              if (ctrl.getSelectedCategories()) {
+                ctrl.selectedCategories = true;
+              }
+            }
+
+            ctrl.toggleCategories = function(select) {
+              ctrl.poisCategories.map(function(c) {
+                c.selected = select;
+                return c;
+              });
+              ctrl.selectedCategories = select;
+            }
+
             ctrl.getSelectedCategories = function() {
               var cat = ctrl.poisCategories.filter(function(c) {
                 return c.selected;
               });
-              if (cat) {
-                return cat.map(function(c) {
-                  return c.id;
-                });
-              }
+              return cat.length;
             }
 
             ctrl.submit = function() {
@@ -70,7 +83,11 @@ angular.module('entourageApp')
 
               ctrl.errors = [];
 
-              var selectedCategories = ctrl.getSelectedCategories();
+              var selectedCategories = ctrl.poisCategories.filter(function(c) {
+                return c.selected;
+              }).map(function(c) {
+                return c.id;
+              });
 
               if (!selectedCategories.length) {
                 ctrl.errors.push("Sélectionnez au moins une catégorie");
@@ -89,9 +106,13 @@ angular.module('entourageApp')
               var data = {
                 latitude: ctrl.location.latitude,
                 longitude: ctrl.location.longitude,
-                distance: 20,
+                distance: 30,
                 category_ids: selectedCategories.join(',')
               };
+
+              if (!isDemoMode()) {
+                ga('send', 'event', 'Search', 'Poi', ctrl.text);
+              }
 
               $.ajax({
                 type: 'GET',
@@ -110,7 +131,7 @@ angular.module('entourageApp')
                       return true;
                     });
                   }
-                  if (!ctrl.results.length) {
+                  if (!data || !data.pois || !data.pois.length || !ctrl.results.length) {
                     delete ctrl.results;
                     ctrl.errors.push("Il n'y a aucun résultat pour votre recherche");
                   }

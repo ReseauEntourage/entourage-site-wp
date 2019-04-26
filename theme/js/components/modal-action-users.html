@@ -18,11 +18,25 @@
     >
     <div
         class="action-participant"
-        ng-repeat="participant in ctrl.action.users"
-        ng-click="ctrl.open(participant.id)"
+        ng-repeat="user in ctrl.action.users|orderBy:'requested_at'"
+        ng-click="ctrl.open(user.id)"
         >
-        <user-picture user="participant"></user-picture>
-        <h3 ng-bind="participant.display_name"></h3>
+        <div>
+            <user-picture
+                user="user"
+                show-as-user="true"
+                ></user-picture>
+            <user-name
+                user="user"
+                show-as-user="true"
+                ></user-name>
+        </div>
+        <span
+            ng-if="user.role == 'creator'"
+            class="role"
+            >
+            Créateur
+        </span>
     </div>  
     <a
         class="modal-close no-mobile"

@@ -40,13 +40,25 @@
                                 uib-dropdown-toggle
                                 class="btn"
                                 >
-                                <i class="material-icons">location_city</i> Catégories
+                                <i class="material-icons">location_city</i>
+                                <span ng-if="!ctrl.selectedCategories">Sélectionnez...</span>
+                                <div
+                                    ng-if="ctrl.selectedCategories"
+                                    class="selected-categories"
+                                    >
+                                    <i
+                                        ng-repeat="category in ctrl.poisCategories|filter:{selected: true}"
+                                        ng-click="ctrl.toggleCategory(category)"
+                                        class="action-icon poi-icon"
+                                        ng-class="'category-' + category.id"
+                                        ></i>
+                                </div>
                             </a>
                             <ul uib-dropdown-menu>
                                 <li>
                                     <a
                                         ng-repeat="category in ctrl.poisCategories"
-                                        ng-click="category.selected = !!!category.selected"
+                                        ng-click="ctrl.toggleCategory(category)"
                                         ng-class="{
                                             selected: category.selected,
                                             unselected: !category.selected
@@ -57,6 +69,14 @@
                                             ng-class="'category-' + category.id"
                                             ></i>
                                         <span ng-bind="category.label"></span>
+                                    </a>
+                                </li>
+                                <li class="bottom-actions">
+                                    <a ng-click="ctrl.toggleCategories(true)">
+                                        <span>Tout sélectionner</span>
+                                    </a>
+                                    <a ng-click="ctrl.toggleCategories(false)">
+                                        <span>Tout déselectionner</span>
                                     </a>
                                 </li>
                             </ul>

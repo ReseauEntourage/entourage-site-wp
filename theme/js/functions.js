@@ -5,6 +5,13 @@ function getLoggedUser() {
   return false;
 }
 
+function getUserToken() {
+  if (getLoggedUser()) {
+    return getLoggedUser().token;
+  }
+  return false;
+}
+
 function getQueryParams(search) {
   qs = window.location.search.split('+').join(' ');
 
@@ -357,7 +364,7 @@ function getVerbatim() {
       subtitle: "Kenny, ancien SDF"
     },
     {
-      title: "\"On a tous en tête que le SDF a besoin de manger. Avant tout, il a besoin de parler&nbsp;!\"",
+      title: "\"On a tous en tête que la personne SDF<br>a besoin de manger. Avant tout,<br>elle a besoin de parler&nbsp;!\"",
       subtitle: "Elina, ancienne SDF"
     },
     {

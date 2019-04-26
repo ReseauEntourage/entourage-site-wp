@@ -70,7 +70,7 @@ angular.module('entourageApp')
                     data.user.phone = ctrlParent.user.phone;
                     ctrlParent.user = data.user;
 
-                    if (ctrl.address.google_place_id) {
+                    if (ctrl.address && ctrl.address.google_place_id) {
                       ctrl.changeAddress();
                     }
                     else {

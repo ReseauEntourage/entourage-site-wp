@@ -27,7 +27,10 @@
                     <fieldset>
                         <label>Votre photo de profil</label>
                         <div class="input-line-centered">
-                            <user-picture user="ctrl.user"></user-picture>
+                            <user-picture
+                                user="ctrl.user"
+                                show-as-user="true"
+                                ></user-picture>
                             <a
                                 class="btn dark-btn"
                                 ng-click="ctrl.showPicture = true"

@@ -3,14 +3,20 @@
     ng-class="{clickable: ctrl.clickable}"
     ng-click="ctrl.click()"
     >
-    <div
+    <user-picture
         ng-if="ctrl.withPicture"
-        class="action-author-picture"
-        ng-class="{'no-picture': !ctrl.profile.avatar_url}"
-        ng-style="{'background-image': 'url(' + ctrl.profile.avatar_url + ')'}"
-    ></div>
-    <b
-        class="action-author-name capitalize-first-letter"
-        ng-bind="ctrl.profile.display_name"
-        ></b>
+        user="ctrl.user"
+        show-as-user="ctrl.showAsUser"
+        ></user-picture>
+    <b class="action-author-name">
+        <span
+            class="capitalize-first-letter"
+            ng-bind="ctrl.displayName"
+            ></span>
+        <span
+            ng-if="ctrl.user.partner && ctrl.showAsUser"
+            class="action-partner-name capitalize-first-letter"
+            ng-bind="ctrl.user.partner.name"
+            ></span>
+    </b>
 </a>

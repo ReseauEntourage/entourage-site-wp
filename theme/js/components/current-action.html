@@ -95,7 +95,7 @@
             <div class="action-title">
                 <div>
                     <user-picture
-                        user="ctrl.user"
+                        user="ctrl.action.author"
                         action="ctrl.action"
                         show-profile="ctrl.openProfile(id)"
                         clickable="!ctrl.public"
@@ -131,8 +131,7 @@
                 <div ng-if="ctrl.action.join_status != 'accepted'">
                     <div class="action-details">
                         <user-name
-                            user="ctrl.user"
-                            profile="ctrl.action.author"
+                            user="ctrl.action.author"
                             show-profile="ctrl.openProfile(id)"
                             clickable="!ctrl.public"
                             ></user-name>
@@ -154,9 +153,8 @@
                         <div class="action-chat-author">
                             Ecrivez un message privé à
                             <user-name
-                                user="ctrl.user"
-                                profile="ctrl.action.author"
-                                with-picture="false"
+                                user="ctrl.action.author"
+                                show-as-user="true"
                                 ></user-name>&nbsp;!
                         </div>
                     </div>
@@ -171,8 +169,7 @@
                         >
                         <div class="action-chat-author">
                             <user-name
-                                user="ctrl.user"
-                                profile="ctrl.action.author"
+                                user="ctrl.action.author"
                                 with-picture="true"
                                 show-profile="ctrl.openProfile(id)"
                                 clickable="!ctrl.public"
@@ -198,11 +195,11 @@
                         </div>
                         <div class="action-chat-author">
                             <user-name
-                                user="ctrl.user"
-                                profile="event.user"
+                                user="event.user"
                                 with-picture="true"
                                 show-profile="ctrl.openProfile(id)"
                                 clickable="true"
+                                show-as-user="true"
                                 ></user-name>
                             <span ng-if="event.type == 'user' && event.user.status == 'accepted'">&nbsp;a rejoint l'action</span>
                             <span
@@ -223,11 +220,11 @@
                         >
                         <div class="action-chat-author">
                             <user-name
-                                user="ctrl.user"
-                                profile="user"
+                                user="user"
                                 with-picture="true"
                                 show-profile="ctrl.openProfile(id)"
                                 clickable="true"
+                                show-as-user="true"
                                 ></user-name>
                             &nbsp;souhaite rejoindre votre action
                         </div>

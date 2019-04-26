@@ -7,19 +7,32 @@ angular.module('entourageApp')
       onShowAction: '&'
     },
     controllerAs: 'ctrl',
-    controller: function($scope) {
+    controller: function($scope, $q) {
       var ctrl = this;
 
       ctrl.unreadOnly = false;
+      refreshIncrement = 0
 
       ctrl.$onInit = function() {
-        ctrl.checkMessages();
-        ctrl.checkingMessagesInterval = setInterval(ctrl.checkMessages, 30000);
+        refreshFeed(true)
       }
 
-      ctrl.checkMessages = function() {
+      refreshFeed = function(first) {
+        refreshIncrement += 1
+        checkMessages()
+        .then(getPendingUsers)
+
+        if (first) {
+          ctrl.checkingMessagesInterval = setInterval(refreshFeed, 30000);
+        }
+      }
+
+      checkMessages = function() {
+        var deferred = $q.defer();
+
         if (ctrl.loading) {
-          return;
+          deferred.resolve();
+          return deferred.promise;
         }
 
         ctrl.loading = true;
@@ -40,15 +53,8 @@ angular.module('entourageApp')
               data.feeds.map(function(action) {
                 action = transformAction(action.data);
 
-                if (action.join_status == 'accepted') {
-                  if (action.number_of_unread_messages) {
-                    ctrl.pushNotification(action.uuid);
-                  }
-
-                  ctrl.is_admin = (action.author.id == ctrl.user.id);
-                  if (ctrl.is_admin) {
-                    ctrl.getPendingUsers(action);
-                  }
+                if (action.join_status == 'accepted' && action.number_of_unread_messages) {
+                  pushNotification(action.uuid);
                 }
                 ctrl.messages.push(action);
                 return action;
@@ -56,19 +62,56 @@ angular.module('entourageApp')
             }
             ctrl.loading = false;
             $scope.$apply();
+            deferred.resolve();
           }
+        });
+
+        return deferred.promise;
+      }
+
+      getPendingUsers = function() {
+        ctrl.messages.map(function(action) {
+          if (action.author.id != ctrl.user.id || action.status == 'closed' || action.group_type == 'conversation') {
+            return;
+          }
+          if (action.updated_at) {
+            var daysFromToday = (new Date().getTime() - new Date(action.updated_at).getTime()) / 1000 / 3600 / 24;
+            if ((daysFromToday > 30 && refreshIncrement%4 != 1) || (daysFromToday > 7 && refreshIncrement%2 != 1)) {
+              return;
+            }
+          }
+          $.ajax({
+            type: 'GET',
+            url: getApiUrl() + '/entourages/' + action.uuid + '/users',
+            data: {
+              token: ctrl.user.token,
+              entourage_id: action.uuid
+            },
+            success: function(data) {
+              if (data.users) {
+                action.pendingUsers = data.users.filter(function(user){
+                  return (user.status == 'pending');
+                });
+
+                if (action.pendingUsers.length) {
+                  pushNotification(action.uuid);
+                }
+              }
+              $scope.$apply();
+            }
+          });
         });
       }
 
-      ctrl.pushNotification = function(notif) {
+      pushNotification = function(notif) {
         if (ctrl.user.notifications.indexOf(notif) == -1) {
           ctrl.user.notifications.push(notif);
           document.title = document.title.replace(/Entourage( \([0-9]*\))? \|/g, 'Entourage (' + ctrl.user.notifications.length + ') |');
-          ctrl.toggleFav(true);
+          toggleFav(true);
         }
       }
 
-      ctrl.removeNotification = function(notif) {
+      removeNotification = function(notif) {
         var index = ctrl.user.notifications.indexOf(notif);
         if (index > -1) {
           ctrl.user.notifications.splice(index, 1);
@@ -76,37 +119,14 @@ angular.module('entourageApp')
             document.title = document.title.replace(/Entourage( \([0-9]*\))? \|/g, 'Entourage (' + ctrl.user.notifications.length + ') |');
           } else {
             document.title = document.title.replace(/Entourage( \([0-9]*\))? \|/g, 'Entourage |');
-            ctrl.toggleFav(false);
+            toggleFav(false);
           }
         }
       }
 
-      ctrl.toggleFav = function(active) {
+      toggleFav = function(active) {
         var link = document.querySelector("head link[rel*='icon']");
         link.href = link.href.replace(active ? 'fav.png' : 'fav-active.png', active ? 'fav-active.png' : 'fav.png');
-      }
-
-      ctrl.getPendingUsers = function(action) {
-        $.ajax({
-          type: 'GET',
-          url: getApiUrl() + '/entourages/' + action.uuid + '/users',
-          data: {
-            token: ctrl.user.token,
-            entourage_id: action.uuid
-          },
-          success: function(data) {
-            if (data.users) {
-              action.pendingUsers = data.users.filter(function(user){
-                return (user.status == 'pending');
-              });
-
-              if (action.pendingUsers.length) {
-                ctrl.pushNotification(action.uuid);
-              }
-            }
-            $scope.$apply();
-          }
-        });
       }
 
       ctrl.showAction = function(action) {
@@ -123,7 +143,7 @@ angular.module('entourageApp')
 
         ctrl.messages.map(function(action){
           if (action.number_of_unread_messages) {
-            ctrl.removeNotification(action.uuid);
+            removeNotification(action.uuid);
 
             $.ajax({
               type: 'PUT',
