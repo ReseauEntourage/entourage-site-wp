@@ -21,6 +21,10 @@
     <div
         ng-if="ctrl.user.partner || ctrl.isAmbassador"
         class="user-picture-badge"
+        tooltip-placement="right"
+        tooltip-enable="ctrl.user.partner"
+        uib-tooltip="Membre d'une association"
+        tooltip-append-to-body="true"
         ng-class="{
             'partner': ctrl.user.partner,
             'entourage': ctrl.isAmbassador

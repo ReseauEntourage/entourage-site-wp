@@ -259,7 +259,10 @@
                     ng-click="ctrl.askJoin()"
                     >
                     <i class="material-icons">group_add</i>
-                    Rejoignez <span ng-bind="ctrl.action.author.display_name"></span> !
+                    Rejoignez
+                    <user-name
+                        user="ctrl.action.author"
+                        ></user-name> !
                 </a>
                 <a
                     ng-switch-when="pending"

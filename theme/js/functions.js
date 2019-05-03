@@ -368,11 +368,11 @@ function getVerbatim() {
       subtitle: "Elina, ancienne SDF"
     },
     {
-      title: "Moi, Pablo, je ne suis pas SDF.<br> Je suis père de 3 enfants, peintre<br> et un excellent joueur de pétanque...",
+      title: "\"Moi, Pablo, je ne suis pas SDF.<br> Je suis père de 3 enfants, peintre<br> et un excellent joueur de pétanque...\"",
       subtitle: "Pablo, SDF"
     },
     {
-      title: "Jamais je ne m'en serais sortie<br> sans l'aide de mes voisins",
+      title: "\"Jamais je ne m'en serais sortie<br> sans l'aide de mes voisins\"",
       subtitle: "Anne-Claire, ancienne SDF"
     },
     {
@@ -384,7 +384,7 @@ function getVerbatim() {
       subtitle: "Etudes BVA/Emmaüs"
     },
     {
-      title: "Si tu savais la chaleur que ça me fait<br> quand on me dit bonjour",
+      title: "\"Si tu savais la chaleur que ça me fait<br> quand on me dit bonjour\"",
       subtitle: "Kenny, ancien SDF"
     },
   ];
@@ -431,4 +431,19 @@ function accentFold (s) {
 
 function searchString(a, b) {
   return accentFold(a).match(new RegExp(accentFold(b), "i"));
+}
+
+function getUnique(arr, comp) {
+
+  var unique = arr
+    .map(e => e[comp])
+
+     // store the keys of the unique objects
+    .map((e, i, final) => final.indexOf(e) === i && i)
+
+    // eliminate the dead keys & store unique objects
+    .filter(e => arr[e])
+    .map(e => arr[e]);
+
+   return unique;
 }
