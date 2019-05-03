@@ -5,138 +5,129 @@
         >
         <i class="material-icons">arrow_back</i>
     </a>
-    Chercher une structure
+    <span ng-if="!ctrl.results">Chercher des structures</span>
+    <span ng-if="ctrl.results">Résultats (<span ng-bind="ctrl.results.length"></span>)</span>
 </div>
 <div
     id="modal-search"
     class="modal-body"
-    ng-class="{loading: ctrl.loading}"
+    ng-class="{
+        'loading': ctrl.loading,
+        'show-results': ctrl.results
+    }"
     ng-swipe-right="ctrl.close()"
     >
     <div class="form">
-        <div class="two-parts">
-            <div>
-                <h3>Votre recherche</h3>
-                <fieldset>
-                    <label>Ville :</label>
-                    <div class="parent-input with-icon address-icon">
-                        <input
-                            ng-init="ctrl.initSearchBox()"
-                            id="new-search-input"
-                            type="text"
-                            ng-model="ctrl.locationName"
-                            />
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <label>Catégories :</label>
-                    <div class="parent-dropdown">
-                        <div
-                            uib-dropdown
-                            auto-close="outsideClick"
-                            class="parent-select"
+        <div ng-if="!ctrl.results">
+            <fieldset>
+                <label>Ville :</label>
+                <div class="parent-input with-icon address-icon">
+                    <input
+                        ng-init="ctrl.initSearchBox()"
+                        id="new-search-input"
+                        type="text"
+                        ng-model="ctrl.locationName"
+                        />
+                </div>
+            </fieldset>
+            <fieldset>
+                <label>Catégories :</label>
+                <div class="parent-dropdown">
+                    <div
+                        uib-dropdown
+                        auto-close="outsideClick"
+                        class="parent-select"
+                        >
+                        <a
+                            uib-dropdown-toggle
+                            class="btn"
                             >
-                            <a
-                                uib-dropdown-toggle
-                                class="btn"
+                            <i class="material-icons">location_city</i>
+                            <span ng-if="!ctrl.selectedCategories">Sélectionnez...</span>
+                            <div
+                                ng-if="ctrl.selectedCategories"
+                                class="selected-categories"
                                 >
-                                <i class="material-icons">location_city</i>
-                                <span ng-if="!ctrl.selectedCategories">Sélectionnez...</span>
-                                <div
-                                    ng-if="ctrl.selectedCategories"
-                                    class="selected-categories"
+                                <i
+                                    ng-repeat="category in ctrl.poisCategories|filter:{selected: true}"
+                                    ng-click="ctrl.toggleCategory(category)"
+                                    class="action-icon poi-icon"
+                                    ng-class="'category-' + category.id"
+                                    ></i>
+                            </div>
+                        </a>
+                        <ul uib-dropdown-menu>
+                            <li>
+                                <a
+                                    ng-repeat="category in ctrl.poisCategories"
+                                    ng-click="ctrl.toggleCategory(category)"
+                                    ng-class="{
+                                        selected: category.selected,
+                                        unselected: !category.selected
+                                    }"
                                     >
                                     <i
-                                        ng-repeat="category in ctrl.poisCategories|filter:{selected: true}"
-                                        ng-click="ctrl.toggleCategory(category)"
                                         class="action-icon poi-icon"
                                         ng-class="'category-' + category.id"
                                         ></i>
-                                </div>
-                            </a>
-                            <ul uib-dropdown-menu>
-                                <li>
-                                    <a
-                                        ng-repeat="category in ctrl.poisCategories"
-                                        ng-click="ctrl.toggleCategory(category)"
-                                        ng-class="{
-                                            selected: category.selected,
-                                            unselected: !category.selected
-                                        }"
-                                        >
-                                        <i
-                                            class="action-icon poi-icon"
-                                            ng-class="'category-' + category.id"
-                                            ></i>
-                                        <span ng-bind="category.label"></span>
-                                    </a>
-                                </li>
-                                <li class="bottom-actions">
-                                    <a ng-click="ctrl.toggleCategories(true)">
-                                        <span>Tout sélectionner</span>
-                                    </a>
-                                    <a ng-click="ctrl.toggleCategories(false)">
-                                        <span>Tout déselectionner</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+                                    <span ng-bind="category.label"></span>
+                                </a>
+                            </li>
+                            <li class="bottom-actions">
+                                <a ng-click="ctrl.toggleCategories(true)">
+                                    <span>Tout sélectionner</span>
+                                </a>
+                                <a ng-click="ctrl.toggleCategories(false)">
+                                    <span>Tout déselectionner</span>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
-                </fieldset>
-                <fieldset>
-                    <label>Mot recherché :</label>
-                    <div class="parent-input with-icon tag-icon">
-                        <input
-                            type="text"
-                            ng-model="ctrl.text"
-                            placeholder="Ex : papiers, écoute, distribution..."
-                            ng-enter="ctrl.submit()"
-                            />
-                    </div>
-                </fieldset>
-                <a
-                    ng-if="ctrl.results"
-                    ng-click="ctrl.submit()"
-                    class="btn orange-btn"
-                    >
-                    <i class="material-icons">search</i>
-                    <span ng-if="ctrl.results">Relancer la recherche</span>
-                    <span ng-if="!ctrl.results">Lancer la recherche</span>
-                </a>
-                <div
-                    class="error"
-                    ng-repeat="error in ctrl.errors"
-                    ng-bind="error"
-                    ></div>
-            </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <label>Mot recherché :</label>
+                <div class="parent-input with-icon tag-icon">
+                    <input
+                        type="text"
+                        ng-model="ctrl.text"
+                        placeholder="Ex : papiers, écoute, distribution..."
+                        ng-enter="ctrl.submit()"
+                        />
+                </div>
+            </fieldset>
             <div
-                ng-if="ctrl.results"
-                class="result"
-                >
-                <h3>Résultats de recherche (<span ng-bind="ctrl.results.length"></span>)</h3>
-                <ul class="result-list">
-                    <li
-                        class="result-item"
-                        ng-repeat="result in ctrl.results"
-                        ng-click="ctrl.openPoi(result)"
-                        >
-                        <h4>
-                            <i
-                                class="action-icon poi-icon"
-                                ng-class="'category-' + result.category_id"
-                                ></i>
-                            <span
-                                class="capitalize-first-letter"
-                                ng-bind="result.name"
-                                ></span>
-                        </h4>
+                class="error"
+                ng-repeat="error in ctrl.errors"
+                ng-bind="error"
+                ></div>
+        </div>
+        <div
+            ng-if="ctrl.results"
+            class="result"
+            >
+            <ul class="result-list">
+                <li
+                    class="result-item"
+                    ng-repeat="result in ctrl.results"
+                    ng-click="ctrl.openPoi(result)"
+                    >
+                    <h4>
+                        <i
+                            class="action-icon poi-icon"
+                            ng-class="'category-' + result.category_id"
+                            ></i>
                         <span
                             class="capitalize-first-letter"
-                            ng-bind="result.adress"
+                            ng-bind="result.name"
                             ></span>
-                    </li>
-                </ul>
-            </div>
+                    </h4>
+                    <span
+                        class="capitalize-first-letter"
+                        ng-bind="result.adress"
+                        ></span>
+                </li>
+            </ul>
         </div>
     </div>
     <a
@@ -146,16 +137,26 @@
         <i class="material-icons">close</i>
     </a>
 </div>
-<div
-    ng-if="!ctrl.results"
-    class="modal-footer"
-    >
+<div class="modal-footer">
     <a
+        ng-if="!ctrl.results"
         ng-click="ctrl.submit()"
         class="btn orange-btn"
         >
-        <i class="material-icons">search</i>
-        <span ng-if="ctrl.results">Relancer la recherche</span>
-        <span ng-if="!ctrl.results">Lancer la recherche</span>
+        <i class="material-icons">search</i> Lancer la recherche
+    </a>
+    <a
+        ng-if="ctrl.results"
+        ng-click="ctrl.close()"
+        class="btn orange-btn"
+        >
+        <i class="material-icons">refresh</i> Nouvelle recherche
+    </a>
+    <a
+        ng-if="ctrl.results"
+        ng-click="ctrl.print()"
+        class="btn dark-btn no-mobile"
+        >
+        <i class="material-icons">print</i> Imprimer la liste
     </a>
 </div>

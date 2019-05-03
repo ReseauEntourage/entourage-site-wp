@@ -19,11 +19,8 @@ angular.module('entourageApp')
             var ctrl = this;
 
             ctrl.loading = false;
-
             ctrl.poisCategories = getPoisCategories();
-
             ctrl.locationName = ctrlParent.currentLocation.short_name;
-
             ctrl.text = "";
 
             ctrl.location = {
@@ -51,7 +48,11 @@ angular.module('entourageApp')
             }
 
             ctrl.close = function() {
-              $uibModalInstance.close();
+              if (ctrl.results) {
+                delete ctrl.results;
+              } else {
+                $uibModalInstance.close();
+              }
             }
 
             ctrl.toggleCategory = function(category) {
@@ -106,7 +107,7 @@ angular.module('entourageApp')
               var data = {
                 latitude: ctrl.location.latitude,
                 longitude: ctrl.location.longitude,
-                distance: 30,
+                distance: 5,
                 category_ids: selectedCategories.join(',')
               };
 
@@ -143,6 +144,80 @@ angular.module('entourageApp')
 
             ctrl.openPoi = function(poi) {
               ctrlParent.onShowPoi({poi: poi});
+            }
+
+            ctrl.print = function() {
+              if (ctrl.window) {
+                ctrl.window.close();
+              }
+              ctrl.window = window.open("/liste-structures/", "win", "width=840,height=1188");
+              ctrl.window.onload = function(){
+
+                var page = `<div class="page">`;
+                page += `<header>`;
+                page += `<img src="/wp-content/themes/entourage/img/logo-entourage-orange-big.png" />`;
+                page += `<strong>Entourage, réseau d’amitié et d’entraide entre voisins avec et sans domicile</strong>`;
+                page += `<a>www.entourage.social</a>`;
+                page += `</header>`;
+
+                page += `<h1>Les structures solidaires recensées à ${ctrl.locationName}</h1>`;
+
+                page += `<div id="categories">`;
+                ctrl.poisCategories.map(function (category) {
+                  if (!category.selected) {
+                    return;
+                  }
+                  page += `<div class="category-item">`;
+                  page += `<i class="action-icon poi-icon category-${category.id }"></i>`;
+                  page += `<span class="name">= ${category.label}</span>`;
+                  page += `</div>`;
+                });
+                page += `</div>`;
+
+                var firstPageResults = ctrl.results.splice(0, 8);
+
+                firstPageResults.map(function (result) {
+                  page += `<div class="result-item">`;
+                  page += `<h4>`;
+                  page += `<i class="action-icon poi-icon category-${result.category_id }"></i>`;
+                  page += `<span class="name">${result.name}</span>`;
+                  page += `</h4>`;
+                  page += `<div class="infos">`;
+                  page += `<span class="capitalize-first-letter address"><i class="material-icons">location_on</i>${result.adress}</span>`;
+                  if (result.phone) {
+                    page += `<span class="phone"><i class="material-icons">phone</i>${result.phone}</span>`;
+                  }
+                  page += `</div>`;
+                  page += `</div>`;
+                });
+
+                var i = 0;
+                ctrl.results.map(function (result) {
+                  if (i%11 == 0) {
+                    page += `</div><div class="page">`;
+                  }
+                  page += `<div class="result-item">`;
+                  page += `<h4>`;
+                  page += `<i class="action-icon poi-icon category-${result.category_id }"></i>`;
+                  page += `<span class="name">${result.name}</span>`;
+                  page += `</h4>`;
+                  page += `<div class="infos">`;
+                  page += `<span class="capitalize-first-letter address"><i class="material-icons">location_on</i>${result.adress}</span>`;
+                  if (result.phone) {
+                    page += `<span class="phone"><i class="material-icons">phone</i>${result.phone}</span>`;
+                  }
+                  page += `</div>`;
+                  page += `</div>`;
+                  i += 1;
+                });
+
+                page += `</div>`;
+
+                ctrl.window.document.body.innerHTML = page;
+                setTimeout(function(){
+                  ctrl.window.print();
+                }, 200);
+              }
             }
           }
         }).closed.then(function() {

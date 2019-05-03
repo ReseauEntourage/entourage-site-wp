@@ -413,7 +413,12 @@
     /** MAP **/
 
     #map {
+        padding-top: 100px;
         padding-left: 0px;
+    }
+
+    #map.loading:before {
+        top: 100px;
     }
 
     #map-bottom-band {

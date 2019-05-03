@@ -588,7 +588,7 @@
         ></modal-calendar>
 
     <modal-search
-        ng-if="map.showModal.search"
+        ng-if="map.showModal.search && map.currentLocation"
         hide="map.toggleModal('search')"
         current-location="map.currentLocation"
         on-show-poi="map.showPoi(poi)"
