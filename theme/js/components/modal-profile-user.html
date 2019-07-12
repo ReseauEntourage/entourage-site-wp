@@ -10,7 +10,7 @@
     id="modal-profile-user"
     class="modal-body"
     ng-class="{loading: ctrl.loading}"
-    ng-swipe-right="ctrl.close()"
+    ng-swipe-right="isMobile() && ctrl.close()"
     >
     <user-picture
         user="ctrl.profile"
@@ -45,7 +45,12 @@
                 <i class="material-icons">favorite</i> Ambassadeur <b>Entourage</b>
             </li>
             <li ng-if="ctrl.profile.partner">
-                <i class="material-icons">thumb_up</i> <a ng-href="http://{{ ctrl.profile.partner.website_url }}" target="_blank" ng-bind="ctrl.profile.partner.name"></a>
+                <i class="material-icons">thumb_up</i>
+                <a
+                    ng-href="{{ ctrl.profile.partner.website_url }}"
+                    target="_blank"
+                    ng-bind="ctrl.profile.partner.name"
+                    ></a>
             </li>
             <li ng-if="ctrl.profile.organization">
                 <i class="material-icons">directions_walk</i> Maraudeur avec <b ng-bind="ctrl.profile.organization.name"></b>

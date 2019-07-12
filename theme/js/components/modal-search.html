@@ -15,7 +15,7 @@
         'loading': ctrl.loading,
         'show-results': ctrl.results
     }"
-    ng-swipe-right="ctrl.close()"
+    ng-swipe-right="isMobile() && ctrl.close()"
     >
     <div class="form">
         <div ng-if="!ctrl.results">

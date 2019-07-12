@@ -14,7 +14,7 @@
     id="modal-profile-edit"
     class="modal-body"
     ng-class="{loading: ctrl.loading}"
-    ng-swipe-right="ctrl.close()"
+    ng-swipe-right="isMobile() && ctrl.close()"
     >
     <div ng-if="!ctrl.success">
         <div

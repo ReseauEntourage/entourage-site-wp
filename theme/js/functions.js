@@ -74,7 +74,10 @@ function getAjaxHeaders(request) {
 
 function transformAction(action) {
   action.created_at = new Date(action.created_at);
-  action.author.display_name = action.author.display_name.charAt(0).toUpperCase() + action.author.display_name.slice(1);
+
+  if (action.author) {
+    action.author.display_name = action.author.display_name.charAt(0).toUpperCase() + action.author.display_name.slice(1);
+  }
 
   if (action.type == 'Announcement') {
     if (action.url) {

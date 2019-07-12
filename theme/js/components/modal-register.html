@@ -10,7 +10,7 @@
     id="modal-register"
     class="modal-body"
     ng-class="{loading: ctrl.loading}"
-    ng-swipe-right="ctrl.close()"
+    ng-swipe-right="isMobile() && ctrl.close()"
     >
     <div class="illu"></div>
     <div
@@ -87,7 +87,10 @@
             <h3>
                 Regardez vite vos SMS !
             </h3>
-            <div class="connection-form">
+            <form
+                class="connection-form"
+                autocomplete="off"
+                >
                 <fieldset>
                     <label>1. Entrez le code d'activation reçu&nbsp;:</label>
                     <input
@@ -96,6 +99,7 @@
                         placeholder="123456"
                         autofocus
                         />
+                    
                 </fieldset>
                 <fieldset>
                     <label>2. Choisissez votre mot de passe (au moins 8 caractères)&nbsp;:</label>
@@ -123,7 +127,7 @@
                     >
                     Un problème ? <a href="/contact/" target="_blank">Contactez-nous</a>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
     <a

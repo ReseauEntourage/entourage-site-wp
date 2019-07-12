@@ -31,12 +31,12 @@ body.woocommerce-page .button {
 }
 
 body.woocommerce-page .woocommerce a.remove {
-    color: #ff5100 !important;
+    color: #F55F24 !important;
 }
 
 body.woocommerce-page .woocommerce a.remove:hover {
     color: #fff!important;
-    background: #ff5100;
+    background: #F55F24;
 }
 
 body.woocommerce-page .woocommerce button.button:disabled,
@@ -94,7 +94,7 @@ body.woocommerce section.section.section_type-products li.type-product .price {
 }
 
 body.woocommerce section.section.section_type-products li.type-product .button {
-	background-color: #ff5100;
+	background-color: #F55F24;
 	color: #fff;
 	text-decoration: none;
 	margin-top: 20px;
@@ -143,7 +143,7 @@ body.woocommerce.single-product .product h1 {
 }
 
 body.woocommerce.single-product .product .price {
-	color: #ff5100;
+	color: #F55F24;
     font-weight: bold;
 }
 
@@ -168,7 +168,7 @@ body.woocommerce.single-product .cart .quantity input {
 
 body.woocommerce.single-product .cart .button {
     border: none;
-    background: #ff5100;
+    background: #F55F24;
     color: #fff;
 }
 
@@ -256,7 +256,7 @@ body.woocommerce-cart .woocommerce table.shop_table .quantity .qty {
 }
 
 body.woocommerce-cart .product-name a {
-    color: #ff5100;
+    color: #F55F24;
     text-decoration: underline;
 }
 
@@ -270,14 +270,14 @@ body.woocommerce-cart .woocommerce .cart-collaterals .cart_totals h2 {
 }
 
 body.woocommerce-cart .shipping-calculator-button {
-    color: #ff5100;
+    color: #F55F24;
 }
 
 body.woocommerce-page #add_payment_method .wc-proceed-to-checkout a.checkout-button,
 body.woocommerce-page.woocommerce-cart .wc-proceed-to-checkout a.checkout-button,
 body.woocommerce-page.woocommerce-checkout .wc-proceed-to-checkout a.checkout-button,
 body.woocommerce-page #payment #place_order {
-    background-color: #ff5100;
+    background-color: #F55F24;
     font-size: 16px;
     padding: 0 20px;
     height: 40px;
@@ -335,7 +335,7 @@ body.woocommerce-checkout .woocommerce table.shop_table {
 }
 
 body.woocommerce-page .order-total .woocommerce-Price-amount {
-    color: #ff5100;
+    color: #F55F24;
     font-weight: bold;
 }
 

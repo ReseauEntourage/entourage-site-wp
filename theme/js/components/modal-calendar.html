@@ -11,8 +11,8 @@
     id="modal-calendar"
     class="modal-body"
     ng-class="{loading: ctrl.loading}"
-    ng-swipe-right="ctrl.previousMonth()"
-    ng-swipe-left="ctrl.nextMonth()"
+    ng-swipe-right="isMobile() && ctrl.previousMonth()"
+    ng-swipe-left="isMobile() && ctrl.nextMonth()"
     >
     <div>
         <div class="calendar-image">

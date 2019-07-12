@@ -10,8 +10,8 @@
 <div
     id="modal-carousel"
     class="modal-body"
-    ng-swipe-left="ctrl.next()"
-    ng-swipe-right="ctrl.previous()"
+    ng-swipe-left="isMobile() && ctrl.next()"
+    ng-swipe-right="isMobile() && ctrl.previous()"
     >
     <ul ng-style="{'left': ctrl.currentIndex * -100 + '%'}">
         <li>

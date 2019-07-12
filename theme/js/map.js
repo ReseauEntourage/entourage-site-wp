@@ -202,8 +202,13 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
         map.refreshMap();
       });
 
-      if (getQueryParams('page')) {
-        map.toggleModal(getQueryParams('page'));
+      var queryPage = getQueryParams('page');
+
+      if (queryPage) {
+        if (queryPage == 'calendrier') {
+          queryPage = 'calendar';
+        }
+        map.toggleModal(queryPage);
       }
 
       map.initSearchbox();

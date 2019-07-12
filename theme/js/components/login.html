@@ -98,13 +98,15 @@
             <fieldset>
                 <label>2. Nous vous avons envoyé un code par SMS. Entrez-le ci-dessous :</label>
                 <div class="parent-input with-icon security-icon">
-                    <input
-                        type="password"
-                        ng-model="ctrl.password"
-                        placeholder="Votre code à 6 chiffres"
-                        ng-enter="ctrl.login()"
-                        autofocus
-                        />
+                    <form autocomplete="off">
+                        <input
+                            type="text"
+                            ng-model="ctrl.password"
+                            placeholder="Votre code à 6 chiffres"
+                            ng-enter="ctrl.login()"
+                            autofocus
+                            />
+                    </form>
                 </div>
                 <label class="label-checkbox">
                     <input

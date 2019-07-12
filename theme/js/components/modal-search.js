@@ -20,13 +20,8 @@ angular.module('entourageApp')
 
             ctrl.loading = false;
             ctrl.poisCategories = getPoisCategories();
-            ctrl.locationName = ctrlParent.currentLocation.short_name;
+            ctrl.locationName = "";
             ctrl.text = "";
-
-            ctrl.location = {
-              latitude: parseFloat(ctrlParent.currentLocation.geometry.location.lat()),
-              longitude: parseFloat(ctrlParent.currentLocation.geometry.location.lng())
-            };
 
             ctrl.initSearchBox = function() {
               var a = new google.maps.places.Autocomplete(document.getElementById('new-search-input'), {

@@ -17,7 +17,7 @@
     id="modal-new-message"
     class="modal-body"
     ng-class="{loading: ctrl.loading}"
-    ng-swipe-right="ctrl.close()"
+    ng-swipe-right="isMobile() && ctrl.close()"
     >
     <div
         class="form"

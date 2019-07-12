@@ -70,7 +70,13 @@ angular.module('entourageApp')
             }
 
             ctrl.close = function() {
-              $uibModalInstance.close();
+              if (ctrl.title || ctrl.description) {
+                if (confirm("Voulez-vous vraiment abandonner la création de cette action ?")) {
+                  $uibModalInstance.close();
+                }
+              } else {
+                $uibModalInstance.close();
+              }
             }
 
             ctrl.submit = function() {

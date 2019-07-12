@@ -35,7 +35,7 @@ a[href]:hover {
     font-size: 8px;
     text-align: center;
     border-radius: 10px;
-    background: #ff5100;
+    background: #F55F24;
 }
 
 .mobile-only {
@@ -740,7 +740,7 @@ div.overlay.fade-out {
 
 #page-title a {
     text-decoration: none;
-    color: #ff5100;
+    color: #F55F24;
 }
 
 #page-title h1 {
@@ -974,20 +974,20 @@ div.overlay.fade-out {
 }
 
 #user-messages .action-info p.pending {
-    color: #ff5100;
+    color: #F55F24;
     font-style: italic;
 }
 
 #user-messages .action-info p.pending i {
     margin-top: -1px;
     margin-right: 0;
-    color: #ff5100;
+    color: #F55F24;
     font-size: 14px;
 }   
 
 #user-messages .action-item.unread .action-info p {
     font-weight: bold;
-    color: #ff5100;
+    color: #F55F24;
 }
 
 
@@ -1015,7 +1015,7 @@ div.overlay.fade-out {
 #user-menu .dropdown-menu a.orange,
 #user-menu .dropdown-menu a.orange .material-icons {
     font-weight: bold;
-    color: #ff5100;
+    color: #F55F24;
 }
 
 
@@ -1280,7 +1280,7 @@ div.overlay.fade-out {
 }
 
 #modal-calendar .day.active a {
-    background: #ff5100;
+    background: #F55F24;
     color: #fff;
     font-weight: 500;
     cursor: pointer;
@@ -1289,7 +1289,7 @@ div.overlay.fade-out {
 }
 
 #modal-calendar .day.active a:hover {
-    box-shadow: 0 0 0 2px #ff5100;
+    box-shadow: 0 0 0 2px #F55F24;
     text-decoration: underline;
 }
 
@@ -1766,7 +1766,7 @@ div.overlay.fade-out {
 }
 
 .action-item.active {
-    box-shadow: inset 10px 0px 0px -4px #ff5100;
+    box-shadow: inset 10px 0px 0px -4px #F55F24;
 }
 
 .action-item.announcement + .action-item.announcement {
@@ -1842,7 +1842,7 @@ div.overlay.fade-out {
 }
 
 .action-icon.ask_for_help {
-    background-color: #ff5100;
+    background-color: #F55F24;
 }
 
 .action-icon.outing {
@@ -1964,12 +1964,12 @@ div.overlay.fade-out {
 }
 
 .action-item .action-status-joined {
-    color: #ff5100;
+    color: #F55F24;
     font-weight: bold;
 }
 
 .action-item .action-status-pending  {
-    color: #ff5100;
+    color: #F55F24;
     font-style: italic;
 }
 
@@ -2320,6 +2320,18 @@ div.overlay.fade-out {
     background: rgba(255,255,255,0.5);
 }
 
+#map-message {
+    position: absolute;
+    bottom: 0;
+    left: 355px;
+    right: 0;
+    font-size: 12px;
+    background: #d4d3d3;
+    line-height: 23px;
+    padding-left: 8px;
+    text-align: center;
+}
+
 #map-bottom-band {
     position: absolute;
     top: -120px;
@@ -2328,7 +2340,7 @@ div.overlay.fade-out {
     padding: 20px;
     display: flex;
     align-items: center;   
-    background: #ff5100;
+    background: #F55F24;
     color: #fff;
     font-size: 15px;
     line-height: 22px;
@@ -2642,7 +2654,7 @@ div.overlay.fade-out {
 
 #current-action .action-description a,
 #current-action .action-chat-message a {
-    color: #ff5100;
+    color: #F55F24;
     text-decoration: underline;
 }
 
@@ -2651,7 +2663,7 @@ div.overlay.fade-out {
 }
 
 #current-action .own-message .action-chat-message {
-    background: #ff5100;
+    background: #F55F24;
     color: #fff;
     text-align: left;
 }
@@ -2862,7 +2874,7 @@ div.overlay.fade-out {
 .gm-style .marker-action.active:not(.hide-animation),
 .gm-style .marker-action.status-open:hover:before,
 .gm-style .marker-action.active:not(.hide-animation):before {
-    background: #ff5100;
+    background: #F55F24;
     animation-duration: 1s;
 }
 
@@ -2968,7 +2980,7 @@ div.overlay.fade-out {
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    background: #ff5100;
+    background: #F55F24;
     animation: scaleIn 1s infinite cubic-bezier(0.4, 0, 1, 1);
 }
 
@@ -2998,7 +3010,7 @@ div.overlay.fade-out {
     left: 50%;
     display: block;
     border: 3px solid #fff;
-    border-top-color: #ff5100;
+    border-top-color: #F55F24;
     border-radius: 50%;
     width: 50px;
     height: 50px;
@@ -3102,14 +3114,14 @@ div.overlay.fade-out {
 
 .modal-header {
     padding: 15px;
-    color: #ff5100;
+    color: #F55F24;
     font-size: 17px;
     font-weight: bold;
     text-align: center;
 }
 
 .modal-header a {
-    color: #ff5100;
+    color: #F55F24;
     text-decoration: underline;
 }
 
@@ -3131,7 +3143,7 @@ div.overlay.fade-out {
 .modal-body {
     position: relative;
     padding: 30px;
-    background-color: #ff5100;
+    background-color: #F55F24;
     border-radius: 10px;
     text-align: left;
     color: #fff;
@@ -3381,7 +3393,7 @@ div.overlay.fade-out {
 .uib-datepicker-popup .btn.active span {
     padding: 5px;
     color: #fff;
-    background: #ff5100;
+    background: #F55F24;
     border-radius: 33px;
 }
 

@@ -2,7 +2,7 @@
     id="current-action"
     class="is-poi"
     ng-class="{open: ctrl.open, 'show-over-modal': ctrl.showOverModal}"
-    ng-swipe-right="ctrl.hide(ctrl.poi)"
+    ng-swipe-right="isMobile() && ctrl.hide(ctrl.poi)"
     >
     <div>
         <div class="action-actions">

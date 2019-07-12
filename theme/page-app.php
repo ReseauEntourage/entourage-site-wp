@@ -623,6 +623,13 @@
                 show-over-modal="map.showModal.search"
                 ></current-poi>
             <div id="map-container"></div>
+            <div
+                ng-if="map.currentZoom < 15"
+                id="map-message"
+                class="no-mobile"
+                >
+                Seules les actions récentes les plus proches du centre sont affichées (25 max). N'hésitez pas à déplacer la carte !
+            </div>
         </div>
         <div id="popup-content"></div>
     </div>

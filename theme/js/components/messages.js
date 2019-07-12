@@ -71,7 +71,7 @@ angular.module('entourageApp')
 
       getPendingUsers = function() {
         ctrl.messages.map(function(action) {
-          if (action.author.id != ctrl.user.id || action.status == 'closed' || action.group_type == 'conversation') {
+          if (!action.author || action.author.id != ctrl.user.id || action.status == 'closed' || action.group_type == 'conversation') {
             return;
           }
           if (action.updated_at) {
