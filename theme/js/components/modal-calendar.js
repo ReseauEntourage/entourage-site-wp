@@ -89,35 +89,15 @@ angular.module('entourageApp')
 
                 ctrl.days.push(day);
               }
-              ctrl.emptyDays = new Array(new Date(ctrl.currentYear, ctrl.currentMonth, 1).getDay() - 1);
+              ctrl.emptyDays = new Array((new Date(ctrl.currentYear, ctrl.currentMonth, 1).getDay() + 6) % 7);
             }
 
             getEvents = function() {
               if (ctrlParent.public) {
                 ctrl.events = ctrlParent.actions.filter(function(action){
-                  var mapPoly = new google.maps.Polygon({
-                    paths: [
-                      {
-                        lat: ctrlParent.map.getBounds().getNorthEast().lat(),
-                        lng: ctrlParent.map.getBounds().getNorthEast().lng()
-                      },
-                      {
-                        lat: ctrlParent.map.getBounds().getNorthEast().lat(),
-                        lng: ctrlParent.map.getBounds().getSouthWest().lng()
-                      },
-                      {
-                        lat: ctrlParent.map.getBounds().getSouthWest().lat(),
-                        lng: ctrlParent.map.getBounds().getSouthWest().lng()
-                      },
-                      {
-                        lat: ctrlParent.map.getBounds().getSouthWest().lat(),
-                        lng: ctrlParent.map.getBounds().getNorthEast().lng()
-                      },
-                    ]
-                  });
-
                   if (action.group_type == 'outing' && action.status == 'open') {
-                    return google.maps.geometry.poly.containsLocation(new google.maps.LatLng(action.location.latitude, action.location.longitude), mapPoly);
+                    var location = new google.maps.LatLng(action.location.latitude, action.location.longitude);
+                    return google.maps.geometry.spherical.computeDistanceBetween(location, ctrlParent.map.getCenter()) <= 10000;
                   }
                   return false
                 });
