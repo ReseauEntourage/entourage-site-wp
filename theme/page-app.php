@@ -652,8 +652,10 @@
         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
         })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-        ga('create', 'UA-68872992-1', 'auto');
+        ga('create', 'UA-68872992-1', 'auto', {'allowLinker': true});
         ga('send', 'pageview');
+        ga('require', 'linker');
+        ga('linker:autoLink', ['www.entourage.social', 'effet.entourage.social', 'entourage.iraiser.eu']);
     </script>
 
     <!-- Facebook JS SDK -->
