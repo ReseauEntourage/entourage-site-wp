@@ -98,4 +98,11 @@ angular.module('entourageApp')
 			}
       		return x;
   		};
-	});
+	})
+  .filter('truncate', function () {
+    return function (item, length) {
+      if (item.length <= length)
+        return item;
+      return item.slice(0, length - 2) + '…';
+    };
+  });

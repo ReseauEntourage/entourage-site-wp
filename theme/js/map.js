@@ -66,6 +66,37 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
       return deferred.promise;
     }
 
+    map.refreshCurrentUser = function() {
+      var deferred = $q.defer();
+
+      if (!map.loggedUser) {
+        deferred.resolve();
+        return deferred.promise;
+      }
+
+      $.ajax({
+        type: 'GET',
+        url: getApiUrl() + '/users/me',
+        data: {
+          token: map.loggedUser.token
+        },
+        success: function(data) {
+          if (!data.user) return;
+
+          data.user.phone = map.loggedUser.phone;
+          localStorage.setItem('user', JSON.stringify(data.user));
+          map.loggedUser = data.user;
+          map.organization = getUserOrganization();
+          $scope.$apply();
+        },
+        complete: function() {
+          deferred.resolve();
+        }
+      });
+
+      return deferred.promise;
+    }
+
     map.initGoogleMaps = function() {
       // maps loader deferred object
       var mapsDefer = $q.defer();
@@ -812,11 +843,24 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
 
     // ** MENU ** //
 
+    map.openOrganizationAdmin = function(event) {
+      var url = getApiUrl() + '/organization_admin_redirect?token=' + map.loggedUser.token;
+      if (event.ctrlKey || event.metaKey) {
+        window.open(url, '_blank');
+      } else {
+        window.location = url;
+      }
+    }
+
     map.logout = function() {
       localStorage.removeItem('user');
       localStorage.removeItem('keep-user');
       sessionStorage.removeItem('logged');
-      window.location.reload();
+      if (map.organization) {
+        window.location = getApiUrl() + '/organization_admin_redirect?message=webapp_logout&token=' + map.loggedUser.token;
+      } else {
+        window.location.reload();
+      }
     }
 
 
@@ -1043,18 +1087,30 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
     }
 
 
-    $.ajaxSetup({
-      beforeSend: function(request, options) {
-        if ((options.url.indexOf('https://entourage-back-preprod.herokuapp.com') == 0) || (options.url.indexOf('https://api.entourage.social') == 0)) {
-          request.setRequestHeader("X-API-KEY", "26fb18404cb9d6afebc87349");
-        }
-      }
-    });
+    // $.ajaxSetup({
+    //   beforeSend: function(request, options) {
+    //     debugger
+    //     if ((options.url.indexOf('https://entourage-back-preprod.herokuapp.com') == 0) || (options.url.indexOf('https://api.entourage.social') == 0)) {
+    //       request.setRequestHeader("X-API-KEY", "26fb18404cb9d6afebc87349");
+    //     }
+    //   }
+    // });
 
+    $.ajaxPrefilter(function(options) {
+        if (options.url.indexOf(getApiUrl() + '/') == 0) {
+          var api_key_param = 'api_key=26fb18404cb9d6afebc87349'
+          if (typeof(options.data) == 'string' && options.data.length > 0) {
+            options.data = options.data + '&' + api_key_param
+          } else {
+            options.data = api_key_param
+          }
+        }
+    })
 
     // ** INIT ** //
 
-    map.autoLogin()
+    map.refreshCurrentUser()
+    .then(map.autoLogin)
     .then(map.initGoogleMaps)
     .then(map.searchToken)
     .then(function() {
