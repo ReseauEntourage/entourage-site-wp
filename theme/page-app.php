@@ -410,7 +410,7 @@
                             <a href="https://www.facebook.com/pg/EntourageReseauCivique/events/?ref=page_internal" target="_blank">
                                 <i class="material-icons">people</i>Participer à nos événements
                             </a>
-                            <a href="https://www.entourage.social/don" target="_blank">
+                            <a href="<?php echo get_option('donate_link'); ?>" target="_blank">
                                 <i class="material-icons">favorite</i>Soutenir Entourage
                             </a>
                         </li>
@@ -655,7 +655,7 @@
         ga('create', 'UA-68872992-1', 'auto', {'allowLinker': true});
         ga('send', 'pageview');
         ga('require', 'linker');
-        ga('linker:autoLink', ['www.entourage.social', 'effet.entourage.social', 'entourage.iraiser.eu']);
+        ga('linker:autoLink', ['www.entourage.social', 'effet.entourage.social', 'don.entourage.social', 'entourage.iraiser.eu']);
     </script>
 
     <!-- Facebook JS SDK -->

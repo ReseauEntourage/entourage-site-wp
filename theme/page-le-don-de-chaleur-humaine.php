@@ -23,7 +23,7 @@ get_header();
         <h1>Pour Noël, <b>réchauffons</b> le <div id="heart"><i class="material-icons">favorite</i></div> des sans-abri</h1>
         <a
             class="btn white-btn"
-            href="/don"
+            href="<?php echo get_option('donate_link'); ?>"
             >
             Je fais un don
         </a>
@@ -52,7 +52,7 @@ get_header();
     </div>
     <a
         class="btn white-btn"
-        href="/don"
+        href="<?php echo get_option('donate_link'); ?>"
         >
         Je fais un don
     </a>
@@ -85,7 +85,7 @@ get_header();
     </ul-->
     <a
         class="btn orange-btn"
-        href="/don"
+        href="<?php echo get_option('donate_link'); ?>"
         >
         Je fais un don
     </a>
@@ -145,7 +145,7 @@ get_header();
         </div>
         <a
             class="btn white-btn"
-            href="/don"
+            href="<?php echo get_option('donate_link'); ?>"
             >
             Je fais un don
         </a>
@@ -227,7 +227,7 @@ get_header();
         <li class="section-quote">
             <div class="quote-content">
                 <p>
-                    <a href="/don"> Je fais un don</a> pour plus d’humanité dans la rue partout en France&nbsp;!
+                    <a href="<?php echo get_option('donate_link'); ?>"> Je fais un don</a> pour plus d’humanité dans la rue partout en France&nbsp;!
                 </p>
             </div>
             <div class="quote-author">

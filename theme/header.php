@@ -75,6 +75,7 @@
         'domains': [
           'www.entourage.social',
           'effet.entourage.social',
+          'don.entourage.social',
           'entourage.iraiser.eu'
         ]
       }
