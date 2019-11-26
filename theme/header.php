@@ -63,49 +63,23 @@
 	<link href='https://fonts.googleapis.com/css?family=Roboto:300,500,100,300italic' rel='stylesheet' type='text/css'>
 	<script src="<?php asset_url('js/lib/jquery.js'); ?>" type="text/javascript"></script>
 
-	<!-- Analytics Code -->
-	<script>
-		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-		})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  <!-- Global Site Tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-68872992-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-    ga('create', 'UA-68872992-1', 'auto', {'allowLinker': true});
-    ga('send', 'pageview');
-    ga('require', 'linker');
-    ga('linker:autoLink', ['www.entourage.social', 'effet.entourage.social', 'entourage.iraiser.eu']);
-	</script>
-
-	<script>
-	    $(document).on('click', 'a[href^="/don"]', function(e) {
-	      var event, url;
-
-	      // ensure exact match because we only did a prefix match
-	      if (this.pathname !== '/don') {
-	        return
-	      }
-
-	      event = {
-	        hitType: 'event',
-	        eventCategory: 'Engagement',
-	        eventAction: 'don'
-	      }
-
-	      if  (this.target === '_blank' || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) {
-	        // page will not open in this tab, no callback required
-	      }
-	      else {
-	        // cancel new page load and resume after event sent
-	        e.preventDefault()
-	        url = this.href
-	        event.hitCallback = function() {
-	          window.location = url
-	        }
-	      }
-
-	      ga('send', event);
-	    })
-	</script>
+    gtag('config', 'UA-68872992-1', {
+      'linker': {
+        'domains': [
+          'www.entourage.social',
+          'effet.entourage.social',
+          'entourage.iraiser.eu'
+        ]
+      }
+    });
+  </script>
 
 	<script src='https://www.google.com/recaptcha/api.js'></script>
 	<?php wp_head(); ?>

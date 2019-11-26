@@ -114,7 +114,7 @@ jQuery(document).ready(function($) {
 			data: { "newsletter_subscription": { "email": email, "active": true } },
 			success: function(){
 				$('.section-newsletter').addClass('success').html('<p>Vous êtes bien inscrit à notre newsletter ! A bientôt :)</p>');
-				ga('send', 'event', 'Engagement', 'Newsletter', 'Website');
+        gtag('event', 'Newsletter', {'event_category': 'Engagement', 'event_label': 'Website'});
 				fbq('track', 'CompleteRegistration');
 			},
 			error: function(){
@@ -126,87 +126,73 @@ jQuery(document).ready(function($) {
 
 	// EVENTS TRACKING //
 
-	$('[ga-event]').on('click', function(e){
-		var data = {
-			hitType: 'event'
-		};
-		var attr = $(this).attr('ga-event').split(" ");
+  // https://developers.google.com/analytics/devguides/collection/gtagjs/sending-data#handle_timeouts
+  function withTimeout(callback, opt_timeout) {
+    var called = false;
+    function fn() {
+      if (!called) {
+        called = true;
+        callback();
+      }
+    }
+    setTimeout(fn, opt_timeout || 1000);
+    return fn;
+  }
 
-		if (attr[0]) {
-			data.eventCategory = attr[0];
-		}
-		if (attr[1]) {
-			data.eventAction = attr[1];
-		}
+  // https://support.google.com/analytics/answer/7478520
+  function gtagOutboundClickEvent(jqEvent, action, parameters) {
+    var element = jqEvent.target,
+        url = element.href;
+    parameters = parameters || {};
+
+    if (!url ||
+        element.target === '_blank' ||
+        jqEvent.ctrlKey || jqEvent.metaKey || jqEvent.shiftKey || jqEvent.altKey) {
+      // do nothing
+    } else {
+      jqEvent.preventDefault();
+      parameters.event_callback = withTimeout(function(){document.location = url});
+      parameters.transport_type = 'beacon';
+    }
+
+    gtag('event', action, parameters);
+  }
+
+	$('[ga-event]').on('click', function(e){
+		var attr = $(this).attr('ga-event').split(" "),
+        action = null,
+        parameters = {};
+
+    if (!attr[1]) {
+      console.info('gtag_send error: no action. attr.', attr);
+      return;
+    }
+
+    action = attr[1];
+    parameters.event_category = attr[0];
 		if (attr[2]) {
-			data.eventLabel = attr[2];
+			parameters.event_label = attr[2];
 		}
-		
-		console.info('ga_send', data);
-		ga('send', data);
+
+		console.info('gtag_send', 'event', action, parameters);
+		gtagOutboundClickEvent(e, action, parameters);
 	});
 
-	$('.iphone-btn').on('click', function(){
-		ga('send', {
-			hitType: 'event',
-			eventCategory: 'Engagement',
-			eventAction: 'AppDownload',
-			eventLabel: 'iOS'
-		});
+	$('.iphone-btn').on('click', function(e){
+    gtagOutboundClickEvent(e, 'AppDownload', {'event_category': 'Engagement', 'event_label': 'iOS'});
 		fbq('track', 'Lead', {'content_name': 'iOS'});
 	});
 
-	$('.android-btn').on('click', function(){
-		ga('send', {
-			hitType: 'event',
-			eventCategory: 'Engagement',
-			eventAction: 'AppDownload',
-			eventLabel: 'Android'
-		});
-		fbq('track', 'Lead', {'content_name': 'Android'});
+	$('.android-btn').on('click', function(e){
+    gtagOutboundClickEvent(e, 'AppDownload', {'event_category': 'Engagement', 'event_label': 'Android'});
+    fbq('track', 'Lead', {'content_name': 'Android'});
 	});
 
-	$('#banner-app-download').find('.app-download-btn').on('click', function(){
-		ga('send', {
-			hitType: 'event',
-			eventCategory: 'Engagement',
-			eventAction: 'AppDownload',
-			eventLabel: mobileOS
-		});
+	$('#banner-app-download').find('.app-download-btn').on('click', function(e){
+    gtagOutboundClickEvent(e, 'AppDownload', {'event_category': 'Engagement', 'event_label': mobileOS});
+    fbq('track', 'Lead', {'content_name': mobileOS});
 	});
 
-  /*
-  Deprecated in favor of the Engagement/don event
-	$('#donate-btn').on('click', function(){
-		ga('send', {
-			hitType: 'event',
-			eventCategory: 'Donate',
-			eventAction: 'ClickDonate',
-			eventLabel: 'FixedButton'
-		});
-		fbq('track', 'Purchase', {'content_name': 'FixedButton'});
-	});
-
-	$('#site-header .donate-btn').on('click', function(){
-		ga('send', {
-			hitType: 'event',
-			eventCategory: 'Donate',
-			eventAction: 'ClickDonate',
-			eventLabel: 'MenuButton'
-		});
-		fbq('track', 'Purchase', {'content_name': 'MenuButton'});
-	});
-
-	$('.site-footer .donate-btn').on('click', function(){
-		ga('send', {
-			hitType: 'event',
-			eventCategory: 'Donate',
-			eventAction: 'ClickDonate',
-			eventLabel: 'FooterButton'
-		});
-		fbq('track', 'Purchase', {'content_name': 'FooterButton'});
-	});
-  */
 
 	// MOBILE NAV //
 
