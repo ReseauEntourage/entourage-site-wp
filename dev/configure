@@ -1,8 +1,10 @@
 #!/bin/bash
 
-dev/wp core install --url=localhost:8081 --title=entourage-site-wp --admin_user=admin --admin_email=admin@example.org
+docker-compose exec wordpress chown -R www-data:www-data wp-content
+dev/wp core install --url=localhost:8081 --title=entourage-site-wp --admin_user=admin --admin_email=admin@example.org --admin_password=admin --skip-email
 dev/wp theme activate entourage
 dev/wp option set permalink_structure /%year%/%monthnum%/%day%/%postname%/
+dev/wp plugin install --activate all-in-one-wp-migration --version=6.77
 dev/wp post create --post_name=app --post_type=page --post_status=publish --meta_input="$(cat <<JSON
 {
   "bouton": "Rejoignez le réseau !",
