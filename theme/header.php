@@ -151,10 +151,16 @@
 						<i class="material-icons"><?php echo get_option('open_app_icon'); ?></i><?php echo get_option('open_app_text'); ?>
 					</a>
 				<?php endif ?>
-				<a class="btn orange-btn header-download-btn mobile-only" title="Ouvrir la carte des actions du réseau solidaire Entourage" href="<?php echo get_option('open_app_link'); ?>" ga-event="Engagement AppView Header">
-					<i class="material-icons"><?php echo get_option('open_app_icon'); ?></i><?php echo get_option('open_app_text_mobile'); ?>
-				</a>
-			</div>
+        <?php if ( $custom_fields['don'] ): ?>
+          <a class="btn orange-btn header-download-btn mobile-only" href="<?php echo get_option('donate_link'); ?>">
+            <?php echo $custom_fields['don'][0] ?>
+          </a>
+        <?php else: ?>
+          <a class="btn orange-btn header-download-btn mobile-only" title="Ouvrir la carte des actions du réseau solidaire Entourage" href="<?php echo get_option('open_app_link'); ?>" ga-event="Engagement AppView Header">
+            <i class="material-icons"><?php echo get_option('open_app_icon'); ?></i><?php echo get_option('open_app_text_mobile'); ?>
+          </a>
+        <?php endif ?>
+      </div>
 		</div>
 
 		<!--<?php if ($wp_query->post->ID != 417): ?>
