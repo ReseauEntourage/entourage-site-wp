@@ -81,23 +81,6 @@ class DonationRouter {
     $url_parameters = $_GET;
 
     if (preg_match('/^\/don\/(.*)$/', $current_url, $path_segments)) {
-      if ($path_segments[1] === 's') {
-        $url_parameters = array_merge([
-          'utm_source'   => '1',
-          'utm_medium'   => 'SMS',
-          'utm_campaign' => 'DEC2017'
-        ], $url_parameters);
-      }
-
-      if (preg_match('/.+-(S[1-4])$/', $_GET['utm_source'], $utm_source)) {
-        $preset = $this->presets[$utm_source[1]];
-        $url_parameters = array_merge($url_parameters, [
-          'once_grid'    => array_map([$this, 'to_cents'], $preset['once']),
-          'regular_grid' => array_map([$this, 'to_cents'], $preset['regular']),
-          'amount'       => $this->to_cents($preset['selected'])
-        ]);
-      }
-
       $url = link_with_url_parameters(
         get_option('donate_link'),
         http_build_query($url_parameters)
