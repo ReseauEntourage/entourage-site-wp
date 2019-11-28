@@ -132,7 +132,11 @@
 				<?php if ( $custom_fields['bouton_2'] ): ?>
 					<a class="link no-mobile" href="<?php echo $custom_fields['lien_2'][0] ?>"><?php echo $custom_fields['bouton_2'][0] ?></a>
 				<?php endif ?>
-				<?php if ( $custom_fields['bouton'] ): ?>
+        <?php if ( $custom_fields['don'] ): ?>
+          <a class="btn orange-btn no-mobile" href="<?php echo get_option('donate_link'); ?>">
+            <?php echo $custom_fields['don'][0] ?>
+          </a>
+				<?php elseif ( $custom_fields['bouton'] ): ?>
 					<a class="btn no-mobile" href="<?php echo $custom_fields['lien'][0]?: '#section-call-to-action' ?>">
 						<?php echo $custom_fields['bouton'][0] ?>
 					</a>
