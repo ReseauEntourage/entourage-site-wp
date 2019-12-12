@@ -15,6 +15,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
     map.showModal = {};
     map.showMessages = false;
     map.verbatim = getVerbatim();
+    map.featureFlags = getFeatureFlags();
 
     map.autoLogin = function() {
       var deferred = $q.defer();
@@ -86,7 +87,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
           data.user.phone = map.loggedUser.phone;
           localStorage.setItem('user', JSON.stringify(data.user));
           map.loggedUser = data.user;
-          map.organization = getUserOrganization();
+          map.featureFlags = getFeatureFlags();
           $scope.$apply();
         },
         complete: function() {
@@ -856,7 +857,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
       localStorage.removeItem('user');
       localStorage.removeItem('keep-user');
       sessionStorage.removeItem('logged');
-      if (map.organization) {
+      if (map.featureFlags.organization_admin) {
         window.location = getApiUrl() + '/organization_admin_redirect?message=webapp_logout&token=' + map.loggedUser.token;
       } else {
         window.location.reload();

@@ -500,7 +500,7 @@
                             <a ng-click="map.toggleModal('profileEdit')">
                                 <i class="material-icons">person_pin</i> Modifier mon profil
                             </a>
-                            <a ng-if="map.loggedUser.partner"
+                            <a ng-if="map.featureFlags.organization_admin"
                                ng-click="map.openOrganizationAdmin($event)">
                                 <i class="material-icons">business</i> Gérer {{map.loggedUser.partner.name | truncate:30}}
                             </a>

@@ -12,12 +12,12 @@ function getUserToken() {
   return false;
 }
 
-function getUserOrganization() {
+function getFeatureFlags() {
   var user = getLoggedUser();
-  if (user && typeof user.partner === 'object') {
-    return user.partner;
+  if (user) {
+    return user['feature_flags'];
   }
-  return false;
+  return {};
 }
 
 function getQueryParams(search) {
