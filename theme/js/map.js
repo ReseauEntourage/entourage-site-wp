@@ -86,6 +86,7 @@ angular.module('entourageApp', ['ui.bootstrap', 'ImageCropper', 'ngTouch'])
 
           data.user.phone = map.loggedUser.phone;
           localStorage.setItem('user', JSON.stringify(data.user));
+          data.user.notifications = map.loggedUser.notifications;
           map.loggedUser = data.user;
           map.featureFlags = getFeatureFlags();
           $scope.$apply();
