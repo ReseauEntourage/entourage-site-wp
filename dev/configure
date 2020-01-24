@@ -1,10 +1,21 @@
 #!/bin/bash
 
+docker-compose up -d nginx
+
+while true; do
+  http_status_code=$(curl -s localhost:8081 -w %{http_code} -o /dev/null)
+  if [[ $http_status_code == '302' ]]; then
+    break
+  fi
+  echo "Waiting for WordPress to initialize (current status code: $http_status_code)"
+  sleep 3
+done
+
 docker-compose exec wordpress chown -R www-data:www-data wp-content
 dev/wp core install --url=localhost:8081 --title=entourage-site-wp --admin_user=admin --admin_email=admin@example.org --admin_password=admin --skip-email
 dev/wp theme activate entourage
 dev/wp option set permalink_structure /%year%/%monthnum%/%day%/%postname%/
-dev/wp plugin install --activate all-in-one-wp-migration --version=6.77
+# dev/wp plugin install --activate all-in-one-wp-migration --version=6.77
 dev/wp post create --post_name=app --post_type=page --post_status=publish --meta_input="$(cat <<JSON
 {
   "bouton": "Rejoignez le réseau !",
@@ -15,3 +26,5 @@ dev/wp post create --post_name=app --post_type=page --post_status=publish --meta
 }
 JSON
 )"
+
+echo "Ready! You can find the webapp at: http://localhost:8081/app/"

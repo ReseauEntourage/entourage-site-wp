@@ -71,7 +71,7 @@ function isDemoMode() {
 
 function getApiUrl() {
   if (isDemoMode())
-    return 'http://api.entourage.localhost:8080/api/v1';
+    return 'http://localhost:8080/api/v1';
   else
     return 'https://api.entourage.social/api/v1';
 }
