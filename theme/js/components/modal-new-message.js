@@ -119,8 +119,7 @@ angular.module('entourageApp')
               $.ajax({
                 type: 'PATCH',
                 url: getApiUrl() + '/entourages/' + ctrlParent.message.action.uuid,
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify({
+                data: {
                   token: ctrlParent.user.token,
                   entourage: {
                     status: 'closed',
@@ -128,7 +127,7 @@ angular.module('entourageApp')
                       success: ctrl.actionFeedback == 'success'
                     }
                   }
-                }),
+                },
                 success: function(data) {
                   ctrlParent.message.action.status = 'closed';
                   ctrlParent.message.action.outcome = {
