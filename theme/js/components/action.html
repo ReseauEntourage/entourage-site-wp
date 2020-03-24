@@ -87,6 +87,7 @@
     </div>
 </div>
 <user-picture
+    ng-if="ctrl.action.type != 'Announcement'"
     user="ctrl.action.author"
     action="ctrl.action"
 ></user-picture>
