@@ -23,7 +23,7 @@
             $og_description = "Rejoignez " . ucfirst($entourage->author->display_name) . " à cet événement convivial sur le réseau solidaire Entourage, pour ressentir la chaleur humaine des moments entre ";
             $og_image = 'img/share-fb-event.jpg';
         } else {
-            $og_description = "Vous pouvez aider ? Rejoignez " . ucfirst($entourage->author->display_name) . " et les 50.000 membres du réseau solidaire Entourage et passez vous aussi concrètement à l'action pour les personnes sans-abri près de chez vous";
+            $og_description = "Vous pouvez aider ? Rejoignez " . ucfirst($entourage->author->display_name) . " et les 100.000 membres du réseau solidaire Entourage et passez vous aussi concrètement à l'action pour les personnes sans-abri près de chez vous";
             $og_image = 'img/share-fb-2.png';
         }
     }
