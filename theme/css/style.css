@@ -179,6 +179,12 @@ a:hover {
 	color: #fff;
 }
 
+.btn.orange-outline-btn {
+  background: #fff;
+  border: 1px solid #F55F24;
+  color: #F55F24;
+}
+
 .btn.dark-btn {
 	background: #333;
 	color: #fff;
@@ -752,11 +758,11 @@ body.show-banner-top #site-header-fixed {
 	float: right;
 	margin-top: 13px;
 	margin-right: 13px;
+	display: flex;
 }
 
 #site-header-right a.link {
     display: inline-block;
-    margin-right: 20px;
     color: #333;
     font-size: 14px;
     line-height: 33px;
@@ -772,8 +778,12 @@ body.show-banner-top #site-header-fixed {
 	display: none;
 }
 
-#site-header-right a.btn:not(.orange-btn):not(.dark-btn) {
+#site-header-right a.btn:not(.orange-btn):not(.dark-btn):not(.orange-outline-btn) {
 	border: 1px solid #fff;
+}
+
+#site-header-right > a + a {
+	margin-left: 15px;
 }
 
 #site-header-title {
@@ -1071,11 +1081,15 @@ section.section:not(.section_type-simple_comme_bonjour) blockquote p {
  */
 
 body.home #site-header {
-	height: 510px;
+	height: auto;
 }
 
 body.home section.section.section_type-download {
 	margin-top: -30px;
+}
+
+.section_type-orange.section_page-homepage {
+  padding-bottom: 30px;
 }
 
 

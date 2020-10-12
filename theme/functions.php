@@ -429,24 +429,55 @@
 			<form method="post" action="options.php">
 				<?php wp_nonce_field('update-options') ?>
 
-				<h2>Haut de page</h2>
+				<h2>Haut de page (ordinateur)</h2>
 
-				<p><strong>Icone bouton orange à droite :</strong><br />
-				<input type="text" name="open_app_icon" size="150" value="<?php echo get_option('open_app_icon'); ?>" /></p>
+				<h3>CTA principal à droite</h3>
+				<p>
+					<strong>Texte :</strong><br />
+					<input type="text" name="header_cta_principal_texte" size="150" value="<?php echo get_option('header_cta_principal_texte'); ?>" />
+				</p>
 
-				<p><strong>Bouton orange à droite :</strong><br />
-				<input type="text" name="open_app_text" size="150" value="<?php echo get_option('open_app_text'); ?>" /></p>
+				<p>
+					<strong>URL :</strong><br />
+					<input type="text" name="header_cta_principal_url" size="150" value="<?php echo get_option('header_cta_principal_url'); ?>" />
+				</p>
 
-				<p><strong>Lien bouton orange à droite :</strong><br />
-				<input type="text" name="open_app_link" size="150" value="<?php echo get_option('open_app_link'); ?>" /></p>
+				<h3>CTA secondaire à droite</h3>
+				<p>
+					<strong>Texte :</strong><br />
+					<input type="text" name="header_cta_secondaire_texte" size="150" value="<?php echo get_option('header_cta_secondaire_texte'); ?>" />
+				</p>
 
-				<p><strong>[MOBILE] Bouton orange à droite (max 15 caractères):</strong><br />
-				<input type="text" name="open_app_text_mobile" size="150" value="<?php echo get_option('open_app_text_mobile'); ?>" /></p>
+				<p>
+					<strong>URL :</strong><br />
+					<input type="text" name="header_cta_secondaire_url" size="150" value="<?php echo get_option('header_cta_secondaire_url'); ?>" />
+				</p>
+
+				<h3>Lien à droite</h3>
+				<p>
+					<strong>Texte :</strong><br />
+					<input type="text" name="header_cta_lien_texte" size="150" value="<?php echo get_option('header_cta_lien_texte'); ?>" />
+				</p>
+
+				<p>
+					<strong>URL :</strong><br />
+					<input type="text" name="header_cta_lien_url" size="150" value="<?php echo get_option('header_cta_lien_url'); ?>" />
+				</p>
+
+				<h2>Haut de page (mobile)</h2>
+
+				<h3>CTA principal à droite</h3>
+				<p>
+					<strong>Texte :</strong><br />
+					<input type="text" name="header_cta_mobile_texte" size="150" value="<?php echo get_option('header_cta_mobile_texte'); ?>" />
+				</p>
+
+				<p>
+					<strong>URL :</strong><br />
+					<input type="text" name="header_cta_mobile_url" size="150" value="<?php echo get_option('header_cta_mobile_url'); ?>" />
+				</p>
 
 				<h2>Don</h2>
-
-				<p><strong>Bouton "faire un don" (max 10 caractères) :</strong><br />
-				<input type="text" name="donate_text" size="150" value="<?php echo get_option('donate_text'); ?>" /></p>
 
 				<p><strong>Lien formulaire de don :</strong><br />
 				<input type="text" name="donate_link" size="150" value="<?php echo get_option('donate_link'); ?>" /></p>
@@ -473,7 +504,7 @@
 				<p><input type="submit" name="Submit" value="Enregistrer les textes" /></p>
 
 				<input type="hidden" name="action" value="update" />
-				<input type="hidden" name="page_options" value="open_app_icon,open_app_text,  open_app_link, open_app_text_mobile, newsletter, donate_text, donate_link, footer_address_text, footer_address_link,facebook_title,facebook_description" />
+				<input type="hidden" name="page_options" value="header_cta_principal_texte, header_cta_principal_url, header_cta_secondaire_texte, header_cta_secondaire_url, header_cta_lien_texte, header_cta_lien_url, header_cta_mobile_texte, header_cta_mobile_url, newsletter, donate_text, donate_link, footer_address_text, footer_address_link, facebook_title, facebook_description" />
 
 			</form>
 		</div>

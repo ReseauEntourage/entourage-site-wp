@@ -97,7 +97,7 @@
   <!-- End Google Tag Manager (noscript) -->
 
 	<header id="site-header" role="banner"
-		<?php if ( has_post_thumbnail() ): ?>
+		<?php if ( !is_front_page() && has_post_thumbnail() ): ?>
 			style="background-image: url(<?php echo the_post_thumbnail_url(); ?>);background-position: <?php echo $custom_fields['alignement_photo'][0]; ?>"
 		<?php endif ?>
 		>
@@ -129,36 +129,31 @@
 				<?php echo get_post(178)->post_content; ?>
 			</div>
 			<div id="site-header-right">
-				<?php if ( $custom_fields['bouton_2'] ): ?>
-					<a class="link no-mobile" href="<?php echo $custom_fields['lien_2'][0] ?>"><?php echo $custom_fields['bouton_2'][0] ?></a>
-				<?php endif ?>
-        <?php if ( $custom_fields['don'] ): ?>
-          <a class="btn orange-btn no-mobile" href="<?php echo get_option('donate_link'); ?>">
-            <?php echo $custom_fields['don'][0] ?>
-          </a>
-				<?php elseif ( $custom_fields['bouton'] ): ?>
-					<a class="btn no-mobile" href="<?php echo $custom_fields['lien'][0]?: '#section-call-to-action' ?>">
-						<?php echo $custom_fields['bouton'][0] ?>
-					</a>
-				<?php elseif ( $custom_fields['bouton_orange'] ): ?>
-					<a class="btn orange-btn no-mobile" href="<?php echo $custom_fields['lien'][0]?: '#section-call-to-action' ?>">
-						<?php echo $custom_fields['bouton_orange'][0] ?>
-					</a>
-				<?php else: ?>
-					<!--a id="header-download-btn" class="btn orange-btn iphone-btn" href="<?php echo link_with_url_parameters($custom_fields_downloads['lien_ios'][0], $_SERVER['QUERY_STRING']) ?>"><?php echo $download_btn_text ?></a>
-					<a id="header-download-btn" class="btn orange-btn android-btn" href="<?php echo link_with_url_parameters($custom_fields_downloads['lien_android'][0], $_SERVER['QUERY_STRING']) ?>"><?php echo $download_btn_text ?></a-->
-					<a class="btn orange-btn header-download-btn web-app-link-tracker no-mobile" title="Ouvrir la carte des actions du réseau solidaire Entourage" href="<?php echo get_option('open_app_link'); ?>" target="_blank" ga-event="Engagement AppView Header">
-						<i class="material-icons"><?php echo get_option('open_app_icon'); ?></i><?php echo get_option('open_app_text'); ?>
-					</a>
-				<?php endif ?>
-        <?php if ( $custom_fields['don'] ): ?>
-          <a class="btn orange-btn header-download-btn mobile-only" href="<?php echo get_option('donate_link'); ?>">
-            <?php echo $custom_fields['don'][0] ?>
+        <?php if ( $custom_fields['bouton_orange'] ): ?>
+          <a class="btn orange-btn no-mobile" href="<?php echo $custom_fields['lien'][0]?: '#section-call-to-action' ?>">
+            <?php echo $custom_fields['bouton_orange'][0] ?>
           </a>
         <?php else: ?>
-          <a class="btn orange-btn header-download-btn mobile-only" title="Ouvrir la carte des actions du réseau solidaire Entourage" href="<?php echo get_option('open_app_link'); ?>" ga-event="Engagement AppView Header">
-            <i class="material-icons"><?php echo get_option('open_app_icon'); ?></i><?php echo get_option('open_app_text_mobile'); ?>
-          </a>
+          <?php if ( !empty(get_option('header_cta_lien_texte')) ): ?>
+            <a class="link no-mobile" href="<?php echo get_option('header_cta_lien_url') ?>">
+              <?php echo get_option('header_cta_lien_texte') ?>
+            </a>
+          <?php endif ?>
+          <?php if ( !empty(get_option('header_cta_secondaire_texte')) ): ?>
+            <a class="btn orange-outline-btn no-mobile" href="<?php echo get_option('header_cta_secondaire_url') ?>">
+              <?php echo get_option('header_cta_secondaire_texte') ?>
+            </a>
+          <?php endif ?>
+          <?php if ( !empty(get_option('header_cta_principal_texte')) ): ?>
+            <a class="btn orange-btn no-mobile" href="<?php echo get_option('header_cta_principal_url') ?>">
+              <?php echo get_option('header_cta_principal_texte') ?>
+            </a>
+          <?php endif ?>
+          <?php if ( !empty(get_option('header_cta_mobile_texte')) ): ?>
+            <a class="btn orange-btn header-download-btn mobile-only" href="<?php echo get_option('header_cta_mobile_url') ?>">
+              <?php echo get_option('header_cta_mobile_texte') ?>
+            </a>
+          <?php endif ?>
         <?php endif ?>
       </div>
 		</div>
@@ -172,6 +167,7 @@
 			</div>
 		<?php endif ?>-->
 
+    <?php if ( !is_front_page() ): ?>
 		<div id="site-header-title">
 			<h1><?php echo $custom_fields['titre'][0] ?></h1>
 
@@ -201,6 +197,7 @@
 				</div>
 			<?php endif ?>
 		</div>
+    <?php endif ?>
 
 	</header>
 
