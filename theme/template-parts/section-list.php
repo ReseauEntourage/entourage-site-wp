@@ -28,7 +28,6 @@
 	  background-position: <?php echo $alignement; ?>;
 	  background-attachment: fixed;
 	  background-size: cover;
-	  height: 500px;
 	  position: relative;
 	  overflow: hidden;
 	}
