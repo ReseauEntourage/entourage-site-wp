@@ -32,7 +32,7 @@
 			'menu_position' => 2,
 			'public' => true,
 			'rewrite' => ['slug' => 'section'],
-			'supports' => [ 'title', 'editor', 'custom-fields','page-attributes'],
+			'supports' => [ 'title', 'editor', 'custom-fields','page-attributes', 'thumbnail'],
 		]);
 
 		register_taxonomy( 'section_type', 'section', [

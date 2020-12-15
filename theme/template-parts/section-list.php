@@ -7,7 +7,13 @@
 	$custom_fields = get_post_custom(get_the_ID());
 ?>
 
-<section <?php post_class('bg-'.$custom_fields['couleur_fond'][0]); ?>>
+<section <?php post_class('bg-'.$custom_fields['couleur_fond'][0]); ?>
+	<?php $alignement = empty($custom_fields['alignement_photo']) ? 'center' : $custom_fields['alignement_photo'][0] ?>
+
+	<?php if ( has_post_thumbnail() ): ?>
+		style="background-image: url(<?php echo the_post_thumbnail_url(); ?>);background-size: cover; background-position: <?php echo $alignement; ?>"
+	<?php endif ?>
+>
 	<h3 class="section-title"><?php the_custom_html_title(); ?></h3>
 	<div class="section-content">
 		<?php the_custom_html_content(); ?>
