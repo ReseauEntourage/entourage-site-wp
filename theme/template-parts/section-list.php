@@ -57,7 +57,7 @@
 	  z-index: 1;
 	  text-shadow: 0 0 4px #000;
 	}
-	.section.blur > header > .section-content .highlight-word {
+	.section.blur .highlight-word {
 		text-shadow: none;
 	}
 <?php endif ?>
