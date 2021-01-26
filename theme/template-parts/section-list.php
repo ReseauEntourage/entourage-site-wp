@@ -34,21 +34,7 @@
 	.section.blur > header {
 	  background: inherit;
 	}
-	.section.blur > header::before {
-	  content: "";
-	  position: absolute;
-	  top: 0;
-	  bottom: 0;
-	  left: 0;
-	  right: 0;
-	  margin: auto;
-	  width: 810px;
-	  height: 100%;
-	  background: inherit;
-	  background-attachment: fixed;
-	  -webkit-filter: blur(8px);
-	  filter: blur(8px);
-	}
+
 	.section.blur > header > h1, .section.blur > header > .section-title, .section.blur > header > .section-content {
 	  margin: 0;
 	  color: white;
