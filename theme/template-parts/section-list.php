@@ -7,9 +7,9 @@
 	$custom_fields = get_post_custom(get_the_ID());
 ?>
 
-<?php $blurclass = empty($custom_fields['blur']) ? '' : 'blur' ?>
+<?php $bgclass = empty($custom_fields['bg']) ? '' : 'bg' ?>
 
-<section <?php post_class($blurclass.' bg-'.$custom_fields['couleur_fond'][0]); ?>>
+<section <?php post_class($bgclass.' bg-'.$custom_fields['couleur_fond'][0]); ?>>
 	<header>
 
 	<h3 class="section-title"><?php the_custom_html_title(); ?></h3>
@@ -23,7 +23,7 @@
 <?php if ( has_post_thumbnail() ): ?>
 	<?php $alignement = empty($custom_fields['alignement_photo']) ? 'center' : $custom_fields['alignement_photo'][0] ?>
 
-	.section.blur {
+	.section.bg {
 	  background: url(<?php echo the_post_thumbnail_url(); ?>);
 	  background-position: <?php echo $alignement; ?>;
 	  background-attachment: fixed;
@@ -31,18 +31,20 @@
 	  position: relative;
 	  overflow: hidden;
 	}
-	.section.blur > header {
+	.section.bg > header {
 	  background: inherit;
 	}
 
-	.section.blur > header > h1, .section.blur > header > .section-title, .section.blur > header > .section-content {
+	.section.bg > header > h1,
+	.section.bg > header > .section-title,
+	.section.bg > header > .section-content {
 	  margin: 0;
 	  color: white;
 	  position: relative;
 	  z-index: 1;
 	  text-shadow: 0 0 4px #000;
 	}
-	.section.blur .highlight-word {
+	.section.bg .highlight-word {
 		text-shadow: none;
 	}
 <?php endif ?>
@@ -57,6 +59,17 @@
 			margin-top: 10px;
 			font-size: 16px;
 			text-align: left;
+		}
+
+		section.section.section_type-list h1 {
+			margin-top: 200px;
+			margin-bottom: 200px;
+			font-size: 35px;
+		}
+
+		section.section h1 b.highlight-word {
+			font-size: 35px;
+			padding: 15px 25px;
 		}
 
 		section.section.section_type-list li {
